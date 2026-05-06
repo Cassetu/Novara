@@ -1,9 +1,15 @@
 document.addEventListener("DOMContentLoaded", async () => {
+
+    console.log("Js loaded");
+
     const authView = document.getElementById("auth-view");
     const appView = document.getElementById("app-view");
     const signupForm = document.getElementById("auth-form");
     const emailInput = document.getElementById("email");
     const messageBox = document.getElementById("message");
+
+    console.log("Form identified");
+
     window.firebaseAuth.onAuthStateChanged((user) => {
         if (user) {
             authView.style.display = "none";
