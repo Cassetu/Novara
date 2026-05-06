@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const authView = document.getElementById("auth-view");
     const appView = document.getElementById("app-view");
-    const signupForm = document.getElementById("signup-form");
+    const signupForm = document.getElementById("auth-form");
     const emailInput = document.getElementById("email");
     const messageBox = document.getElementById("message");
     window.firebaseAuth.onAuthStateChanged((user) => {
