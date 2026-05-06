@@ -1,22 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novara</title>
     <link rel="stylesheet" href="style.css">
-
-    <script type="module" src="firebase-config.js"></script>
-
-    <script type="module" src="app.js" defer></script>
 </head>
 <body>
-<div class="container">
-    <h1 id="header-text">Sign In</h1>
 
-    <form id="signup-form">
-        <input type="email" id="email" placeholder="Email Address" required>
-        <button type="submit">Send Magic Link</button>
-    </form>
-
-    <p id="message-box"></p>
+<div id="auth-view" class="auth">
+    <div class="auth-box">
+        <h1>Sign In</h1>
+        <form id="auth-form">
+            <input type="email" id="email" placeholder="email" required>
+            <button type="submit">Verify</button>
+        </form>
+        <p id="message"></p>
+    </div>
 </div>
+
+<div id="app-view" class="app" style="display: none;">
+
+    <aside class="sidebar">
+        <h2>Menu</h2>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Lessons</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="workspace">
+        <h1>editor</h1>
+    </main>
+
+</div>
+
 </body>
 </html>
