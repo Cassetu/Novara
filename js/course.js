@@ -1,6 +1,8 @@
 let currentCourse = null;
 let currentIndex = 0;
 
+const correctSound = new Audio("assets/sfx/correct.mp3");
+
 const contentDiv = document.getElementById("module-content");
 const headerDiv = document.getElementById("course-header");
 const nextBtn = document.getElementById("next-btn");
@@ -39,6 +41,9 @@ nextBtn.addEventListener("click", () => {
             alert("Incorrect answer. Please try again.");
             return;
         }
+
+        correctSound.currentTime = 0;
+        correctSound.play();
     }
 
     if (currentIndex < currentCourse.modules.length - 1) {
