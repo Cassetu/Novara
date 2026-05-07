@@ -1,0 +1,96 @@
+:root {
+    --void: #0a0a0a;
+    --surface: #141414;
+    --text-main: #f0f0f0;
+    --text-dim: #888888;
+    --accent: #ffffff;
+    --border: #333333;
+}
+
+.workspace {
+    flex-grow: 1;
+    background-color: var(--void);
+    color: var(--text-main);
+    padding: 50px;
+    overflow-y: auto;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#course-header {
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+    text-transform: lowercase;
+    letter-spacing: 2px;
+}
+
+#module-content {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    max-width: 800px;
+}
+
+.notepad-container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+}
+
+.notepad-container h3 {
+    margin-bottom: 15px;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#notepad {
+    flex-grow: 1;
+    resize: none;
+    padding: 15px;
+    background-color: var(--surface);
+    color: var(--accent);
+    border: 1px solid var(--border);
+    font-family: inherit;
+    outline: none;
+}
+
+#notepad:focus {
+    border-color: var(--accent);
+}
+
+/* mcq */
+.mcq-option {
+    display: block;
+    margin: 15px 0;
+    padding: 10px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.mcq-option:hover {
+    border-color: var(--text-dim);
+}
+
+.controls button {
+    padding: 12px 24px;
+    background-color: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--text-main);
+    cursor: pointer;
+    font-family: inherit;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+    transition: 0.2s ease;
+}
+
+.controls button:hover {
+    background-color: var(--text-main);
+    color: var(--void);
+}

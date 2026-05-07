@@ -1,0 +1,29 @@
+    ADDING A NEW COURSE:
+
+1. Create a new json file under `/data`.
+    follow a schema:
+
+    {
+        "id": "course_id",
+        "title": "Course Title",
+        "modules": [
+            {
+                "type": "reading" || "mcq" || "coding",
+                "title:" "Module Title",
+                ... (other content)
+            }
+    }
+
+2. in `index.html`, add a new list item with the ID:
+    <li><a href="#" id="load-course_id">Course Title</a></li>
+
+3. in `js/course.js`,make a new load listener, and connect everything.
+
+    const loadCourseNameBtn = document.getElementById("load-course_id");
+    loadCourseNameBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const response = await fetch("data/filename.json");
+        currentCourse = await response.json();
+        currentIndex = 0;
+        render();
+    });

@@ -1,0 +1,18 @@
+{
+  "id":  "js-101",
+  "title": "JavaScript Basics",
+  "modules": [
+    {
+      "type": "reading",
+      "title": "Variables",
+      "content": "Variables store data. Think of them as labeled boxes in your code. You can put different types of data in these boxes, such as numbers, strings, or even more complex data structures. In JavaScript, you can declare a variable using `var`, `let`, or `const`."
+    },
+    {
+      "type": "mcq",
+      "title": "Knowledge check",
+      "questions": "Which keyword declares a changeable variable?",
+      "options": ["const","let","var","int"],
+      "answer": 1
+    }
+  ]
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Novara</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/course.css">
 
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="app.js" defer></script>
@@ -23,23 +24,31 @@
 </div>
 
 <div id="app-view" class="app" style="display: none;">
-
     <aside class="sidebar">
         <h2>Menu</h2>
         <nav>
             <ul>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Lessons</a></li>
-                <li><a href="#">Settings</a></li>
+                <li><a href="#" id="load-js101">js 101</a></li>
             </ul>
         </nav>
+
+        <div class="notepad-container">
+            <h3>Scratchpad</h3>
+            <textarea id="notepad" placeholder="Write your notes here..."></textarea>
+        </div>
     </aside>
 
-    <main class="workspace">
-        <h1>editor</h1>
-    </main>
+    <main class="Workspace">
+        <div id="course-header"></div>
+        <div id="module-content"></div>
 
+        <div class="Controls">
+            <button id="ntext-btw" style="display: none;">Next</button>
+        </div>
+    </main>
 </div>
+
+<script type="module" src="js/course.js" defer></script>
 
 </body>
 </html>
