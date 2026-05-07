@@ -25,10 +25,27 @@ loadBtn.addEventListener("click", async (e) => {
 });
 
 nextBtn.addEventListener("click", () => {
+    const module = currentCourse.modules[currentIndex];
+
+    if (module.type === "mcq") {
+        const selected = document.querySelector('input[name="answer"]:checked');
+
+        if (!selected) {
+            alert("Error: No selection made.")
+            return;
+        }
+
+        if (parseInt(selected.value) !== module.answer) {
+            alert("Incorrect answer. Please try again.");}
+            return;
+        }
+    }
+
     if (currentIndex < currentCourse.modules.length - 1) {
         currentIndex++;
         render();
     } else {
+        headerDiv.innerHTML = "<h2>Status</h2>";
         contentDiv.innerHTML = "<p>Course Complete!</p>";
         nextBtn.style.display = "none";
     }
