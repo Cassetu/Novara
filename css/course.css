@@ -1,17 +1,18 @@
 :root {
-    --void: #0a0a0a;
-    --surface: #141414;
-    --text-main: #f0f0f0;
+    --void: #000000;
+    --surface: #f5f5f5;
+    --text-main: #0a0a0a;
     --text-dim: #888888;
-    --accent: #ffffff;
-    --border: #333333;
+    --accent: #000000;
+    --border: #000000;
+    --bg: #ffffff;
 }
 
 .workspace {
     flex-grow: 1;
-    background-color: var(--void);
+    background-color: var(--bg);
     color: var(--text-main);
-    padding: 50px;
+    padding: 60px;
     overflow-y: auto;
     font-family: 'Courier New', Courier, monospace;
     display: flex;
@@ -24,101 +25,128 @@
 #module-content,
 .controls {
     width: 100%;
-    max-width: 700px;
+    max-width: 680px;
+}
+
+#course-header,
+#module-content,
+.controls {
+    background-color: var(--bg);
+}
+
+.course-box {
+    width: 100%;
+    max-width: 680px;
+    border: 2px solid var(--border);
+    padding: 40px;
+    background-color: var(--bg);
 }
 
 #course-header {
     margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+    border-bottom: 1px solid #cccccc;
     text-transform: lowercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    font-size: 12px;
+    color: var(--text-dim);
 }
 
 #module-content {
-    font-size: 16px;
-    line-height: 1.8;
+    font-size: 15px;
+    line-height: 2;
     margin-bottom: 40px;
+    color: var(--text-main);
+}
+
+#module-content code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    background-color: #f0f0f0;
+    color: #000000;
+    border: 1px solid #cccccc;
+    padding: 1px 6px;
 }
 
 .notepad-container {
-    margin-top: 40px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     height: 50%;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid #cccccc;
     padding-top: 20px;
 }
 
 .controls {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 24px;
 }
 
 .notepad-container h3 {
-    margin-bottom: 15px;
-    font-size: 12px;
+    margin-bottom: 12px;
+    font-size: 10px;
     color: var(--text-dim);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
 #notepad {
     flex-grow: 1;
     resize: none;
-    padding: 15px;
-    background-color: var(--surface);
-    color: var(--accent);
-    border: 1px solid var(--border);
+    padding: 14px;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    border: 1px solid #cccccc;
     font-family: inherit;
+    font-size: 13px;
     outline: none;
+    line-height: 1.8;
 }
 
 #notepad:focus {
-    border-color: var(--accent);
+    border-color: #555555;
 }
 
-/* mcq */
 .mcq-option {
     display: block;
-    margin: 15px 0;
-    padding: 10px;
-    background-color: var(--surface);
-    border: 1px solid var(--border);
+    margin: 10px 0;
+    padding: 13px 16px;
+    background-color: var(--bg);
+    border: 1px solid #cccccc;
     color: var(--text-main);
     cursor: pointer;
-    transition: 0.2s ease;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 0.5px;
 }
 
 .mcq-option:hover {
-    border-color: var(--text-dim);
+    border-color: var(--border);
+    background-color: #f0f0f0;
 }
 
 .controls button {
     padding: 12px 30px;
-    background-color: var(--void);
+    background-color: var(--bg);
     color: var(--accent);
     border: 2px solid var(--accent);
     border-radius: 0;
     cursor: pointer;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 11px;
     font-weight: bold;
-    text-transform: lowercase;
-    letter-spacing: 2px;
-    transition: all 0.1s ease;
-    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .controls button:hover {
     background-color: var(--accent);
-    color: var(--void);
-    box-shadow: 4px 4px 0px var(--text-dim);
-    transform: translate(-2px, -2px);
+    color: var(--bg);
 }
 
 .controls button:active {
-    box-shadow: 0px 0px 0px var(--text-dim);
-    transform: translate(2px, 2px);
+    opacity: 0.7;
 }

@@ -59,7 +59,8 @@ function render() {
     nextBtn.style.display = "block";
 
     if (module.type === "reading") {
-        contentDiv.innerHTML = `<p>${module.content}</p>`;
+        const parsed = module.content.replace(/`([^`]+)`/g, '<code>$1</code>');
+        contentDiv.innerHTML = `<p>${parsed}</p>`;
     } else if (module.type === "mcq") {
         let optionsHtml = module.options.map((opt, i) => `
             <label class="mcq-option">
