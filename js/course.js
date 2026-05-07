@@ -27,7 +27,7 @@ loadBtn.addEventListener("click", async (e) => {
 nextBtn.addEventListener("click", () => {
     if (currentIndex < currentCourse.modules.length -1) {
         currentIndex++;
-        render();}
+        render();
     } else {
         contentDiv.innerHTML = "<p>Course Complete!</p>";
         nextBtn.style.display = "none";
