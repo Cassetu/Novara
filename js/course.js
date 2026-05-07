@@ -25,7 +25,7 @@ loadBtn.addEventListener("click", async (e) => {
 });
 
 nextBtn.addEventListener("click", () => {
-    if (currentIndex < currentCourse.modules.length -1) {
+    if (currentIndex < currentCourse.modules.length - 1) {
         currentIndex++;
         render();
     } else {
@@ -38,7 +38,7 @@ function render() {
     if (!currentCourse) return;
 
     const module = currentCourse.modules[currentIndex];
-    headerDiv.innerHTML = '<h2>${module.title}</h2>';
+    headerDiv.innerHTML = `<h2>${module.title}</h2>`;
     nextBtn.style.display = "block";
 
     if (module.type === "reading") {
