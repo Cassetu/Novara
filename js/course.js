@@ -36,7 +36,7 @@ nextBtn.addEventListener("click", () => {
         }
 
         if (parseInt(selected.value) !== module.answer) {
-            alert("Incorrect answer. Please try again.");}
+            alert("Incorrect answer. Please try again.");
             return;
         }
     }
