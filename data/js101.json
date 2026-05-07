@@ -10,7 +10,7 @@
     {
       "type": "mcq",
       "title": "Knowledge check",
-      "questions": "Which keyword declares a changeable variable?",
+      "question": "Which keyword declares a changeable variable?",
       "options": ["const","let","var","int"],
       "answer": 1
     }

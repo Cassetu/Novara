@@ -14,6 +14,17 @@
     padding: 50px;
     overflow-y: auto;
     font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#course-header,
+#module-content,
+.controls {
+    width: 100%;
+    max-width: 700px;
 }
 
 #course-header {
@@ -28,7 +39,6 @@
     font-size: 16px;
     line-height: 1.8;
     margin-bottom: 40px;
-    max-width: 800px;
 }
 
 .notepad-container {
@@ -38,6 +48,12 @@
     height: 50%;
     border-top: 1px solid var(--border);
     padding-top: 20px;
+}
+
+.controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
 }
 
 .notepad-container h3 {
@@ -70,6 +86,7 @@
     padding: 10px;
     background-color: var(--surface);
     border: 1px solid var(--border);
+    color: var(--text-main);
     cursor: pointer;
     transition: 0.2s ease;
 }
@@ -79,18 +96,29 @@
 }
 
 .controls button {
-    padding: 12px 24px;
-    background-color: transparent;
-    color: var(--text-main);
-    border: 1px solid var(--text-main);
+    padding: 12px 30px;
+    background-color: var(--void);
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 0;
     cursor: pointer;
     font-family: inherit;
+    font-size: 16px;
+    font-weight: bold;
     text-transform: lowercase;
-    letter-spacing: 1px;
-    transition: 0.2s ease;
+    letter-spacing: 2px;
+    transition: all 0.1s ease;
+    position: relative;
 }
 
 .controls button:hover {
-    background-color: var(--text-main);
+    background-color: var(--accent);
     color: var(--void);
+    box-shadow: 4px 4px 0px var(--text-dim);
+    transform: translate(-2px, -2px);
+}
+
+.controls button:active {
+    box-shadow: 0px 0px 0px var(--text-dim);
+    transform: translate(2px, 2px);
 }
