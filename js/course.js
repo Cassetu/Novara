@@ -155,9 +155,11 @@ async function openSyllabus(courseMeta) {
             row.className = "lesson-row";
 
             const score = userData.scores?.[safeLessonId] || 0;
+            const hasQuestions = lesson.questions && lesson.questions.length > 0;
 
             let dotsHtml = '';
-            if (lesson.type === "document") {
+
+            if (lesson.type === "challenge" || (!hasQuestions && lesson.type === "document")) {
                 dotsHtml = `<div class="rating-dot ${score >= 1 ? 'filled' : ''}"></div>`;
             } else {
                 dotsHtml = `
@@ -191,22 +193,30 @@ function shuffleArray(array) {
     return array;
 }
 
+function parseCode(str) {
+    if (!str) return "";
+    return str.replace(/`([^`]+)`/g, '<code>$1</code>');
+}
+
 function startLesson(lesson) {
     activeLessonData = JSON.parse(JSON.stringify(lesson));
 
-    if (activeLessonData.type !== "document") {
+    if (activeLessonData.questions && activeLessonData.questions.length > 0) {
         activeLessonData.questions = shuffleArray(activeLessonData.questions);
     }
 
     currentQuestionIndex = 0;
     correctAnswersCount = 0;
     questionResults = [];
+    isQuestionSubmitted = false;
 
     document.body.classList.add("lesson-active");
     switchView("view-lesson");
 
-    if (activeLessonData.type === "document") {
+    if (activeLessonData.type === "document" || activeLessonData.content) {
         renderDocument();
+    } else if (activeLessonData.type === "challenge") {
+        renderChallenge();
     } else {
         renderQuestion();
     }
@@ -214,20 +224,34 @@ function startLesson(lesson) {
 
 function renderDocument() {
     const lessonView = document.getElementById("view-lesson");
-    const formattedContent = activeLessonData.content.replace(/\n/g, "<br>");
+    const formattedContent = parseCode(activeLessonData.content).replace(/\n/g, '<br>');
+
+    let examplesHtml = "";
+    if (activeLessonData.examples && activeLessonData.examples.length > 0) {
+        examplesHtml = activeLessonData.examples.map(ex => `
+            <div style="margin-top: 25px; padding: 20px; background-color: var(--void); border: 1px solid var(--border);">
+                <strong style="color: var(--text-dim); display: block; margin-bottom: 12px; font-size: 14px;">${ex.label}</strong>
+                <div style="color: var(--surface); font-family: 'Courier New', Courier, monospace; font-size: 15px; white-space: pre-wrap; line-height: 1.5;">${parseCode(ex.code)}</div>
+            </div>
+        `).join("");
+    }
+
+    const hasQuestions = activeLessonData.questions && activeLessonData.questions.length > 0;
+    const btnText = hasQuestions ? "continue to quiz" : "mark as read";
 
     lessonView.innerHTML = `
-        <div class="lesson-workspace">
+        <div class="lesson-workspace" style="max-width: 800px;">
             <h2>${activeLessonData.title}</h2>
             <div id="module-content">
                 <p style="text-transform: none; text-align: left;">${formattedContent}</p>
+                ${examplesHtml}
             </div>
 
             <div class="lesson-footer">
                 <div class="progress-dots">
                     <div class="p-dot active"></div>
                 </div>
-                <button id="lesson-read-btn">mark as read</button>
+                <button id="lesson-read-btn">${btnText}</button>
             </div>
         </div>
     `;
@@ -235,7 +259,12 @@ function renderDocument() {
     document.getElementById("lesson-read-btn").addEventListener("click", () => {
         correctSound.currentTime = 0;
         correctSound.play();
-        finishLesson();
+
+        if (hasQuestions) {
+            renderQuestion();
+        } else {
+            finishLesson();
+        }
     });
 }
 
@@ -244,8 +273,6 @@ function renderQuestion() {
     const lessonView = document.getElementById("view-lesson");
 
     isQuestionSubmitted = false;
-
-    const parseCode = (str) => str.replace(/`([^`]+)`/g, '<code>$1</code>');
 
     let optionsHtml = qData.options.map((opt, i) => `
         <label class="mcq-option" id="opt-label-${i}">
@@ -258,7 +285,6 @@ function renderQuestion() {
         if (i === currentQuestionIndex) dotClass = "active";
         else if (questionResults[i] === true) dotClass = "correct";
         else if (questionResults[i] === false) dotClass = "incorrect";
-
         return `<div class="p-dot ${dotClass}"></div>`;
     }).join("");
 
@@ -268,6 +294,7 @@ function renderQuestion() {
             <div id="module-content">
                 <p>${parseCode(qData.q)}</p>
                 <form id="mcq-form">${optionsHtml}</form>
+                <div id="explanation-box" class="explanation-box" style="display: none;"></div>
             </div>
 
             <div class="lesson-footer">
@@ -323,6 +350,12 @@ async function handleActionClick() {
             document.getElementById(`opt-label-${qData.answer}`).classList.add("reveal-correct");
         }
 
+        if (qData.explanation) {
+            const expBox = document.getElementById("explanation-box");
+            expBox.innerHTML = `<strong>analysis:</strong> ${parseCode(qData.explanation)}`;
+            expBox.style.display = "block";
+        }
+
         const dots = document.querySelectorAll('.p-dot');
         dots[currentQuestionIndex].classList.remove('active');
         dots[currentQuestionIndex].classList.add(isCorrect ? 'correct' : 'incorrect');
@@ -340,14 +373,92 @@ async function handleActionClick() {
     }
 }
 
+function renderChallenge() {
+    const lessonView = document.getElementById("view-lesson");
+    const formattedPrompt = parseCode(activeLessonData.prompt).replace(/\n/g, '<br>');
+
+    lessonView.innerHTML = `
+        <div class="lesson-workspace" style="max-width: 900px;">
+            <h2>${activeLessonData.title}</h2>
+
+            <div class="challenge-workspace">
+                <div class="challenge-prompt">
+                    <p style="text-transform: none;">${formattedPrompt}</p>
+                </div>
+
+                <div class="challenge-editor-wrapper">
+                    <textarea id="challenge-input" class="challenge-editor" spellcheck="false" placeholder=""></textarea>
+                    <div id="challenge-console" class="challenge-console"></div>
+                </div>
+            </div>
+
+            <div class="lesson-footer" id="challenge-footer">
+                <div class="progress-dots">
+                    <div class="p-dot active"></div>
+                </div>
+                <button id="lesson-action-btn">execute</button>
+            </div>
+        </div>
+    `;
+
+    document.getElementById("lesson-action-btn").addEventListener("click", () => {
+        const input = document.getElementById("challenge-input").value;
+        const consoleOut = document.getElementById("challenge-console");
+        consoleOut.innerText = "";
+        consoleOut.style.color = "#ff4444";
+
+        let passed = true;
+
+        for (const check of activeLessonData.validation) {
+            const regex = new RegExp(check.rule);
+            if (!regex.test(input)) {
+                consoleOut.innerText = check.message;
+                incorrectSound.currentTime = 0;
+                incorrectSound.play();
+                passed = false;
+                break;
+            }
+        }
+
+        if (passed) {
+            correctSound.currentTime = 0;
+            correctSound.play();
+            finishLesson();
+        } else {
+            if (activeLessonData.solution && !document.getElementById('solution-btn')) {
+                const footer = document.getElementById('challenge-footer');
+                const solBtn = document.createElement('button');
+
+                solBtn.id = 'solution-btn';
+                solBtn.innerText = 'view solution';
+                solBtn.style.marginRight = '15px';
+                solBtn.style.backgroundColor = 'transparent';
+                solBtn.style.borderColor = 'var(--text-dim)';
+                solBtn.style.color = 'var(--text-dim)';
+
+                solBtn.addEventListener('click', () => {
+                    document.getElementById("challenge-input").value = activeLessonData.solution;
+                    consoleOut.innerText = "Solution loaded.";
+                    consoleOut.style.color = "var(--text-dim)";
+                    solBtn.remove();
+                });
+
+                footer.insertBefore(solBtn, document.getElementById('lesson-action-btn'));
+            }
+        }
+    });
+}
+
 async function finishLesson() {
     let finalScore = 0;
     let accuracyText = "";
     let ratingText = "";
 
-    if (activeLessonData.type === "document") {
+    const hasQuestions = activeLessonData.questions && activeLessonData.questions.length > 0;
+
+    if (activeLessonData.type === "challenge" || (!hasQuestions && activeLessonData.type === "document")) {
         finalScore = 1;
-        accuracyText = "reading complete";
+        accuracyText = activeLessonData.type === "challenge" ? "challenge passed" : "reading complete";
         ratingText = "rating: 1 / 1";
     } else {
         const total = activeLessonData.questions.length;

@@ -441,3 +441,20 @@ code {
     min-height: 20px;
     font-weight: bold;
 }
+
+.explanation-box {
+    margin-top: 25px;
+    padding: 15px 20px;
+    background-color: var(--surface);
+    border-left: 3px solid var(--text-dim);
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+}
+
+.explanation-box strong {
+    color: var(--text-main);
+    letter-spacing: 1px;
+    text-transform: lowercase;
+}

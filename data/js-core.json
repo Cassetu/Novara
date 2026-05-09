@@ -1,55 +1,167 @@
 {
-  "id": "js-core",
-  "title": "JavaScript Architecture: Full Stack",
+  "id": "js-core-full",
+  "title": "JavaScript: Zero to Master",
   "sections": [
     {
       "title": "Module 1: Core Memory",
       "lessons": [
         {
+          "id": "l-what-is-programming",
+          "title": "What Is a Program?",
+          "type": "document",
+          "content": "A program is a set of instructions. The computer reads them in order, from top to bottom, and does exactly what each one says.\n\nComputers do not guess. They do not interpret. If you write an instruction incorrectly, the program stops and reports an error. This is not the computer being difficult. It is the computer being precise.\n\nJavaScript is a language that lets you write those instructions in a way that is readable to humans and understandable to machines. Every browser in the world has a JavaScript engine built into it. When you open a webpage, that engine reads the JavaScript on the page and runs it.\n\nJavaScript is also used on servers, in mobile apps, and in desktop software. Learning it gives you access to almost every part of modern software development."
+        },
+        {
           "id": "l-intro-memory",
           "title": "The Concept of State",
           "type": "document",
-          "content": "A program without memory is a calculator. It processes input, returns output, and immediately forgets everything.\n\nTo build systems that track users, scores, or time, a program needs 'State'. State is data stored in your computer's short-term memory (RAM) while the program runs.\n\nIn JavaScript, we allocate this memory by declaring variables. You are reserving a microscopic physical space on a computer chip and giving it a label."
+          "content": "A program that cannot remember anything is useless for building real applications. To track a user, store a score, or hold items in a cart, a program needs memory.\n\nEngineers call this memory 'state'. State is the data your program is actively holding while it runs. It lives in your computer's RAM and disappears the moment the program stops.\n\nIn JavaScript, you create state by declaring variables. When you declare a variable, you are reserving a slot in RAM and giving it a name. Every time you need that value, you refer to it by name. Every time you want to change it, you write a new value into that slot."
         },
         {
           "id": "l-var-declaration",
           "title": "Variable Keywords",
+          "type": "document",
+          "content": "JavaScript has three keywords for declaring variables: const, let, and var.\n\nconst is short for constant. You use it when the value will never need to change after it is set. If you try to reassign a const variable, JavaScript throws a TypeError and stops execution.\n\nlet is for values that will change over time. A score that increases, a name that gets updated, a status that flips between true and false. These belong in let.\n\nvar is the old way of declaring variables, used before 2015. It has confusing rules around where it can be accessed from, which causes bugs that are hard to find. There is no reason to use var in code written today.\n\nThe practical rule: declare everything with const by default. If you find yourself needing to reassign the value, change it to let. Every let in your code then becomes a clear signal that the value is expected to change.",
+          "examples": [
+            {
+              "label": "const for values that never change",
+              "code": "const MAX_RETRIES = 3;\nconst API_URL = 'https://api.example.com';\nconst TAX_RATE = 0.08;"
+            },
+            {
+              "label": "let for values that change over time",
+              "code": "let score = 0;\nlet currentUser = null;\nlet isLoggedIn = false;\n\nscore = score + 10;\nisLoggedIn = true;"
+            }
+          ],
           "questions": [
             {
               "q": "Which keyword should you use to declare a value that will never change?",
               "options": ["`let`", "`var`", "`const`", "`static`"],
-              "answer": 2
+              "answer": 2,
+              "explanation": "const locks the variable after assignment. Reassigning it later throws a TypeError. Use it for anything that should stay fixed: configuration values, URLs, rates."
             },
             {
-              "q": "If you need a counter that goes up by one every time a user clicks, how should you declare it?",
+              "q": "If you need a counter that increases every time a user clicks, how should you declare it?",
               "options": ["`let counter = 0;`", "`const counter = 0;`", "`var counter = 0;`", "`counter === 0;`"],
-              "answer": 0
+              "answer": 0,
+              "explanation": "A counter changes over time, so let is correct. const would throw an error the moment you try to increment it. var works but is outdated. The === operator is for comparison, not declaration."
             },
             {
-              "q": "What happens if you try to redefine a `const` variable later in your code?",
-              "options": ["It silently ignores the change.", "The program crashes and throws a TypeError.", "It overwrites the old memory slot.", "It creates a duplicate variable."],
-              "answer": 1
+              "q": "What happens if you try to reassign a const variable?",
+              "options": ["It silently ignores the change.", "JavaScript throws a TypeError.", "It overwrites the old value.", "It creates a second variable with the same name."],
+              "answer": 1,
+              "explanation": "JavaScript enforces const strictly. Reassigning it crashes execution at that line with a TypeError."
+            },
+            {
+              "q": "You are storing a user's current city, which they can update in their profile settings. Which keyword do you use?",
+              "options": ["`const`", "`let`", "`var`", "`fixed`"],
+              "answer": 1,
+              "explanation": "Because the value can change when the user updates it, let is the right choice. const would prevent that update."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-init",
+          "title": "Challenge: Initialization",
+          "type": "challenge",
+          "prompt": "Declare a constant variable named engineState and assign it the string value 'online'. Terminate the statement with a semicolon.",
+          "solution": "const engineState = 'online';",
+          "validation": [
+            {
+              "rule": "const\\s+engineState",
+              "message": "error: must declare engineState using the const keyword."
+            },
+            {
+              "rule": "=\\s*(['\"])online\\1",
+              "message": "error: value must be the exact string 'online'."
+            },
+            {
+              "rule": ";",
+              "message": "error: missing semicolon."
             }
           ]
         },
         {
           "id": "l-primitive-types",
-          "title": "Primitive Data",
+          "title": "Primitive Data Types",
+          "type": "document",
+          "content": "Every value in JavaScript has a type. The type determines what kind of data the value is and what you can do with it.\n\nA string is text. You write it inside single quotes, double quotes, or backticks. Strings hold names, messages, email addresses, URLs, anything that is made of characters.\n\nA number is any numeric value. JavaScript does not separate integers from decimals. The number 5 and the number 5.7 are both just type number.\n\nA boolean is either true or false. Nothing else. Booleans are what your program uses to make decisions. Is the user logged in? Is the form valid? Is the item in stock?\n\nundefined means a variable has been declared but no value has been assigned to it yet. JavaScript sets this automatically.\n\nnull means the absence of a value was intentional. A developer writes null to say: this slot exists but it currently holds nothing. It is different from undefined, which means the slot was never filled.\n\nBigInt and Symbol are two additional primitive types used in specific advanced situations. They are not needed until you are working on specialized problems.",
+          "examples": [
+            {
+              "label": "All six primitive types",
+              "code": "const name = 'Jordan';         // string\nconst age = 24;                // number\nconst price = 9.99;            // number\nconst isActive = true;         // boolean\nlet session;                   // undefined (no value assigned)\nconst selectedColor = null;    // null (intentionally empty)"
+            }
+          ],
           "questions": [
             {
-              "q": "Which of these represents a 'String' in JavaScript?",
+              "q": "Which of these is a string?",
               "options": ["`42`", "`false`", "`'Error detected'`", "`{ id: 1 }`"],
-              "answer": 2
+              "answer": 2,
+              "explanation": "A string is text wrapped in quotes. 42 is a number. false is a boolean. { id: 1 } is an object."
             },
             {
-              "q": "What is the specific data type of `false`?",
+              "q": "What is the data type of the value false?",
               "options": ["Boolean", "String", "Undefined", "Number"],
-              "answer": 0
+              "answer": 0,
+              "explanation": "true and false are the two boolean values. They represent an on/off, yes/no state."
             },
             {
-              "q": "If you declare `let score;` but do not assign a value, what does JavaScript store in that memory slot by default?",
-              "options": ["`0`", "`null`", "`''` (empty string)", "`undefined`"],
-              "answer": 3
+              "q": "If you write `let score;` without assigning a value, what does JavaScript store in that slot?",
+              "options": ["`0`", "`null`", "`''`", "`undefined`"],
+              "answer": 3,
+              "explanation": "JavaScript automatically assigns undefined to any variable that has been declared but not given a value. It means the slot exists but has never been filled."
+            },
+            {
+              "q": "What is the difference between null and undefined?",
+              "options": ["They are the same.", "undefined is set by JavaScript automatically. null is set by a developer on purpose.", "null is set by JavaScript. undefined is set by the developer.", "null is a number. undefined is a string."],
+              "answer": 1,
+              "explanation": "undefined means a value was never assigned. null means a developer deliberately chose to leave it empty. Both represent emptiness, but one is automatic and one is intentional."
+            }
+          ]
+        },
+        {
+          "id": "l-typeof",
+          "title": "Checking Types with typeof",
+          "type": "document",
+          "content": "You can check what type a value is at any point in your program using the typeof operator. It returns a string describing the type.\n\nThis is useful when you are receiving data from somewhere external and you need to verify it is what you expect before you try to work with it.\n\nOne known quirk: typeof null returns 'object', not 'null'. This is a bug in JavaScript that dates back to 1995 and was never fixed because fixing it would break too many programs that were already relying on the incorrect behavior. You simply have to know it.",
+          "examples": [
+            {
+              "label": "Using typeof",
+              "code": "typeof 'hello'        // 'string'\ntypeof 42             // 'number'\ntypeof true           // 'boolean'\ntypeof undefined      // 'undefined'\ntypeof null           // 'object'  (known bug)\ntypeof {}             // 'object'\ntypeof function(){}   // 'function'"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does `typeof 'hello'` return?",
+              "options": ["'text'", "'string'", "'word'", "'char'"],
+              "answer": 1,
+              "explanation": "typeof returns the string 'string' for any string value."
+            },
+            {
+              "q": "What does `typeof null` return, and why is it considered a bug?",
+              "options": ["'null' — and it is not a bug.", "'object' — because null is actually an object.", "'object' — due to a 1995 implementation error that was never corrected.", "'undefined' — because null has no type."],
+              "answer": 2,
+              "explanation": "typeof null returning 'object' is widely acknowledged as a bug from JavaScript's original implementation in 1995. It was never fixed because correcting it would have broken existing code."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-types",
+          "title": "Challenge: Declare Three Types",
+          "type": "challenge",
+          "prompt": "Declare three variables: a const named appName set to the string 'Launchpad', a let named userCount set to the number 0, and a const named isLive set to the boolean false.",
+          "solution": "const appName = 'Launchpad';\nlet userCount = 0;\nconst isLive = false;",
+          "validation": [
+            {
+              "rule": "const\\s+appName\\s*=\\s*(['\"])Launchpad\\1",
+              "message": "error: appName must be a const set to the string 'Launchpad'."
+            },
+            {
+              "rule": "let\\s+userCount\\s*=\\s*0",
+              "message": "error: userCount must be a let set to 0."
+            },
+            {
+              "rule": "const\\s+isLive\\s*=\\s*false",
+              "message": "error: isLive must be a const set to false."
             }
           ]
         }
@@ -62,87 +174,296 @@
           "id": "l-intro-logic",
           "title": "Conditional Execution",
           "type": "document",
-          "content": "Code executes strictly from top to bottom. However, a rigid script is useless in the real world. A system must adapt to user input.\n\nWe introduce flexibility using conditional statements (`if`, `else`). This creates forks in the road. The engine evaluates a condition—if it resolves to `true`, it takes one path. If `false`, it takes another.\n\nThis is how you build security gates, permissions, and responsive user interfaces."
+          "content": "By default, JavaScript reads your code from top to bottom and runs every line. But most programs need to make decisions. Run this code if the user is logged in. Run that code if the password is wrong. Skip this block if the cart is empty.\n\nThis is called control flow. You control which paths through your code actually get executed based on conditions.\n\nThe primary tool for this is the if statement. You write a condition inside parentheses. If that condition is true, the code inside the curly braces runs. If the condition is false, it gets skipped entirely.\n\nYou can add an else block for code that should run when the condition is false. You can also chain multiple conditions using else if.\n\nWhen you have many specific values to check against a single variable, a switch statement is often cleaner than a long chain of else if blocks.",
+          "examples": [
+            {
+              "label": "if, else if, else",
+              "code": "const score = 74;\n\nif (score >= 90) {\n  console.log('Grade: A');\n} else if (score >= 75) {\n  console.log('Grade: B');\n} else if (score >= 60) {\n  console.log('Grade: C');\n} else {\n  console.log('Grade: F');\n}"
+            },
+            {
+              "label": "switch statement",
+              "code": "const day = 'Monday';\n\nswitch (day) {\n  case 'Monday':\n    console.log('Start of the week.');\n    break;\n  case 'Friday':\n    console.log('End of the week.');\n    break;\n  default:\n    console.log('Midweek.');\n}"
+            }
+          ]
         },
         {
           "id": "l-comparisons",
-          "title": "Evaluation Operators",
+          "title": "Comparison and Logical Operators",
+          "type": "document",
+          "content": "Conditions in JavaScript are built using comparison operators. These operators compare two values and return a boolean: either true or false.\n\nThe most important distinction to learn immediately: the difference between = and ===.\n\nA single = is the assignment operator. It puts a value into a variable. It does not compare anything.\n\nTriple === is the strict equality operator. It checks whether two values are identical in both value and data type. It returns true or false.\n\nDouble == also compares values but performs type coercion: it converts both sides to the same type before comparing. This leads to counterintuitive results. The number 0 and the empty string '' are considered equal under ==. Use === always.\n\nLogical operators let you combine multiple conditions. && means AND: both sides must be true for the whole expression to be true. || means OR: at least one side must be true. ! means NOT: it flips a boolean to its opposite.",
+          "examples": [
+            {
+              "label": "Comparison operators",
+              "code": "5 === 5        // true\n5 === '5'      // false (different types)\n5 !== 3        // true (not equal)\n10 > 4         // true\n3 <= 3         // true"
+            },
+            {
+              "label": "Logical operators",
+              "code": "const isAdmin = true;\nconst isVerified = true;\n\nif (isAdmin && isVerified) {\n  console.log('Access granted.');\n}\n\nconst hasEmail = false;\nconst hasPhone = true;\n\nif (hasEmail || hasPhone) {\n  console.log('Can receive notifications.');\n}\n\nconst isLocked = false;\nif (!isLocked) {\n  console.log('System is open.');\n}"
+            }
+          ],
           "questions": [
             {
-              "q": "Which operator checks if two values are identical in both value AND data type?",
+              "q": "Which operator checks if two values are identical in both value and data type?",
               "options": ["`==`", "`=`", "`===`", "`!==`"],
-              "answer": 2
+              "answer": 2,
+              "explanation": "=== is strict equality. It returns true only if both the value and the data type match. 5 === '5' is false because a number and a string are different types."
             },
             {
-              "q": "What is the exact difference between `=` and `==`?",
-              "options": ["They are the same.", "`=` is for text, `==` is for numbers.", "`=` assigns a value to memory, `==` compares two values.", "`=` compares values, `==` assigns values."],
-              "answer": 2
+              "q": "What is the difference between = and ===?",
+              "options": ["They are the same.", "= is for text, === is for numbers.", "= assigns a value to a variable. === compares two values.", "= compares values. === assigns values."],
+              "answer": 2,
+              "explanation": "= is the assignment operator. It stores a value. === is the comparison operator. It checks whether two values are equal. Mixing them up is one of the most common early mistakes."
             },
             {
-              "q": "Which logical operator requires BOTH conditions to be true? (e.g., The user is an admin AND the system is unlocked).",
-              "options": ["`||` (OR)", "`&&` (AND)", "`!` (NOT)", "`??` (Nullish)"],
-              "answer": 1
+              "q": "Which logical operator requires both conditions to be true?",
+              "options": ["`||`", "`&&`", "`!`", "`??`"],
+              "answer": 1,
+              "explanation": "&& is the AND operator. If either side is false, the whole expression is false. Both sides must be true for it to evaluate to true."
+            },
+            {
+              "q": "What does `!true` evaluate to?",
+              "options": ["`true`", "`false`", "`null`", "`undefined`"],
+              "answer": 1,
+              "explanation": "The ! operator flips a boolean. !true becomes false. !false becomes true. It is called the NOT operator."
+            },
+            {
+              "q": "Why should you use === instead of == in almost all cases?",
+              "options": ["=== is faster.", "== converts types before comparing, which produces unexpected results.", "=== works on numbers. == only works on strings.", "There is no practical difference."],
+              "answer": 1,
+              "explanation": "== performs type coercion before comparing, meaning 0 == '' evaluates to true. This behavior is rarely what you want and leads to hard-to-find bugs. === never converts types and is always predictable."
+            }
+          ]
+        },
+        {
+          "id": "l-truthy-falsy",
+          "title": "Truthy and Falsy Values",
+          "type": "document",
+          "content": "In JavaScript, every value has an inherent boolean quality. When used in a condition, it behaves as either true or false even if it is not actually a boolean.\n\nFalsy values are values that behave like false in a condition. There are exactly six of them: false, 0, '' (empty string), null, undefined, and NaN.\n\nEvery other value is truthy. A non-empty string is truthy. Any number other than 0 is truthy. An empty array is truthy. An empty object is truthy.\n\nThis matters because it allows you to write shorter conditions. Instead of checking if a string has a length greater than zero, you can just check if it exists.",
+          "examples": [
+            {
+              "label": "Truthy and falsy in conditions",
+              "code": "const username = '';\n\nif (username) {\n  console.log('Username is set.');\n} else {\n  console.log('No username provided.'); // runs because '' is falsy\n}\n\nconst items = ['apple', 'banana'];\n\nif (items.length) {\n  console.log('Cart has items.'); // runs because 2 is truthy\n}"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which of these values is falsy?",
+              "options": ["`[]`", "`'false'`", "`0`", "`{}`"],
+              "answer": 2,
+              "explanation": "0 is one of the six falsy values. An empty array [], the string 'false', and an empty object {} are all truthy because they exist as values."
+            },
+            {
+              "q": "You have a variable `const message = 'Hello'`. In a condition, does it behave as true or false?",
+              "options": ["False, because it was not explicitly set to true.", "True, because it is a non-empty string.", "False, because strings are not booleans.", "It throws an error."],
+              "answer": 1,
+              "explanation": "Any non-empty string is truthy. It behaves as true when used in an if condition even though it is not the boolean value true."
             }
           ]
         },
         {
           "id": "l-loops",
-          "title": "Iteration and Loops",
+          "title": "Loops and Iteration",
+          "type": "document",
+          "content": "Loops let you repeat a block of code multiple times without writing it multiple times.\n\nThe for loop is the most common. It has three parts: an initializer that sets up a counter, a condition that decides whether to keep running, and an incrementor that changes the counter after each cycle.\n\nThe while loop runs as long as a condition is true. You use it when you do not know in advance how many times you need to loop. If the condition is false from the start, the block never runs.\n\nThe do...while loop is like a while loop but with one difference: it always runs the block at least once before checking the condition.\n\nThe break keyword stops a loop immediately and jumps out of it. The continue keyword skips the rest of the current iteration and jumps to the next one.",
+          "examples": [
+            {
+              "label": "for loop",
+              "code": "for (let i = 0; i < 5; i++) {\n  console.log(i); // prints 0, 1, 2, 3, 4\n}"
+            },
+            {
+              "label": "while loop",
+              "code": "let attempts = 0;\n\nwhile (attempts < 3) {\n  console.log('Attempting connection...');\n  attempts++;\n}"
+            },
+            {
+              "label": "break and continue",
+              "code": "for (let i = 0; i < 10; i++) {\n  if (i === 3) continue; // skip 3\n  if (i === 7) break;    // stop at 7\n  console.log(i);        // prints 0,1,2,4,5,6\n}"
+            }
+          ],
           "questions": [
             {
-              "q": "Which loop is guaranteed to execute its code block at least once, even if the condition is false?",
+              "q": "Which loop is guaranteed to execute its block at least once, even if the condition is false from the start?",
               "options": ["`for`", "`while`", "`do...while`", "`forEach`"],
-              "answer": 2
+              "answer": 2,
+              "explanation": "A do...while loop runs the code block first, then checks the condition afterward. This guarantees the block runs at least one time regardless of the condition."
             },
             {
-              "q": "In a standard loop (`let i=0; i<5; i++`), what does `i++` do?",
-              "options": ["Checks the condition.", "Executes the code.", "Increments the counter by 1.", "Declares the variable."],
-              "answer": 2
+              "q": "In the loop `for (let i = 0; i < 5; i++)`, what does `i++` do?",
+              "options": ["It checks the condition.", "It runs the code block.", "It increases the counter by 1 after each iteration.", "It declares the variable."],
+              "answer": 2,
+              "explanation": "i++ is shorthand for i = i + 1. It runs at the end of each iteration to move the counter forward. Without it, the loop would run forever."
             },
             {
-              "q": "Which keyword immediately aborts a loop entirely, skipping any remaining cycles?",
+              "q": "Which keyword stops a loop entirely and jumps to the code that follows it?",
               "options": ["`stop`", "`return`", "`continue`", "`break`"],
-              "answer": 3
+              "answer": 3,
+              "explanation": "break exits the entire loop immediately. continue only skips the current iteration and moves to the next one. return exits the entire function, not just the loop."
+            },
+            {
+              "q": "You are looping through a list of orders and want to skip any order where the quantity is zero but keep processing the rest. Which keyword do you use?",
+              "options": ["`break`", "`return`", "`continue`", "`skip`"],
+              "answer": 2,
+              "explanation": "continue skips the current iteration and moves on to the next one. The loop itself keeps running. break would stop the entire loop."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-loop",
+          "title": "Challenge: Count Down",
+          "type": "challenge",
+          "prompt": "Write a for loop that starts at 5 and counts down to 1, logging each number using console.log.",
+          "solution": "for (let i = 5; i >= 1; i--) {\n  console.log(i);\n}",
+          "validation": [
+            {
+              "rule": "for\\s*\\(",
+              "message": "error: must use a for loop."
+            },
+            {
+              "rule": "i--",
+              "message": "error: counter must decrement (i--)."
+            },
+            {
+              "rule": "console\\.log",
+              "message": "error: must use console.log to output each number."
             }
           ]
         }
       ]
     },
     {
-      "title": "Module 3: Execution Engine",
+      "title": "Module 3: Execution Engine (Functions)",
       "lessons": [
         {
           "id": "l-intro-functions",
-          "title": "Reusable Architecture",
+          "title": "Why Functions Exist",
           "type": "document",
-          "content": "Copying and pasting the same block of code multiple times is an engineering failure. If you need to change how that code works later, you have to hunt down every copy and fix it manually.\n\nFunctions solve this. A function is a self-contained block of logic. You write it once, and you 'call' it whenever you need it.\n\nThink of a function like a machine: you feed it raw materials (parameters), it does the work inside its chassis, and it hands you the finished product (the return value)."
+          "content": "Imagine you need to validate a user's email address in five different places in your application. Without functions, you would write the same validation logic five times. When you find a bug in that logic, you have to fix it in five places. When requirements change, you update five places.\n\nFunctions solve this by letting you write a block of logic once and run it anywhere, as many times as needed, by calling it by name.\n\nA function is defined once using the function keyword or an arrow syntax. It can accept inputs called parameters. It does its work and optionally sends back a result using the return keyword.\n\nA function that does not have a return statement hands back undefined automatically. Every function call in JavaScript always returns something, even if that something is undefined."
         },
         {
-          "id": "l-func-mechanics",
-          "title": "Function Mechanics",
+          "id": "l-function-syntax",
+          "title": "Function Syntax",
+          "type": "document",
+          "content": "There are three common ways to write a function in JavaScript.\n\nA function declaration uses the function keyword followed by a name, parentheses for parameters, and a code block in curly braces. Function declarations are hoisted, meaning you can call them before they appear in your file.\n\nA function expression assigns an anonymous function to a variable. It is not hoisted. You must define it before you call it.\n\nAn arrow function is a shorter syntax introduced in 2015. It uses the => symbol. Arrow functions are the most common style in modern JavaScript. They have one important behavioral difference from regular functions regarding the this keyword, which becomes relevant in Module 9.",
+          "examples": [
+            {
+              "label": "Function declaration",
+              "code": "function greet(name) {\n  return 'Hello, ' + name;\n}\n\nconsole.log(greet('Sam')); // 'Hello, Sam'"
+            },
+            {
+              "label": "Function expression",
+              "code": "const greet = function(name) {\n  return 'Hello, ' + name;\n};\n\nconsole.log(greet('Sam')); // 'Hello, Sam'"
+            },
+            {
+              "label": "Arrow function",
+              "code": "const greet = (name) => {\n  return 'Hello, ' + name;\n};\n\n// Shorthand when the body is a single expression:\nconst greet = (name) => 'Hello, ' + name;\n\nconsole.log(greet('Sam')); // 'Hello, Sam'"
+            }
+          ],
           "questions": [
             {
-              "q": "If you have a function named `authenticateUser`, how do you trigger it to run?",
-              "options": ["`run authenticateUser`", "`authenticateUser()`", "`call authenticateUser;`", "`authenticateUser`"],
-              "answer": 1
+              "q": "If you have a function named validateEmail, how do you run it?",
+              "options": ["`run validateEmail`", "`validateEmail()`", "`call validateEmail;`", "`validateEmail`"],
+              "answer": 1,
+              "explanation": "A function runs when you write its name followed by parentheses. Writing the name alone without parentheses only references the function as a value — it does not execute it."
             },
             {
-              "q": "Which keyword must be used to extract the final result out of a function so the rest of your program can use it?",
+              "q": "Which keyword sends a result out of a function so the rest of the program can use it?",
               "options": ["`export`", "`output`", "`yield`", "`return`"],
-              "answer": 3
+              "answer": 3,
+              "explanation": "return exits the function and sends a value back to the point in the code where the function was called. Without return, the function hands back undefined."
             },
             {
-              "q": "If a function executes successfully but lacks a `return` statement, what value does it hand back to the system?",
+              "q": "A function runs successfully but has no return statement. What value does it hand back?",
               "options": ["`undefined`", "`0`", "`true`", "`null`"],
-              "answer": 0
+              "answer": 0,
+              "explanation": "A function without a return statement automatically returns undefined. This is JavaScript's way of saying the function completed but produced no output."
+            },
+            {
+              "q": "What is the difference between a function declaration and a function expression?",
+              "options": ["There is no difference.", "Declarations are hoisted and can be called before they appear in the file. Expressions are not hoisted.", "Expressions are hoisted. Declarations are not.", "Declarations accept parameters. Expressions do not."],
+              "answer": 1,
+              "explanation": "Function declarations are hoisted to the top of their scope during compilation, so you can call them before the line where they are written. Function expressions are not hoisted and must be defined before they are called."
+            }
+          ]
+        },
+        {
+          "id": "l-parameters",
+          "title": "Parameters and Arguments",
+          "type": "document",
+          "content": "Parameters are the names you list in a function's definition. They are placeholders for the values that will be passed in.\n\nArguments are the actual values you pass in when you call the function.\n\nIf you call a function without providing a value for a parameter, that parameter is undefined inside the function. You can protect against this by defining default parameter values. If no argument is passed, the default is used.\n\nFunctions can accept any number of parameters. When the number of inputs is not known in advance, you can use the rest parameter syntax: three dots followed by a name. This collects all extra arguments into an array.",
+          "examples": [
+            {
+              "label": "Parameters and defaults",
+              "code": "function createUser(name, role = 'viewer') {\n  return { name, role };\n}\n\ncreateUser('Alex', 'admin'); // { name: 'Alex', role: 'admin' }\ncreateUser('Sam');           // { name: 'Sam', role: 'viewer' }"
+            },
+            {
+              "label": "Rest parameters",
+              "code": "function sum(...numbers) {\n  let total = 0;\n  for (const n of numbers) {\n    total += n;\n  }\n  return total;\n}\n\nsum(1, 2, 3, 4); // 10"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What is the value of a parameter if no argument is passed and no default is set?",
+              "options": ["`null`", "`0`", "`undefined`", "`false`"],
+              "answer": 2,
+              "explanation": "If a function is called without providing a value for a parameter, that parameter is undefined inside the function body."
+            },
+            {
+              "q": "What does the rest parameter (`...args`) do?",
+              "options": ["It stops the function after a certain number of arguments.", "It collects all remaining arguments into an array.", "It sets defaults for missing arguments.", "It limits arguments to three."],
+              "answer": 1,
+              "explanation": "The rest parameter uses three dots followed by a name (such as ...args). It collects any extra arguments that were passed in and puts them into an array you can then iterate over."
             }
           ]
         },
         {
           "id": "l-scope",
-          "title": "Scope and Memory Borders",
+          "title": "Scope",
           "type": "document",
-          "content": "Scope dictates where memory can be accessed.\n\nIf you declare a variable inside a function, it is 'locally scoped'. It exists only inside that function. The moment the function finishes running, the JavaScript engine destroys that variable to free up RAM.\n\nVariables declared outside of any function are 'globally scoped' and can be seen by the entire system. Master engineers keep the global scope as clean as possible to prevent data collisions."
+          "content": "Scope is the rule that governs where in your code a variable can be accessed.\n\nA variable declared inside a function is locally scoped to that function. It cannot be accessed from outside. When the function finishes running, that variable is destroyed and its memory is freed.\n\nA variable declared outside of any function or block is globally scoped. Any part of the program can read or modify it. Global variables seem convenient but they cause problems at scale. If many different parts of a program can change the same variable, tracking down the source of an unexpected value becomes extremely difficult. Good engineers keep the global scope as empty as possible.\n\nBlock scope applies to variables declared with let and const inside any pair of curly braces. A variable declared with let inside an if block only exists for the duration of that block. var does not respect block scope, which is one of the primary reasons it was replaced.",
+          "examples": [
+            {
+              "label": "Local vs global scope",
+              "code": "const globalMessage = 'I exist everywhere.';\n\nfunction showMessage() {\n  const localMessage = 'I only exist in here.';\n  console.log(globalMessage); // works\n  console.log(localMessage);  // works\n}\n\nshowMessage();\nconsole.log(globalMessage); // works\nconsole.log(localMessage);  // ReferenceError: not defined"
+            },
+            {
+              "label": "Block scope with let",
+              "code": "if (true) {\n  let blockVariable = 'only inside this block';\n  console.log(blockVariable); // works\n}\n\nconsole.log(blockVariable); // ReferenceError: not defined"
+            }
+          ],
+          "questions": [
+            {
+              "q": "A variable is declared inside a function. Can code outside that function access it?",
+              "options": ["Yes, always.", "No. It is locally scoped and only exists inside the function.", "Only if it was declared with var.", "Only if the function has been called at least once."],
+              "answer": 1,
+              "explanation": "Variables declared inside a function are locally scoped. They are invisible to any code outside that function."
+            },
+            {
+              "q": "Which keyword does NOT respect block scope?",
+              "options": ["`let`", "`const`", "`var`", "All three respect block scope."],
+              "answer": 2,
+              "explanation": "var does not respect block scope. A var declared inside an if block is still accessible outside it. This unpredictable behavior is why var was replaced by let and const."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-function",
+          "title": "Challenge: Write a Function",
+          "type": "challenge",
+          "prompt": "Write a function called multiply that accepts two parameters, a and b, and returns their product. Use const and an arrow function.",
+          "solution": "const multiply = (a, b) => a * b;",
+          "validation": [
+            {
+              "rule": "const\\s+multiply",
+              "message": "error: must use const to declare multiply."
+            },
+            {
+              "rule": "=>",
+              "message": "error: must use arrow function syntax."
+            },
+            {
+              "rule": "a\\s*\\*\\s*b",
+              "message": "error: must return the product of a and b."
+            }
+          ]
         }
       ]
     },
@@ -151,28 +472,121 @@
       "lessons": [
         {
           "id": "l-intro-structures",
-          "title": "Organizing Complexity",
+          "title": "Why You Need Data Structures",
           "type": "document",
-          "content": "Variables are fine for single values. But what if you need to store a list of 10,000 enrolled students? You cannot write 10,000 variables.\n\nWe solve this with Data Structures. In JavaScript, the two primary structures are Arrays and Objects.\n\nAn Array is a strictly ordered list. Use it when sequence matters. An Object is a collection of labeled properties (Key-Value pairs). Use it when you need to describe a complex entity, like a user's profile."
+          "content": "A single variable holds one value. But real applications deal with collections of values: a list of users, a set of product prices, a catalog of inventory items.\n\nYou cannot create a separate variable for every item in a list of a thousand orders. You need a container that holds many values and gives you tools to work with them.\n\nJavaScript has two primary built-in data structures: Arrays and Objects.\n\nAn Array is an ordered list. The order matters. Each item sits at a numbered position called an index, starting from zero.\n\nAn Object is a collection of named properties. Instead of positions, you access values by their key. Objects are used to represent structured entities: a user, a product, a configuration."
         },
         {
-          "id": "l-arrays-objects",
-          "title": "Arrays and Objects",
+          "id": "l-arrays",
+          "title": "Arrays",
+          "type": "document",
+          "content": "An array is written as a list of values inside square brackets, separated by commas. The values can be of any type, including other arrays.\n\nEvery item in an array has an index. Indexing starts at zero, not one. The first item is at index 0, the second at index 1, and so on. You access an item by writing the array name followed by the index in square brackets.\n\nThe length property tells you how many items are in the array.\n\nArrays have built-in methods for adding and removing items. push adds an item to the end. pop removes and returns the last item. unshift adds an item to the front. shift removes and returns the first item.\n\nTo check whether something is an array, use Array.isArray(). The typeof operator returns 'object' for arrays, which is not useful.",
+          "examples": [
+            {
+              "label": "Creating and accessing arrays",
+              "code": "const colors = ['red', 'green', 'blue'];\n\nconsole.log(colors[0]);      // 'red'\nconsole.log(colors[2]);      // 'blue'\nconsole.log(colors.length);  // 3"
+            },
+            {
+              "label": "Modifying arrays",
+              "code": "const items = ['a', 'b', 'c'];\n\nitems.push('d');     // ['a', 'b', 'c', 'd']\nitems.pop();         // removes 'd', returns 'd'\nitems.unshift('z');  // ['z', 'a', 'b', 'c']\nitems.shift();       // removes 'z', returns 'z'"
+            },
+            {
+              "label": "Looping through an array",
+              "code": "const scores = [82, 91, 76, 88];\n\nfor (const score of scores) {\n  console.log(score);\n}\n\n// for...of is the cleanest way to iterate an array"
+            }
+          ],
           "questions": [
             {
-              "q": "How do you access the very first item in an Array named `records`?",
-              "options": ["`records.first`", "`records[0]`", "`records[1]`", "`records(0)`"],
-              "answer": 1
+              "q": "How do you access the first item in an array named `orders`?",
+              "options": ["`orders.first`", "`orders[0]`", "`orders[1]`", "`orders(0)`"],
+              "answer": 1,
+              "explanation": "Array indexing starts at zero. The first item is always at index 0, accessed with square bracket notation: orders[0]."
             },
             {
-              "q": "Which array method pushes a new item onto the absolute end of the list?",
+              "q": "Which method adds a new item to the end of an array?",
               "options": ["`unshift()`", "`append()`", "`pop()`", "`push()`"],
-              "answer": 3
+              "answer": 3,
+              "explanation": "push adds one or more items to the end of an array. pop removes the last item. unshift adds to the front. shift removes from the front."
             },
             {
-              "q": "If you have an Object named `user`, how do you read its `email` property?",
+              "q": "You have an array with 5 items. What is the index of the last item?",
+              "options": ["5", "4", "0", "It depends on the values."],
+              "answer": 1,
+              "explanation": "Indexes start at 0, so an array with 5 items has indexes 0 through 4. The last item is always at index length - 1."
+            }
+          ]
+        },
+        {
+          "id": "l-objects",
+          "title": "Objects",
+          "type": "document",
+          "content": "An object groups related data under named keys. Where an array stores a list of values at numbered positions, an object stores values at named positions called properties.\n\nYou write an object with curly braces. Inside, each entry is a key-value pair separated by a colon. Pairs are separated by commas.\n\nYou access properties using dot notation: object.property. You can also use bracket notation when the key is dynamic or stored in a variable: object['property'].\n\nYou can add new properties to an object at any time by assigning to them. You can delete a property using the delete keyword.\n\nThe for...in loop iterates over the keys of an object. The Object.keys() method returns an array of all keys. Object.values() returns an array of all values. Object.entries() returns an array of key-value pairs.",
+          "examples": [
+            {
+              "label": "Creating and accessing objects",
+              "code": "const user = {\n  name: 'Jordan',\n  age: 24,\n  email: 'jordan@example.com',\n  isAdmin: false\n};\n\nconsole.log(user.name);      // 'Jordan'\nconsole.log(user['email']);  // 'jordan@example.com'"
+            },
+            {
+              "label": "Modifying objects",
+              "code": "user.age = 25;           // update\nuser.city = 'Austin';    // add new property\ndelete user.isAdmin;     // remove property"
+            },
+            {
+              "label": "Iterating over an object",
+              "code": "const settings = { theme: 'dark', language: 'en', notifications: true };\n\nfor (const key in settings) {\n  console.log(key + ': ' + settings[key]);\n}"
+            }
+          ],
+          "questions": [
+            {
+              "q": "How do you read the `email` property of an object named `user`?",
               "options": ["`user[email]`", "`user.email`", "`user->email`", "`user:email`"],
-              "answer": 1
+              "answer": 1,
+              "explanation": "Dot notation is the standard way to access an object property: user.email. Bracket notation is user['email'] and is used when the property name is dynamic."
+            },
+            {
+              "q": "You want to add a new property `lastLogin` to an existing object named `session`. How do you do it?",
+              "options": ["`session.push('lastLogin')`", "`session.lastLogin = Date.now()`", "`session.add('lastLogin')`", "`session['add']['lastLogin']`"],
+              "answer": 1,
+              "explanation": "You add a new property to an object simply by assigning to it with dot notation. If the property does not exist, JavaScript creates it."
+            },
+            {
+              "q": "Which method returns an array of all the keys in an object?",
+              "options": ["`Object.values()`", "`Object.list()`", "`Object.keys()`", "`Object.entries()`"],
+              "answer": 2,
+              "explanation": "Object.keys(obj) returns an array of all the property names (keys) in an object. Object.values() returns the values. Object.entries() returns both as nested arrays."
+            }
+          ]
+        },
+        {
+          "id": "l-destructuring",
+          "title": "Destructuring and Spread",
+          "type": "document",
+          "content": "Destructuring is a shorthand that lets you pull multiple values out of an array or object in a single line.\n\nFor objects, you write the property names in curly braces on the left side of an assignment. JavaScript finds those properties and assigns them to local variables with the same names. You can rename them by adding a colon and the new name.\n\nFor arrays, you use square brackets on the left side and the variables receive values based on position.\n\nThe spread operator (...) takes the contents of an array or object and spreads them into a new one. It is the standard way to copy an array or object without pointing to the same reference in memory.",
+          "examples": [
+            {
+              "label": "Object destructuring",
+              "code": "const user = { name: 'Alex', age: 30, city: 'Denver' };\n\nconst { name, age } = user;\nconsole.log(name); // 'Alex'\nconsole.log(age);  // 30\n\n// Rename on destructure:\nconst { name: username } = user;\nconsole.log(username); // 'Alex'"
+            },
+            {
+              "label": "Array destructuring",
+              "code": "const coordinates = [40.71, -74.00];\nconst [latitude, longitude] = coordinates;\n\nconsole.log(latitude);  // 40.71\nconsole.log(longitude); // -74.00"
+            },
+            {
+              "label": "Spread operator",
+              "code": "const a = [1, 2, 3];\nconst b = [...a, 4, 5]; // [1, 2, 3, 4, 5]\n\nconst original = { x: 1, y: 2 };\nconst copy = { ...original, z: 3 }; // { x: 1, y: 2, z: 3 }"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does `const { name, email } = user;` do?",
+              "options": ["It creates a new object with only name and email.", "It extracts the name and email properties from user into separate variables.", "It deletes name and email from user.", "It checks whether name and email exist."],
+              "answer": 1,
+              "explanation": "This is destructuring. It reads the name and email properties from the user object and assigns them to local variables called name and email."
+            },
+            {
+              "q": "What does the spread operator (...) do when used with an array?",
+              "options": ["It deletes all items.", "It reverses the array.", "It expands the array's items into a new location.", "It converts the array to a string."],
+              "answer": 2,
+              "explanation": "The spread operator takes all items from an array and places them into the new array or function call. It is the idiomatic way to copy or merge arrays without mutating the original."
             }
           ]
         }
@@ -183,28 +597,111 @@
       "lessons": [
         {
           "id": "l-intro-dom",
-          "title": "Bridging Logic and Pixels",
+          "title": "What the DOM Is",
           "type": "document",
-          "content": "JavaScript running in a vacuum is invisible. To make an app interactive, JavaScript must talk to the HTML.\n\nWhen a browser loads a webpage, it converts the HTML into a tree of data called the Document Object Model (DOM). JavaScript can select branches of this tree, read their data, change their colors, or destroy them entirely.\n\nBy attaching 'Event Listeners' to these branches, JavaScript can wait for a user to click, type, or scroll, and instantly react."
+          "content": "When a browser loads an HTML file, it does not just display the text. It parses every tag and builds an internal data structure called the Document Object Model, or DOM. The DOM is a tree where every HTML element is a node.\n\nJavaScript can access this tree through a global object called document. You can select any element, read its contents, change its text, add or remove CSS classes, create new elements, or delete existing ones entirely.\n\nThis is how JavaScript makes a webpage interactive. Without DOM access, JavaScript runs in complete isolation from what the user sees. DOM manipulation is the bridge between your logic and the user's screen."
+        },
+        {
+          "id": "l-selecting-elements",
+          "title": "Selecting and Reading Elements",
+          "type": "document",
+          "content": "To work with an HTML element in JavaScript, you first need to select it. The modern standard is document.querySelector(), which accepts any valid CSS selector and returns the first matching element.\n\ndocument.querySelectorAll() returns all matching elements as a NodeList, which you can loop through.\n\nOnce you have a reference to an element, you can read or modify its properties:\n\ntextContent reads or sets the text inside an element, stripping any HTML tags.\n\ninnerHTML reads or sets the full HTML content inside an element. It is powerful but be cautious: setting innerHTML with user-provided data is a security risk called XSS (Cross-Site Scripting).\n\nvalue reads or sets the current value of form inputs, textareas, and selects.",
+          "examples": [
+            {
+              "label": "Selecting elements",
+              "code": "const title = document.querySelector('h1');\nconst button = document.querySelector('#submit-btn');\nconst cards = document.querySelectorAll('.card');"
+            },
+            {
+              "label": "Reading and writing content",
+              "code": "const heading = document.querySelector('h1');\n\nconsole.log(heading.textContent); // reads current text\nheading.textContent = 'New Title'; // updates it\n\nconst input = document.querySelector('#username');\nconsole.log(input.value); // reads the typed value"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which method is the modern standard for finding an HTML element by its CSS selector?",
+              "options": ["`document.findElement()`", "`document.querySelector()`", "`document.search()`", "`document.getElement()`"],
+              "answer": 1,
+              "explanation": "document.querySelector() accepts any valid CSS selector and returns the first matching element. It replaced older methods like getElementById and getElementsByClassName."
+            },
+            {
+              "q": "What is the difference between textContent and innerHTML?",
+              "options": ["They are the same.", "textContent only works on headings. innerHTML works on all elements.", "textContent reads or sets plain text. innerHTML reads or sets HTML including tags.", "innerHTML is read-only. textContent can be written."],
+              "answer": 2,
+              "explanation": "textContent treats the content as plain text. innerHTML interprets it as HTML, so you can inject tags. Setting innerHTML with untrusted data is a security vulnerability."
+            }
+          ]
+        },
+        {
+          "id": "l-events",
+          "title": "Event Listeners",
+          "type": "document",
+          "content": "An event listener tells JavaScript to watch an element and run a function whenever a specific thing happens to it.\n\nYou attach one using addEventListener. The first argument is the event type as a string. The second argument is the function to run when the event fires. That function is called an event handler or callback.\n\nThe callback automatically receives an event object as its first argument. This object contains details about what happened: which key was pressed, where the mouse was, which element was clicked, and so on.\n\nCommon events include: click, submit, input, change, keydown, keyup, mouseover, and scroll.\n\nFor form submissions, it is important to call event.preventDefault() inside the handler. Without it, the browser will reload the page, which is the default browser behavior for form submission.",
+          "examples": [
+            {
+              "label": "Click event",
+              "code": "const button = document.querySelector('#launch-btn');\n\nbutton.addEventListener('click', function(event) {\n  console.log('Button clicked');\n  console.log(event.target); // the element that was clicked\n});"
+            },
+            {
+              "label": "Form submission",
+              "code": "const form = document.querySelector('form');\n\nform.addEventListener('submit', function(event) {\n  event.preventDefault(); // stop the page from reloading\n\n  const input = document.querySelector('#email');\n  console.log('Submitted email:', input.value);\n});"
+            },
+            {
+              "label": "Input event",
+              "code": "const searchField = document.querySelector('#search');\n\nsearchField.addEventListener('input', function(event) {\n  console.log('Current value:', event.target.value);\n});"
+            }
+          ],
+          "questions": [
+            {
+              "q": "How do you listen for a click on a button stored in the variable `submitBtn`?",
+              "options": ["`submitBtn.onClick(...)`", "`submitBtn.listen('click', ...)`", "`submitBtn.addEventListener('click', ...)`", "`submitBtn.trigger('click')`"],
+              "answer": 2,
+              "explanation": "addEventListener is the standard method for attaching event listeners. The first argument is the event name as a string. The second is the function to call when it fires."
+            },
+            {
+              "q": "Why do you call event.preventDefault() inside a form submission handler?",
+              "options": ["To delete the form from the page.", "To stop the browser from reloading the page, which is its default behavior on form submit.", "To prevent the user from typing in the form.", "To reset the form fields to empty."],
+              "answer": 1,
+              "explanation": "The browser's default action when a form is submitted is to navigate to the form's action URL, which reloads the page. event.preventDefault() cancels that default, letting JavaScript handle the submission instead."
+            },
+            {
+              "q": "What object does the event callback function automatically receive as its first argument?",
+              "options": ["The element that was clicked.", "The entire document.", "An event object containing details about what happened.", "The window object."],
+              "answer": 2,
+              "explanation": "JavaScript automatically passes an Event object to the callback. It contains information about the event: which element triggered it (event.target), what type of event it was, key codes for keyboard events, and more."
+            }
+          ]
         },
         {
           "id": "l-dom-manipulation",
-          "title": "DOM Manipulation",
+          "title": "Modifying the DOM",
+          "type": "document",
+          "content": "You can create entirely new elements using document.createElement(). This creates an element in memory but does not add it to the page yet.\n\nTo add it to the page, you select an existing element and call appendChild() or insertAdjacentElement() on it to place the new element in the correct position.\n\nYou can remove an element by calling remove() on it directly, or by calling removeChild() on its parent.\n\nFor styling, you can add or remove CSS classes using element.classList. It has methods: add, remove, toggle, and contains. Manipulating classes is preferred over directly setting inline styles, because it keeps your styling in CSS files where it belongs.",
+          "examples": [
+            {
+              "label": "Creating and inserting elements",
+              "code": "const list = document.querySelector('#user-list');\n\nconst item = document.createElement('li');\nitem.textContent = 'New User';\n\nlist.appendChild(item);"
+            },
+            {
+              "label": "Removing elements",
+              "code": "const card = document.querySelector('.notification-card');\ncard.remove();"
+            },
+            {
+              "label": "Modifying classes",
+              "code": "const panel = document.querySelector('.panel');\n\npanel.classList.add('active');\npanel.classList.remove('hidden');\npanel.classList.toggle('expanded'); // adds if absent, removes if present\nconsole.log(panel.classList.contains('active')); // true"
+            }
+          ],
           "questions": [
             {
-              "q": "Which method is the modern standard for finding an HTML element using its CSS class or ID?",
-              "options": ["`document.findElement()`", "`document.querySelector()`", "`document.search()`", "`document.grab()`"],
-              "answer": 1
+              "q": "Which method creates a new HTML element in memory?",
+              "options": ["`document.newElement()`", "`document.createElement()`", "`document.buildElement()`", "`document.make()`"],
+              "answer": 1,
+              "explanation": "document.createElement() takes a tag name as a string (such as 'div', 'li', 'p') and returns a new element. It exists only in memory until you append it to an element in the document."
             },
             {
-              "q": "How do you listen for a user clicking on a button stored in a variable named `submitBtn`?",
-              "options": ["`submitBtn.onClick(...)`", "`submitBtn.listen('click', ...)`", "`submitBtn.addEventListener('click', ...)`", "`submitBtn.trigger('click')`"],
-              "answer": 2
-            },
-            {
-              "q": "Which property allows you to completely replace the text and HTML inside a selected `div`?",
-              "options": ["`.innerHTML`", "`value`", "`.textContent`", "`.htmlContent`"],
-              "answer": 0
+              "q": "What does classList.toggle() do?",
+              "options": ["It switches between two different classes.", "It adds the class if it is absent, and removes it if it is present.", "It removes all classes from the element.", "It converts class names to lowercase."],
+              "answer": 1,
+              "explanation": "classList.toggle() is convenient for features like opening and closing menus. It adds the class if the element does not have it, and removes it if the element already has it."
             }
           ]
         }
@@ -215,28 +712,92 @@
       "lessons": [
         {
           "id": "l-intro-async",
-          "title": "The Single Thread",
+          "title": "The Single Thread Problem",
           "type": "document",
-          "content": "JavaScript is 'single-threaded'. It has only one worker. It can only do one task at a time.\n\nIf your code asks a server for a heavy database file, and that takes 5 seconds, the entire website will freeze. The user won't even be able to click a button.\n\nWe solve this with 'Asynchronous' code. When JavaScript hits a slow task, it hands the task off to the browser in the background, and continues executing the rest of your code. When the background task finishes, it taps JavaScript on the shoulder with a 'Promise'."
+          "content": "JavaScript is single-threaded. It has one worker and a single list of tasks. It can only do one thing at a time.\n\nThis creates a real problem. When your code asks a server for data, that network request might take two seconds. If JavaScript waited for it — doing nothing else — your entire page would be completely frozen for those two seconds. The user could not scroll. Could not click. Could not type.\n\nThe solution is asynchronous execution. When JavaScript encounters a slow task, it hands that task off to the browser's background environment and continues running the rest of your code. When the background task finishes, it notifies JavaScript, which then runs the completion code.\n\nThe main tools for this in modern JavaScript are Promises and the async/await syntax, which is built on top of Promises."
         },
         {
-          "id": "l-promises-async",
-          "title": "Promises and Await",
+          "id": "l-promises",
+          "title": "Promises",
+          "type": "document",
+          "content": "A Promise is an object that represents a value that does not exist yet but will exist at some point in the future.\n\nA Promise has three possible states: pending (the work is still in progress), fulfilled (the work succeeded and a value is available), or rejected (something went wrong).\n\nYou chain .then() onto a Promise to run code when it fulfills. You chain .catch() to run code when it rejects. You can chain .finally() to run code regardless of whether it fulfilled or rejected.\n\nPromises replaced an older pattern called callbacks. Nested callbacks became extremely hard to read and maintain. The community called this callback hell. Promises made the code linear and readable again.",
+          "examples": [
+            {
+              "label": "Creating and using a Promise",
+              "code": "const fetchData = new Promise((resolve, reject) => {\n  const success = true;\n\n  if (success) {\n    resolve({ id: 1, name: 'Alex' });\n  } else {\n    reject(new Error('Could not load data.'));\n  }\n});\n\nfetchData\n  .then(data => console.log(data))\n  .catch(err => console.error(err.message))\n  .finally(() => console.log('Done.'));"
+            }
+          ],
           "questions": [
             {
-              "q": "What object represents the eventual completion (or failure) of an asynchronous operation?",
-              "options": ["A Callback", "A Thread", "A Promise", "A Timeout"],
-              "answer": 2
+              "q": "What object represents an asynchronous operation that will complete at some point in the future?",
+              "options": ["A Callback", "A Thread", "A Promise", "A Timer"],
+              "answer": 2,
+              "explanation": "A Promise is an object that wraps a value that is not available yet. When the operation succeeds, the Promise fulfills with that value. When it fails, it rejects with an error."
             },
+            {
+              "q": "Which method do you chain onto a Promise to handle a failure?",
+              "options": ["`then()`", "`fail()`", "`catch()`", "`reject()`"],
+              "answer": 2,
+              "explanation": ".catch() receives the error object when a Promise rejects. It is where you write error handling: logging, showing a message, retrying."
+            },
+            {
+              "q": "What are the three possible states of a Promise?",
+              "options": ["loading, success, error", "pending, fulfilled, rejected", "waiting, complete, failed", "inactive, active, closed"],
+              "answer": 1,
+              "explanation": "A Promise starts as pending. It becomes fulfilled when the operation succeeds, or rejected when something goes wrong. Once it settles (either fulfilled or rejected), it never changes state again."
+            }
+          ]
+        },
+        {
+          "id": "l-async-await",
+          "title": "Async and Await",
+          "type": "document",
+          "content": "Async/await is syntax built on top of Promises that makes asynchronous code read like synchronous code. It is the standard way to write asynchronous JavaScript today.\n\nThe async keyword goes in front of a function declaration. It tells JavaScript that this function contains asynchronous operations and will automatically return a Promise.\n\nThe await keyword pauses execution inside the async function until the Promise it is waiting on either fulfills or rejects. While it pauses, the rest of the program outside the function continues running normally.\n\nYou can only use await inside a function marked as async.\n\nError handling with async/await uses try/catch. You wrap your await calls in a try block. If any awaited Promise rejects, execution jumps to the catch block.",
+          "examples": [
+            {
+              "label": "Async function with error handling",
+              "code": "async function loadUser(userId) {\n  try {\n    const response = await fetch('/api/users/' + userId);\n    const user = await response.json();\n    return user;\n  } catch (error) {\n    console.error('Failed to load user:', error.message);\n    return null;\n  }\n}\n\nloadUser(42).then(user => console.log(user));"
+            }
+          ],
+          "questions": [
             {
               "q": "To pause execution inside a function until a Promise resolves, which keyword do you use?",
               "options": ["`pause`", "`halt`", "`yield`", "`await`"],
-              "answer": 3
+              "answer": 3,
+              "explanation": "await suspends execution at that point inside the async function until the Promise settles. The rest of the program outside the function is not blocked."
             },
             {
-              "q": "If you want to use the `await` keyword, what MUST you put in front of the function declaration?",
+              "q": "What must you place in front of a function declaration to use await inside it?",
               "options": ["`defer`", "`async`", "`promise`", "`background`"],
-              "answer": 1
+              "answer": 1,
+              "explanation": "A function must be declared with async to use await inside it. The async keyword also means the function automatically returns a Promise."
+            },
+            {
+              "q": "If an awaited Promise rejects inside an async function, where does execution go?",
+              "options": ["It crashes the entire program.", "It skips to the next await statement.", "It jumps to the catch block if one is present.", "It retries the await automatically."],
+              "answer": 2,
+              "explanation": "A rejected Promise inside a try block causes execution to jump immediately to the catch block, where you can handle the error gracefully."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-async",
+          "title": "Challenge: Async Function",
+          "type": "challenge",
+          "prompt": "Write an async function called getData that awaits a Promise called fetchRecords and stores the result in a const named records, then returns records.",
+          "solution": "const getData = async () => {\n  const records = await fetchRecords;\n  return records;\n};",
+          "validation": [
+            {
+              "rule": "async",
+              "message": "error: function must be declared async."
+            },
+            {
+              "rule": "await",
+              "message": "error: must use await."
+            },
+            {
+              "rule": "return\\s+records",
+              "message": "error: must return records."
             }
           ]
         }
@@ -247,28 +808,75 @@
       "lessons": [
         {
           "id": "l-intro-network",
-          "title": "The Fetch API",
+          "title": "How Apps Get Data",
           "type": "document",
-          "content": "Modern applications do not hardcode their data. They retrieve it dynamically from databases across the world using APIs (Application Programming Interfaces).\n\nIn JavaScript, we make these network requests using the `fetch()` function. \n\nBecause network speed is entirely unpredictable, `fetch()` is inherently asynchronous. It returns a Promise. You must `await` the server's response, and then you must parse that raw text response into usable JavaScript Objects, usually via JSON."
+          "content": "Modern applications almost never store all their data inside the application itself. Instead, they request data from external servers over the internet using an API: an Application Programming Interface.\n\nAn API is a contract between a server and a client. The server says: send me a request formatted this way, and I will send back data formatted that way. The client does not need to know how the server works internally. It only needs to know the contract.\n\nThe most common format for that contract is HTTP, and the most common data format returned is JSON: JavaScript Object Notation. JSON looks almost identical to a JavaScript object literal but it is just text, which means any language can read it.\n\nIn JavaScript, you make these network requests using the built-in fetch() function."
         },
         {
-          "id": "l-fetch-json",
-          "title": "APIs and JSON",
-          "questions": [
+          "id": "l-fetch",
+          "title": "The Fetch API",
+          "type": "document",
+          "content": "fetch() accepts a URL and returns a Promise. When the server responds, the Promise fulfills with a Response object.\n\nThe Response object is not yet the data you want. It is a wrapper around the raw HTTP response. You call .json() on it to parse the body into a JavaScript object. That method also returns a Promise, so you await it as well.\n\nYou can make different types of requests by passing an options object as the second argument. GET requests retrieve data. POST requests send new data. PUT and PATCH update existing data. DELETE removes it.\n\nAlways use try/catch with fetch. Networks fail. Servers go down. Timeouts happen. If you do not handle the error, the crash will reach the user.",
+          "examples": [
             {
-              "q": "Which function natively makes HTTP requests to external servers in modern JavaScript?",
-              "options": ["`request()`", "`ajax()`", "`get()`", "`fetch()`"],
-              "answer": 3
+              "label": "Basic GET request",
+              "code": "async function getUser(id) {\n  try {\n    const response = await fetch('https://api.example.com/users/' + id);\n    const user = await response.json();\n    return user;\n  } catch (error) {\n    console.error('Request failed:', error.message);\n    return null;\n  }\n}"
             },
             {
-              "q": "After fetching data from a modern API, which method is typically used to parse the raw response into a JavaScript object?",
-              "options": ["`.toJson()`", "`.json()`", "`.parseData()`", "`.toObject()`"],
-              "answer": 1
+              "label": "POST request — sending data",
+              "code": "async function createUser(userData) {\n  try {\n    const response = await fetch('https://api.example.com/users', {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify(userData)\n    });\n    const newUser = await response.json();\n    return newUser;\n  } catch (error) {\n    console.error('Failed to create user:', error.message);\n  }\n}"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which function makes HTTP requests to external servers in modern JavaScript?",
+              "options": ["`request()`", "`ajax()`", "`get()`", "`fetch()`"],
+              "answer": 3,
+              "explanation": "fetch() is the modern built-in function for making HTTP requests. It returns a Promise that resolves to a Response object."
+            },
+            {
+              "q": "After a fetch request completes, which method parses the raw response body into a JavaScript object?",
+              "options": ["`toJson()`", "`.json()`", "`.parseData()`", "`.toObject()`"],
+              "answer": 1,
+              "explanation": ".json() is called on the Response object. It reads the response body, parses it as JSON, and returns a Promise that resolves to the resulting JavaScript object."
             },
             {
               "q": "What does JSON stand for?",
-              "options": ["JavaScript Object Notation", "Java Syntax Operator Network", "JavaScript Output Node", "Joined String Object Notation"],
-              "answer": 0
+              "options": ["JavaScript Object Notation", "Java Syntax Operator Network", "JavaScript Output Node", "Joined Structured Object Notation"],
+              "answer": 0,
+              "explanation": "JSON stands for JavaScript Object Notation. It is a text format for representing structured data that is readable by both humans and machines in any programming language."
+            },
+            {
+              "q": "To send data to a server with fetch, which HTTP method do you typically use?",
+              "options": ["GET", "POST", "FETCH", "SEND"],
+              "answer": 1,
+              "explanation": "POST is used to send new data to a server. GET retrieves data. You specify the method in the options object passed as the second argument to fetch()."
+            }
+          ]
+        },
+        {
+          "id": "l-json",
+          "title": "Working with JSON",
+          "type": "document",
+          "content": "JSON is just text. It is not a JavaScript object. It cannot have methods. It cannot have undefined values. Keys must be wrapped in double quotes.\n\nJavaScript gives you two functions for working with JSON.\n\nJSON.stringify() converts a JavaScript object into a JSON string. You use this when sending data to a server, because the network transmits text, not live JavaScript objects.\n\nJSON.parse() converts a JSON string back into a JavaScript object. You use this when you receive JSON text and want to work with it as a real object.\n\nfetch's .json() method calls JSON.parse() for you. But you will need JSON.stringify() and JSON.parse() frequently in other situations: storing data in localStorage, logging, or passing data between systems.",
+          "examples": [
+            {
+              "label": "JSON.stringify and JSON.parse",
+              "code": "const user = { name: 'Alex', age: 30 };\n\nconst jsonString = JSON.stringify(user);\nconsole.log(jsonString);        // '{\"name\":\"Alex\",\"age\":30}'\nconsole.log(typeof jsonString); // 'string'\n\nconst parsed = JSON.parse(jsonString);\nconsole.log(parsed.name);       // 'Alex'\nconsole.log(typeof parsed);     // 'object'"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which method converts a JavaScript object into a JSON string?",
+              "options": ["`JSON.parse()`", "`JSON.stringify()`", "`JSON.convert()`", "`JSON.encode()`"],
+              "answer": 1,
+              "explanation": "JSON.stringify() takes a JavaScript object and converts it to a JSON-formatted string. This is required when sending data over a network or saving it as text."
+            },
+            {
+              "q": "You receive a JSON string from a server and want to access its properties. What do you do?",
+              "options": ["Access it directly with dot notation.", "Wrap it in quotes.", "Pass it through JSON.parse() first.", "Pass it through JSON.stringify() first."],
+              "answer": 2,
+              "explanation": "A JSON string is just text. You must call JSON.parse() on it to convert it into a JavaScript object before you can access its properties."
             }
           ]
         }
@@ -279,92 +887,290 @@
       "lessons": [
         {
           "id": "l-intro-functional",
-          "title": "Declarative Architecture",
+          "title": "Higher-Order Array Methods",
           "type": "document",
-          "content": "Standard `for` loops are manual labor. They require you to set up counters, manage length logic, and manually push data into new arrays.\n\nMaster engineers use 'Higher Order Array Methods' like `.map()`, `.filter()`, and `.reduce()`. These are declarative. You do not tell the computer *how* to iterate; you simply tell it *what* you want the final data to look like.\n\nThis leads to code that is vastly easier to read, test, and debug."
+          "content": "A higher-order function is a function that takes another function as an argument. In JavaScript, arrays have several built-in higher-order methods that let you transform data without writing manual loops.\n\nWith a for loop, you tell the computer exactly how to do the work: set up a counter, increment it, check the length, push items into a new array. This is called imperative code.\n\nWith methods like map, filter, and reduce, you describe what you want the result to look like. You do not manage counters or indices. This is called declarative code. It is shorter, easier to read, and harder to make mistakes with.\n\nThese methods do not modify the original array. They return new arrays or values, which makes them safe to use without worrying about unintended side effects on your original data."
         },
         {
-          "id": "l-higher-order",
-          "title": "Map, Filter, Reduce",
+          "id": "l-map",
+          "title": "map()",
+          "type": "document",
+          "content": "map() transforms every item in an array and returns a new array of the same length. You pass it a function that receives each item and returns a new value.\n\nThe original array is not changed. map always returns a new array with exactly as many items as the original.",
+          "examples": [
+            {
+              "label": "Transform each item",
+              "code": "const prices = [10, 20, 30];\nconst discounted = prices.map(price => price * 0.9);\nconsole.log(discounted); // [9, 18, 27]\nconsole.log(prices);     // [10, 20, 30] — unchanged"
+            },
+            {
+              "label": "Transform an array of objects",
+              "code": "const users = [\n  { name: 'Alex', active: true },\n  { name: 'Sam', active: false }\n];\n\nconst names = users.map(user => user.name);\nconsole.log(names); // ['Alex', 'Sam']"
+            }
+          ],
           "questions": [
             {
-              "q": "Which array method takes an original array, transforms every item in it, and returns a brand new array of the exact same length?",
-              "options": ["`.forEach()`", "`.map()`", "`.reduce()`", "`.filter()`"],
-              "answer": 1
+              "q": "Which array method transforms every item and returns a new array of the same length?",
+              "options": ["`forEach()`", "`map()`", "`reduce()`", "`filter()`"],
+              "answer": 1,
+              "explanation": "map() iterates every item, applies your transformation function, and builds a new array from the results. It always returns the same number of items as the input."
             },
             {
-              "q": "If you have an array of 100 users, and you only want an array of users who are older than 18, which method should you use?",
-              "options": ["`.map()`", "`.slice()`", "`.filter()`", "`.splice()`"],
-              "answer": 2
+              "q": "Does map() modify the original array?",
+              "options": ["Yes, it modifies in place.", "No, it returns a new array.", "Only if you use const.", "Only if the array contains objects."],
+              "answer": 1,
+              "explanation": "map() never modifies the original array. It always returns a brand new array containing the transformed values."
+            }
+          ]
+        },
+        {
+          "id": "l-filter",
+          "title": "filter()",
+          "type": "document",
+          "content": "filter() returns a new array containing only the items for which your test function returns true. Items where your function returns false are left out.\n\nThe returned array will have fewer items than the original unless every item passes the test. Your test function must return a boolean (or a truthy/falsy value).",
+          "examples": [
+            {
+              "label": "Filter by condition",
+              "code": "const ages = [14, 22, 17, 31, 16, 25];\nconst adults = ages.filter(age => age >= 18);\nconsole.log(adults); // [22, 31, 25]"
             },
             {
-              "q": "Which method iterates through an array and collapses all of its values down into a single final output (like a sum or total)?",
-              "options": ["`.collapse()`", "`.reduce()`", "`.concat()`", "`.join()`"],
-              "answer": 1
+              "label": "Filter objects",
+              "code": "const products = [\n  { name: 'Shirt', inStock: true },\n  { name: 'Hat', inStock: false },\n  { name: 'Shoes', inStock: true }\n];\n\nconst available = products.filter(p => p.inStock);\n// [{ name: 'Shirt', inStock: true }, { name: 'Shoes', inStock: true }]"
+            }
+          ],
+          "questions": [
+            {
+              "q": "You have an array of 100 users and you want only users older than 18. Which method should you use?",
+              "options": ["`map()`", "`slice()`", "`filter()`", "`splice()`"],
+              "answer": 2,
+              "explanation": "filter() is specifically for narrowing a collection down based on a condition. It returns a new array with only the items that passed the test."
+            },
+            {
+              "q": "If no items in an array pass the filter test, what does filter() return?",
+              "options": ["null", "undefined", "An empty array", "false"],
+              "answer": 2,
+              "explanation": "filter() always returns an array. If no items pass the test, it returns an empty array. It never returns null or undefined."
+            }
+          ]
+        },
+        {
+          "id": "l-reduce",
+          "title": "reduce()",
+          "type": "document",
+          "content": "reduce() iterates through an array and collapses all of its values into a single output. That output can be a number, a string, an object, or another array.\n\nIt takes a function with two arguments: an accumulator (the running result) and the current item. It also takes an initial value for the accumulator as a second argument. After each iteration, whatever you return becomes the new accumulator.\n\nreduce() is the most powerful of the three. Everything map() and filter() can do can technically be done with reduce(). In practice, you reach for reduce() when you need to compute a total, group items by a category, or flatten a nested structure.",
+          "examples": [
+            {
+              "label": "Summing numbers",
+              "code": "const cart = [12.99, 4.50, 7.25, 19.00];\nconst total = cart.reduce((sum, item) => sum + item, 0);\nconsole.log(total); // 43.74"
+            },
+            {
+              "label": "Grouping by a property",
+              "code": "const orders = [\n  { status: 'pending', id: 1 },\n  { status: 'shipped', id: 2 },\n  { status: 'pending', id: 3 }\n];\n\nconst grouped = orders.reduce((acc, order) => {\n  if (!acc[order.status]) acc[order.status] = [];\n  acc[order.status].push(order);\n  return acc;\n}, {});\n\n// { pending: [{...}, {...}], shipped: [{...}] }"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which method iterates an array and collapses all values into a single final output?",
+              "options": ["`collapse()`", "`reduce()`", "`concat()`", "`join()`"],
+              "answer": 1,
+              "explanation": "reduce() accumulates values across iterations. You define a starting value and how each item modifies the accumulator. At the end, you have a single output: a sum, an object, a merged string, etc."
+            },
+            {
+              "q": "What is the second argument to reduce(), after the callback function?",
+              "options": ["The final value.", "The initial value of the accumulator.", "The index to start at.", "A condition for when to stop."],
+              "answer": 1,
+              "explanation": "The second argument to reduce() is the initial value of the accumulator — the starting point before any items have been processed. Without it, reduce() uses the first item as the initial value, which can lead to unexpected results."
+            }
+          ]
+        },
+        {
+          "id": "l-chaining",
+          "title": "Chaining Methods",
+          "type": "document",
+          "content": "Because map(), filter(), and similar methods all return new arrays, you can chain them. The output of one method becomes the input of the next.\n\nChaining allows you to build a data transformation pipeline: filter down to the relevant items, then transform them, then reduce them to a final result. Each step is focused on one job.\n\nRead a chain from left to right: start with the original array, apply each step in order, and the final result falls out at the end.",
+          "examples": [
+            {
+              "label": "Filter, then map, then reduce",
+              "code": "const orders = [\n  { item: 'Laptop', price: 999, shipped: true },\n  { item: 'Mouse', price: 29, shipped: false },\n  { item: 'Monitor', price: 349, shipped: true },\n  { item: 'Keyboard', price: 79, shipped: false }\n];\n\nconst shippedTotal = orders\n  .filter(order => order.shipped)\n  .map(order => order.price)\n  .reduce((sum, price) => sum + price, 0);\n\nconsole.log(shippedTotal); // 1348"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Why can you chain map(), filter(), and reduce() together?",
+              "options": ["Because they all modify the same array in place.", "Because they all return new arrays (except reduce, which returns a value).", "Because JavaScript executes them in parallel.", "Because they share state with each other."],
+              "answer": 1,
+              "explanation": "map() and filter() both return new arrays, which means you can immediately call another array method on the result. This is what makes chaining possible."
             }
           ]
         }
       ]
     },
     {
-      "title": "Module 9: Architectural Blueprints",
+      "title": "Module 9: Architectural Blueprints (Classes)",
       "lessons": [
         {
           "id": "l-intro-classes",
-          "title": "Object Oriented Classes",
+          "title": "Classes and Object-Oriented Programming",
           "type": "document",
-          "content": "As applications scale, manually creating hundreds of loose objects becomes chaotic. You need standardized templates.\n\nA `class` is a blueprint. You write the blueprint once, and then use the `new` keyword to stamp out as many identical Objects as you need. Each object created from a class is called an 'instance'.\n\nInside a class, variables are called 'properties' and functions are called 'methods'. To reference an object's own internal data, you must use the `this` keyword."
+          "content": "As applications grow, managing hundreds of individual objects becomes unmanageable. If you need to create a hundred User objects that all have the same shape — each with a name, an email, an ID, and a login method — creating each one manually is repetitive and inconsistent.\n\nA class is a blueprint. You define the structure and behavior once. Then you use the new keyword to create as many instances as you need from that blueprint. Every instance is its own independent object with its own copy of the data.\n\nInside a class, the special method called constructor runs automatically every time a new instance is created. It is where you set the initial values of the instance's properties.\n\nTo reference the current instance's data from inside a method, you use the this keyword. this refers to whatever specific object is currently running the code."
         },
         {
-          "id": "l-classes-this",
-          "title": "Classes and 'this'",
+          "id": "l-class-syntax",
+          "title": "Class Syntax",
+          "type": "document",
+          "content": "A class is defined with the class keyword followed by a name written in PascalCase (first letter of every word capitalized).\n\nInside the class, the constructor method receives the initial data and assigns it to the instance using this.propertyName.\n\nOther methods are defined directly inside the class body without the function keyword. They become available on every instance.",
+          "examples": [
+            {
+              "label": "Defining a class",
+              "code": "class User {\n  constructor(name, email) {\n    this.name = name;\n    this.email = email;\n    this.createdAt = Date.now();\n  }\n\n  greet() {\n    return 'Hello, my name is ' + this.name;\n  }\n\n  getEmail() {\n    return this.email;\n  }\n}"
+            },
+            {
+              "label": "Creating instances",
+              "code": "const user1 = new User('Alex', 'alex@example.com');\nconst user2 = new User('Sam', 'sam@example.com');\n\nconsole.log(user1.greet());    // 'Hello, my name is Alex'\nconsole.log(user2.getEmail()); // 'sam@example.com'\nconsole.log(user1.name);       // 'Alex'"
+            }
+          ],
           "questions": [
             {
-              "q": "Which special method inside a `class` is automatically triggered the exact moment a new instance is created?",
+              "q": "Which special method inside a class runs automatically the moment a new instance is created?",
               "options": ["`init()`", "`start()`", "`constructor()`", "`build()`"],
-              "answer": 2
+              "answer": 2,
+              "explanation": "The constructor method is called automatically by the new keyword. It receives any arguments you pass and sets up the initial state of the instance."
             },
             {
-              "q": "To create a new user from a `User` class blueprint, what syntax do you use?",
-              "options": ["`create User('John')`", "`User('John')`", "`spawn User('John')`", "`new User('John')`"],
-              "answer": 3
+              "q": "To create a new instance from a class called Product, what syntax do you use?",
+              "options": ["`create Product('Shirt')`", "`Product('Shirt')`", "`spawn Product('Shirt')`", "`new Product('Shirt')`"],
+              "answer": 3,
+              "explanation": "The new keyword creates a new instance from a class. It calls the constructor with the provided arguments and returns the new object."
             },
             {
-              "q": "Inside a class method, which keyword refers to the specific instance of the object that is currently executing the code?",
+              "q": "Inside a class method, which keyword refers to the specific instance currently executing the code?",
               "options": ["`self`", "`this`", "`instance`", "`me`"],
-              "answer": 1
+              "answer": 1,
+              "explanation": "this refers to the current instance. When you call user1.greet(), inside the greet method, this refers to user1. When you call user2.greet(), this refers to user2."
+            }
+          ]
+        },
+        {
+          "id": "l-inheritance",
+          "title": "Inheritance",
+          "type": "document",
+          "content": "Inheritance lets one class extend another. The child class gets all the properties and methods of the parent class and can add its own on top.\n\nYou declare a child class using extends. Inside the constructor of a child class, you must call super() before using this. super() calls the parent class's constructor and sets up the inherited properties.\n\nThis avoids repetition. If you have a User class and you need an AdminUser class that has all the same behavior plus additional admin methods, you extend User instead of rewriting everything.",
+          "examples": [
+            {
+              "label": "Extending a class",
+              "code": "class Animal {\n  constructor(name) {\n    this.name = name;\n  }\n\n  speak() {\n    return this.name + ' makes a sound.';\n  }\n}\n\nclass Dog extends Animal {\n  constructor(name, breed) {\n    super(name); // calls Animal's constructor\n    this.breed = breed;\n  }\n\n  speak() {\n    return this.name + ' barks.';\n  }\n}\n\nconst d = new Dog('Rex', 'Labrador');\nconsole.log(d.speak()); // 'Rex barks.'\nconsole.log(d.name);    // 'Rex' — inherited"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does `super()` do inside a child class constructor?",
+              "options": ["It deletes the parent class.", "It calls the parent class's constructor to set up inherited properties.", "It copies all methods from the parent.", "It prevents the parent's methods from being overridden."],
+              "answer": 1,
+              "explanation": "super() must be called in a child class constructor before you can use this. It runs the parent class's constructor, which sets up any properties the parent defines."
+            },
+            {
+              "q": "If a child class defines a method with the same name as a method in the parent class, what happens when you call that method on the child?",
+              "options": ["JavaScript throws an error.", "Both methods run.", "The child's version runs, overriding the parent's.", "The parent's version always runs."],
+              "answer": 2,
+              "explanation": "This is called method overriding. When a child class defines a method with the same name as the parent, calling it on a child instance runs the child's version, not the parent's."
             }
           ]
         }
       ]
     },
     {
-      "title": "Module 10: System Resilience",
+      "title": "Module 10: System Resilience (Error Handling)",
       "lessons": [
         {
           "id": "l-intro-errors",
-          "title": "Graceful Failure",
+          "title": "Why Errors Happen and How to Handle Them",
           "type": "document",
-          "content": "All systems fail. Networks drop, servers crash, and users input invalid data. An amateur's script will crash the entire page and display a white screen.\n\nA master engineer anticipates failure and handles it gracefully. We do this using `try / catch` blocks. \n\nYou place risky code (like network requests) inside the `try` block. If the code detonates, the system does not crash. Instead, it immediately hands the error to the `catch` block, allowing you to log the issue and show the user a friendly warning."
+          "content": "Networks drop. Servers return unexpected formats. Users type invalid input. Code that assumes everything will always go right will crash, and that crash will reach the user as a blank white screen or a frozen interface.\n\nError handling is not defensive programming — it is professional engineering. You build the expectation of failure directly into your code. When something goes wrong, the program does not stop. It takes a different path and tells the user what happened in a way they can understand.\n\nJavaScript has three kinds of errors: SyntaxError (you wrote the code incorrectly, caught before execution), ReferenceError (you tried to use a variable that does not exist), and TypeError (you tried to do something with a value that does not support it, like calling a function on null).\n\nYou handle runtime errors using try/catch blocks."
         },
         {
           "id": "l-try-catch",
-          "title": "Error Handling",
+          "title": "Try, Catch, and Finally",
+          "type": "document",
+          "content": "A try block contains code that might fail. If any line inside the try block throws an error, execution immediately jumps to the catch block. The remaining lines in the try block are skipped.\n\nThe catch block receives the error object as its argument. The error object has a message property containing a human-readable description of what went wrong, and a name property with the error type.\n\nA finally block runs after both the try and catch blocks, regardless of whether an error occurred. You use it for cleanup: closing a database connection, hiding a loading spinner, resetting a form.\n\nYou can also throw errors manually using the throw keyword followed by a new Error object. This is how you signal that something went wrong inside your own functions.",
+          "examples": [
+            {
+              "label": "try/catch/finally",
+              "code": "async function loadProfile(userId) {\n  try {\n    const response = await fetch('/api/users/' + userId);\n\n    if (!response.ok) {\n      throw new Error('Server returned status ' + response.status);\n    }\n\n    const user = await response.json();\n    return user;\n\n  } catch (error) {\n    console.error('Failed to load profile:', error.message);\n    return null;\n\n  } finally {\n    console.log('Request complete.');\n  }\n}"
+            },
+            {
+              "label": "Throwing a custom error",
+              "code": "function divide(a, b) {\n  if (b === 0) {\n    throw new Error('Cannot divide by zero.');\n  }\n  return a / b;\n}\n\ntry {\n  const result = divide(10, 0);\n} catch (error) {\n  console.error(error.message); // 'Cannot divide by zero.'\n}"
+            }
+          ],
           "questions": [
             {
-              "q": "What block of code will execute if the code inside the `try` block fails?",
-              "options": ["`else`", "`error`", "`catch`", "`finally`"],
-              "answer": 2
+              "q": "If code inside the try block throws an error, where does execution go next?",
+              "options": ["`finally`", "`else`", "`catch`", "The program terminates."],
+              "answer": 2,
+              "explanation": "When an error is thrown inside a try block, execution immediately jumps to the catch block. Any remaining lines in the try block are skipped."
             },
             {
-              "q": "Which block of code executes at the very end, regardless of whether the `try` succeeded or failed?",
+              "q": "Which block executes at the very end, regardless of whether the try succeeded or failed?",
               "options": ["`always`", "`finally`", "`done`", "`end`"],
-              "answer": 1
+              "answer": 1,
+              "explanation": "The finally block always runs after the try and catch blocks, whether or not an error occurred. It is used for cleanup tasks that must always happen."
             },
             {
-              "q": "How can you manually trigger your own custom error to stop execution?",
+              "q": "How do you manually trigger an error inside a function?",
               "options": ["`throw new Error('msg')`", "`stop Error('msg')`", "`return Error('msg')`", "`catch Error('msg')`"],
-              "answer": 0
+              "answer": 0,
+              "explanation": "The throw keyword followed by a new Error object manually signals that something went wrong. This causes execution to jump to the nearest catch block, just like a built-in runtime error would."
+            },
+            {
+              "q": "What does the error object's `.message` property contain?",
+              "options": ["The line number where the error occurred.", "A human-readable description of what went wrong.", "The type of error as a number.", "The stack trace."],
+              "answer": 1,
+              "explanation": "error.message is a string describing what went wrong. It is the string you pass into new Error('...'), or the default message JavaScript generates for built-in errors like TypeError."
+            }
+          ]
+        },
+        {
+          "id": "l-custom-errors",
+          "title": "Custom Error Classes",
+          "type": "document",
+          "content": "In larger applications, you will have different categories of errors: network errors, validation errors, authentication errors. Using the generic Error class for all of them makes it hard to handle each type differently.\n\nYou can extend the Error class to create your own named error types. Inside a catch block, you can then check which type of error was thrown using instanceof and respond appropriately.",
+          "examples": [
+            {
+              "label": "Custom error types",
+              "code": "class ValidationError extends Error {\n  constructor(message) {\n    super(message);\n    this.name = 'ValidationError';\n  }\n}\n\nclass NetworkError extends Error {\n  constructor(message) {\n    super(message);\n    this.name = 'NetworkError';\n  }\n}\n\nfunction processForm(data) {\n  if (!data.email) {\n    throw new ValidationError('Email is required.');\n  }\n}\n\ntry {\n  processForm({});\n} catch (error) {\n  if (error instanceof ValidationError) {\n    console.log('Please fix your input:', error.message);\n  } else if (error instanceof NetworkError) {\n    console.log('Check your connection:', error.message);\n  } else {\n    console.log('Unexpected error:', error.message);\n  }\n}"
+            }
+          ],
+          "questions": [
+            {
+              "q": "How do you check what type of error was thrown inside a catch block?",
+              "options": ["`error.type === 'ValidationError'`", "`error instanceof ValidationError`", "`typeof error === ValidationError`", "`error.class === 'ValidationError'`"],
+              "answer": 1,
+              "explanation": "instanceof checks whether an object was created from a specific class. In a catch block, error instanceof ValidationError returns true if the caught error is a ValidationError or anything that extends it."
+            },
+            {
+              "q": "When extending the Error class to create a custom error, what must you call inside the constructor?",
+              "options": ["`init(message)`", "`super(message)`", "`Error.call(message)`", "`this.init(message)`"],
+              "answer": 1,
+              "explanation": "super(message) calls the parent Error class constructor, which sets up the message property correctly on the error instance. Without it, error.message will be undefined."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-errors",
+          "title": "Challenge: Safe Division",
+          "type": "challenge",
+          "prompt": "Write a function called safeDivide that accepts two numbers a and b. If b is zero, throw a new Error with the message 'Division by zero'. Otherwise return a divided by b. Wrap the call to safeDivide(10, 0) in a try/catch block and log the error message in the catch.",
+          "solution": "function safeDivide(a, b) {\n  if (b === 0) {\n    throw new Error('Division by zero');\n  }\n  return a / b;\n}\n\ntry {\n  safeDivide(10, 0);\n} catch (error) {\n  console.log(error.message);\n}",
+          "validation": [
+            {
+              "rule": "throw new Error",
+              "message": "error: must throw a new Error when b is zero."
+            },
+            {
+              "rule": "try\\s*\\{",
+              "message": "error: must wrap the call in a try block."
+            },
+            {
+              "rule": "catch\\s*\\(",
+              "message": "error: must include a catch block."
             }
           ]
         }
