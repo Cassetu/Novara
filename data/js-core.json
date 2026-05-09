@@ -1,23 +1,190 @@
 {
   "id": "js-core",
-  "title": "javascript core",
+  "title": "JavaScript Core",
   "sections": [
     {
-      "title": "module 1: the matrix",
+      "title": "Module 1: The Matrix (Fundamentals)",
       "lessons": [
         {
-          "id": "l-01",
-          "title": "variables and memory",
+          "id": "l-var",
+          "title": "Variables and Memory",
           "questions": [
             {
-              "q": "which keyword declares a variable that cannot be reassigned?",
-              "options": ["let", "var", "const", "static"],
+              "q": "Which keyword declares a block-scoped variable that can be reassigned?",
+              "options": ["const", "var", "let", "static"],
               "answer": 2
             },
             {
-              "q": "what is the default value of an uninitialized variable?",
+              "q": "What happens if you attempt to reassign a value to a 'const' variable?",
+              "options": ["It silently fails", "It throws a TypeError", "It overwrites the memory", "It creates a new variable"],
+              "answer": 1
+            },
+            {
+              "q": "Which legacy keyword should generally be avoided in modern JavaScript?",
+              "options": ["let", "var", "function", "return"],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": "l-types",
+          "title": "Primitive Data Types",
+          "questions": [
+            {
+              "q": "Which of the following represents the intentional absence of any object value?",
+              "options": ["undefined", "NaN", "null", "false"],
+              "answer": 2
+            },
+            {
+              "q": "What is the data type of the value 'false'?",
+              "options": ["String", "Boolean", "Number", "Object"],
+              "answer": 1
+            },
+            {
+              "q": "What will the expression 'typeof 42' evaluate to?",
+              "options": ["'number'", "'integer'", "'float'", "'string'"],
+              "answer": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: The Logic (Control Flow)",
+      "lessons": [
+        {
+          "id": "l-cond",
+          "title": "Conditional Statements",
+          "questions": [
+            {
+              "q": "Which operator perfectly checks both value AND data type?",
+              "options": ["==", "!=", "=", "==="],
+              "answer": 3
+            },
+            {
+              "q": "What is the correct syntax for an 'if' statement?",
+              "options": ["if x = 5 then", "if (x == 5)", "if x == 5:", "if {x == 5}"],
+              "answer": 1
+            },
+            {
+              "q": "Which logical operator means 'OR'?",
+              "options": ["&&", "||", "!", "//"],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": "l-loops",
+          "title": "Iteration and Loops",
+          "questions": [
+            {
+              "q": "Which loop is guaranteed to execute its code block at least once?",
+              "options": ["for", "while", "do...while", "forEach"],
+              "answer": 2
+            },
+            {
+              "q": "In a standard 'for' loop (let i=0; i<5; i++), what does 'i++' do?",
+              "options": ["Checks the condition", "Executes the code", "Increments the counter", "Declares the variable"],
+              "answer": 2
+            },
+            {
+              "q": "Which keyword immediately exits a loop entirely?",
+              "options": ["stop", "return", "continue", "break"],
+              "answer": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: The Engine (Functions)",
+      "lessons": [
+        {
+          "id": "l-func",
+          "title": "Function Declarations",
+          "questions": [
+            {
+              "q": "How do you correctly call a function named 'initSystem'?",
+              "options": ["call initSystem;", "initSystem();", "run initSystem()", "execute(initSystem)"],
+              "answer": 1
+            },
+            {
+              "q": "What keyword is used to send data back from a function to where it was called?",
+              "options": ["output", "send", "return", "export"],
+              "answer": 2
+            },
+            {
+              "q": "If a function does not explicitly return a value, what does it evaluate to?",
               "options": ["null", "0", "undefined", "false"],
               "answer": 2
+            }
+          ]
+        },
+        {
+          "id": "l-arrow",
+          "title": "Arrow Functions",
+          "questions": [
+            {
+              "q": "Which syntax correctly defines an arrow function?",
+              "options": ["() => {}", "=> () {}", "function => {}", "() -> {}"],
+              "answer": 0
+            },
+            {
+              "q": "If an arrow function has exactly one parameter, what can you omit?",
+              "options": ["The 'return' keyword", "The parentheses () around the parameter", "The curly braces {}", "The arrow =>"],
+              "answer": 1
+            },
+            {
+              "q": "Arrow functions do not have their own binding to which keyword?",
+              "options": ["return", "this", "super", "class"],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 4: The Vault (Data Structures)",
+      "lessons": [
+        {
+          "id": "l-arrays",
+          "title": "Arrays and Indexing",
+          "questions": [
+            {
+              "q": "How do you access the first element in an array named 'data'?",
+              "options": ["data[1]", "data.first", "data[0]", "data(0)"],
+              "answer": 2
+            },
+            {
+              "q": "Which array method adds a new element to the END of the array?",
+              "options": ["push()", "pop()", "shift()", "unshift()"],
+              "answer": 0
+            },
+            {
+              "q": "Which property tells you how many items are currently in an array?",
+              "options": ["count", "size", "index", "length"],
+              "answer": 3
+            }
+          ]
+        },
+        {
+          "id": "l-objects",
+          "title": "Objects and Properties",
+          "questions": [
+            {
+              "q": "Objects consist of properties represented as...",
+              "options": ["Index arrays", "Key-Value pairs", "Sequential nodes", "Boolean flags"],
+              "answer": 1
+            },
+            {
+              "q": "How do you access the 'email' property of an object named 'user'?",
+              "options": ["user[email]", "user->email", "user.email", "user:email"],
+              "answer": 2
+            },
+            {
+              "q": "Which syntax is used to create an empty object?",
+              "options": ["[]", "{}", "()", "<>"],
+              "answer": 1
             }
           ]
         }
