@@ -1,0 +1,27 @@
+{
+  "id": "js-core",
+  "title": "javascript core",
+  "sections": [
+    {
+      "title": "module 1: the matrix",
+      "lessons": [
+        {
+          "id": "l-01",
+          "title": "variables and memory",
+          "questions": [
+            {
+              "q": "which keyword declares a variable that cannot be reassigned?",
+              "options": ["let", "var", "const", "static"],
+              "answer": 2
+            },
+            {
+              "q": "what is the default value of an uninitialized variable?",
+              "options": ["null", "0", "undefined", "false"],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

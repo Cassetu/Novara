@@ -24,28 +24,46 @@
 </div>
 
 <div id="app-view" class="app" style="display: none;">
-    <aside class="sidebar">
-        <h2>Menu</h2>
+
+    <aside class="sidebar" id="main-sidebar">
+        <h2>active</h2>
         <nav>
-            <ul>
-                <li><a href="#" id="load-js101">Javascript 101</a></li>
+            <ul id="enrolled-list">
             </ul>
         </nav>
 
-        <div class="notepad-container">
-            <h3>Scratchpad</h3>
-            <textarea id="notepad" placeholder="Write your notes here..."></textarea>
-        </div>
+        <h2 style="margin-top: 40px;">system</h2>
+        <nav>
+            <ul>
+                <li><a href="#" id="nav-explorer">curriculums</a></li>
+                <li><a href="#" id="nav-settings">settings</a></li>
+            </ul>
+        </nav>
     </aside>
 
-    <main class="workspace">
-        <div class="course-box">
-            <div id="course-header"></div>
-            <div id="module-content"></div>
-            <div class="controls">
-                <button id="next-btn" style="display: none;">Next</button>
+    <main class="workspace" id="main-workspace">
+
+        <div id="view-explorer" class="view-layer">
+            <div class="explorer-header">
+                <div class="category-filters">
+                    <button class="filter-btn active" data-filter="all">all</button>
+                    <button class="filter-btn" data-filter="engineering">engineering</button>
+                    <button class="filter-btn" data-filter="data">data</button>
+                    <button class="filter-btn" data-filter="design">design</button>
+                </div>
+                <input type="text" id="search-bar" placeholder="search matrix...">
             </div>
+            <div id="catalog-grid" class="catalog-grid"></div>
         </div>
+
+        <div id="view-syllabus" class="view-layer" style="display: none;">
+            <h1 id="syllabus-title"></h1>
+            <div id="syllabus-content"></div>
+        </div>
+
+        <div id="view-lesson" class="view-layer" style="display: none;">
+        </div>
+
     </main>
 </div>
 
