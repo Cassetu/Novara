@@ -1,74 +1,86 @@
 {
   "id": "js-core",
-  "title": "JavaScript Core",
+  "title": "JavaScript Architecture: Full Stack",
   "sections": [
     {
-      "title": "Module 1: The Matrix (Fundamentals)",
+      "title": "Module 1: Core Memory",
       "lessons": [
         {
-          "id": "l-var",
-          "title": "Variables and Memory",
+          "id": "l-intro-memory",
+          "title": "The Concept of State",
+          "type": "document",
+          "content": "A program without memory is a calculator. It processes input, returns output, and immediately forgets everything.\n\nTo build systems that track users, scores, or time, a program needs 'State'. State is data stored in your computer's short-term memory (RAM) while the program runs.\n\nIn JavaScript, we allocate this memory by declaring variables. You are reserving a microscopic physical space on a computer chip and giving it a label."
+        },
+        {
+          "id": "l-var-declaration",
+          "title": "Variable Keywords",
           "questions": [
             {
-              "q": "Which keyword declares a block-scoped variable that can be reassigned?",
-              "options": ["const", "var", "let", "static"],
+              "q": "Which keyword should you use to declare a value that will never change?",
+              "options": ["`let`", "`var`", "`const`", "`static`"],
               "answer": 2
             },
             {
-              "q": "What happens if you attempt to reassign a value to a 'const' variable?",
-              "options": ["It silently fails", "It throws a TypeError", "It overwrites the memory", "It creates a new variable"],
-              "answer": 1
+              "q": "If you need a counter that goes up by one every time a user clicks, how should you declare it?",
+              "options": ["`let counter = 0;`", "`const counter = 0;`", "`var counter = 0;`", "`counter === 0;`"],
+              "answer": 0
             },
             {
-              "q": "Which legacy keyword should generally be avoided in modern JavaScript?",
-              "options": ["let", "var", "function", "return"],
+              "q": "What happens if you try to redefine a `const` variable later in your code?",
+              "options": ["It silently ignores the change.", "The program crashes and throws a TypeError.", "It overwrites the old memory slot.", "It creates a duplicate variable."],
               "answer": 1
             }
           ]
         },
         {
-          "id": "l-types",
-          "title": "Primitive Data Types",
+          "id": "l-primitive-types",
+          "title": "Primitive Data",
           "questions": [
             {
-              "q": "Which of the following represents the intentional absence of any object value?",
-              "options": ["undefined", "NaN", "null", "false"],
+              "q": "Which of these represents a 'String' in JavaScript?",
+              "options": ["`42`", "`false`", "`'Error detected'`", "`{ id: 1 }`"],
               "answer": 2
             },
             {
-              "q": "What is the data type of the value 'false'?",
-              "options": ["String", "Boolean", "Number", "Object"],
-              "answer": 1
+              "q": "What is the specific data type of `false`?",
+              "options": ["Boolean", "String", "Undefined", "Number"],
+              "answer": 0
             },
             {
-              "q": "What will the expression 'typeof 42' evaluate to?",
-              "options": ["'number'", "'integer'", "'float'", "'string'"],
-              "answer": 0
+              "q": "If you declare `let score;` but do not assign a value, what does JavaScript store in that memory slot by default?",
+              "options": ["`0`", "`null`", "`''` (empty string)", "`undefined`"],
+              "answer": 3
             }
           ]
         }
       ]
     },
     {
-      "title": "Module 2: The Logic (Control Flow)",
+      "title": "Module 2: Control Flow",
       "lessons": [
         {
-          "id": "l-cond",
-          "title": "Conditional Statements",
+          "id": "l-intro-logic",
+          "title": "Conditional Execution",
+          "type": "document",
+          "content": "Code executes strictly from top to bottom. However, a rigid script is useless in the real world. A system must adapt to user input.\n\nWe introduce flexibility using conditional statements (`if`, `else`). This creates forks in the road. The engine evaluates a condition—if it resolves to `true`, it takes one path. If `false`, it takes another.\n\nThis is how you build security gates, permissions, and responsive user interfaces."
+        },
+        {
+          "id": "l-comparisons",
+          "title": "Evaluation Operators",
           "questions": [
             {
-              "q": "Which operator perfectly checks both value AND data type?",
-              "options": ["==", "!=", "=", "==="],
-              "answer": 3
+              "q": "Which operator checks if two values are identical in both value AND data type?",
+              "options": ["`==`", "`=`", "`===`", "`!==`"],
+              "answer": 2
             },
             {
-              "q": "What is the correct syntax for an 'if' statement?",
-              "options": ["if x = 5 then", "if (x == 5)", "if x == 5:", "if {x == 5}"],
-              "answer": 1
+              "q": "What is the exact difference between `=` and `==`?",
+              "options": ["They are the same.", "`=` is for text, `==` is for numbers.", "`=` assigns a value to memory, `==` compares two values.", "`=` compares values, `==` assigns values."],
+              "answer": 2
             },
             {
-              "q": "Which logical operator means 'OR'?",
-              "options": ["&&", "||", "!", "//"],
+              "q": "Which logical operator requires BOTH conditions to be true? (e.g., The user is an admin AND the system is unlocked).",
+              "options": ["`||` (OR)", "`&&` (AND)", "`!` (NOT)", "`??` (Nullish)"],
               "answer": 1
             }
           ]
@@ -78,18 +90,18 @@
           "title": "Iteration and Loops",
           "questions": [
             {
-              "q": "Which loop is guaranteed to execute its code block at least once?",
-              "options": ["for", "while", "do...while", "forEach"],
+              "q": "Which loop is guaranteed to execute its code block at least once, even if the condition is false?",
+              "options": ["`for`", "`while`", "`do...while`", "`forEach`"],
               "answer": 2
             },
             {
-              "q": "In a standard 'for' loop (let i=0; i<5; i++), what does 'i++' do?",
-              "options": ["Checks the condition", "Executes the code", "Increments the counter", "Declares the variable"],
+              "q": "In a standard loop (`let i=0; i<5; i++`), what does `i++` do?",
+              "options": ["Checks the condition.", "Executes the code.", "Increments the counter by 1.", "Declares the variable."],
               "answer": 2
             },
             {
-              "q": "Which keyword immediately exits a loop entirely?",
-              "options": ["stop", "return", "continue", "break"],
+              "q": "Which keyword immediately aborts a loop entirely, skipping any remaining cycles?",
+              "options": ["`stop`", "`return`", "`continue`", "`break`"],
               "answer": 3
             }
           ]
@@ -97,46 +109,69 @@
       ]
     },
     {
-      "title": "Module 3: The Engine (Functions)",
+      "title": "Module 3: Execution Engine",
       "lessons": [
         {
-          "id": "l-func",
-          "title": "Function Declarations",
+          "id": "l-intro-functions",
+          "title": "Reusable Architecture",
+          "type": "document",
+          "content": "Copying and pasting the same block of code multiple times is an engineering failure. If you need to change how that code works later, you have to hunt down every copy and fix it manually.\n\nFunctions solve this. A function is a self-contained block of logic. You write it once, and you 'call' it whenever you need it.\n\nThink of a function like a machine: you feed it raw materials (parameters), it does the work inside its chassis, and it hands you the finished product (the return value)."
+        },
+        {
+          "id": "l-func-mechanics",
+          "title": "Function Mechanics",
           "questions": [
             {
-              "q": "How do you correctly call a function named 'initSystem'?",
-              "options": ["call initSystem;", "initSystem();", "run initSystem()", "execute(initSystem)"],
+              "q": "If you have a function named `authenticateUser`, how do you trigger it to run?",
+              "options": ["`run authenticateUser`", "`authenticateUser()`", "`call authenticateUser;`", "`authenticateUser`"],
               "answer": 1
             },
             {
-              "q": "What keyword is used to send data back from a function to where it was called?",
-              "options": ["output", "send", "return", "export"],
-              "answer": 2
+              "q": "Which keyword must be used to extract the final result out of a function so the rest of your program can use it?",
+              "options": ["`export`", "`output`", "`yield`", "`return`"],
+              "answer": 3
             },
             {
-              "q": "If a function does not explicitly return a value, what does it evaluate to?",
-              "options": ["null", "0", "undefined", "false"],
-              "answer": 2
+              "q": "If a function executes successfully but lacks a `return` statement, what value does it hand back to the system?",
+              "options": ["`undefined`", "`0`", "`true`", "`null`"],
+              "answer": 0
             }
           ]
         },
         {
-          "id": "l-arrow",
-          "title": "Arrow Functions",
+          "id": "l-scope",
+          "title": "Scope and Memory Borders",
+          "type": "document",
+          "content": "Scope dictates where memory can be accessed.\n\nIf you declare a variable inside a function, it is 'locally scoped'. It exists only inside that function. The moment the function finishes running, the JavaScript engine destroys that variable to free up RAM.\n\nVariables declared outside of any function are 'globally scoped' and can be seen by the entire system. Master engineers keep the global scope as clean as possible to prevent data collisions."
+        }
+      ]
+    },
+    {
+      "title": "Module 4: Data Structures",
+      "lessons": [
+        {
+          "id": "l-intro-structures",
+          "title": "Organizing Complexity",
+          "type": "document",
+          "content": "Variables are fine for single values. But what if you need to store a list of 10,000 enrolled students? You cannot write 10,000 variables.\n\nWe solve this with Data Structures. In JavaScript, the two primary structures are Arrays and Objects.\n\nAn Array is a strictly ordered list. Use it when sequence matters. An Object is a collection of labeled properties (Key-Value pairs). Use it when you need to describe a complex entity, like a user's profile."
+        },
+        {
+          "id": "l-arrays-objects",
+          "title": "Arrays and Objects",
           "questions": [
             {
-              "q": "Which syntax correctly defines an arrow function?",
-              "options": ["() => {}", "=> () {}", "function => {}", "() -> {}"],
-              "answer": 0
-            },
-            {
-              "q": "If an arrow function has exactly one parameter, what can you omit?",
-              "options": ["The 'return' keyword", "The parentheses () around the parameter", "The curly braces {}", "The arrow =>"],
+              "q": "How do you access the very first item in an Array named `records`?",
+              "options": ["`records.first`", "`records[0]`", "`records[1]`", "`records(0)`"],
               "answer": 1
             },
             {
-              "q": "Arrow functions do not have their own binding to which keyword?",
-              "options": ["return", "this", "super", "class"],
+              "q": "Which array method pushes a new item onto the absolute end of the list?",
+              "options": ["`unshift()`", "`append()`", "`pop()`", "`push()`"],
+              "answer": 3
+            },
+            {
+              "q": "If you have an Object named `user`, how do you read its `email` property?",
+              "options": ["`user[email]`", "`user.email`", "`user->email`", "`user:email`"],
               "answer": 1
             }
           ]
@@ -144,47 +179,192 @@
       ]
     },
     {
-      "title": "Module 4: The Vault (Data Structures)",
+      "title": "Module 5: The Interface (DOM)",
       "lessons": [
         {
-          "id": "l-arrays",
-          "title": "Arrays and Indexing",
-          "questions": [
-            {
-              "q": "How do you access the first element in an array named 'data'?",
-              "options": ["data[1]", "data.first", "data[0]", "data(0)"],
-              "answer": 2
-            },
-            {
-              "q": "Which array method adds a new element to the END of the array?",
-              "options": ["push()", "pop()", "shift()", "unshift()"],
-              "answer": 0
-            },
-            {
-              "q": "Which property tells you how many items are currently in an array?",
-              "options": ["count", "size", "index", "length"],
-              "answer": 3
-            }
-          ]
+          "id": "l-intro-dom",
+          "title": "Bridging Logic and Pixels",
+          "type": "document",
+          "content": "JavaScript running in a vacuum is invisible. To make an app interactive, JavaScript must talk to the HTML.\n\nWhen a browser loads a webpage, it converts the HTML into a tree of data called the Document Object Model (DOM). JavaScript can select branches of this tree, read their data, change their colors, or destroy them entirely.\n\nBy attaching 'Event Listeners' to these branches, JavaScript can wait for a user to click, type, or scroll, and instantly react."
         },
         {
-          "id": "l-objects",
-          "title": "Objects and Properties",
+          "id": "l-dom-manipulation",
+          "title": "DOM Manipulation",
           "questions": [
             {
-              "q": "Objects consist of properties represented as...",
-              "options": ["Index arrays", "Key-Value pairs", "Sequential nodes", "Boolean flags"],
+              "q": "Which method is the modern standard for finding an HTML element using its CSS class or ID?",
+              "options": ["`document.findElement()`", "`document.querySelector()`", "`document.search()`", "`document.grab()`"],
               "answer": 1
             },
             {
-              "q": "How do you access the 'email' property of an object named 'user'?",
-              "options": ["user[email]", "user->email", "user.email", "user:email"],
+              "q": "How do you listen for a user clicking on a button stored in a variable named `submitBtn`?",
+              "options": ["`submitBtn.onClick(...)`", "`submitBtn.listen('click', ...)`", "`submitBtn.addEventListener('click', ...)`", "`submitBtn.trigger('click')`"],
               "answer": 2
             },
             {
-              "q": "Which syntax is used to create an empty object?",
-              "options": ["[]", "{}", "()", "<>"],
+              "q": "Which property allows you to completely replace the text and HTML inside a selected `div`?",
+              "options": ["`.innerHTML`", "`value`", "`.textContent`", "`.htmlContent`"],
+              "answer": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 6: Temporal Logic (Async)",
+      "lessons": [
+        {
+          "id": "l-intro-async",
+          "title": "The Single Thread",
+          "type": "document",
+          "content": "JavaScript is 'single-threaded'. It has only one worker. It can only do one task at a time.\n\nIf your code asks a server for a heavy database file, and that takes 5 seconds, the entire website will freeze. The user won't even be able to click a button.\n\nWe solve this with 'Asynchronous' code. When JavaScript hits a slow task, it hands the task off to the browser in the background, and continues executing the rest of your code. When the background task finishes, it taps JavaScript on the shoulder with a 'Promise'."
+        },
+        {
+          "id": "l-promises-async",
+          "title": "Promises and Await",
+          "questions": [
+            {
+              "q": "What object represents the eventual completion (or failure) of an asynchronous operation?",
+              "options": ["A Callback", "A Thread", "A Promise", "A Timeout"],
+              "answer": 2
+            },
+            {
+              "q": "To pause execution inside a function until a Promise resolves, which keyword do you use?",
+              "options": ["`pause`", "`halt`", "`yield`", "`await`"],
+              "answer": 3
+            },
+            {
+              "q": "If you want to use the `await` keyword, what MUST you put in front of the function declaration?",
+              "options": ["`defer`", "`async`", "`promise`", "`background`"],
               "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 7: Network Protocols",
+      "lessons": [
+        {
+          "id": "l-intro-network",
+          "title": "The Fetch API",
+          "type": "document",
+          "content": "Modern applications do not hardcode their data. They retrieve it dynamically from databases across the world using APIs (Application Programming Interfaces).\n\nIn JavaScript, we make these network requests using the `fetch()` function. \n\nBecause network speed is entirely unpredictable, `fetch()` is inherently asynchronous. It returns a Promise. You must `await` the server's response, and then you must parse that raw text response into usable JavaScript Objects, usually via JSON."
+        },
+        {
+          "id": "l-fetch-json",
+          "title": "APIs and JSON",
+          "questions": [
+            {
+              "q": "Which function natively makes HTTP requests to external servers in modern JavaScript?",
+              "options": ["`request()`", "`ajax()`", "`get()`", "`fetch()`"],
+              "answer": 3
+            },
+            {
+              "q": "After fetching data from a modern API, which method is typically used to parse the raw response into a JavaScript object?",
+              "options": ["`.toJson()`", "`.json()`", "`.parseData()`", "`.toObject()`"],
+              "answer": 1
+            },
+            {
+              "q": "What does JSON stand for?",
+              "options": ["JavaScript Object Notation", "Java Syntax Operator Network", "JavaScript Output Node", "Joined String Object Notation"],
+              "answer": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 8: Data Transformation",
+      "lessons": [
+        {
+          "id": "l-intro-functional",
+          "title": "Declarative Architecture",
+          "type": "document",
+          "content": "Standard `for` loops are manual labor. They require you to set up counters, manage length logic, and manually push data into new arrays.\n\nMaster engineers use 'Higher Order Array Methods' like `.map()`, `.filter()`, and `.reduce()`. These are declarative. You do not tell the computer *how* to iterate; you simply tell it *what* you want the final data to look like.\n\nThis leads to code that is vastly easier to read, test, and debug."
+        },
+        {
+          "id": "l-higher-order",
+          "title": "Map, Filter, Reduce",
+          "questions": [
+            {
+              "q": "Which array method takes an original array, transforms every item in it, and returns a brand new array of the exact same length?",
+              "options": ["`.forEach()`", "`.map()`", "`.reduce()`", "`.filter()`"],
+              "answer": 1
+            },
+            {
+              "q": "If you have an array of 100 users, and you only want an array of users who are older than 18, which method should you use?",
+              "options": ["`.map()`", "`.slice()`", "`.filter()`", "`.splice()`"],
+              "answer": 2
+            },
+            {
+              "q": "Which method iterates through an array and collapses all of its values down into a single final output (like a sum or total)?",
+              "options": ["`.collapse()`", "`.reduce()`", "`.concat()`", "`.join()`"],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 9: Architectural Blueprints",
+      "lessons": [
+        {
+          "id": "l-intro-classes",
+          "title": "Object Oriented Classes",
+          "type": "document",
+          "content": "As applications scale, manually creating hundreds of loose objects becomes chaotic. You need standardized templates.\n\nA `class` is a blueprint. You write the blueprint once, and then use the `new` keyword to stamp out as many identical Objects as you need. Each object created from a class is called an 'instance'.\n\nInside a class, variables are called 'properties' and functions are called 'methods'. To reference an object's own internal data, you must use the `this` keyword."
+        },
+        {
+          "id": "l-classes-this",
+          "title": "Classes and 'this'",
+          "questions": [
+            {
+              "q": "Which special method inside a `class` is automatically triggered the exact moment a new instance is created?",
+              "options": ["`init()`", "`start()`", "`constructor()`", "`build()`"],
+              "answer": 2
+            },
+            {
+              "q": "To create a new user from a `User` class blueprint, what syntax do you use?",
+              "options": ["`create User('John')`", "`User('John')`", "`spawn User('John')`", "`new User('John')`"],
+              "answer": 3
+            },
+            {
+              "q": "Inside a class method, which keyword refers to the specific instance of the object that is currently executing the code?",
+              "options": ["`self`", "`this`", "`instance`", "`me`"],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 10: System Resilience",
+      "lessons": [
+        {
+          "id": "l-intro-errors",
+          "title": "Graceful Failure",
+          "type": "document",
+          "content": "All systems fail. Networks drop, servers crash, and users input invalid data. An amateur's script will crash the entire page and display a white screen.\n\nA master engineer anticipates failure and handles it gracefully. We do this using `try / catch` blocks. \n\nYou place risky code (like network requests) inside the `try` block. If the code detonates, the system does not crash. Instead, it immediately hands the error to the `catch` block, allowing you to log the issue and show the user a friendly warning."
+        },
+        {
+          "id": "l-try-catch",
+          "title": "Error Handling",
+          "questions": [
+            {
+              "q": "What block of code will execute if the code inside the `try` block fails?",
+              "options": ["`else`", "`error`", "`catch`", "`finally`"],
+              "answer": 2
+            },
+            {
+              "q": "Which block of code executes at the very end, regardless of whether the `try` succeeded or failed?",
+              "options": ["`always`", "`finally`", "`done`", "`end`"],
+              "answer": 1
+            },
+            {
+              "q": "How can you manually trigger your own custom error to stop execution?",
+              "options": ["`throw new Error('msg')`", "`stop Error('msg')`", "`return Error('msg')`", "`catch Error('msg')`"],
+              "answer": 0
             }
           ]
         }

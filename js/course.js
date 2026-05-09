@@ -156,13 +156,22 @@ async function openSyllabus(courseMeta) {
 
             const score = userData.scores?.[safeLessonId] || 0;
 
-            row.innerHTML = `
-                <div class="lesson-title">${lesson.title}</div>
-                <div class="rating-display">
+            let dotsHtml = '';
+            if (lesson.type === "document") {
+                dotsHtml = `<div class="rating-dot ${score >= 1 ? 'filled' : ''}"></div>`;
+            } else {
+                dotsHtml = `
                     <div class="rating-dot ${score >= 1 ? 'filled' : ''}"></div>
                     <div class="rating-dot ${score >= 2 ? 'filled' : ''}"></div>
                     <div class="rating-dot ${score >= 3 ? 'filled' : ''}"></div>
                     <div class="rating-dot ${score >= 4 ? 'filled' : ''}"></div>
+                `;
+            }
+
+            row.innerHTML = `
+                <div class="lesson-title">${lesson.title}</div>
+                <div class="rating-display">
+                    ${dotsHtml}
                 </div>
             `;
 
@@ -184,7 +193,10 @@ function shuffleArray(array) {
 
 function startLesson(lesson) {
     activeLessonData = JSON.parse(JSON.stringify(lesson));
-    activeLessonData.questions = shuffleArray(activeLessonData.questions);
+
+    if (activeLessonData.type !== "document") {
+        activeLessonData.questions = shuffleArray(activeLessonData.questions);
+    }
 
     currentQuestionIndex = 0;
     correctAnswersCount = 0;
@@ -193,7 +205,38 @@ function startLesson(lesson) {
     document.body.classList.add("lesson-active");
     switchView("view-lesson");
 
-    renderQuestion();
+    if (activeLessonData.type === "document") {
+        renderDocument();
+    } else {
+        renderQuestion();
+    }
+}
+
+function renderDocument() {
+    const lessonView = document.getElementById("view-lesson");
+    const formattedContent = activeLessonData.content.replace(/\n/g, "<br>");
+
+    lessonView.innerHTML = `
+        <div class="lesson-workspace">
+            <h2>${activeLessonData.title}</h2>
+            <div id="module-content">
+                <p style="text-transform: none; text-align: left;">${formattedContent}</p>
+            </div>
+
+            <div class="lesson-footer">
+                <div class="progress-dots">
+                    <div class="p-dot active"></div>
+                </div>
+                <button id="lesson-read-btn">mark as read</button>
+            </div>
+        </div>
+    `;
+
+    document.getElementById("lesson-read-btn").addEventListener("click", () => {
+        correctSound.currentTime = 0;
+        correctSound.play();
+        finishLesson();
+    });
 }
 
 function renderQuestion() {
@@ -202,9 +245,11 @@ function renderQuestion() {
 
     isQuestionSubmitted = false;
 
+    const parseCode = (str) => str.replace(/`([^`]+)`/g, '<code>$1</code>');
+
     let optionsHtml = qData.options.map((opt, i) => `
         <label class="mcq-option" id="opt-label-${i}">
-            <input type="radio" name="answer" value="${i}"> ${opt}
+            <input type="radio" name="answer" value="${i}"> ${parseCode(opt)}
         </label>
     `).join("");
 
@@ -221,7 +266,7 @@ function renderQuestion() {
         <div class="lesson-workspace">
             <h2>${activeLessonData.title}</h2>
             <div id="module-content">
-                <p>${qData.q}</p>
+                <p>${parseCode(qData.q)}</p>
                 <form id="mcq-form">${optionsHtml}</form>
             </div>
 
@@ -296,17 +341,29 @@ async function handleActionClick() {
 }
 
 async function finishLesson() {
-    const total = activeLessonData.questions.length;
-    const percentage = correctAnswersCount / total;
-    let finalScore = Math.round(percentage * 4);
-    if (finalScore === 0 && correctAnswersCount > 0) finalScore = 1;
+    let finalScore = 0;
+    let accuracyText = "";
+    let ratingText = "";
+
+    if (activeLessonData.type === "document") {
+        finalScore = 1;
+        accuracyText = "reading complete";
+        ratingText = "rating: 1 / 1";
+    } else {
+        const total = activeLessonData.questions.length;
+        const percentage = correctAnswersCount / total;
+        finalScore = Math.round(percentage * 4);
+        if (finalScore === 0 && correctAnswersCount > 0) finalScore = 1;
+        accuracyText = `accuracy: ${correctAnswersCount} / ${total}`;
+        ratingText = `rating: ${finalScore} / 4`;
+    }
 
     const lessonView = document.getElementById("view-lesson");
     lessonView.innerHTML = `
         <div class="lesson-workspace" style="text-align: center;">
             <h2>lesson complete</h2>
-            <p>accuracy: ${correctAnswersCount} / ${total}</p>
-            <p style="color: var(--accent); font-size: 24px; margin-top: 20px;">rating: ${finalScore} / 4</p>
+            <p>${accuracyText}</p>
+            <p style="color: var(--accent); font-size: 24px; margin-top: 20px;">${ratingText}</p>
             <button id="return-btn" style="margin-top: 40px;">return to syllabus</button>
         </div>
     `;

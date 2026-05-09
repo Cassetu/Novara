@@ -17,8 +17,8 @@
     font-family: 'Courier New', Courier, monospace;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: flex-start;
 }
 
 #course-header,
@@ -202,6 +202,8 @@ body.lesson-active .workspace {
 .view-layer {
     width: 100%;
     max-width: 900px;
+    margin: auto 0;
+    padding: 40px 0;
     animation: fadeIn 0.3s ease;
 }
 
@@ -385,4 +387,57 @@ button:disabled {
     cursor: not-allowed;
     transform: none !important;
     box-shadow: none !important;
+}
+
+code {
+    background-color: var(--void);
+    color: var(--text-dim);
+    padding: 2px 6px;
+    border: 1px solid var(--border);
+    font-size: 0.9em;
+}
+
+.challenge-workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    height: 350px;
+    margin-top: 20px;
+}
+
+.challenge-prompt {
+    background-color: var(--surface);
+    padding: 20px;
+    border: 1px solid var(--border);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.challenge-editor-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.challenge-editor {
+    flex-grow: 1;
+    background-color: var(--void);
+    color: var(--bg);
+    border: 1px solid var(--border);
+    padding: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    resize: none;
+    outline: none;
+}
+
+.challenge-editor:focus {
+    border-color: var(--accent);
+}
+
+.challenge-console {
+    margin-top: 10px;
+    color: #ff4444;
+    font-size: 14px;
+    min-height: 20px;
+    font-weight: bold;
 }
