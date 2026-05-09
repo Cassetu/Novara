@@ -1,0 +1,16 @@
+{
+  "nodes": [
+    {
+      "id": "js-101",
+      "title": "Variables",
+      "file": "data/js101.json",
+      "reqs": []
+    },
+    {
+      "id": "js-102",
+      "title": "Functions",
+      "file": "data/js102.json",
+      "reqs": ["js-101"]
+    }
+  ]
+}
