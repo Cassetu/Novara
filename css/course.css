@@ -127,6 +127,29 @@
     background-color: #f0f0f0;
 }
 
+.mcq-option input:disabled {
+    cursor: not-allowed;
+}
+
+.mcq-option.locked {
+    cursor: default;
+    opacity: 0.7;
+}
+
+.mcq-option.locked:hover {
+    border-color: var(--border);
+}
+
+.mcq-option.reveal-correct {
+    border-color: #5b9ea6;
+    color: #5b9ea6;
+}
+
+.mcq-option.reveal-incorrect {
+    border-color: #444444;
+    color: #888888;
+}
+
 .controls button {
     padding: 12px 30px;
     background-color: var(--bg);
@@ -294,12 +317,13 @@ body.lesson-active .workspace {
 .rating-dot {
     width: 8px;
     height: 8px;
-    background-color: var(--border);
+    background-color: #cccccc;
     border-radius: 50%;
+    transition: background-color 0.2s ease;
 }
 
 .rating-dot.filled {
-    background-color: var(--accent);
+    background-color: #007bff;
 }
 
 #view-lesson {
@@ -338,11 +362,22 @@ body.lesson-active .workspace {
     height: 10px;
     border: 1px solid var(--text-dim);
     border-radius: 50%;
+    transition: all 0.2s ease;
 }
 
 .p-dot.active {
+    border-color: var(--accent);
+    background-color: transparent;
+}
+
+.p-dot.correct {
     background-color: #007bff;
     border-color: #007bff;
+}
+
+.p-dot.incorrect {
+    background-color: #444444;
+    border-color: #444444;
 }
 
 button:disabled {

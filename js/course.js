@@ -5,8 +5,11 @@ let activeCurriculumData = null;
 let activeLessonData = null;
 let currentQuestionIndex = 0;
 let correctAnswersCount = 0;
+let isQuestionSubmitted = false;
+let questionResults = [];
 
 const correctSound = new Audio("assets/sfx/correct.mp3");
+const incorrectSound = new Audio("assets/sfx/incorrect.mp3");
 
 const viewExplorer = document.getElementById("view-explorer");
 const viewSyllabus = document.getElementById("view-syllabus");
@@ -145,10 +148,13 @@ async function openSyllabus(courseMeta) {
         sectionBlock.appendChild(header);
 
         section.lessons.forEach(lesson => {
+            const safeLessonId = lesson.id || lesson.title.replace(/\s+/g, '-').toLowerCase();
+            lesson.id = safeLessonId;
+
             const row = document.createElement("div");
             row.className = "lesson-row";
 
-            const score = userData.scores?.[lesson.id] || 0;
+            const score = userData.scores?.[safeLessonId] || 0;
 
             row.innerHTML = `
                 <div class="lesson-title">${lesson.title}</div>
@@ -168,10 +174,21 @@ async function openSyllabus(courseMeta) {
     });
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 function startLesson(lesson) {
-    activeLessonData = lesson;
+    activeLessonData = JSON.parse(JSON.stringify(lesson));
+    activeLessonData.questions = shuffleArray(activeLessonData.questions);
+
     currentQuestionIndex = 0;
     correctAnswersCount = 0;
+    questionResults = [];
 
     document.body.classList.add("lesson-active");
     switchView("view-lesson");
@@ -183,15 +200,22 @@ function renderQuestion() {
     const qData = activeLessonData.questions[currentQuestionIndex];
     const lessonView = document.getElementById("view-lesson");
 
+    isQuestionSubmitted = false;
+
     let optionsHtml = qData.options.map((opt, i) => `
-        <label class="mcq-option">
+        <label class="mcq-option" id="opt-label-${i}">
             <input type="radio" name="answer" value="${i}"> ${opt}
         </label>
     `).join("");
 
-    let dotsHtml = activeLessonData.questions.map((_, i) => `
-        <div class="p-dot ${i <= currentQuestionIndex ? 'active' : ''}"></div>
-    `).join("");
+    let dotsHtml = activeLessonData.questions.map((_, i) => {
+        let dotClass = "";
+        if (i === currentQuestionIndex) dotClass = "active";
+        else if (questionResults[i] === true) dotClass = "correct";
+        else if (questionResults[i] === false) dotClass = "incorrect";
+
+        return `<div class="p-dot ${dotClass}"></div>`;
+    }).join("");
 
     lessonView.innerHTML = `
         <div class="lesson-workspace">
@@ -203,39 +227,71 @@ function renderQuestion() {
 
             <div class="lesson-footer">
                 <div class="progress-dots">${dotsHtml}</div>
-                <button id="lesson-next-btn" disabled>next</button>
+                <button id="lesson-action-btn" disabled>submit</button>
             </div>
         </div>
     `;
 
     const radios = document.querySelectorAll('input[name="answer"]');
-    const nextBtn = document.getElementById("lesson-next-btn");
+    const actionBtn = document.getElementById("lesson-action-btn");
 
     radios.forEach(radio => {
         radio.addEventListener("change", () => {
-            nextBtn.disabled = false;
+            if (!isQuestionSubmitted) actionBtn.disabled = false;
         });
     });
 
-    nextBtn.addEventListener("click", handleNextQuestion);
+    actionBtn.addEventListener("click", handleActionClick);
 }
 
-async function handleNextQuestion() {
+async function handleActionClick() {
     const qData = activeLessonData.questions[currentQuestionIndex];
-    const selected = document.querySelector('input[name="answer"]:checked');
+    const actionBtn = document.getElementById("lesson-action-btn");
 
-    if (parseInt(selected.value) === qData.answer) {
-        correctAnswersCount++;
-        correctSound.currentTime = 0;
-        correctSound.play();
-    }
+    if (!isQuestionSubmitted) {
+        const selectedRadio = document.querySelector('input[name="answer"]:checked');
+        const selectedVal = parseInt(selectedRadio.value);
+        const isCorrect = selectedVal === qData.answer;
 
-    currentQuestionIndex++;
+        questionResults[currentQuestionIndex] = isCorrect;
 
-    if (currentQuestionIndex < activeLessonData.questions.length) {
-        renderQuestion();
+        if (isCorrect) {
+            correctAnswersCount++;
+            correctSound.currentTime = 0;
+            correctSound.play();
+        } else {
+            incorrectSound.currentTime = 0;
+            incorrectSound.play();
+        }
+
+        const allRadios = document.querySelectorAll('input[name="answer"]');
+        const allLabels = document.querySelectorAll('.mcq-option');
+
+        allRadios.forEach(r => r.disabled = true);
+        allLabels.forEach(l => l.classList.add("locked"));
+
+        const selectedLabel = document.getElementById(`opt-label-${selectedVal}`);
+        if (isCorrect) {
+            selectedLabel.classList.add("reveal-correct");
+        } else {
+            selectedLabel.classList.add("reveal-incorrect");
+            document.getElementById(`opt-label-${qData.answer}`).classList.add("reveal-correct");
+        }
+
+        const dots = document.querySelectorAll('.p-dot');
+        dots[currentQuestionIndex].classList.remove('active');
+        dots[currentQuestionIndex].classList.add(isCorrect ? 'correct' : 'incorrect');
+
+        actionBtn.innerText = "next";
+        isQuestionSubmitted = true;
     } else {
-        finishLesson();
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < activeLessonData.questions.length) {
+            renderQuestion();
+        } else {
+            finishLesson();
+        }
     }
 }
 
@@ -257,7 +313,9 @@ async function finishLesson() {
 
     if (!userData.scores) userData.scores = {};
 
-    if (finalScore > (userData.scores[activeLessonData.id] || 0)) {
+    const currentHighscore = userData.scores[activeLessonData.id] || 0;
+
+    if (finalScore > currentHighscore) {
         userData.scores[activeLessonData.id] = finalScore;
         const userRef = window.doc(window.db, "users", currentUser.uid);
         await window.setDoc(userRef, { scores: userData.scores }, { merge: true });
@@ -265,6 +323,10 @@ async function finishLesson() {
 
     document.getElementById("return-btn").addEventListener("click", () => {
         const courseMeta = catalogData.find(c => c.id === activeCurriculumData.id);
-        openSyllabus(courseMeta);
+        if (courseMeta) {
+            openSyllabus(courseMeta);
+        } else {
+            navExplorer.click();
+        }
     });
 }
