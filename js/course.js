@@ -14,9 +14,11 @@ const incorrectSound = new Audio("assets/sfx/incorrect.mp3");
 const viewExplorer = document.getElementById("view-explorer");
 const viewSyllabus = document.getElementById("view-syllabus");
 const viewLesson = document.getElementById("view-lesson");
+const viewSettings = document.getElementById("view-settings");
 const catalogGrid = document.getElementById("catalog-grid");
 const enrolledList = document.getElementById("enrolled-list");
 const navExplorer = document.getElementById("nav-explorer");
+const navSettings = document.getElementById("nav-settings");
 
 window.firebaseAuth.onAuthStateChanged(async (user) => {
     if (user) {
@@ -43,6 +45,7 @@ function switchView(viewId) {
     viewExplorer.style.display = "none";
     viewSyllabus.style.display = "none";
     viewLesson.style.display = "none";
+    viewSettings.style.display = "none";
     document.getElementById(viewId).style.display = "block";
     document.body.classList.remove("lesson-active");
 }
@@ -55,6 +58,49 @@ navExplorer.addEventListener("click", async (e) => {
     }
     renderExplorer();
     switchView("view-explorer");
+});
+
+navSettings.addEventListener("click", (e) => {
+    e.preventDefault();
+    switchView("view-settings");
+});
+
+const reqWipeBtn = document.getElementById("request-wipe-btn");
+const wipeAuthBlock = document.getElementById("wipe-auth-block");
+const wipeConfirmInput = document.getElementById("wipe-confirm-input");
+const execWipeBtn = document.getElementById("execute-wipe-btn");
+
+reqWipeBtn.addEventListener("click", () => {
+    reqWipeBtn.style.display = "none";
+    wipeAuthBlock.style.display = "block";
+});
+
+wipeConfirmInput.addEventListener("input", (e) => {
+    if (e.target.value === "PURGE") {
+        execWipeBtn.disabled = false;
+        execWipeBtn.style.backgroundColor = "#ff4444";
+        execWipeBtn.style.color = "var(--void)";
+    } else {
+        execWipeBtn.disabled = true;
+        execWipeBtn.style.backgroundColor = "transparent";
+        execWipeBtn.style.color = "#ff4444";
+    }
+});
+
+execWipeBtn.addEventListener("click", async () => {
+    const userRef = window.doc(window.db, "users", currentUser.uid);
+    await window.setDoc(userRef, { enrolled: [], scores: {} });
+
+    userData = { enrolled: [], scores: {} };
+    wipeConfirmInput.value = "";
+    execWipeBtn.disabled = true;
+    execWipeBtn.style.backgroundColor = "transparent";
+    execWipeBtn.style.color = "#ff4444";
+    wipeAuthBlock.style.display = "none";
+    reqWipeBtn.style.display = "inline-block";
+
+    renderExplorer();
+    navExplorer.click();
 });
 
 async function enrollInCourse(course) {

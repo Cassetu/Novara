@@ -26,17 +26,17 @@
 <div id="app-view" class="app" style="display: none;">
 
     <aside class="sidebar" id="main-sidebar">
-        <h2>active</h2>
+        <h2>Active</h2>
         <nav>
             <ul id="enrolled-list">
             </ul>
         </nav>
 
-        <h2 style="margin-top: 40px;">system</h2>
+        <h2 style="margin-top: 40px;">System</h2>
         <nav>
             <ul>
-                <li><a href="#" id="nav-explorer">curriculums</a></li>
-                <li><a href="#" id="nav-settings">settings</a></li>
+                <li><a href="#" id="nav-explorer">Curriculums</a></li>
+                <li><a href="#" id="nav-settings">Settings</a></li>
             </ul>
         </nav>
     </aside>
@@ -46,10 +46,10 @@
         <div id="view-explorer" class="view-layer">
             <div class="explorer-header">
                 <div class="category-filters">
-                    <button class="filter-btn active" data-filter="all">all</button>
-                    <button class="filter-btn" data-filter="engineering">engineering</button>
-                    <button class="filter-btn" data-filter="data">data</button>
-                    <button class="filter-btn" data-filter="design">design</button>
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="engineering">Engineering</button>
+                    <button class="filter-btn" data-filter="data">Data</button>
+                    <button class="filter-btn" data-filter="design">Design</button>
                 </div>
                 <input type="text" id="search-bar" placeholder="search matrix...">
             </div>
@@ -62,6 +62,24 @@
         </div>
 
         <div id="view-lesson" class="view-layer" style="display: none;">
+        </div>
+
+        <div id="view-settings" class="view-layer" style="display: none;">
+            <h2>System Settings</h2>
+
+            <div class="danger-zone">
+                <h3>Danger Zone</h3>
+                <p>Execute a complete purge. This will permanently erase all enrollments, scores, and progress from the database. This action cannot be undone.</p>
+
+                <div id="wipe-auth-block" style="display: none; margin-top: 25px;">
+                    <p style="color: var(--text-dim); margin-bottom: 10px;">To verify identity, type <strong>PURGE</strong> below:</p>
+                    <input type="text" id="wipe-confirm-input" placeholder="..." spellcheck="false" autocomplete="off" style="padding: 10px; background: var(--void); color: #ff4444; border: 1px solid var(--border); width: 100%; max-width: 300px; margin-bottom: 15px; outline: none; font-family: monospace;">
+                    <br>
+                    <button id="execute-wipe-btn" class="danger-btn" disabled>Execute Purge</button>
+                </div>
+
+                <button id="request-wipe-btn" class="danger-btn">Request Data Wipe</button>
+            </div>
         </div>
 
     </main>

@@ -5,8 +5,9 @@
 }
 
 body {
-    font-family: sans-serif;
-    color: #333;
+    font-family: 'Courier New', Courier, monospace;
+    color: #0a0a0a;
+    background: #ffffff;
 }
 
 .auth {
@@ -14,70 +15,160 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f4f4f9;
+    background-color: #f0f0f0;
 }
 
 .auth-box {
-    font-family: Georgia, sans-serif;
-    background: white;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-family: 'Courier New', Courier, monospace;
+    background: #ffffff;
+    padding: 48px;
+    border: 2px solid #0a0a0a;
     text-align: center;
-    width: 320px;
+    width: 360px;
+}
+
+.auth-box h2 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #888888;
+    margin-bottom: 32px;
 }
 
 .auth-box input {
     width: 100%;
-    padding: 10px;
-    margin: 15px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 12px 14px;
+    margin: 8px 0;
+    border: 1px solid #cccccc;
+    border-radius: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    outline: none;
+    background: #f8f8f8;
+    color: #0a0a0a;
+    transition: border-color 0.15s ease;
+}
+
+.auth-box input:focus {
+    border-color: #0a0a0a;
+    background: #ffffff;
+}
+
+.auth-box input::placeholder {
+    color: #aaaaaa;
 }
 
 .auth-box button {
-    font-family: Georgia, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
     width: 100%;
-    padding: 10px;
-    background-color: #1e1e1e;
-    color: white;
-    border: none;
-    border-radius: 4px;
+    padding: 13px;
+    margin-top: 16px;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    border: 2px solid #0a0a0a;
+    border-radius: 0;
     cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.auth-box button:hover {
+    background-color: #ffffff;
+    color: #0a0a0a;
+}
+
+.auth-box .auth-link {
+    display: block;
+    margin-top: 20px;
+    font-size: 11px;
+    color: #888888;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.auth-box .auth-link:hover {
+    color: #0a0a0a;
 }
 
 .app {
     display: flex;
     height: 100vh;
+    overflow: hidden;
 }
 
 .sidebar {
-    width: 250px;
-    background-color: #1e1e1e;
-    color: white;
-    padding: 20px;
+    width: 240px;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    padding: 0;
+    flex-shrink: 0;
+    border-right: 2px solid #0a0a0a;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-brand {
+    padding: 24px 20px;
+    border-bottom: 1px solid #1e1e1e;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #555555;
+}
+
+.sidebar-section-label {
+    padding: 16px 20px 8px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #3a3a3a;
 }
 
 .sidebar ul {
     list-style: none;
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    padding: 4px 0;
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
-.sidebar a {
-    color: #a0a0a0;
+.sidebar ul li a {
+    display: block;
+    padding: 11px 20px;
+    color: #888888;
     text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    border-left: 2px solid transparent;
+    transition: color 0.1s ease, background-color 0.1s ease, border-color 0.1s ease;
 }
 
-.sidebar a:hover {
-    color: white;
+.sidebar ul li a:hover {
+    color: #ffffff;
+    background-color: #1a1a1a;
+    border-left-color: #ffffff;
+}
+
+.sidebar ul li.active a {
+    color: #ffffff;
+    background-color: #1a1a1a;
+    border-left-color: #ffffff;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid #1e1e1e;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #3a3a3a;
+    text-transform: uppercase;
 }
 
 .workspace {
     flex-grow: 1;
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     padding: 40px;
     overflow-y: auto;
 }
