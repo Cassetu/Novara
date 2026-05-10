@@ -611,3 +611,41 @@ code {
     font-size: 14px;
     color: var(--text-dim);
 }
+
+.practice-card {
+    border: 1px solid var(--border);
+    padding: 25px;
+    background-color: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.practice-card h3 {
+    color: var(--text-main);
+    font-size: 18px;
+}
+
+.practice-btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.practice-btn-group button {
+    flex: 1;
+    font-size: 12px;
+}
+
+.strike-dot {
+    width: 12px;
+    height: 12px;
+    background-color: transparent;
+    border: 2px solid var(--text-dim);
+    border-radius: 2px;
+}
+
+.strike-dot.lost {
+    background-color: #ff4444;
+    border-color: #ff4444;
+}
