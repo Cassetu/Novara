@@ -190,7 +190,8 @@ function shuffleArray(array) {
 
 function parseCode(str) {
     if (!str) return "";
-    return str.replace(/`([^`]+)`/g, '<code>$1</code>');
+    const safeStr = str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return safeStr.replace(/`([^`]+)`/g, '<code>$1</code>');
 }
 
 async function fetchCourseData(courseMeta) {

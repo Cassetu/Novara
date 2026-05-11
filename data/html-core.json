@@ -1,0 +1,1551 @@
+{
+  "id": "html-core",
+  "title": "HTML Architecture: The Skeleton",
+  "sections": [
+    {
+      "title": "Module 1: The Root Node",
+      "lessons": [
+        {
+          "id": "l-intro-html",
+          "title": "Markup and Structure",
+          "type": "document",
+          "content": "HTML (HyperText Markup Language) is a structural blueprint. Browsers parse this blueprint to construct the Document Object Model (DOM). Every piece of text, image, and container on a webpage is a 'Node' in this tree.\n\nYou define these nodes using tags enclosed in angle brackets. Most elements require an opening tag and a closing tag to define exactly where the element's memory boundaries begin and end. The closing tag is identical to the opening tag, but preceded by a forward slash `/`.\n\nThere are two main zones in an HTML document. The `<head>` zone contains invisible metadata, configuration settings, and links to external files. The `<body>` zone contains the physical, visible payload that the user actually sees and interacts with. Both of these zones must be wrapped inside the master root node, which is the `<html>` tag.",
+          "examples": [
+            {
+              "label": "Standard HTML5 Boilerplate",
+              "code": "<!DOCTYPE html>\n<html>\n  <head>\n    \n  </head>\n  <body>\n    \n  </body>\n</html>"
+            }
+          ]
+        },
+        {
+          "id": "l-html-syntax",
+          "title": "Syntax Fundamentals",
+          "questions": [
+            {
+              "q": "What syntax is used to explicitly declare the closing boundary of an HTML node?",
+              "options": ["`\\`", "`*`", "`/`", "`!`"],
+              "answer": 2,
+              "explanation": "A forward slash `/` inside the angle brackets explicitly tells the browser engine to close the current node. Example: `</p>`."
+            },
+            {
+              "q": "Which tag serves as the master root node that wraps all other content, including the head and body?",
+              "options": ["`<root>`", "`<main>`", "`<document>`", "`<html>`"],
+              "answer": 3,
+              "explanation": "The `<html>` tag encapsulates the entire document structure, separating the HTML payload from the browser's internal engine space."
+            },
+            {
+              "q": "Where does the visual user interface payload of a webpage belong?",
+              "options": ["Inside the `<head>` tag", "Inside the `<title>` tag", "Inside the `<body>` tag", "Inside the `<html>` tag directly"],
+              "answer": 2,
+              "explanation": "The `<head>` contains invisible metadata. The `<body>` contains the actual physical elements rendered onto the user's screen."
+            },
+            {
+              "q": "Which declaration must appear at the absolute top of every HTML5 file, before the `<html>` tag?",
+              "options": ["`<html5>`", "`<!-- HTML5 -->`", "`<!DOCTYPE html>`", "`<doctype>`"],
+              "answer": 2,
+              "explanation": "The `<!DOCTYPE html>` declaration is not a tag. It is a processing instruction that tells the browser to render the document using the HTML5 standard, not a legacy mode."
+            },
+            {
+              "q": "What is the DOM?",
+              "options": ["A server-side database.", "A CSS preprocessor.", "The tree structure the browser builds from your HTML, where each element is a node.", "A JavaScript animation library."],
+              "answer": 2,
+              "explanation": "The Document Object Model is the live, in-memory tree representation of your HTML. JavaScript reads and modifies this tree at runtime."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-boilerplate",
+          "title": "Protocol: Initialization",
+          "type": "challenge",
+          "prompt": "Every modern application must explicitly instruct the browser engine to use the HTML5 rendering standard before any other code is executed.\n\nDeclare the exact document type instruction required at the absolute top of an HTML file.",
+          "solution": "<!DOCTYPE html>",
+          "validation": [
+            {
+              "rule": "^<!DOCTYPE html>$",
+              "message": "error: invalid doctype declaration. check your capitalization and spacing."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-root-structure",
+          "title": "Protocol: Root Structure",
+          "type": "challenge",
+          "prompt": "Construct the complete root skeleton of an HTML5 document.\n\nIt must include the doctype declaration, the `<html>` root node, and both a `<head>` and a `<body>` child inside the html tag. Both the head and body must be empty.",
+          "solution": "<!DOCTYPE html>\n<html>\n  <head>\n  </head>\n  <body>\n  </body>\n</html>",
+          "validation": [
+            {
+              "rule": "<!DOCTYPE html>",
+              "message": "error: missing DOCTYPE declaration."
+            },
+            {
+              "rule": "<html>[\\s\\S]*</html>",
+              "message": "error: missing or unclosed <html> root node."
+            },
+            {
+              "rule": "<head>[\\s\\S]*</head>",
+              "message": "error: missing or unclosed <head> tag."
+            },
+            {
+              "rule": "<body>[\\s\\S]*</body>",
+              "message": "error: missing or unclosed <body> tag."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Semantic Integrity",
+      "lessons": [
+        {
+          "id": "l-semantics",
+          "title": "Meaningful Containers",
+          "type": "document",
+          "content": "Amateurs use the generic `<div>` (division) tag to build everything. This creates an architecture that is impossible for screen readers and search engine crawlers to parse effectively.\n\nMaster engineers use Semantic Tags. These tags physically act exactly like a `<div>`, but they describe their structural purpose to the system.\n\nKey semantic wrappers include:\n- `<nav>`: Explicitly for navigation routers and links.\n- `<article>`: An independent, self-contained block of data that makes sense on its own (like a blog post).\n- `<section>`: Groups related content together.\n- `<main>`: Wraps the primary, unique content of the page.\n- `<header>`: Wraps the top portion of a page or a section. Usually contains a logo, site title, or navigation.\n- `<footer>`: Wraps the bottom portion of a page or a section. Usually contains copyright info and supplementary links.\n- `<aside>`: Marks content that is tangentially related to the surrounding content, like a sidebar.\n\nFor text formatting, HTML supports headings `<h1>` through `<h6>`. The `<h1>` must strictly be used only once per page for the primary title. To emphasize text with semantic weight, use `<strong>` rather than the legacy `<b>` tag. To italicize with meaning, use `<em>` (emphasis) rather than the legacy `<i>` tag.",
+          "examples": [
+            {
+              "label": "Semantic Architecture",
+              "code": "<header>\n  <nav>\n    <a href=\"/\">Home</a>\n  </nav>\n</header>\n<main>\n  <article>\n    <h1>System Status</h1>\n    <p>The network is <strong>online</strong>.</p>\n  </article>\n  <aside>\n    <p>Last checked: 2 minutes ago.</p>\n  </aside>\n</main>\n<footer>\n  <p>All rights reserved.</p>\n</footer>"
+            }
+          ]
+        },
+        {
+          "id": "l-headings-text",
+          "title": "Hierarchy and Text",
+          "questions": [
+            {
+              "q": "Which tag defines an independent, self-contained block of data that could theoretically be distributed on its own?",
+              "options": ["`<section>`", "`<div>`", "`<article>`", "`<main>`"],
+              "answer": 2,
+              "explanation": "The `<article>` tag specifies independent content. A `<section>` groups related content, but an `<article>` is fully autonomous."
+            },
+            {
+              "q": "What is the architectural rule regarding the `<h1>` tag?",
+              "options": ["It must be used for all bold text.", "It must only be used once per page.", "It must be placed inside the `<head>`.", "It replaces the `<title>` tag."],
+              "answer": 1,
+              "explanation": "The `<h1>` represents the single most important heading on the page. Search engines heavily penalize pages that use multiple `<h1>` tags."
+            },
+            {
+              "q": "To emphasize a word while actively applying semantic weight for screen readers, which tag should you deploy?",
+              "options": ["`<b>`", "`<strong>`", "`<em>`", "`<bold>`"],
+              "answer": 1,
+              "explanation": "While `<b>` merely alters the physical pixels to bold, `<strong>` applies structural semantic weight, commanding screen readers to emphasize the payload audibly."
+            },
+            {
+              "q": "Which semantic tag is the correct wrapper for the bottom section of a page containing copyright text?",
+              "options": ["`<bottom>`", "`<section>`", "`<footer>`", "`<end>`"],
+              "answer": 2,
+              "explanation": "The `<footer>` element semantically marks the concluding section of a page or parent element. Screen readers and crawlers use it to identify supplementary closing information."
+            },
+            {
+              "q": "Which tag marks content that is supplementary to the main content, like a sidebar or a pull-quote?",
+              "options": ["`<extra>`", "`<side>`", "`<nav>`", "`<aside>`"],
+              "answer": 3,
+              "explanation": "The `<aside>` element communicates to the browser that its content is related to, but not essential to, the primary content flow."
+            },
+            {
+              "q": "You want to italicize a technical term and have screen readers treat it with tonal emphasis. Which tag is correct?",
+              "options": ["`<i>`", "`<italic>`", "`<em>`", "`<slant>`"],
+              "answer": 2,
+              "explanation": "`<em>` (emphasis) italicizes text and carries semantic meaning. `<i>` is a purely visual tag with no semantic weight."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-article",
+          "title": "Protocol: Semantic Wrapper",
+          "type": "challenge",
+          "prompt": "Construct an `<article>` node.\n\nInside the article, nest an `<h2>` heading element containing the text 'System Alert'. Below the heading, nest a `<p>` paragraph element containing the text 'Breach detected'.",
+          "solution": "<article>\n  <h2>System Alert</h2>\n  <p>Breach detected</p>\n</article>",
+          "validation": [
+            {
+              "rule": "<article>[\\s\\S]*</article>",
+              "message": "error: payload must be wrapped entirely within an <article> node."
+            },
+            {
+              "rule": "<h2>System Alert</h2>",
+              "message": "error: missing or malformed <h2> heading payload."
+            },
+            {
+              "rule": "<p>Breach detected</p>",
+              "message": "error: missing or malformed <p> paragraph payload."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-page-layout",
+          "title": "Protocol: Full Semantic Shell",
+          "type": "challenge",
+          "prompt": "Construct the semantic shell of a standard webpage.\n\nCreate a `<header>` tag. Inside it, place a `<nav>` tag (empty). Below the header, create a `<main>` tag (empty). Below the main, create a `<footer>` tag containing a `<p>` tag with the text 'End of transmission.'",
+          "solution": "<header>\n  <nav></nav>\n</header>\n<main></main>\n<footer>\n  <p>End of transmission.</p>\n</footer>",
+          "validation": [
+            {
+              "rule": "<header>[\\s\\S]*</header>",
+              "message": "error: missing or unclosed <header> element."
+            },
+            {
+              "rule": "<nav>\\s*</nav>",
+              "message": "error: missing or unclosed <nav> element inside the header."
+            },
+            {
+              "rule": "<main>\\s*</main>",
+              "message": "error: missing or unclosed <main> element."
+            },
+            {
+              "rule": "<footer>[\\s\\S]*</footer>",
+              "message": "error: missing or unclosed <footer> element."
+            },
+            {
+              "rule": "<p>End of transmission\\.</p>",
+              "message": "error: footer must contain a <p> with text 'End of transmission.'"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Hyperlinks and Networking",
+      "lessons": [
+        {
+          "id": "l-links",
+          "title": "Anchor Mechanics",
+          "type": "document",
+          "content": "Nodes isolated from the network are useless. We interconnect documents using the Anchor tag `<a>`.\n\nA raw `<a>` tag does nothing. We must inject parameters directly into the opening tag to provide operational data. We call these parameters 'Attributes'. Attributes always follow the format `name=\"value\"`.\n\nThe primary attribute for an anchor tag is `href` (Hypertext REFerence), containing the destination URL. Whatever text you place between the opening `<a>` and closing `</a>` tags becomes the clickable blue link on the screen.\n\nBy default, clicking a link overwrites the current browser tab. If you are linking to an external website and want to preserve your application's session, you must add the `target=\"_blank\"` attribute to force the browser to spawn a completely new tab.\n\nThere are two types of paths. An 'absolute' path starts from the root and includes the full protocol, like `https://example.com/page`. A 'relative' path is relative to the current file's location, like `../about.html` or simply `/contact`. Relative paths are standard practice inside the same project.",
+          "examples": [
+            {
+              "label": "Anchor Tag with Attributes",
+              "code": "<a href=\"https://matrix.dev\" target=\"_blank\">\n  Access Server\n</a>\n\n<a href=\"/about\">About</a>"
+            }
+          ]
+        },
+        {
+          "id": "l-link-questions",
+          "title": "Hyperlink Attributes",
+          "questions": [
+            {
+              "q": "What is the standard syntax for writing an HTML attribute?",
+              "options": ["`name: value`", "`name=\"value\"`", "`name(value)`", "`{name: value}`"],
+              "answer": 1,
+              "explanation": "Attributes are placed in the opening tag, separated by a space, using the `name=\"value\"` syntax."
+            },
+            {
+              "q": "Which attribute holds the destination URL for an anchor tag?",
+              "options": ["`src`", "`link`", "`href`", "`url`"],
+              "answer": 2,
+              "explanation": "`href` stands for Hypertext Reference. It tells the browser exactly where to route the user when the element is clicked."
+            },
+            {
+              "q": "To force a hyperlink to spawn a completely new browser tab, which attribute is required?",
+              "options": ["`target=\"_blank\"`", "`window=\"new\"`", "`href=\"_new\"`", "`open=\"tab\"`"],
+              "answer": 0,
+              "explanation": "Injecting `target=\"_blank\"` into the anchor tag overrides default browser navigation, forcing the destination to render in a new process thread."
+            },
+            {
+              "q": "A link that reads `<a href=\"/contact\">` is using which type of path?",
+              "options": ["An absolute path.", "A relative path.", "A protocol path.", "An anchor path."],
+              "answer": 1,
+              "explanation": "A relative path does not include the domain. It is resolved relative to the current document's location. `/contact` means the contact page within the same site."
+            },
+            {
+              "q": "You want to link to an email address so clicking the link opens the user's mail app. What should the `href` value begin with?",
+              "options": ["`email:`", "`to:`", "`mailto:`", "`mail://`"],
+              "answer": 2,
+              "explanation": "The `mailto:` protocol prefix tells the browser to hand the address off to the system's default email client instead of navigating to a URL."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-anchor",
+          "title": "Protocol: Hyperlink Injection",
+          "type": "challenge",
+          "prompt": "Construct an anchor tag that routes exactly to `/dashboard`.\n\nThe clickable textual payload inside the anchor tag must be exactly the string 'Initialize'. Do not open it in a new tab.",
+          "solution": "<a href=\"/dashboard\">Initialize</a>",
+          "validation": [
+            {
+              "rule": "<a\\s+",
+              "message": "error: must instantiate an anchor <a> tag."
+            },
+            {
+              "rule": "href=[\"']/dashboard[\"']",
+              "message": "error: href parameter must explicitly target '/dashboard'."
+            },
+            {
+              "rule": ">Initialize</a>",
+              "message": "error: text payload must be exactly 'Initialize' and the node must be properly terminated."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-external-link",
+          "title": "Protocol: External Link",
+          "type": "challenge",
+          "prompt": "Construct an anchor tag that routes to `https://example.com`.\n\nThe visible text must be 'Visit Site'. It must open in a new tab.",
+          "solution": "<a href=\"https://example.com\" target=\"_blank\">Visit Site</a>",
+          "validation": [
+            {
+              "rule": "href=[\"']https://example\\.com[\"']",
+              "message": "error: href must be exactly 'https://example.com'."
+            },
+            {
+              "rule": "target=[\"']_blank[\"']",
+              "message": "error: missing target='_blank' to open in a new tab."
+            },
+            {
+              "rule": ">Visit Site</a>",
+              "message": "error: link text must be exactly 'Visit Site'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 4: Media Assets",
+      "lessons": [
+        {
+          "id": "l-media",
+          "title": "Images and Video",
+          "type": "document",
+          "content": "To inject external visual data, we deploy the `<img>` tag. Unlike paragraphs or articles, the `<img>` tag is a 'Void Element' (or self-closing tag). It does not wrap around text, so it does not have a closing tag.\n\nThe `<img>` tag requires the `src` (source) attribute to point to the file path. Furthermore, it strictly mandates the `alt` (alternative text) attribute to maintain accessibility compliance. The `alt` text is intercepted by screen readers for visually impaired users and displayed if the network drops the image payload.\n\nFor moving pictures, we use the `<video>` tag. This is NOT a void element. It requires a closing tag. You must provide the `src` attribute, and importantly, you must include the `controls` boolean attribute if you want the browser to render play, pause, and volume buttons for the user.\n\nFor audio, we use the `<audio>` tag the same way. It is also not a void element, requires a closing tag, and also uses the `controls` boolean attribute to expose playback buttons.\n\nFor both `<video>` and `<audio>`, you can place a `<source>` tag inside instead of using the `src` attribute directly. This lets you specify multiple file formats as fallbacks. The browser picks the first format it can decode.",
+          "examples": [
+            {
+              "label": "Media Injection",
+              "code": "<img src=\"/assets/blueprint.png\" alt=\"system schematic\">\n\n<video controls>\n  <source src=\"/stream.mp4\" type=\"video/mp4\">\n  <source src=\"/stream.webm\" type=\"video/webm\">\n</video>\n\n<audio controls>\n  <source src=\"/signal.mp3\" type=\"audio/mpeg\">\n</audio>"
+            }
+          ]
+        },
+        {
+          "id": "l-media-questions",
+          "title": "Media Constraints",
+          "questions": [
+            {
+              "q": "What defines a 'Void Element' like the `<img>` tag?",
+              "options": ["It is invisible.", "It has no opening tag.", "It has no closing tag because it cannot wrap content.", "It requires a JavaScript compiler."],
+              "answer": 2,
+              "explanation": "Void elements embed an asset directly into the DOM structure. Because they do not wrap text or other HTML tags, they close themselves."
+            },
+            {
+              "q": "Which attribute is strictly mandatory for an `<img>` tag to maintain accessibility compliance for visually impaired users?",
+              "options": ["`title`", "`description`", "`alt`", "`src`"],
+              "answer": 2,
+              "explanation": "The `alt` (alternative text) attribute provides a text fallback. Without it, screen readers will read the raw filename, which creates a terrible user experience."
+            },
+            {
+              "q": "What happens if you embed a `<video>` tag but forget to include the `controls` attribute?",
+              "options": ["The video plays automatically.", "The video crashes.", "The video displays like a static image and cannot be interacted with.", "The browser injects default controls."],
+              "answer": 2,
+              "explanation": "Without the `controls` boolean attribute, the video will load but the user will have no UI to play, pause, or unmute it."
+            },
+            {
+              "q": "Why would you use multiple `<source>` tags inside a `<video>` element?",
+              "options": ["To create a playlist of videos.", "To provide multiple file format fallbacks so the browser picks one it supports.", "To set different quality levels.", "To play multiple videos simultaneously."],
+              "answer": 1,
+              "explanation": "Different browsers support different video codecs. Providing a `.mp4` and a `.webm` source ensures the video plays regardless of which browser the user is running."
+            },
+            {
+              "q": "Which tag is used to embed audio files with playback controls?",
+              "options": ["`<sound>`", "`<mp3>`", "`<audio>`", "`<media>`"],
+              "answer": 2,
+              "explanation": "The `<audio>` tag is the dedicated HTML5 element for embedding audio. Like `<video>`, it uses the `controls` boolean attribute to expose the playback UI."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-image",
+          "title": "Protocol: Image Injection",
+          "type": "challenge",
+          "prompt": "Construct an image tag targeting the source `/logo.png`.\n\nYou must include an accessibility attribute describing the image as 'Company Logo'.",
+          "solution": "<img src=\"/logo.png\" alt=\"Company Logo\">",
+          "validation": [
+            {
+              "rule": "<img\\s+",
+              "message": "error: must instantiate an <img> tag."
+            },
+            {
+              "rule": "src=[\"']/logo.png[\"']",
+              "message": "error: source target must be strictly '/logo.png'."
+            },
+            {
+              "rule": "alt=[\"']Company Logo[\"']",
+              "message": "error: missing or malformed alt text payload."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-audio",
+          "title": "Protocol: Audio Embed",
+          "type": "challenge",
+          "prompt": "Construct an `<audio>` element with playback controls enabled.\n\nInside the audio tag, place a `<source>` tag with a `src` of `/alert.mp3` and a `type` of `audio/mpeg`.",
+          "solution": "<audio controls>\n  <source src=\"/alert.mp3\" type=\"audio/mpeg\">\n</audio>",
+          "validation": [
+            {
+              "rule": "<audio[\\s\\S]*controls[\\s\\S]*>",
+              "message": "error: <audio> element must include the 'controls' boolean attribute."
+            },
+            {
+              "rule": "<source\\s+",
+              "message": "error: missing <source> tag inside the audio element."
+            },
+            {
+              "rule": "src=[\"']/alert\\.mp3[\"']",
+              "message": "error: source src must be '/alert.mp3'."
+            },
+            {
+              "rule": "type=[\"']audio/mpeg[\"']",
+              "message": "error: source type must be 'audio/mpeg'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 5: Tabular Data Constraints",
+      "lessons": [
+        {
+          "id": "l-tables",
+          "title": "Grid Architecture",
+          "type": "document",
+          "content": "Historically, developers used HTML tables to build the layout of entire websites. This is now considered a catastrophic architectural failure. Tables must be strictly reserved for rendering two-dimensional tabular data (like spreadsheets).\n\nA `<table>` acts as the master wrapper. Inside, you define rows using the `<tr>` (table row) tag.\n\nInside the rows, you define the actual cells. Use `<th>` (table header) for labels at the top of a column. Browsers natively render `<th>` text as bold and centered. For standard data cells, use `<td>` (table data).\n\nFor better organization and accessibility, you can also group rows into three semantic sections: `<thead>` wraps the header rows, `<tbody>` wraps the main data rows, and `<tfoot>` wraps any summary or totals rows at the bottom. These do not change the visual output by default, but they give screen readers and CSS a clean structural hook to work with.\n\nIf you need a single data cell to stretch horizontally across multiple columns, you apply the `colspan` attribute to that specific cell. To stretch vertically across multiple rows, use `rowspan`.",
+          "examples": [
+            {
+              "label": "Data Grid Blueprint",
+              "code": "<table>\n  <thead>\n    <tr>\n      <th>ID</th>\n      <th>Status</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>001</td>\n      <td>Online</td>\n    </tr>\n    <tr>\n      <td colspan=\"2\">Merged Cell</td>\n    </tr>\n  </tbody>\n</table>"
+            }
+          ]
+        },
+        {
+          "id": "l-table-questions",
+          "title": "Table Mechanics",
+          "questions": [
+            {
+              "q": "Which node is explicitly designed to contain the header labels for a column or row?",
+              "options": ["`<thead>`", "`<tc>`", "`<th>`", "`<header>`"],
+              "answer": 2,
+              "explanation": "The `<th>` element defines a header cell. Screen readers announce it as the definitive label for all adjacent data cells."
+            },
+            {
+              "q": "What tag defines a horizontal sequence of cells in a table?",
+              "options": ["`<row>`", "`<hr>`", "`<tr>`", "`<td>`"],
+              "answer": 2,
+              "explanation": "The `<tr>` (table row) tag acts as a wrapper. All `<th>` and `<td>` cells must be placed inside a `<tr>` to render correctly."
+            },
+            {
+              "q": "To force a single data cell to stretch horizontally across multiple columns, which attribute is deployed?",
+              "options": ["`rowspan`", "`width`", "`stretch`", "`colspan`"],
+              "answer": 3,
+              "explanation": "The `colspan` attribute commands the rendering engine to expand the cell across the specified number of column tracks."
+            },
+            {
+              "q": "Which semantic table tag wraps the main body of data rows, separate from the headers?",
+              "options": ["`<tdata>`", "`<td>`", "`<tbody>`", "`<tablebody>`"],
+              "answer": 2,
+              "explanation": "`<tbody>` groups the primary data rows. This allows CSS and screen readers to treat the header and body sections of a table independently."
+            },
+            {
+              "q": "You need a cell to span vertically across 3 rows. Which attribute do you use?",
+              "options": ["`colspan=\"3\"`", "`height=\"3\"`", "`rowspan=\"3\"`", "`span=\"3\"`"],
+              "answer": 2,
+              "explanation": "`rowspan` extends a cell vertically downward across the specified number of row tracks, merging rows instead of columns."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-table",
+          "title": "Protocol: Grid Row",
+          "type": "challenge",
+          "prompt": "Construct a single table row element.\n\nInside the row, insert two standard table data elements. The first cell must contain the integer '404', and the second cell must contain the string 'Not Found'.",
+          "solution": "<tr>\n  <td>404</td>\n  <td>Not Found</td>\n</tr>",
+          "validation": [
+            {
+              "rule": "<tr>[\\s\\S]*</tr>",
+              "message": "error: missing or unclosed <tr> row node."
+            },
+            {
+              "rule": "<td>\\s*404\\s*</td>",
+              "message": "error: missing data cell containing '404'."
+            },
+            {
+              "rule": "<td>\\s*Not Found\\s*</td>",
+              "message": "error: missing data cell containing 'Not Found'."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-full-table",
+          "title": "Protocol: Full Table Structure",
+          "type": "challenge",
+          "prompt": "Construct a complete `<table>` with a `<thead>` and a `<tbody>`.\n\nIn the thead, add a single `<tr>` with two `<th>` cells: 'Name' and 'Role'. In the tbody, add a single `<tr>` with two `<td>` cells: 'Cassetu' and 'Admin'.",
+          "solution": "<table>\n  <thead>\n    <tr>\n      <th>Name</th>\n      <th>Role</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Cassetu</td>\n      <td>Admin</td>\n    </tr>\n  </tbody>\n</table>",
+          "validation": [
+            {
+              "rule": "<table>[\\s\\S]*</table>",
+              "message": "error: missing or unclosed <table> wrapper."
+            },
+            {
+              "rule": "<thead>[\\s\\S]*</thead>",
+              "message": "error: missing or unclosed <thead> section."
+            },
+            {
+              "rule": "<th>\\s*Name\\s*</th>",
+              "message": "error: missing <th> cell with text 'Name'."
+            },
+            {
+              "rule": "<th>\\s*Role\\s*</th>",
+              "message": "error: missing <th> cell with text 'Role'."
+            },
+            {
+              "rule": "<tbody>[\\s\\S]*</tbody>",
+              "message": "error: missing or unclosed <tbody> section."
+            },
+            {
+              "rule": "<td>\\s*Cassetu\\s*</td>",
+              "message": "error: missing <td> cell with text 'Cassetu'."
+            },
+            {
+              "rule": "<td>\\s*Admin\\s*</td>",
+              "message": "error: missing <td> cell with text 'Admin'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 6: Data Collection (Forms)",
+      "lessons": [
+        {
+          "id": "l-forms",
+          "title": "Input Mechanics",
+          "type": "document",
+          "content": "To build an application, the system must ingest data from the user. We execute this via HTML Forms.\n\nThe `<form>` tag acts as the transmission wrapper. Inside, we deploy the `<input>` void element. The input tag physically morphs its UI rendering based entirely on its `type` attribute.\n\nSetting `type=\"text\"` creates a standard box. Setting `type=\"password\"` obscures the keystrokes with dots for security. Setting `type=\"radio\"` creates circular buttons intended for mutually exclusive choices (where selecting one deselects the others). For radio buttons to link together, they must all share the exact same `name` attribute. Setting `type=\"checkbox\"` creates a toggle box for non-exclusive choices. Setting `type=\"email\"` creates a text field that automatically validates the input contains an `@` symbol before submission.\n\nEvery input must be mathematically paired with a `<label>` tag. You bind them by matching the `<label>` tag's `for` attribute to the `<input>` tag's `id` attribute. This expands the clickable hit-box of the input to include the label text itself, which is a critical accessibility requirement.\n\nThe `<textarea>` tag creates a multi-line text input area. Unlike `<input>`, it is not a void element. It has an opening and closing tag, and its default content is placed between them.",
+          "examples": [
+            {
+              "label": "Authentication Form Architecture",
+              "code": "<form>\n  <label for=\"sys-pass\">Passcode:</label>\n  <input type=\"password\" id=\"sys-pass\">\n\n  <label for=\"agree\">Accept Terms</label>\n  <input type=\"checkbox\" id=\"agree\">\n\n  <label for=\"bio\">Bio:</label>\n  <textarea id=\"bio\"></textarea>\n</form>"
+            }
+          ]
+        },
+        {
+          "id": "l-input-questions",
+          "title": "Form Binding",
+          "questions": [
+            {
+              "q": "To automatically mask user keystrokes for secure data entry, which type is required?",
+              "options": ["`type=\"hidden\"`", "`type=\"password\"`", "`mask=\"true\"`", "`type=\"secure\"`"],
+              "answer": 1,
+              "explanation": "Setting `type=\"password\"` instructs the browser rendering engine to visually obscure the payload, mitigating shoulder-surfing attacks."
+            },
+            {
+              "q": "How do you link a group of radio buttons together so that selecting one automatically deselects the others?",
+              "options": ["Give them all the same `class` attribute.", "Wrap them in a `<radio-group>` tag.", "Give them all the same `name` attribute.", "Give them all the same `id` attribute."],
+              "answer": 2,
+              "explanation": "Radio buttons enforce a strict single-choice constraint only when they share identical `name` attributes. The browser engine uses this name to bind their exclusion logic."
+            },
+            {
+              "q": "How do you explicitly bind a `<label>` to a specific `<input>` element?",
+              "options": ["Match the label's `id` to the input's `id`.", "Match the label's `for` attribute to the input's `id` attribute.", "Match the label's `for` attribute to the input's `class` attribute.", "Place the label directly below the input."],
+              "answer": 1,
+              "explanation": "Explicit binding occurs by pointing the `<label for=\"targetId\">` to the `<input id=\"targetId\">`."
+            },
+            {
+              "q": "Which input type should you use to collect an email address, so the browser automatically validates its format before submission?",
+              "options": ["`type=\"text\"`", "`type=\"string\"`", "`type=\"email\"`", "`type=\"mail\"`"],
+              "answer": 2,
+              "explanation": "`type=\"email\"` activates the browser's built-in email format validator. It will reject input that does not contain an `@` and a domain."
+            },
+            {
+              "q": "A user needs to select multiple items from a list independently. Which input type is correct for each item?",
+              "options": ["`type=\"radio\"`", "`type=\"checkbox\"`", "`type=\"multi\"`", "`type=\"select\"`"],
+              "answer": 1,
+              "explanation": "Checkboxes are for non-exclusive, multi-select choices. Each can be toggled on or off independently. Radio buttons are strictly single-choice."
+            },
+            {
+              "q": "Which tag creates a multi-line text entry field, as opposed to a single-line input?",
+              "options": ["`<input type=\"multiline\">`", "`<textbox>`", "`<textarea>`", "`<input type=\"textarea\">`"],
+              "answer": 2,
+              "explanation": "`<textarea>` is a distinct block-level element that renders a resizable, multi-line editing area. It has its own open and close tags."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-label",
+          "title": "Protocol: Input Binding",
+          "type": "challenge",
+          "prompt": "Construct a text input element with an `id` of `email-field`.\n\nDirectly above it, construct a label containing the text 'Email'. Explicitly bind the label to the input using the appropriate attribute.",
+          "solution": "<label for=\"email-field\">Email</label>\n<input type=\"text\" id=\"email-field\">",
+          "validation": [
+            {
+              "rule": "<label\\s+for=[\"']email-field[\"']>\\s*Email\\s*</label>",
+              "message": "error: label must contain text 'Email' and its 'for' attribute must target 'email-field'."
+            },
+            {
+              "rule": "<input\\s+type=[\"']text[\"']\\s+id=[\"']email-field[\"']\\s*/?>",
+              "message": "error: input must be type 'text' and possess an 'id' of 'email-field'."
+            }
+          ]
+        },
+        {
+          "id": "l-select-dropdown",
+          "title": "Dropdowns and Option Lists",
+          "type": "document",
+          "content": "When you need the user to select from a predefined list, you use the `<select>` element. This renders a native dropdown menu. Each available choice is defined by an `<option>` tag nested inside the `<select>` element.\n\nThe `value` attribute on each `<option>` defines what data actually gets submitted to the server. The text between the opening and closing `<option>` tags is just the human-readable label shown in the dropdown. These two do not have to be the same.\n\nTo pre-select an option when the page loads, add the `selected` boolean attribute directly to that `<option>` tag.\n\nFor longer lists, you can group options into labeled categories using `<optgroup>`. The `label` attribute on `<optgroup>` sets the visible group header, which is not selectable itself.",
+          "examples": [
+            {
+              "label": "Select Dropdown",
+              "code": "<label for=\"role\">Role:</label>\n<select id=\"role\">\n  <optgroup label=\"Access Tiers\">\n    <option value=\"admin\">Administrator</option>\n    <option value=\"mod\">Moderator</option>\n    <option value=\"user\" selected>Standard User</option>\n  </optgroup>\n</select>"
+            }
+          ]
+        },
+        {
+          "id": "l-select-questions",
+          "title": "Dropdown Mechanics",
+          "questions": [
+            {
+              "q": "What is the difference between the `value` attribute and the text content of an `<option>` tag?",
+              "options": ["They are always identical.", "The `value` is the data sent to the server; the text content is the visible label.", "The text content is sent to the server; `value` is CSS-only.", "The `value` sets the font size."],
+              "answer": 1,
+              "explanation": "The `value` is the actual data payload. The inner text is just a human-readable label. For example, `<option value=\"us\">United States</option>` submits 'us', not 'United States'."
+            },
+            {
+              "q": "How do you make one option in a `<select>` dropdown appear pre-selected when the page first loads?",
+              "options": ["Add `default` to the `<select>` tag.", "Add `first=\"true\"` to the option.", "Add the `selected` boolean attribute to that `<option>` tag.", "The first option is always pre-selected."],
+              "answer": 2,
+              "explanation": "The `selected` boolean attribute on an `<option>` element forces the dropdown to display that option as the initial active choice."
+            },
+            {
+              "q": "Which tag groups multiple `<option>` elements under a labeled category header inside a `<select>`?",
+              "options": ["`<group>`", "`<optgroup>`", "`<category>`", "`<selectgroup>`"],
+              "answer": 1,
+              "explanation": "`<optgroup>` creates a non-selectable visual header that organizes related options into categories within a dropdown."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-select",
+          "title": "Protocol: Dropdown Construction",
+          "type": "challenge",
+          "prompt": "Construct a `<select>` element with an `id` of `status-select`.\n\nInside it, add two `<option>` elements. The first must have a `value` of `active` and display the text 'Active'. The second must have a `value` of `inactive` and display the text 'Inactive', and it must be pre-selected.",
+          "solution": "<select id=\"status-select\">\n  <option value=\"active\">Active</option>\n  <option value=\"inactive\" selected>Inactive</option>\n</select>",
+          "validation": [
+            {
+              "rule": "<select\\s+id=[\"']status-select[\"']>",
+              "message": "error: <select> must have an id of 'status-select'."
+            },
+            {
+              "rule": "<option\\s+value=[\"']active[\"']>\\s*Active\\s*</option>",
+              "message": "error: missing option with value 'active' and text 'Active'."
+            },
+            {
+              "rule": "<option\\s+value=[\"']inactive[\"'][^>]*selected[^>]*>\\s*Inactive\\s*</option>",
+              "message": "error: missing option with value 'inactive', text 'Inactive', and selected attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 7: Structural Validation",
+      "lessons": [
+        {
+          "id": "l-validation",
+          "title": "Client-Side Constraints",
+          "type": "document",
+          "content": "Never trust user input. Before transmitting data to the server, you must enforce formatting constraints directly in the browser.\n\nHTML5 handles this via attributes. Adding the `required` boolean attribute to an input prevents transmission of the form if the field is empty. Setting `minlength=\"8\"` forces the user to type at least 8 characters. `maxlength` sets the hard upper character limit.\n\nFor number inputs, `min` and `max` set the acceptable numeric range. The `step` attribute defines the increment for number and range inputs.\n\nThe most powerful constraint is the `pattern` attribute, which allows you to bind a strict Regular Expression to an input. If you deploy a pattern, you should also include the `title` attribute. The text inside the `title` attribute is intercepted by the browser and displayed inside the error tooltip when the pattern validation fails.\n\nThe `placeholder` attribute injects faded ghost text inside an empty input field. It disappears the moment the user starts typing. It is not a substitute for a `<label>` tag and should only be used as a format hint.",
+          "examples": [
+            {
+              "label": "Strict Form Constraints",
+              "code": "<input type=\"text\" pattern=\"[0-9]{5}\" required title=\"Enter a 5 digit zip code\" placeholder=\"e.g. 90210\">\n\n<input type=\"number\" min=\"1\" max=\"100\" step=\"5\">"
+            }
+          ]
+        },
+        {
+          "id": "l-validation-questions",
+          "title": "Enforcing Data Rules",
+          "questions": [
+            {
+              "q": "Which boolean attribute strictly prohibits a form from submitting if the input is left blank?",
+              "options": ["`mandatory`", "`validate`", "`required`", "`strict`"],
+              "answer": 2,
+              "explanation": "The `required` attribute triggers the browser's native error-handling UI, halting the submission sequence until data is provided."
+            },
+            {
+              "q": "Which attribute forces a user to type a minimum number of characters into a text field before submitting?",
+              "options": ["`min`", "`minlength`", "`size`", "`minimum`"],
+              "answer": 1,
+              "explanation": "The `minlength` attribute enforces string length limits. The `min` attribute is used for numerical thresholds on `type=\"number\"` inputs."
+            },
+            {
+              "q": "If you deploy the `pattern` attribute to enforce a Regex sequence, which supplementary attribute dictates the error message shown to the user?",
+              "options": ["`alt`", "`error-msg`", "`title`", "`placeholder`"],
+              "answer": 2,
+              "explanation": "The `title` attribute is natively intercepted by the browser and injected into the error tooltip when a `pattern` validation fails."
+            },
+            {
+              "q": "What is the purpose of the `placeholder` attribute on an input?",
+              "options": ["It sets the default value that gets submitted.", "It locks the field to that value.", "It displays faint ghost text inside the field as a format hint, disappearing when the user types.", "It is an alternative to `alt` for inputs."],
+              "answer": 2,
+              "explanation": "Placeholder text is only a visual hint. It is never submitted as a value. If the field is left empty, the placeholder is invisible to the server."
+            },
+            {
+              "q": "For a `type=\"number\"` input, which attribute controls the size of each increment when the user clicks the up/down arrows?",
+              "options": ["`interval`", "`jump`", "`increment`", "`step`"],
+              "answer": 3,
+              "explanation": "The `step` attribute defines the legal number intervals for numeric and range inputs. `step=\"5\"` means the value can only be 0, 5, 10, 15, etc."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-validation",
+          "title": "Protocol: Data Constraint",
+          "type": "challenge",
+          "prompt": "Construct a password input field.\n\nApply the boolean attribute that forces the field to be completely mandatory. Additionally, apply the attribute that forces the password to be at least 12 characters long.",
+          "solution": "<input type=\"password\" required minlength=\"12\">",
+          "validation": [
+            {
+              "rule": "<input\\s+",
+              "message": "error: must instantiate an <input> tag."
+            },
+            {
+              "rule": "type=[\"']password[\"']",
+              "message": "error: input type must strictly be configured for 'password'."
+            },
+            {
+              "rule": "\\srequired",
+              "message": "error: missing the 'required' boolean attribute constraint."
+            },
+            {
+              "rule": "minlength=[\"']12[\"']",
+              "message": "error: missing or incorrect minlength attribute."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-submit-button",
+          "title": "Protocol: Form Submission",
+          "type": "challenge",
+          "prompt": "Construct a complete `<form>` element.\n\nInside the form, place a `required` text input with an `id` of `username`. Below that, place a `<button>` element with a `type` of `submit`. The button text must read 'Log In'.",
+          "solution": "<form>\n  <input type=\"text\" id=\"username\" required>\n  <button type=\"submit\">Log In</button>\n</form>",
+          "validation": [
+            {
+              "rule": "<form>[\\s\\S]*</form>",
+              "message": "error: missing or unclosed <form> wrapper."
+            },
+            {
+              "rule": "id=[\"']username[\"']",
+              "message": "error: input must have an id of 'username'."
+            },
+            {
+              "rule": "\\srequired",
+              "message": "error: input must have the 'required' attribute."
+            },
+            {
+              "rule": "<button\\s+type=[\"']submit[\"']>\\s*Log In\\s*</button>",
+              "message": "error: missing submit button with text 'Log In'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 8: The Metadata Matrix",
+      "lessons": [
+        {
+          "id": "l-metadata",
+          "title": "Invisible Architecture",
+          "type": "document",
+          "content": "Everything within the `<body>` tag is for the human. Everything within the `<head>` tag is for the machine.\n\nThe `<head>` block is a metadata matrix. It dictates how search engines index the page, what text appears on the browser tab, and how the rendering engine scales the pixels for mobile devices.\n\nKey configurations:\n- `<meta charset=\"UTF-8\">`: Dictates the character encoding format. UTF-8 supports global symbols and emojis, ensuring the browser correctly translates binary data into readable human text.\n- `<title>`: Dictates the text that appears physically on the browser's graphical tab. Search engines use this as the hyperlinked headline in search results.\n- `<meta name=\"viewport\">`: Crucial for mobile responsiveness. It tells mobile browsers not to shrink the website down to a microscopic size.\n- `<meta name=\"description\">`: A brief summary of the page's content. Search engines display this text as the paragraph under the headline in results.\n- `<link rel=\"stylesheet\" href=\"style.css\">`: Connects an external CSS file to the document. This is how you inject visual styling.\n- `<link rel=\"icon\" href=\"/favicon.ico\">`: Sets the small icon that appears on the browser tab next to the title.",
+          "examples": [
+            {
+              "label": "Standard Metadata Configuration",
+              "code": "<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <meta name=\"description\" content=\"A real-time network monitoring dashboard.\">\n  <title>System Terminal</title>\n  <link rel=\"stylesheet\" href=\"/style.css\">\n  <link rel=\"icon\" href=\"/favicon.ico\">\n</head>"
+            }
+          ]
+        },
+        {
+          "id": "l-meta-questions",
+          "title": "Head Block Execution",
+          "questions": [
+            {
+              "q": "What is the function of `<meta charset=\"UTF-8\">`?",
+              "options": ["It encrypts the HTML file.", "It translates the page into English.", "It links to an external CSS file.", "It dictates the character encoding format, supporting global symbols."],
+              "answer": 3,
+              "explanation": "UTF-8 is the universal standard for character encoding. Declaring it prevents text rendering bugs when using complex international alphabets."
+            },
+            {
+              "q": "Which tag dictates the text that appears physically on the browser's graphical tab at the top of the screen?",
+              "options": ["`<header>`", "`<name>`", "`<tab>`", "`<title>`"],
+              "answer": 3,
+              "explanation": "The `<title>` tag is exclusively read by the browser UI to label the tab, and by search engines to index the page name."
+            },
+            {
+              "q": "Which meta tag is absolutely required to ensure a webpage does not look microscopic on an iPhone?",
+              "options": ["`<meta name=\"mobile\">`", "`<meta name=\"viewport\">`", "`<meta responsive=\"true\">`", "`<meta scale=\"100%\">`"],
+              "answer": 1,
+              "explanation": "The viewport meta tag instructs the mobile browser's rendering engine to match the physical width of the device screen, preventing automatic shrinking."
+            },
+            {
+              "q": "Which `<link>` tag connects an external CSS file named `main.css` to the document?",
+              "options": ["`<link src=\"main.css\">`", "`<link rel=\"stylesheet\" href=\"main.css\">`", "`<style src=\"main.css\">`", "`<css href=\"main.css\">`"],
+              "answer": 1,
+              "explanation": "The `<link>` tag with `rel=\"stylesheet\"` and the correct `href` path is the standard mechanism for importing external CSS files into an HTML document."
+            },
+            {
+              "q": "Which meta tag provides a short description of the page that appears as paragraph text in search engine results?",
+              "options": ["`<meta name=\"keywords\">`", "`<meta name=\"summary\">`", "`<meta name=\"description\">`", "`<meta name=\"subtitle\">`"],
+              "answer": 2,
+              "explanation": "Search engines read the `description` meta tag to generate the preview text shown below the page title in a results listing."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-viewport",
+          "title": "Protocol: Viewport Scaling",
+          "type": "challenge",
+          "prompt": "Mobile responsiveness will fail without a strict viewport configuration.\n\nConstruct a `<meta>` tag. Set its `name` attribute to `viewport`, and set its `content` attribute to exactly `width=device-width, initial-scale=1.0`.",
+          "solution": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+          "validation": [
+            {
+              "rule": "<meta\\s+",
+              "message": "error: must instantiate a <meta> void tag."
+            },
+            {
+              "rule": "name=[\"']viewport[\"']",
+              "message": "error: the name attribute must equal 'viewport'."
+            },
+            {
+              "rule": "content=[\"']width=device-width,\\s*initial-scale=1\\.0[\"']",
+              "message": "error: content scaling parameters are malformed. verify spelling and syntax."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-full-head",
+          "title": "Protocol: Complete Head Block",
+          "type": "challenge",
+          "prompt": "Construct a full `<head>` block.\n\nIt must contain: a charset meta tag set to UTF-8, a viewport meta tag with `width=device-width, initial-scale=1.0`, a title tag with the text 'Mission Control', and a stylesheet link pointing to `/app.css`.",
+          "solution": "<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Mission Control</title>\n  <link rel=\"stylesheet\" href=\"/app.css\">\n</head>",
+          "validation": [
+            {
+              "rule": "<head>[\\s\\S]*</head>",
+              "message": "error: missing or unclosed <head> block."
+            },
+            {
+              "rule": "charset=[\"']UTF-8[\"']",
+              "message": "error: missing charset meta tag set to UTF-8."
+            },
+            {
+              "rule": "content=[\"']width=device-width,\\s*initial-scale=1\\.0[\"']",
+              "message": "error: missing or malformed viewport content attribute."
+            },
+            {
+              "rule": "<title>\\s*Mission Control\\s*</title>",
+              "message": "error: title tag must contain text 'Mission Control'."
+            },
+            {
+              "rule": "rel=[\"']stylesheet[\"'][^>]*href=[\"']/app\\.css[\"']",
+              "message": "error: missing stylesheet link pointing to '/app.css'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 9: Interactive Native Modules",
+      "lessons": [
+        {
+          "id": "l-native-ui",
+          "title": "JavaScript-Free Interactivity",
+          "type": "document",
+          "content": "Amateurs write hundreds of lines of JavaScript to create simple toggle menus and modals. Modern HTML5 provides these components natively, built directly into the browser's rendering engine.\n\nThe `<details>` and `<summary>` tags automatically construct a fully functional accordion menu. The `<details>` tag acts as the wrapper. The `<summary>` tag must be the very first child inside it. The browser engine automatically wires the `<summary>` element to act as the clickable toggle switch for the remaining content.\n\nBy default, the content inside a `<details>` element is hidden. When clicked, the browser injects the boolean `open` attribute into the `<details>` tag. You can also hardcode the `open` attribute in the HTML to force the menu to be expanded when the page loads.\n\nThe `<dialog>` element is a native HTML5 modal. It is hidden by default. JavaScript's `.showModal()` method opens it, and a `<form method=\"dialog\">` inside it allows the user to close it without any extra JavaScript. The `open` attribute can also force it visible in HTML alone.\n\nThe `<progress>` element renders a native progress bar. Its `value` attribute sets the current progress and its `max` attribute sets the total. `<meter>` is similar but represents a gauge within a fixed range, like disk usage.",
+          "examples": [
+            {
+              "label": "Native Accordion and Progress",
+              "code": "<details open>\n  <summary>System Diagnostics</summary>\n  <p>CPU Temperature: 42C. All subsystems nominal.</p>\n</details>\n\n<progress value=\"70\" max=\"100\"></progress>\n\n<meter value=\"6\" min=\"0\" max=\"10\">6 out of 10</meter>"
+            }
+          ]
+        },
+        {
+          "id": "l-native-questions",
+          "title": "Browser Compilation",
+          "questions": [
+            {
+              "q": "In a native HTML5 accordion, which element serves as the visible, clickable toggle button?",
+              "options": ["`<button>`", "`<toggle>`", "`<summary>`", "`<header>`"],
+              "answer": 2,
+              "explanation": "The `<summary>` tag acts as the trigger. Clicking it expands the parent `<details>` block."
+            },
+            {
+              "q": "By default, the content inside a `<details>` element is hidden. What attribute makes it visible on page load?",
+              "options": ["`visible`", "`open`", "`active`", "`expanded`"],
+              "answer": 1,
+              "explanation": "The boolean `open` attribute controls the state. The browser toggles it automatically on click, but you can hardcode it to set an initial expanded state."
+            },
+            {
+              "q": "The `<progress>` element shows how far along a task is. Which attribute sets its total completion value?",
+              "options": ["`total`", "`end`", "`max`", "`full`"],
+              "answer": 2,
+              "explanation": "The `max` attribute defines the full scale. The `value` attribute sets the current position on that scale."
+            },
+            {
+              "q": "Which native HTML5 element is specifically designed to work as a modal popup dialog?",
+              "options": ["`<popup>`", "`<modal>`", "`<overlay>`", "`<dialog>`"],
+              "answer": 3,
+              "explanation": "The `<dialog>` element is the browser's native modal. It is hidden by default and can be opened with JavaScript's `.showModal()` method or hardcoded `open` attribute."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-accordion",
+          "title": "Protocol: Native Toggle",
+          "type": "challenge",
+          "prompt": "Construct a native HTML5 accordion.\n\nThe wrapper must be the `<details>` tag. Inside, the clickable label must be a `<summary>` tag containing the text 'Logs'. Under the summary, place a `<p>` tag containing the text 'Terminal empty.'",
+          "solution": "<details>\n  <summary>Logs</summary>\n  <p>Terminal empty.</p>\n</details>",
+          "validation": [
+            {
+              "rule": "<details>[\\s\\S]*</details>",
+              "message": "error: missing or unclosed <details> wrapper."
+            },
+            {
+              "rule": "<summary>\\s*Logs\\s*</summary>",
+              "message": "error: missing <summary> element with text 'Logs'."
+            },
+            {
+              "rule": "<p>\\s*Terminal empty\\.\\s*</p>",
+              "message": "error: missing <p> element with text 'Terminal empty.'."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-progress",
+          "title": "Protocol: Progress Bar",
+          "type": "challenge",
+          "prompt": "Construct a `<progress>` element representing 40 out of 200 units complete.",
+          "solution": "<progress value=\"40\" max=\"200\"></progress>",
+          "validation": [
+            {
+              "rule": "<progress",
+              "message": "error: must instantiate a <progress> element."
+            },
+            {
+              "rule": "value=[\"']40[\"']",
+              "message": "error: progress value must be '40'."
+            },
+            {
+              "rule": "max=[\"']200[\"']",
+              "message": "error: progress max must be '200'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 10: System Accessibility (A11y)",
+      "lessons": [
+        {
+          "id": "l-accessibility",
+          "title": "ARIA Architecture",
+          "type": "document",
+          "content": "A beautiful interface is useless if disabled users cannot navigate it. WAI-ARIA (Web Accessibility Initiative - Accessible Rich Internet Applications) is a specification for injecting invisible instructions into your DOM specifically for screen reading software.\n\nIf you build a close button that only contains an 'X' icon, a screen reader will just announce 'button X'. By injecting `aria-label=\"Close Menu\"` into the button tag, you overwrite the physical display. The screen reader will announce 'Close Menu' and ignore the visual X entirely.\n\nConversely, if an element is purely decorative, injecting `aria-hidden=\"true\"` completely removes it from the accessibility tree, preventing the software from wasting the user's time.\n\nFinally, some users navigate exclusively using the 'Tab' key on their keyboard. By default, only links and inputs are focusable. Setting `tabindex=\"0\"` on a `<div>` inserts it into the natural keyboard tabbing sequence, allowing keyboard-only users to access it.\n\nThe `role` attribute assigns a semantic role to an element that does not have one natively. For example, if you use a `<div>` as a button for some reason, you can add `role=\"button\"` to tell screen readers what it actually is. Common values include `alert`, `dialog`, `navigation`, and `banner`.",
+          "examples": [
+            {
+              "label": "ARIA Data Overrides",
+              "code": "<button aria-label=\"Close Modal\">X</button>\n\n<span class=\"icon-star\" aria-hidden=\"true\"></span>\n\n<div role=\"alert\">Connection lost.</div>\n\n<div tabindex=\"0\">Focusable container.</div>"
+            }
+          ]
+        },
+        {
+          "id": "l-aria-questions",
+          "title": "Screen Reader Overrides",
+          "questions": [
+            {
+              "q": "Which ARIA attribute explicitly overwrites the audible text spoken by a screen reader, completely ignoring the element's visual contents?",
+              "options": ["`aria-text`", "`aria-voice`", "`aria-label`", "`alt`"],
+              "answer": 2,
+              "explanation": "`aria-label` provides an invisible string payload that takes priority over any physical text inside the element."
+            },
+            {
+              "q": "If you want to hide a purely decorative icon from a screen reader so it doesn't clutter the audio output, which attribute do you use?",
+              "options": ["`invisible=\"true\"`", "`aria-hidden=\"true\"`", "`display=\"none\"`", "`aria-block=\"true\"`"],
+              "answer": 1,
+              "explanation": "`aria-hidden=\"true\"` removes the element from the accessibility tree without affecting its visual rendering on the screen."
+            },
+            {
+              "q": "If you want to allow a user to navigate to a generic `<div>` using the 'Tab' key on their keyboard, which attribute must you inject?",
+              "options": ["`keyboard=\"true\"`", "`focusable`", "`tabindex=\"0\"`", "`aria-select`"],
+              "answer": 2,
+              "explanation": "Setting `tabindex=\"0\"` inserts an otherwise non-interactive element into the natural keyboard tabbing sequence."
+            },
+            {
+              "q": "You have a `<div>` styled to look and behave like a navigation menu. Which ARIA attribute communicates its true purpose to screen readers?",
+              "options": ["`aria-label=\"nav\"`", "`class=\"navigation\"`", "`role=\"navigation\"`", "`aria-type=\"nav\"`"],
+              "answer": 2,
+              "explanation": "The `role` attribute overrides the implicit semantics of an element. `role=\"navigation\"` tells assistive technology to treat the div as a nav landmark, regardless of the tag used."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-aria",
+          "title": "Protocol: Accessibility Injection",
+          "type": "challenge",
+          "prompt": "Construct a `<button>` element containing the raw text payload `>>`.\n\nBecause `>>` means nothing audibly, you must inject an ARIA attribute that forces screen readers to announce the button strictly as 'Next Page'.",
+          "solution": "<button aria-label=\"Next Page\">>></button>",
+          "validation": [
+            {
+              "rule": "<button\\s+",
+              "message": "error: must instantiate a <button> element."
+            },
+            {
+              "rule": "aria-label=[\"']Next Page[\"']",
+              "message": "error: missing or malformed aria-label payload."
+            },
+            {
+              "rule": ">\\s*>>\\s*</button>",
+              "message": "error: button payload must contain '>>' and be closed correctly."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 11: Lists and Content Flow",
+      "lessons": [
+        {
+          "id": "l-lists",
+          "title": "Ordered and Unordered Lists",
+          "type": "document",
+          "content": "Lists are a fundamental way to present discrete items. HTML has two main list types.\n\nAn unordered list `<ul>` renders a bullet-point list where order does not matter, like a list of features. An ordered list `<ol>` renders a numbered list where sequence matters, like steps in a procedure. Both use the `<li>` (list item) tag for each entry inside them.\n\nLists can be nested. You can place a complete `<ul>` or `<ol>` inside any `<li>` to create a sub-list.\n\nFor key-value pairs or term definitions, HTML provides the Description List. The `<dl>` tag is the wrapper. `<dt>` (description term) defines the key, and `<dd>` (description detail) provides the corresponding value or definition. This is perfect for glossaries or specification sheets.",
+          "examples": [
+            {
+              "label": "List Types",
+              "code": "<ul>\n  <li>Speed</li>\n  <li>Accuracy\n    <ul>\n      <li>Sub-point A</li>\n    </ul>\n  </li>\n</ul>\n\n<ol>\n  <li>Connect</li>\n  <li>Authenticate</li>\n  <li>Execute</li>\n</ol>\n\n<dl>\n  <dt>HTTP</dt>\n  <dd>HyperText Transfer Protocol</dd>\n</dl>"
+            }
+          ]
+        },
+        {
+          "id": "l-list-questions",
+          "title": "List Architecture",
+          "questions": [
+            {
+              "q": "Which list tag should you use when the order of items does not matter?",
+              "options": ["`<ol>`", "`<list>`", "`<ul>`", "`<dl>`"],
+              "answer": 2,
+              "explanation": "`<ul>` (unordered list) renders bullet points. It is semantically correct for collections where sequence is irrelevant."
+            },
+            {
+              "q": "Which tag defines a single item inside either a `<ul>` or an `<ol>`?",
+              "options": ["`<item>`", "`<bullet>`", "`<entry>`", "`<li>`"],
+              "answer": 3,
+              "explanation": "`<li>` (list item) is the only valid direct child of `<ul>` and `<ol>`. Everything else renders incorrectly."
+            },
+            {
+              "q": "In a description list, which tag defines the term being described?",
+              "options": ["`<dl>`", "`<dd>`", "`<dt>`", "`<term>`"],
+              "answer": 2,
+              "explanation": "`<dt>` (description term) marks the key. The corresponding `<dd>` (description detail) provides the value or explanation."
+            },
+            {
+              "q": "You are writing a recipe. The steps must be done in a specific sequence. Which list type is semantically correct?",
+              "options": ["`<ul>`", "`<dl>`", "`<ol>`", "`<sl>`"],
+              "answer": 2,
+              "explanation": "`<ol>` (ordered list) is the correct choice when item sequence carries meaning. It renders numbered items automatically."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-ordered-list",
+          "title": "Protocol: Ordered List",
+          "type": "challenge",
+          "prompt": "Construct an `<ol>` element with exactly three `<li>` items.\n\nThe items must contain the text 'Boot', 'Load', and 'Execute' in that order.",
+          "solution": "<ol>\n  <li>Boot</li>\n  <li>Load</li>\n  <li>Execute</li>\n</ol>",
+          "validation": [
+            {
+              "rule": "<ol>[\\s\\S]*</ol>",
+              "message": "error: missing or unclosed <ol> element."
+            },
+            {
+              "rule": "<li>\\s*Boot\\s*</li>",
+              "message": "error: missing list item with text 'Boot'."
+            },
+            {
+              "rule": "<li>\\s*Load\\s*</li>",
+              "message": "error: missing list item with text 'Load'."
+            },
+            {
+              "rule": "<li>\\s*Execute\\s*</li>",
+              "message": "error: missing list item with text 'Execute'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 12: Inline Elements and Text Semantics",
+      "lessons": [
+        {
+          "id": "l-inline-elements",
+          "title": "Block vs Inline",
+          "type": "document",
+          "content": "Every HTML element has a default display behavior: block or inline.\n\nBlock-level elements (`<div>`, `<p>`, `<h1>`, `<section>`, etc.) always start on a new line and stretch to fill the full available width. They stack vertically like building blocks.\n\nInline elements sit within the flow of text without breaking to a new line. They only take up as much space as their content requires.\n\nKey inline elements:\n- `<span>`: The inline equivalent of `<div>`. A generic wrapper with no semantic meaning. Use it to target a specific chunk of text with CSS or JavaScript.\n- `<strong>`: Bold text with semantic weight.\n- `<em>`: Italic text with semantic emphasis.\n- `<code>`: Marks a short snippet of inline code. Browsers render it in a monospace font.\n- `<abbr>`: Marks an abbreviation. The `title` attribute provides the full expansion on hover.\n- `<mark>`: Highlights text, like a yellow marker. Semantically indicates relevance.\n- `<sub>` and `<sup>`: Renders text as subscript (H₂O) or superscript (x²).",
+          "examples": [
+            {
+              "label": "Inline Text Elements",
+              "code": "<p>\n  Run the <code>npm install</code> command.\n  Use <abbr title=\"HyperText Markup Language\">HTML</abbr> correctly.\n  The formula is H<sub>2</sub>O.\n  Press <mark>Ctrl+S</mark> to save.\n</p>"
+            }
+          ]
+        },
+        {
+          "id": "l-inline-questions",
+          "title": "Inline Element Identification",
+          "questions": [
+            {
+              "q": "Which element is the correct generic inline wrapper for targeting a piece of text with CSS?",
+              "options": ["`<div>`", "`<p>`", "`<span>`", "`<inline>`"],
+              "answer": 2,
+              "explanation": "`<span>` is the inline counterpart to `<div>`. It carries no semantic meaning and is used purely as a styling or scripting hook."
+            },
+            {
+              "q": "Which element semantically marks a small piece of code within a sentence?",
+              "options": ["`<pre>`", "`<script>`", "`<code>`", "`<kbd>`"],
+              "answer": 2,
+              "explanation": "`<code>` marks inline code snippets. It renders in monospace and communicates to screen readers that the text is a code value."
+            },
+            {
+              "q": "What does the `<abbr>` element do with the text provided in its `title` attribute?",
+              "options": ["It displays it as a tooltip when the user hovers over the abbreviation.", "It replaces the abbreviation text entirely.", "It submits it to a form.", "It sets an ARIA label for screen readers only."],
+              "answer": 0,
+              "explanation": "Browsers display the `title` content as a tooltip on hover, showing the full expansion of the abbreviation to the user."
+            },
+            {
+              "q": "Block-level elements and inline elements differ in a key layout way. What is it?",
+              "options": ["Block elements are bold; inline elements are not.", "Block elements always start on a new line and fill full width; inline elements flow within text.", "Inline elements require closing tags; block elements do not.", "Block elements can only contain text."],
+              "answer": 1,
+              "explanation": "Block elements break layout flow and consume full horizontal space. Inline elements slot into the text stream without disrupting it."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-inline-code",
+          "title": "Protocol: Inline Code Annotation",
+          "type": "challenge",
+          "prompt": "Construct a `<p>` tag.\n\nInside it, write the sentence 'To exit, type ', followed by the word `quit` wrapped in a `<code>` tag, followed by the text ' and press Enter.'",
+          "solution": "<p>To exit, type <code>quit</code> and press Enter.</p>",
+          "validation": [
+            {
+              "rule": "<p>[\\s\\S]*</p>",
+              "message": "error: missing or unclosed <p> element."
+            },
+            {
+              "rule": "<code>\\s*quit\\s*</code>",
+              "message": "error: missing <code> element containing the text 'quit'."
+            },
+            {
+              "rule": "To exit, type",
+              "message": "error: paragraph must begin with 'To exit, type'."
+            },
+            {
+              "rule": "and press Enter",
+              "message": "error: paragraph must contain 'and press Enter' after the code element."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 13: Embedding and Iframes",
+      "lessons": [
+        {
+          "id": "l-iframes",
+          "title": "Inline Frame Architecture",
+          "type": "document",
+          "content": "The `<iframe>` (Inline Frame) tag embeds a completely separate, fully functional HTML document inside your current page. It is how YouTube embeds, Google Maps, and third-party widgets work.\n\nThe `src` attribute defines the URL of the document to embed. The `width` and `height` attributes control its rendered dimensions in pixels.\n\nFor security, browsers restrict what an embedded iframe can do by default. The `sandbox` attribute adds an extra layer of restrictions, preventing the iframe from executing scripts, submitting forms, or accessing parent content. You can selectively re-allow capabilities by adding specific values like `allow-scripts` or `allow-forms` to the sandbox attribute.\n\nThe `title` attribute on an `<iframe>` is mandatory for accessibility. Screen readers read it aloud to announce what the embedded content is before the user navigates into it.\n\nAny text placed between the `<iframe>` opening and closing tags is fallback content, displayed only in browsers that do not support iframes.",
+          "examples": [
+            {
+              "label": "Embedded Frame",
+              "code": "<iframe\n  src=\"https://www.youtube.com/embed/dQw4w9WgXcQ\"\n  width=\"560\"\n  height=\"315\"\n  title=\"Embedded video\"\n  sandbox=\"allow-scripts allow-same-origin\">\n  Your browser does not support iframes.\n</iframe>"
+            }
+          ]
+        },
+        {
+          "id": "l-iframe-questions",
+          "title": "Iframe Constraints",
+          "questions": [
+            {
+              "q": "What does the `<iframe>` element fundamentally do?",
+              "options": ["It displays an image.", "It embeds a completely separate HTML document inside the current page.", "It creates a floating overlay.", "It links to an external page in a new tab."],
+              "answer": 1,
+              "explanation": "An iframe renders a fully independent browsing context inside a defined rectangular region of your page. It has its own DOM, resources, and scripts."
+            },
+            {
+              "q": "Which attribute on an `<iframe>` is mandatory for accessibility?",
+              "options": ["`alt`", "`name`", "`title`", "`description`"],
+              "answer": 2,
+              "explanation": "The `title` attribute gives screen readers a text description of what the iframe contains, so users know what they are navigating into."
+            },
+            {
+              "q": "What does the `sandbox` attribute on an `<iframe>` do?",
+              "options": ["It sets the iframe's background color to grey.", "It prevents the iframe from loading.", "It restricts the iframe's permissions, blocking scripts, forms, and other potentially dangerous behavior.", "It makes the iframe responsive."],
+              "answer": 2,
+              "explanation": "The `sandbox` attribute applies a strict permission model to the embedded document, reducing the attack surface of third-party content."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-iframe",
+          "title": "Protocol: Iframe Embed",
+          "type": "challenge",
+          "prompt": "Construct an `<iframe>` element embedding the URL `/map.html`.\n\nSet its `width` to `800`, its `height` to `600`, and its `title` to 'Site Map'.",
+          "solution": "<iframe src=\"/map.html\" width=\"800\" height=\"600\" title=\"Site Map\"></iframe>",
+          "validation": [
+            {
+              "rule": "<iframe",
+              "message": "error: must instantiate an <iframe> element."
+            },
+            {
+              "rule": "src=[\"']/map\\.html[\"']",
+              "message": "error: src must be '/map.html'."
+            },
+            {
+              "rule": "width=[\"']800[\"']",
+              "message": "error: width must be '800'."
+            },
+            {
+              "rule": "height=[\"']600[\"']",
+              "message": "error: height must be '600'."
+            },
+            {
+              "rule": "title=[\"']Site Map[\"']",
+              "message": "error: title must be 'Site Map'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 14: Classes, IDs, and Data Attributes",
+      "lessons": [
+        {
+          "id": "l-class-id",
+          "title": "Targeting and Identity",
+          "type": "document",
+          "content": "HTML elements are anonymous by default. To target them with CSS or JavaScript, you must give them an identity.\n\nThe `id` attribute assigns a unique identity to a single element. No two elements on the same page should share an `id`. It is a unique address in the DOM. In CSS, you target it with `#my-id`. In JavaScript, you retrieve it with `document.getElementById('my-id')`.\n\nThe `class` attribute assigns a reusable group label. Multiple elements can share the same class. A single element can also carry multiple classes, separated by spaces. In CSS, you target a class with `.my-class`. Classes are the primary targeting mechanism for CSS styling.\n\nThe `data-*` attribute family lets you attach custom metadata directly to any HTML element. You invent the name after `data-`. For example, `data-user-id=\"42\"` or `data-status=\"active\"`. JavaScript reads these via `element.dataset.userId`. They are invisible to the user but extremely useful for scripting.",
+          "examples": [
+            {
+              "label": "Identity and Data Attributes",
+              "code": "<div id=\"main-panel\" class=\"panel active\" data-user-id=\"99\">\n  Content\n</div>\n\n<p class=\"alert\">Warning A</p>\n<p class=\"alert\">Warning B</p>"
+            }
+          ]
+        },
+        {
+          "id": "l-class-id-questions",
+          "title": "Attribute Targeting",
+          "questions": [
+            {
+              "q": "Which attribute assigns a unique, page-wide identity to a single HTML element?",
+              "options": ["`class`", "`name`", "`id`", "`key`"],
+              "answer": 2,
+              "explanation": "The `id` attribute is a unique DOM address. Only one element per page should carry a specific id value."
+            },
+            {
+              "q": "How do you assign multiple classes to a single element?",
+              "options": ["Use multiple `class` attributes.", "Separate the class names with commas inside one `class` attribute.", "Separate the class names with spaces inside one `class` attribute.", "Use a `classes` attribute instead."],
+              "answer": 2,
+              "explanation": "Multiple class names are separated by spaces within a single `class` attribute. Example: `class=\"panel active highlighted\"`."
+            },
+            {
+              "q": "Which attribute pattern stores custom private metadata on an element for JavaScript to read?",
+              "options": ["`meta-*`", "`data-*`", "`custom-*`", "`info-*`"],
+              "answer": 1,
+              "explanation": "The `data-*` attribute family is the standard HTML5 method for attaching custom key-value data to elements. JavaScript accesses it via `element.dataset`."
+            },
+            {
+              "q": "In CSS, which selector prefix targets an element by its `id`?",
+              "options": ["`.`", "`@`", "`#`", "`$`"],
+              "answer": 2,
+              "explanation": "The `#` prefix targets an element by id in CSS. `.` targets by class. For example, `#hero-title` selects the element with `id=\"hero-title\"`."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-class-id",
+          "title": "Protocol: Element Identity",
+          "type": "challenge",
+          "prompt": "Construct a `<div>` element.\n\nGive it an `id` of `dashboard`. Give it two classes: `panel` and `active`. Add a `data-` attribute named `data-module` with a value of `stats`.",
+          "solution": "<div id=\"dashboard\" class=\"panel active\" data-module=\"stats\"></div>",
+          "validation": [
+            {
+              "rule": "<div",
+              "message": "error: must instantiate a <div> element."
+            },
+            {
+              "rule": "id=[\"']dashboard[\"']",
+              "message": "error: id must be 'dashboard'."
+            },
+            {
+              "rule": "class=[\"'][^\"']*panel[^\"']*[\"']",
+              "message": "error: class attribute must include 'panel'."
+            },
+            {
+              "rule": "class=[\"'][^\"']*active[^\"']*[\"']",
+              "message": "error: class attribute must include 'active'."
+            },
+            {
+              "rule": "data-module=[\"']stats[\"']",
+              "message": "error: missing data-module attribute with value 'stats'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 15: Advanced Form Architecture",
+      "lessons": [
+        {
+          "id": "l-fieldset",
+          "title": "Grouping and Submission",
+          "type": "document",
+          "content": "Large forms become disorganized fast. The `<fieldset>` tag groups related inputs into a logical section with a visual border. The `<legend>` tag must be the first child inside a `<fieldset>` and acts as the visible title for that group.\n\nThe `<button>` element is the standard trigger for actions. Its `type` attribute determines behavior. `type=\"submit\"` submits the parent `<form>`. `type=\"reset\"` clears all inputs in the form back to their default values. `type=\"button\"` does nothing by default — it is purely for JavaScript event handlers.\n\nThe `action` attribute on `<form>` defines the server URL that receives the data. The `method` attribute defines the HTTP transmission protocol: `GET` appends data to the URL (visible, bookmarkable), while `POST` sends data in the request body (private, for sensitive data like passwords).\n\nThe `<datalist>` element provides autocomplete suggestions to a linked `<input>`. The input's `list` attribute must match the `<datalist>`'s `id`. The user can still type anything; the datalist only offers non-binding suggestions.",
+          "examples": [
+            {
+              "label": "Structured Form",
+              "code": "<form action=\"/submit\" method=\"POST\">\n  <fieldset>\n    <legend>Credentials</legend>\n    <label for=\"user\">User:</label>\n    <input type=\"text\" id=\"user\" list=\"users\">\n    <datalist id=\"users\">\n      <option value=\"admin\">\n      <option value=\"guest\">\n    </datalist>\n  </fieldset>\n  <button type=\"submit\">Connect</button>\n  <button type=\"reset\">Clear</button>\n</form>"
+            }
+          ]
+        },
+        {
+          "id": "l-advanced-form-questions",
+          "title": "Form Transmission",
+          "questions": [
+            {
+              "q": "Which tag must be the first child of a `<fieldset>` element to provide a visible group label?",
+              "options": ["`<label>`", "`<title>`", "`<h3>`", "`<legend>`"],
+              "answer": 3,
+              "explanation": "`<legend>` is specifically designed as the caption for a `<fieldset>`. It renders as a title embedded in the fieldset's border."
+            },
+            {
+              "q": "A form has `method=\"GET\"`. What does this mean for the submitted data?",
+              "options": ["Data is sent in the request body, invisibly.", "Data is appended to the URL as query parameters, making it visible.", "Data is encrypted before sending.", "Data is stored in localStorage."],
+              "answer": 1,
+              "explanation": "GET appends form data to the URL. Useful for searches and bookmarkable queries. Never use GET for passwords or sensitive data."
+            },
+            {
+              "q": "A `<button type=\"reset\">` inside a form does what when clicked?",
+              "options": ["Submits the form.", "Reloads the page.", "Resets all form inputs to their default values.", "Deletes the form from the DOM."],
+              "answer": 2,
+              "explanation": "A reset button clears the form, restoring inputs to whatever their initial state was when the page loaded."
+            },
+            {
+              "q": "How do you link an `<input>` to a `<datalist>` to enable autocomplete suggestions?",
+              "options": ["Set the input's `autocomplete` attribute to the datalist's id.", "Set the input's `list` attribute to match the datalist's `id`.", "Set the input's `src` to the datalist's id.", "Nest the input directly inside the datalist."],
+              "answer": 1,
+              "explanation": "The `list` attribute on the input must match the `id` of the target `<datalist>`. The browser then shows matching suggestions from the datalist as the user types."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-fieldset",
+          "title": "Protocol: Grouped Form",
+          "type": "challenge",
+          "prompt": "Construct a `<fieldset>` element.\n\nInside it, the first element must be a `<legend>` with the text 'Access Level'. Below that, place a `<label>` with a `for` of `tier` and the text 'Tier:'. Below that, place a `<select>` with an `id` of `tier` containing one `<option>` with a `value` of `1` and the text 'Level 1'.",
+          "solution": "<fieldset>\n  <legend>Access Level</legend>\n  <label for=\"tier\">Tier:</label>\n  <select id=\"tier\">\n    <option value=\"1\">Level 1</option>\n  </select>\n</fieldset>",
+          "validation": [
+            {
+              "rule": "<fieldset>[\\s\\S]*</fieldset>",
+              "message": "error: missing or unclosed <fieldset> wrapper."
+            },
+            {
+              "rule": "<legend>\\s*Access Level\\s*</legend>",
+              "message": "error: missing <legend> with text 'Access Level'."
+            },
+            {
+              "rule": "<label\\s+for=[\"']tier[\"']>\\s*Tier:\\s*</label>",
+              "message": "error: missing <label> bound to 'tier' with text 'Tier:'."
+            },
+            {
+              "rule": "<select\\s+id=[\"']tier[\"']>",
+              "message": "error: missing <select> with id 'tier'."
+            },
+            {
+              "rule": "<option\\s+value=[\"']1[\"']>\\s*Level 1\\s*</option>",
+              "message": "error: missing <option> with value '1' and text 'Level 1'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 16: Scripting Integration",
+      "lessons": [
+        {
+          "id": "l-scripts",
+          "title": "Loading JavaScript",
+          "type": "document",
+          "content": "HTML is static by default. JavaScript is the layer that makes it dynamic. You connect a JavaScript file to your HTML document using the `<script>` tag.\n\nThe `src` attribute points to an external `.js` file. The `<script>` tag can also wrap inline JavaScript directly between its tags, but external files are strongly preferred for maintainability.\n\nPlacement matters. A `<script>` tag placed in the `<head>` is executed before the `<body>` is parsed. This means if the script tries to read a DOM element, it fails because the element hasn't been created yet.\n\nThe correct modern approach is to place the `<script>` tag at the very bottom of the `<body>`, just before `</body>`, so the entire DOM is built before the script runs. Alternatively, you can add the `defer` attribute to a `<script>` in the `<head>`. The `defer` attribute tells the browser to download the script in the background and execute it after the DOM is fully parsed, without blocking rendering. The `async` attribute also downloads in the background but executes immediately when ready, which can cause race conditions.",
+          "examples": [
+            {
+              "label": "Script Integration",
+              "code": "<head>\n  <script src=\"/app.js\" defer></script>\n</head>\n<body>\n  <p>Content loads first.</p>\n\n  <script src=\"/legacy.js\"></script>\n</body>"
+            }
+          ]
+        },
+        {
+          "id": "l-script-questions",
+          "title": "Script Execution Order",
+          "questions": [
+            {
+              "q": "What is the problem with placing a `<script>` tag in the `<head>` without any special attributes?",
+              "options": ["Scripts are not allowed in the head.", "The script runs before the DOM exists, so it cannot find any elements.", "The script is ignored by the browser.", "The page will crash immediately."],
+              "answer": 1,
+              "explanation": "The browser parses HTML top to bottom. A script in the `<head>` executes before the `<body>` is parsed, so any DOM query inside it returns null."
+            },
+            {
+              "q": "Which attribute on a `<script>` tag tells the browser to download the file while parsing HTML, then execute it only after the DOM is fully built?",
+              "options": ["`async`", "`late`", "`defer`", "`wait`"],
+              "answer": 2,
+              "explanation": "`defer` is the modern standard for loading scripts efficiently. It does not block rendering and guarantees DOM readiness before execution."
+            },
+            {
+              "q": "What does the `async` attribute on a `<script>` tag do?",
+              "options": ["It defers execution until DOMContentLoaded.", "It downloads the script in the background and executes it immediately when ready, regardless of DOM state.", "It runs the script asynchronously on a worker thread.", "It makes the script optional."],
+              "answer": 1,
+              "explanation": "`async` is useful for independent scripts like analytics that don't interact with the DOM. It can cause issues if two `async` scripts depend on each other."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-script",
+          "title": "Protocol: Deferred Script",
+          "type": "challenge",
+          "prompt": "You need to load an external JavaScript file `/main.js` from the `<head>` without blocking page rendering.\n\nConstruct the correct `<script>` tag with the appropriate attribute to guarantee the script runs only after the DOM is fully parsed.",
+          "solution": "<script src=\"/main.js\" defer></script>",
+          "validation": [
+            {
+              "rule": "<script",
+              "message": "error: must instantiate a <script> tag."
+            },
+            {
+              "rule": "src=[\"']/main\\.js[\"']",
+              "message": "error: script src must be '/main.js'."
+            },
+            {
+              "rule": "\\sdefer",
+              "message": "error: missing the 'defer' attribute."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 17: HTML Entities and Special Characters",
+      "lessons": [
+        {
+          "id": "l-entities",
+          "title": "Reserved Characters",
+          "type": "document",
+          "content": "HTML uses `<`, `>`, and `&` as part of its own syntax. If you type these characters directly into your content, the browser may misread them as code. To display them safely, you use HTML Entities.\n\nAn HTML entity begins with `&` and ends with `;`. Named entities are easy to remember. Numeric entities use a code instead.\n\nCommon entities:\n- `&lt;` → displays `<` (less-than)\n- `&gt;` → displays `>` (greater-than)\n- `&amp;` → displays `&` (ampersand)\n- `&nbsp;` → a non-breaking space (forces a space that the browser won't collapse)\n- `&copy;` → displays `©` (copyright symbol)\n- `&trade;` → displays `™` (trademark symbol)\n- `&quot;` → displays `\"` (double quote)\n\nThe non-breaking space `&nbsp;` is particularly useful when you need two words to always stay on the same line, preventing awkward line breaks between them.",
+          "examples": [
+            {
+              "label": "Entity Usage",
+              "code": "<p>Use &lt;p&gt; for paragraphs.</p>\n<p>Company Name&trade; &amp; Logo&copy; 2025</p>\n<p>Price:&nbsp;$99.00</p>"
+            }
+          ]
+        },
+        {
+          "id": "l-entity-questions",
+          "title": "Character Encoding",
+          "questions": [
+            {
+              "q": "Why can't you type the `<` character directly inside visible paragraph text?",
+              "options": ["Keyboards don't have that key.", "The browser will interpret it as the start of an HTML tag.", "It is a copyrighted symbol.", "It crashes the parser."],
+              "answer": 1,
+              "explanation": "The `<` character signals the start of an HTML tag. Typing it inside content confuses the parser. Use the entity `&lt;` instead."
+            },
+            {
+              "q": "Which entity displays the `&` (ampersand) character in content?",
+              "options": ["`&and;`", "`&amp;`", "`&#and;`", "`&symbol;`"],
+              "answer": 1,
+              "explanation": "`&amp;` is the correct entity for a literal ampersand. Using `&` directly can confuse the parser into thinking an entity sequence is starting."
+            },
+            {
+              "q": "You want two words to always remain on the same line and never split across a line break. Which entity creates a space that prevents this?",
+              "options": ["`&space;`", "`&hardspace;`", "`&nbsp;`", "`&ls;`"],
+              "answer": 2,
+              "explanation": "`&nbsp;` is a non-breaking space. The browser treats it as a character, not a collapse point, preventing the line from breaking at that position."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-entity",
+          "title": "Protocol: Safe Text Rendering",
+          "type": "challenge",
+          "prompt": "Construct a `<p>` element that displays the exact following text on screen:\n\n`Use <strong> for bold text.`\n\nYou must use the correct HTML entities so the angle brackets render as visible characters, not as code.",
+          "solution": "<p>Use &lt;strong&gt; for bold text.</p>",
+          "validation": [
+            {
+              "rule": "<p>[\\s\\S]*</p>",
+              "message": "error: missing or unclosed <p> element."
+            },
+            {
+              "rule": "&lt;strong&gt;",
+              "message": "error: angle brackets must be encoded as &lt; and &gt; entities."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 18: Comments and Code Hygiene",
+      "lessons": [
+        {
+          "id": "l-comments",
+          "title": "Documentation and Debugging",
+          "type": "document",
+          "content": "Code that you write today will be confusing to someone else — or to yourself in six months. HTML comments are invisible annotations embedded directly in the source code. The browser completely ignores them; they never appear on the rendered page.\n\nThe syntax is `<!-- comment goes here -->`. Everything between the double dashes is suppressed.\n\nComments serve two practical purposes. First, they document the intent of complex or non-obvious code sections. Second, they allow you to temporarily disable a block of HTML during debugging without deleting it. This is called 'commenting out'.\n\nA key hygiene rule: avoid nesting comments. `<!-- outer <!-- inner --> outer -->` produces unexpected parsing behavior. Also, HTML comments are visible to anyone who views the page source. Never put passwords, API keys, or sensitive information in a comment.",
+          "examples": [
+            {
+              "label": "Comment Syntax",
+              "code": "<!-- Primary navigation block -->\n<nav>\n  <a href=\"/\">Home</a>\n</nav>\n\n<!-- TODO: add search bar here -->\n\n<!-- <section class=\"beta-feature\">\n  This is disabled for now.\n</section> -->"
+            }
+          ]
+        },
+        {
+          "id": "l-comment-questions",
+          "title": "Comment Mechanics",
+          "questions": [
+            {
+              "q": "What is the correct syntax for an HTML comment?",
+              "options": ["`// comment`", "`/* comment */`", "`<!-- comment -->`", "`# comment`"],
+              "answer": 2,
+              "explanation": "HTML comments use `<!--` to open and `-->` to close. Everything between those markers is stripped from rendering by the browser engine."
+            },
+            {
+              "q": "A developer temporarily wraps a block of HTML in comment tags to remove it from the page without deleting the code. This technique is called?",
+              "options": ["Flagging.", "Commenting out.", "Escape wrapping.", "Voiding."],
+              "answer": 1,
+              "explanation": "Commenting out is a standard debugging technique. The code is preserved in the file for easy re-activation but is invisible to the browser."
+            },
+            {
+              "q": "Why should you never put an API key or password inside an HTML comment?",
+              "options": ["The browser encrypts it incorrectly.", "Comment syntax breaks when special characters are present.", "HTML comments are visible to anyone who views the page source in their browser.", "Comments are sent to a third-party analytics server."],
+              "answer": 2,
+              "explanation": "HTML comments are not secure. Any user can right-click a page, select 'View Page Source', and read every comment in the file."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-comment",
+          "title": "Protocol: Code Annotation",
+          "type": "challenge",
+          "prompt": "Construct an HTML comment containing the exact text `Navigation starts here`.\n\nBelow it, place an empty `<nav>` tag.",
+          "solution": "<!-- Navigation starts here -->\n<nav></nav>",
+          "validation": [
+            {
+              "rule": "<!--\\s*Navigation starts here\\s*-->",
+              "message": "error: comment must contain exact text 'Navigation starts here'."
+            },
+            {
+              "rule": "<nav>\\s*</nav>",
+              "message": "error: missing empty <nav> tag below the comment."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -3,21 +3,28 @@
     "id": "js-core",
     "title": "Javascript",
     "category": "engineering",
-    "description": "the fundamental matrix of the web. variables, loops, and logic.",
+    "description": "The fundamental matrix of the web. variables, loops, and logic.",
     "file": "data/js-core.json"
   },
   {
     "id": "py-core",
     "title": "Python",
     "category": "data",
-    "description": "data structures and scripting algorithms.",
+    "description": "Data structures and scripting algorithms.",
     "file": "data/py-core.json"
   },
   {
     "id": "css-arch",
-    "title": "css architecture",
+    "title": "CSS Architecture",
     "category": "design",
-    "description": "design patterns and layout engines.",
+    "description": "Design patterns and layout engines.",
     "file": "data/css-arch.json"
+  },
+  {
+    "id": "html-core",
+    "title": "HTML Architecture",
+    "category": "design",
+    "description": "Nodes, semantic integrity, and data ingestion.",
+    "file": "data/html-core.json"
   }
 ]
