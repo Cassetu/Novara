@@ -380,6 +380,7 @@ async function compileSurvivalPractice(courseMeta) {
 
     startLesson({
         id: "practice-survival",
+        courseId: courseMeta.id,
         title: "Survival",
         type: "practice_survival",
         questions: shuffleArray(allQuestions)
@@ -615,7 +616,7 @@ async function finishLesson() {
     const hasQuestions = activeLessonData.questions && activeLessonData.questions.length > 0;
 
     if (activeLessonData.type === "practice_survival") {
-        const courseId = activeCurriculumData.id;
+        const courseId = activeLessonData.courseId || activeCurriculumData.id;
         const currentHigh = userData.survivalScores[courseId] || 0;
         let recordText = "";
 
@@ -647,7 +648,7 @@ async function finishLesson() {
     const lessonView = document.getElementById("view-lesson");
     lessonView.innerHTML = `
         <div class="lesson-workspace" style="text-align: center;">
-            <h2>Lesson complete</h2>
+            <h2>Complete</h2>
             <p style="line-height: 1.5;">${accuracyText}</p>
             <p style="color: var(--accent); font-size: 24px; margin-top: 20px;">${ratingText}</p>
             <button id="return-btn" style="margin-top: 40px;">Return</button>
