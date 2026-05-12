@@ -2,13 +2,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     console.log("Js loaded");
 
-    const authView = document.getElementById("auth-view");
+    const authView = document.getElementById("view-auth");
     const appView = document.getElementById("app-view");
-    const signupForm = document.getElementById("auth-form");
-    const emailInput = document.getElementById("email");
-    const messageBox = document.getElementById("message");
+    const authMagicBtn = document.getElementById("auth-magic-btn");
+    const emailInput = document.getElementById("auth-email-input");
+    const messageBox = document.getElementById("auth-status");
 
-    console.log("Form identified");
+    console.log("DOM elements identified");
 
     window.firebaseAuth.onAuthStateChanged((user) => {
         if (user) {
@@ -16,12 +16,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             appView.style.display = "flex";
             console.log("Welcome back, ", user.email);
         } else {
-            authView.style.display = "flex";
+            authView.style.display = "block";
             appView.style.display = "none";
         }
     });
-    if (window.isSignInWithEmailLink(window.firebaseAuth, window.location.href)) {
 
+    if (window.isSignInWithEmailLink(window.firebaseAuth, window.location.href)) {
         messageBox.style.color = "blue";
         messageBox.innerText = "Confirming your magic link...";
 
@@ -40,9 +40,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    signupForm.addEventListener("submit", async (e) => {
+    authMagicBtn.addEventListener("click", async (e) => {
         e.preventDefault();
-        const email = emailInput.value;
+        const email = emailInput.value.trim();
+
+        if (!email) {
+            messageBox.style.color = "red";
+            messageBox.innerText = "Please enter an email address.";
+            return;
+        }
 
         const actionCodeSettings = {
             url: window.location.href,
@@ -58,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             messageBox.style.color = "green";
             messageBox.innerText = `Check your inbox! We sent a magic link to ${email}`;
-            signupForm.reset();
+            emailInput.value = "";
 
         } catch (error) {
             messageBox.style.color = "red";

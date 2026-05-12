@@ -25,12 +25,54 @@ const practiceContent = document.getElementById("practice-content");
 const navExplorer = document.getElementById("nav-explorer");
 const navSettings = document.getElementById("nav-settings");
 const navPractice = document.getElementById("nav-practice");
+const viewAuth = document.getElementById("view-auth");
+const authGoogleBtn = document.getElementById("auth-google-btn");
+const authMagicBtn = document.getElementById("auth-magic-btn");
+const authEmailInput = document.getElementById("auth-email-input");
+const authStatus = document.getElementById("auth-status");
 
 window.firebaseAuth.onAuthStateChanged(async (user) => {
     if (user) {
         currentUser = user;
         await loadUserData();
         navExplorer.click();
+    }
+});
+
+authGoogleBtn.addEventListener("click", async () => {
+    try {
+        const provider = new window.GoogleAuthProvider();
+        await window.signInWithPopup(window.firebaseAuth, provider);
+    } catch (error) {
+        authStatus.innerText = "Google Auth Flopped!: " + error.message;
+        authStatus.style.color = "#ff4444";
+    }
+});
+
+authMagicBtn.addEventListener("click", async () => {
+    const email = authEmailInput.value.trim();
+    if (!email) {
+        authStatus.innerText = "Email Required";
+        authStatus.style.color = "#ff4444";
+        return;
+    }
+
+    authStatus.innerText = "Dispatching Authorization Link...";
+    authStatus.style.color = "var(--text-dim)";
+
+    const actionCodeSettings = {
+        url: window.location.origin + window.location.pathname,
+        handleCodeInApp: true
+    };
+
+    try {
+        await window.sendSignInLinkToEmail(window.firebaseAuth, email, actionCodeSettings);
+        window.localStorage.setItem('emailForSignIn', email);
+        authStatus.innerText = "Link sent! check your inbox/spam folder.";
+        authStatus.style.color = "var(--accent)";
+    } catch (error) {
+        authStatus.innerText = "T   ransmission failed: " + error.message;
+        authStatus.style.color = "#ff4444";
     }
 });
 
