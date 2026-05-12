@@ -174,6 +174,16 @@ async function enrollInCourse(course) {
     await renderExplorer();
 }
 
+async function unenrollFromCourse(course) {
+    if (!confirm(`drop protocol initiated: remove '${course.title}' from active matrix? \n\n(note: historical scores will be preserved in the database)`)) {
+        return;
+    }
+    userData.enrolled = userData.enrolled.filter(id => id !== course.id);
+    const userRef = window.doc(window.db, "users", currentUser.uid);
+    await window.setDoc(userRef, { enrolled: userData.enrolled }, { merge: true });
+    await renderExplorer();
+}
+
 async function getCourseProgress(courseId) {
     const courseMeta = catalogData.find(c => c.id === courseId);
     if (!courseMeta) return 0;
@@ -197,10 +207,14 @@ async function getCourseProgress(courseId) {
 
 async function renderExplorer() {
     catalogGrid.innerHTML = "";
+
     for (const course of catalogData) {
         const isEnrolled = userData.enrolled.includes(course.id);
         const card = document.createElement("div");
         card.className = "course-card";
+
+        card.style.display = "flex";
+        card.style.flexDirection = "column";
 
         let progressHtml = "";
         if (isEnrolled) {
@@ -215,23 +229,45 @@ async function renderExplorer() {
 
         card.innerHTML = `
             <h3>${course.title}</h3>
-            <p>${course.description}</p>
+            <p style="flex-grow: 1;">${course.description}</p>
             ${progressHtml}
         `;
 
-        const actionBtn = document.createElement("button");
+        const btnGroup = document.createElement("div");
+        btnGroup.style.display = "flex";
+        btnGroup.style.gap = "10px";
+        btnGroup.style.marginTop = "auto";
+
         if (isEnrolled) {
-            actionBtn.innerText = "continue";
-            actionBtn.style.borderColor = "var(--text-dim)";
-            actionBtn.style.color = "var(--text-dim)";
-            actionBtn.addEventListener("click", () => openSyllabus(course));
+            const continueBtn = document.createElement("button");
+            continueBtn.innerText = "Continue";
+            continueBtn.style.flex = "2";
+            continueBtn.style.borderColor = "var(--text-dim)";
+            continueBtn.style.color = "var(--text-dim)";
+            continueBtn.addEventListener("click", () => openSyllabus(course));
+
+            const dropBtn = document.createElement("button");
+            dropBtn.innerText = "drop";
+            dropBtn.style.flex = "1";
+            dropBtn.style.borderColor = "#ff4444";
+            dropBtn.style.color = "#ff4444";
+            dropBtn.style.backgroundColor = "transparent";
+            dropBtn.addEventListener("click", () => unenrollFromCourse(course));
+
+            btnGroup.appendChild(continueBtn);
+            btnGroup.appendChild(dropBtn);
         } else {
-            actionBtn.innerText = "enroll";
-            actionBtn.addEventListener("click", () => enrollInCourse(course));
+            const enrollBtn = document.createElement("button");
+            enrollBtn.innerText = "Enroll";
+            enrollBtn.style.flex = "1";
+            enrollBtn.addEventListener("click", () => enrollInCourse(course));
+            btnGroup.appendChild(enrollBtn);
         }
-        card.appendChild(actionBtn);
+
+        card.appendChild(btnGroup);
         catalogGrid.appendChild(card);
     }
+
     renderSidebar();
 
     setTimeout(() => {

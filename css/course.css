@@ -3,11 +3,11 @@
     --surface: #f0f0f0;
     --text-main: #0a0a0a;
     --text-dim: #777777;
-    --accent: #2563eb;
+    --accent: #77BBA2;
     --border: #0a0a0a;
     --border-light: #d0d0d0;
     --bg: #ffffff;
-    --blue: #2563eb;
+    --blue: #77BBA2;
 }
 
 .workspace {
@@ -699,4 +699,120 @@ code {
     color: var(--accent);
     margin-top: 5px;
     transition: color 0.2s ease;
+}
+
+#lesson-action-btn,
+#lesson-read-btn {
+    background-color: var(--accent);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#lesson-action-btn:hover:not(:disabled),
+#lesson-read-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+#lesson-action-btn:active:not(:disabled),
+#lesson-read-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+#lesson-action-btn:disabled,
+#lesson-read-btn:disabled {
+    background-color: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+        cursor: not-allowed;
+    opacity: 0.6;
+}
+
+#return-btn {
+    background-color: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#return-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+#return-btn:active {
+    transform: translateY(1px);
+}
+
+.practice-btn-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.practice-btn-group button {
+    flex: 1;
+    background-color: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    padding: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.practice-btn-group button:hover {
+    transform: translateY(-2px);
+    opacity: 0.8;
+}
+
+.practice-btn-group button:active {
+    transform: translateY(1px);
+}
+
+.danger-btn {
+    background-color: transparent;
+    color: #ff4444;
+    border: 1px solid #ff4444;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.danger-btn:hover:not(:disabled) {
+    background-color: #ff4444;
+    color: var(--void);
+    transform: translateY(-2px);
+}
+
+.danger-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.danger-btn:disabled {
+    border-color: var(--border);
+    color: var(--text-dim);
+    cursor: not-allowed;
+    background-color: transparent;
+    transform: none;
 }
