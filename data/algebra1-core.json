@@ -1,0 +1,998 @@
+{
+  "id": "algebra1-core",
+  "title": "Algebra 1: Thinking in Abstractions",
+  "sections": [
+    {
+      "title": "Module 1: The Language of Algebra",
+      "lessons": [
+        {
+          "id": "l-intro-algebra",
+          "title": "From Numbers to Symbols",
+          "type": "document",
+          "content": "Arithmetic deals with specific numbers. Algebra deals with relationships. Instead of asking 'what is 3 + 4', algebra asks 'if something plus 4 equals 7, what is the something?'\n\nThat 'something' is a variable. A variable is a letter that represents an unknown or changing value. The most common are x, y, and n, but any letter works. The letter itself means nothing — it is just a placeholder.\n\nA constant is a fixed number that does not change. A coefficient is a number multiplied by a variable. In the expression 5x, the coefficient is 5 and x is the variable. When no coefficient is written, it is understood to be 1. So x means 1x.\n\nAn expression is a combination of numbers, variables, and operations. It has no equal sign. Examples: 3x + 7, 2a - 5, 4.\n\nAn equation is a statement that two expressions are equal, connected by an equal sign. Examples: 3x + 7 = 22, 2a - 5 = 9. The equal sign is a claim that both sides balance. Your job in algebra is usually to find the value of the variable that makes the claim true.",
+          "examples": [
+            {
+              "label": "Identifying Parts of an Expression",
+              "code": "Expression: 6x + 3\n\nCoefficient: 6\nVariable: x\nConstant: 3\n\nExpression: x - 10\n\nCoefficient: 1 (understood)\nVariable: x\nConstant: 10"
+            }
+          ]
+        },
+        {
+          "id": "l-language-questions",
+          "title": "Algebra Vocabulary",
+          "questions": [
+            {
+              "q": "What is a variable?",
+              "options": ["A number that changes based on the weather.", "A letter that represents an unknown or changing value.", "The answer to an equation.", "A type of operation like addition or subtraction."],
+              "answer": 1,
+              "explanation": "A variable is a symbol, usually a letter, that holds the place of a value we either don't know yet or that can change."
+            },
+            {
+              "q": "In the expression 9y + 4, what is the coefficient?",
+              "options": ["4", "y", "9", "9y"],
+              "answer": 2,
+              "explanation": "The coefficient is the number multiplied directly by the variable. In 9y, the coefficient is 9."
+            },
+            {
+              "q": "What is the difference between an expression and an equation?",
+              "options": ["Expressions use letters; equations use numbers.", "Expressions are wrong; equations are correct.", "An expression has no equal sign; an equation has an equal sign claiming two sides are equal.", "An equation can only have one variable."],
+              "answer": 2,
+              "explanation": "An expression like 3x + 5 is just a mathematical phrase. An equation like 3x + 5 = 20 is a complete statement with an equal sign."
+            },
+            {
+              "q": "In the expression x + 7, what is the coefficient of x?",
+              "options": ["0", "7", "x", "1"],
+              "answer": 3,
+              "explanation": "When no number is written next to a variable, the coefficient is always understood to be 1. x is the same as 1x."
+            },
+            {
+              "q": "Which of the following is an expression, not an equation?",
+              "options": ["5x = 20", "x + 3 = 9", "4n + 2", "2 = 2"],
+              "answer": 2,
+              "explanation": "4n + 2 has no equal sign, so it is an expression. All the others make a claim of equality with an equal sign, making them equations."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-identify",
+          "title": "Protocol: Expression Breakdown",
+          "type": "challenge",
+          "prompt": "Write the coefficient of the variable in this expression:\n\n7x + 12\n\nWrite only the number.",
+          "solution": "7",
+          "validation": [
+            {
+              "rule": "^7$",
+              "message": "error: the coefficient is the number multiplied by x. look at 7x."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Order of Operations",
+      "lessons": [
+        {
+          "id": "l-order-ops",
+          "title": "The Rules of Evaluation",
+          "type": "document",
+          "content": "When an expression has multiple operations, there is a strict order they must be performed in. Without this order, the same expression would produce different answers depending on who solved it, which makes math useless.\n\nThe order is:\n1. Parentheses — evaluate everything inside grouping symbols first.\n2. Exponents — evaluate powers and roots next.\n3. Multiplication and Division — left to right.\n4. Addition and Subtraction — left to right.\n\nA common memory tool is PEMDAS. The important detail most people miss: multiplication and division are on the same level, performed left to right. Same with addition and subtraction. You do not always multiply before dividing — you work left to right through whichever comes first.\n\nFor example: 8 ÷ 4 × 2. Left to right: 8 ÷ 4 = 2, then 2 × 2 = 4. If you multiplied first you would get the wrong answer.\n\nThis order applies equally when a variable is present. To evaluate an expression means to substitute a specific value for the variable and compute the result.",
+          "examples": [
+            {
+              "label": "Evaluating Expressions",
+              "code": "Evaluate 3x + 2 when x = 5\n\nStep 1: Substitute     → 3(5) + 2\nStep 2: Multiply       → 15 + 2\nStep 3: Add            → 17\n\nEvaluate 2(x + 4) when x = 3\n\nStep 1: Substitute     → 2(3 + 4)\nStep 2: Parentheses    → 2(7)\nStep 3: Multiply       → 14"
+            }
+          ]
+        },
+        {
+          "id": "l-order-questions",
+          "title": "Evaluation Order",
+          "questions": [
+            {
+              "q": "What is the first operation to perform when evaluating an expression?",
+              "options": ["Multiplication", "Addition", "Exponents", "Parentheses"],
+              "answer": 3,
+              "explanation": "Parentheses (and all grouping symbols) are evaluated first. Everything inside them must be simplified before any outside operations are applied."
+            },
+            {
+              "q": "Evaluate: 3 + 4 × 2",
+              "options": ["14", "11", "10", "24"],
+              "answer": 1,
+              "explanation": "Multiplication comes before addition. Multiply first: 4 × 2 = 8. Then add: 3 + 8 = 11."
+            },
+            {
+              "q": "Evaluate: 2(x + 3) when x = 4",
+              "options": ["11", "10", "14", "18"],
+              "answer": 2,
+              "explanation": "Substitute x = 4: 2(4 + 3). Parentheses first: 4 + 3 = 7. Then multiply: 2 × 7 = 14."
+            },
+            {
+              "q": "Evaluate: 20 ÷ 4 × 2",
+              "options": ["2.5", "40", "10", "8"],
+              "answer": 2,
+              "explanation": "Division and multiplication are equal priority, worked left to right. 20 ÷ 4 = 5, then 5 × 2 = 10."
+            },
+            {
+              "q": "Evaluate 5x - 3 when x = 6",
+              "options": ["27", "15", "33", "12"],
+              "answer": 0,
+              "explanation": "Substitute: 5(6) - 3. Multiply first: 30 - 3 = 27."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-evaluate",
+          "title": "Protocol: Expression Evaluation",
+          "type": "challenge",
+          "prompt": "Evaluate the expression:\n\n4x + 9 when x = 3\n\nWrite only the final number.",
+          "solution": "21",
+          "validation": [
+            {
+              "rule": "^21$",
+              "message": "error: substitute x = 3. multiply 4 × 3 = 12 first, then add 9."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Simplifying Expressions",
+      "lessons": [
+        {
+          "id": "l-like-terms",
+          "title": "Combining Like Terms",
+          "type": "document",
+          "content": "Like terms are terms that have the exact same variable raised to the exact same power. You can combine them by adding or subtracting their coefficients. The variable part does not change.\n\n3x and 7x are like terms. Their sum is 10x.\n5x² and 2x are not like terms. The exponents are different, so they cannot be combined.\n4 and 9 are like terms — both are constants with no variable.\n\nSimplifying an expression means combining all like terms to make the expression as compact as possible. You are not solving for anything. You are just rewriting the expression in a shorter form.\n\nThe Distributive Property lets you multiply a single term across the terms inside parentheses. a(b + c) = ab + ac. It works in reverse too — factoring out a common value from multiple terms: ab + ac = a(b + c).\n\nWhen you see a negative sign in front of parentheses, like -(x + 5), distribute the negative. It is the same as multiplying by -1: -x - 5.",
+          "examples": [
+            {
+              "label": "Combining Like Terms and Distributing",
+              "code": "3x + 5 + 7x - 2\n= (3x + 7x) + (5 - 2)\n= 10x + 3\n\n4(2x + 3)\n= 4(2x) + 4(3)\n= 8x + 12\n\n-(x + 5)\n= -1(x + 5)\n= -x - 5"
+            }
+          ]
+        },
+        {
+          "id": "l-simplify-questions",
+          "title": "Simplification Rules",
+          "questions": [
+            {
+              "q": "Which two terms in the expression 5x + 3 + 2x + 8 are like terms with x?",
+              "options": ["5x and 3", "3 and 8", "5x and 2x", "2x and 8"],
+              "answer": 2,
+              "explanation": "Like terms share the same variable and exponent. 5x and 2x both have x to the first power, so they are like terms and can be combined."
+            },
+            {
+              "q": "Simplify: 6x + 4 - 2x + 1",
+              "options": ["4x + 5", "8x + 5", "4x + 3", "8x - 3"],
+              "answer": 0,
+              "explanation": "Combine x terms: 6x - 2x = 4x. Combine constants: 4 + 1 = 5. Result: 4x + 5."
+            },
+            {
+              "q": "Apply the Distributive Property: 3(x + 6)",
+              "options": ["3x + 6", "x + 18", "3x + 9", "3x + 18"],
+              "answer": 3,
+              "explanation": "Distribute the 3 to each term inside: 3 × x = 3x, and 3 × 6 = 18. Result: 3x + 18."
+            },
+            {
+              "q": "Simplify -(2x - 4)",
+              "options": ["-2x - 4", "2x + 4", "-2x + 4", "2x - 4"],
+              "answer": 2,
+              "explanation": "A negative sign in front of parentheses is -1 multiplied through. -1 × 2x = -2x, and -1 × -4 = +4. Result: -2x + 4."
+            },
+            {
+              "q": "Can 4x² and 4x be combined into one term?",
+              "options": ["Yes, they combine to 8x.", "Yes, they combine to 8x².", "No, they have different exponents and are not like terms.", "No, because both have coefficient 4."],
+              "answer": 2,
+              "explanation": "Like terms must have the same variable AND the same exponent. x² and x are different terms. They cannot be combined."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-simplify",
+          "title": "Protocol: Combine Like Terms",
+          "type": "challenge",
+          "prompt": "Simplify the following expression completely:\n\n9x + 2 - 3x + 6\n\nWrite your answer in the form ax + b.",
+          "solution": "6x + 8",
+          "validation": [
+            {
+              "rule": "^6x \\+ 8$",
+              "message": "error: combine x terms (9x - 3x = 6x) and constants (2 + 6 = 8)."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-distribute",
+          "title": "Protocol: Distributive Property",
+          "type": "challenge",
+          "prompt": "Apply the Distributive Property and simplify:\n\n5(2x + 3)\n\nWrite your answer in the form ax + b.",
+          "solution": "10x + 15",
+          "validation": [
+            {
+              "rule": "^10x \\+ 15$",
+              "message": "error: multiply 5 by each term inside the parentheses. 5 × 2x = 10x, 5 × 3 = 15."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 4: Solving One-Step Equations",
+      "lessons": [
+        {
+          "id": "l-one-step",
+          "title": "Inverse Operations",
+          "type": "document",
+          "content": "Solving an equation means finding the value of the variable that makes the equation true. The method is always the same: isolate the variable. Get it alone on one side of the equal sign.\n\nTo do this, you use inverse operations. The inverse (opposite) of addition is subtraction. The inverse of subtraction is addition. The inverse of multiplication is division. The inverse of division is multiplication.\n\nThe golden rule: whatever you do to one side of the equation, you must do the exact same thing to the other side. The equation is a balance. If you change one side without matching it on the other, you break the balance and the equation is no longer true.\n\nFor an equation like x + 5 = 12, the 5 is being added to x. Do the inverse: subtract 5 from both sides. The left side becomes x. The right side becomes 7. So x = 7.\n\nFor an equation like 3x = 21, x is being multiplied by 3. Do the inverse: divide both sides by 3. The left side becomes x. The right side becomes 7. So x = 7.",
+          "examples": [
+            {
+              "label": "One-Step Solutions",
+              "code": "x + 8 = 15\n  - 8    - 8\n──────────────\n    x = 7\n\ny - 3 = 10\n  + 3    + 3\n──────────────\n    y = 13\n\n4n = 28\n÷4    ÷4\n──────────────\n n = 7\n\nm ÷ 6 = 5\n  × 6    × 6\n──────────────\n  m = 30"
+            }
+          ]
+        },
+        {
+          "id": "l-one-step-questions",
+          "title": "Isolating the Variable",
+          "questions": [
+            {
+              "q": "To solve x + 9 = 20, what operation do you perform on both sides?",
+              "options": ["Add 9 to both sides.", "Multiply both sides by 9.", "Divide both sides by 9.", "Subtract 9 from both sides."],
+              "answer": 3,
+              "explanation": "9 is being added to x. The inverse of addition is subtraction. Subtract 9 from both sides to isolate x. x = 20 - 9 = 11."
+            },
+            {
+              "q": "Solve: x - 7 = 4",
+              "options": ["x = 3", "x = 11", "x = -3", "x = 28"],
+              "answer": 1,
+              "explanation": "7 is being subtracted from x. Add 7 to both sides: x = 4 + 7 = 11."
+            },
+            {
+              "q": "Solve: 6x = 42",
+              "options": ["x = 36", "x = 48", "x = 7", "x = 252"],
+              "answer": 2,
+              "explanation": "x is multiplied by 6. Divide both sides by 6: x = 42 ÷ 6 = 7."
+            },
+            {
+              "q": "Solve: x ÷ 5 = 9",
+              "options": ["x = 1.8", "x = 14", "x = 4", "x = 45"],
+              "answer": 3,
+              "explanation": "x is divided by 5. Multiply both sides by 5: x = 9 × 5 = 45."
+            },
+            {
+              "q": "What is the golden rule of solving equations?",
+              "options": ["Always subtract from both sides first.", "Only operate on the side with the variable.", "Whatever you do to one side, you must do to the other side.", "Move variables to the left and constants to the right."],
+              "answer": 2,
+              "explanation": "An equation is a balance. Any operation performed on one side must be mirrored on the other side to maintain equality."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-one-step",
+          "title": "Protocol: One-Step Solution",
+          "type": "challenge",
+          "prompt": "Solve for x:\n\nx + 14 = 31\n\nWrite only the value of x.",
+          "solution": "17",
+          "validation": [
+            {
+              "rule": "^17$",
+              "message": "error: subtract 14 from both sides. 31 - 14 = 17."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 5: Solving Two-Step Equations",
+      "lessons": [
+        {
+          "id": "l-two-step",
+          "title": "Undoing Two Operations",
+          "type": "document",
+          "content": "Most equations require more than one step. The strategy remains the same — isolate the variable — but now there are two operations to undo instead of one.\n\nThe order matters. Work in the reverse order of operations. If the equation has both addition/subtraction and multiplication/division, undo the addition or subtraction first. Then undo the multiplication or division.\n\nThink of it this way: if you were building the expression, you would multiply first, then add. To take it apart, you reverse those steps — undo the addition first, then the multiplication.\n\nFor 2x + 3 = 11:\nStep 1: Subtract 3 from both sides → 2x = 8\nStep 2: Divide both sides by 2 → x = 4\n\nYou should always check your answer. Substitute your solution back into the original equation and verify both sides are equal. If they are not, you made an error somewhere.",
+          "examples": [
+            {
+              "label": "Two-Step Solutions",
+              "code": "3x - 5 = 16\n  + 5    + 5\n────────────\n  3x = 21\n  ÷3    ÷3\n────────────\n   x = 7\n\nCheck: 3(7) - 5 = 21 - 5 = 16 ✓\n\nx/4 + 2 = 6\n     - 2   - 2\n────────────────\n  x/4 = 4\n  × 4    × 4\n────────────────\n    x = 16\n\nCheck: 16/4 + 2 = 4 + 2 = 6 ✓"
+            }
+          ]
+        },
+        {
+          "id": "l-two-step-questions",
+          "title": "Multi-Step Logic",
+          "questions": [
+            {
+              "q": "To solve 4x + 7 = 23, what is the first step?",
+              "options": ["Divide both sides by 4.", "Subtract 4 from both sides.", "Subtract 7 from both sides.", "Multiply both sides by 4."],
+              "answer": 2,
+              "explanation": "Undo operations in reverse order. Addition and subtraction come after multiplication in the order of operations, so we undo them first. Subtract 7 from both sides."
+            },
+            {
+              "q": "Solve: 2x + 5 = 13",
+              "options": ["x = 9", "x = 4", "x = 3", "x = 8"],
+              "answer": 1,
+              "explanation": "Step 1: Subtract 5 from both sides: 2x = 8. Step 2: Divide both sides by 2: x = 4."
+            },
+            {
+              "q": "Solve: 5x - 10 = 20",
+              "options": ["x = 2", "x = 10", "x = 6", "x = 30"],
+              "answer": 2,
+              "explanation": "Step 1: Add 10 to both sides: 5x = 30. Step 2: Divide both sides by 5: x = 6."
+            },
+            {
+              "q": "After solving 3x + 1 = 10, a student says x = 3. How do they verify this?",
+              "options": ["Solve the equation a second time.", "Substitute 3 for x in the original equation: 3(3) + 1 = 9 + 1 = 10. It checks out.", "Substitute 3 into x on the right side only.", "They cannot verify it without a calculator."],
+              "answer": 1,
+              "explanation": "To check a solution, substitute it back into the original equation and confirm both sides are equal. This always works and catches arithmetic mistakes."
+            },
+            {
+              "q": "Solve: x/3 - 4 = 2",
+              "options": ["x = 2", "x = 18", "x = 6", "x = 24"],
+              "answer": 1,
+              "explanation": "Step 1: Add 4 to both sides: x/3 = 6. Step 2: Multiply both sides by 3: x = 18."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-two-step",
+          "title": "Protocol: Two-Step Solution",
+          "type": "challenge",
+          "prompt": "Solve for x:\n\n6x - 4 = 32\n\nWrite only the value of x.",
+          "solution": "6",
+          "validation": [
+            {
+              "rule": "^6$",
+              "message": "error: step 1 — add 4 to both sides: 6x = 36. step 2 — divide both sides by 6: x = 6."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 6: Multi-Step and Variable on Both Sides",
+      "lessons": [
+        {
+          "id": "l-both-sides",
+          "title": "Collecting the Variable",
+          "type": "document",
+          "content": "Some equations have the variable on both sides of the equal sign. The strategy is to collect all variable terms on one side first, and all constant terms on the other side.\n\nFor 5x + 3 = 2x + 12:\nStep 1: Subtract 2x from both sides to eliminate x from the right side: 3x + 3 = 12\nStep 2: Subtract 3 from both sides: 3x = 9\nStep 3: Divide both sides by 3: x = 3\n\nWhen equations involve parentheses, always distribute first, then combine like terms, then move variable terms to one side.\n\nSome equations simplify to something like 5 = 5 — a true statement with no variable. This means the equation is true for all values of x. We call it an identity and say it has infinitely many solutions.\n\nSome equations simplify to something like 3 = 7 — a false statement. This means no value of x makes the equation true. We say it has no solution.",
+          "examples": [
+            {
+              "label": "Variables on Both Sides",
+              "code": "7x - 3 = 4x + 9\n  - 4x     - 4x\n───────────────────\n  3x - 3 = 9\n     + 3    + 3\n───────────────────\n    3x = 12\n    ÷3    ÷3\n───────────────────\n     x = 4\n\nCheck: 7(4) - 3 = 28 - 3 = 25\n       4(4) + 9 = 16 + 9 = 25 ✓"
+            }
+          ]
+        },
+        {
+          "id": "l-both-sides-questions",
+          "title": "Collecting Terms",
+          "questions": [
+            {
+              "q": "To begin solving 8x - 2 = 5x + 10, what is a logical first step?",
+              "options": ["Divide everything by 2.", "Subtract 5x from both sides.", "Add 2 to the right side only.", "Multiply both sides by 5."],
+              "answer": 1,
+              "explanation": "The first goal is to get all x terms on one side. Subtracting 5x from both sides eliminates x from the right, giving 3x - 2 = 10."
+            },
+            {
+              "q": "Solve: 9x + 1 = 4x + 21",
+              "options": ["x = 4", "x = 5", "x = 3", "x = 22"],
+              "answer": 0,
+              "explanation": "Subtract 4x from both sides: 5x + 1 = 21. Subtract 1 from both sides: 5x = 20. Divide by 5: x = 4."
+            },
+            {
+              "q": "An equation simplifies to 7 = 7. What does this mean?",
+              "options": ["There is no solution.", "x = 7.", "The equation is true for all values of x — infinitely many solutions.", "The equation is invalid."],
+              "answer": 2,
+              "explanation": "When the variable cancels out and you are left with a true statement, the equation works for every possible value of x. This is called an identity."
+            },
+            {
+              "q": "An equation simplifies to 4 = 9. What does this mean?",
+              "options": ["x = 4.", "x = 9.", "x = 4/9.", "There is no solution."],
+              "answer": 3,
+              "explanation": "When the variable cancels out and you are left with a false statement, no value of x can make the equation true. The equation has no solution."
+            },
+            {
+              "q": "Solve: 2(x + 3) = x + 9",
+              "options": ["x = 3", "x = 6", "x = 12", "x = 0"],
+              "answer": 0,
+              "explanation": "Distribute: 2x + 6 = x + 9. Subtract x from both sides: x + 6 = 9. Subtract 6: x = 3."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-both-sides",
+          "title": "Protocol: Collect and Solve",
+          "type": "challenge",
+          "prompt": "Solve for x:\n\n10x - 6 = 7x + 9\n\nWrite only the value of x.",
+          "solution": "5",
+          "validation": [
+            {
+              "rule": "^5$",
+              "message": "error: subtract 7x from both sides: 3x - 6 = 9. add 6 to both sides: 3x = 15. divide by 3: x = 5."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 7: Inequalities",
+      "lessons": [
+        {
+          "id": "l-inequalities",
+          "title": "A Range of Solutions",
+          "type": "document",
+          "content": "An equation says two things are exactly equal. An inequality says one side is greater than, less than, or possibly equal to the other. Instead of one specific solution, an inequality has a range of solutions.\n\nThe four inequality symbols:\n- `>` means 'greater than'. x > 5 means x can be 6, 7, 100, or anything above 5 — but not 5 itself.\n- `<` means 'less than'. x < 3 means x can be 2, 1, 0, -50 — but not 3 itself.\n- `≥` means 'greater than or equal to'. x ≥ 5 includes 5 itself.\n- `≤` means 'less than or equal to'. x ≤ 3 includes 3 itself.\n\nSolving inequalities works almost exactly like solving equations — use inverse operations to isolate the variable. The one critical difference: if you multiply or divide both sides by a negative number, you must flip the inequality symbol.\n\nFor example: -2x < 8. Divide both sides by -2. The symbol flips. x > -4.\n\nWhy? Because multiplying or dividing by a negative reverses the order of numbers on the number line.",
+          "examples": [
+            {
+              "label": "Solving Inequalities",
+              "code": "3x + 4 > 13\n      - 4   - 4\n──────────────────\n    3x > 9\n    ÷3    ÷3\n──────────────────\n     x > 3\n\nSolution: all numbers greater than 3\n\n-5x ≤ 20\n÷(-5)  ÷(-5)   ← flip the symbol!\n──────────────────\n  x ≥ -4\n\nSolution: all numbers greater than or equal to -4"
+            }
+          ]
+        },
+        {
+          "id": "l-inequality-questions",
+          "title": "Inequality Logic",
+          "questions": [
+            {
+              "q": "What is the difference between x > 4 and x ≥ 4?",
+              "options": ["There is no difference.", "x > 4 includes 4; x ≥ 4 does not.", "x > 4 excludes 4; x ≥ 4 includes 4.", "x ≥ 4 means x is greater and also even."],
+              "answer": 2,
+              "explanation": "The > symbol is strict — it excludes the boundary value. The ≥ symbol is inclusive — the boundary value is a valid solution."
+            },
+            {
+              "q": "Solve: x + 6 > 10",
+              "options": ["x > 16", "x > 4", "x < 4", "x = 4"],
+              "answer": 1,
+              "explanation": "Subtract 6 from both sides: x > 10 - 6, so x > 4. This is solved like an equation, and the inequality symbol stays the same."
+            },
+            {
+              "q": "When must you flip the inequality symbol?",
+              "options": ["When you add a negative number to both sides.", "When you subtract from both sides.", "When you multiply or divide both sides by a negative number.", "When the variable is on the right side."],
+              "answer": 2,
+              "explanation": "Dividing or multiplying by a negative reverses the relative order of numbers. If 4 > 2, then -4 < -2. The symbol must flip to keep the statement true."
+            },
+            {
+              "q": "Solve: -4x > 24",
+              "options": ["x > -6", "x < -6", "x > 6", "x < 6"],
+              "answer": 1,
+              "explanation": "Divide both sides by -4 and flip the symbol: x < 24 ÷ -4, so x < -6."
+            },
+            {
+              "q": "Which value is a solution to x ≤ -2?",
+              "options": ["0", "-1", "-2", "2"],
+              "answer": 2,
+              "explanation": "-2 satisfies x ≤ -2 because -2 equals -2. The ≤ symbol includes the boundary value."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-inequality",
+          "title": "Protocol: Inequality Solution",
+          "type": "challenge",
+          "prompt": "Solve the inequality:\n\n-3x + 6 ≤ 21\n\nWrite your answer in the form x [symbol] [number]. For example: x ≥ -5",
+          "solution": "x ≥ -5",
+          "validation": [
+            {
+              "rule": "x ≥ -5",
+              "message": "error: step 1 — subtract 6 from both sides: -3x ≤ 15. step 2 — divide by -3 and flip the symbol: x ≥ -5."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 8: Graphing on the Coordinate Plane",
+      "lessons": [
+        {
+          "id": "l-coordinate-plane",
+          "title": "Mapping Two Dimensions",
+          "type": "document",
+          "content": "The coordinate plane is a grid created by two number lines intersecting at right angles. The horizontal line is the x-axis. The vertical line is the y-axis. The point where they cross is the origin, which has coordinates (0, 0).\n\nEvery point on the plane is identified by an ordered pair (x, y). The first number is the x-coordinate, which tells you how far to move horizontally from the origin. The second number is the y-coordinate, which tells you how far to move vertically.\n\nThe axes divide the plane into four quadrants:\n- Quadrant I: x positive, y positive (upper right)\n- Quadrant II: x negative, y positive (upper left)\n- Quadrant III: x negative, y negative (lower left)\n- Quadrant IV: x positive, y negative (lower right)\n\nTo plot a point like (3, -2): start at the origin, move 3 units right on the x-axis, then move 2 units down (negative direction on y-axis).",
+          "examples": [
+            {
+              "label": "Reading Coordinates",
+              "code": "Point A at (4, 2)   → Quadrant I\nPoint B at (-3, 5)  → Quadrant II\nPoint C at (-1, -4) → Quadrant III\nPoint D at (6, -2)  → Quadrant IV\n\nPoint (0, 5)  → on the y-axis\nPoint (3, 0)  → on the x-axis"
+            }
+          ]
+        },
+        {
+          "id": "l-coordinate-questions",
+          "title": "Coordinate Geometry",
+          "questions": [
+            {
+              "q": "In an ordered pair (x, y), which number tells you how far to move horizontally?",
+              "options": ["y, the second number.", "x, the first number.", "Both equally.", "The larger number."],
+              "answer": 1,
+              "explanation": "In an ordered pair, x always comes first and represents horizontal movement. y comes second and represents vertical movement."
+            },
+            {
+              "q": "The point (-4, 7) is located in which quadrant?",
+              "options": ["Quadrant I", "Quadrant II", "Quadrant III", "Quadrant IV"],
+              "answer": 1,
+              "explanation": "Quadrant II has a negative x-coordinate and a positive y-coordinate. (-4, 7) fits: x is negative, y is positive."
+            },
+            {
+              "q": "What are the coordinates of the origin?",
+              "options": ["(1, 1)", "(0, 1)", "(1, 0)", "(0, 0)"],
+              "answer": 3,
+              "explanation": "The origin is the intersection of both axes. It is always at (0, 0)."
+            },
+            {
+              "q": "A point has coordinates (5, 0). Where is it located?",
+              "options": ["In Quadrant I.", "In Quadrant IV.", "On the y-axis.", "On the x-axis."],
+              "answer": 3,
+              "explanation": "Any point with a y-coordinate of 0 lies directly on the x-axis. It is not in any quadrant."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-quadrant",
+          "title": "Protocol: Quadrant Identification",
+          "type": "challenge",
+          "prompt": "In which quadrant does the point (-6, -3) lie?\n\nWrite only the Roman numeral: I, II, III, or IV.",
+          "solution": "III",
+          "validation": [
+            {
+              "rule": "^III$",
+              "message": "error: both x and y are negative. that places the point in Quadrant III."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 9: Linear Equations and Slope",
+      "lessons": [
+        {
+          "id": "l-slope",
+          "title": "Rate of Change",
+          "type": "document",
+          "content": "A linear equation produces a straight line when graphed on the coordinate plane. The most useful form for understanding and graphing these lines is slope-intercept form:\n\ny = mx + b\n\nm is the slope. It measures how steep the line is — specifically, how much y changes for every 1 unit x increases. We calculate it as: rise over run, or the change in y divided by the change in x.\n\nSlope = (y₂ - y₁) / (x₂ - x₁)\n\nA positive slope means the line goes up from left to right. A negative slope means it goes down. A slope of 0 is a flat horizontal line. An undefined slope is a perfectly vertical line (you would be dividing by zero).\n\nb is the y-intercept. It is the y-coordinate of the point where the line crosses the y-axis. At that point, x is always 0.\n\nTo graph a linear equation: plot the y-intercept on the y-axis first. Then use the slope as a ratio (rise/run) to find a second point and draw the line through both.",
+          "examples": [
+            {
+              "label": "Reading Slope-Intercept Form",
+              "code": "y = 3x + 2\n\nSlope (m) = 3  → rise 3, run 1\ny-intercept (b) = 2  → line crosses y-axis at (0, 2)\n\nTo graph:\n1. Plot (0, 2)\n2. From there, go up 3, right 1 → plot (1, 5)\n3. Draw the line\n\ny = -½x + 4\n\nSlope = -½  → go down 1, right 2\ny-intercept = 4 → start at (0, 4)"
+            }
+          ]
+        },
+        {
+          "id": "l-slope-questions",
+          "title": "Slope and Intercept",
+          "questions": [
+            {
+              "q": "In the equation y = 5x - 3, what is the slope?",
+              "options": ["-3", "x", "5", "y"],
+              "answer": 2,
+              "explanation": "In y = mx + b, m is always the coefficient of x. Here m = 5, which means for every 1 unit right, the line rises 5 units."
+            },
+            {
+              "q": "In the equation y = -2x + 7, what is the y-intercept?",
+              "options": ["-2", "x", "-7", "7"],
+              "answer": 3,
+              "explanation": "In y = mx + b, b is the y-intercept. Here b = 7. The line crosses the y-axis at the point (0, 7)."
+            },
+            {
+              "q": "What is the slope of a horizontal line?",
+              "options": ["1", "Undefined", "0", "-1"],
+              "answer": 2,
+              "explanation": "A horizontal line has no rise — every point has the same y-value. Rise / run = 0 / run = 0."
+            },
+            {
+              "q": "Find the slope between points (2, 3) and (6, 11).",
+              "options": ["2", "4", "3", "0.5"],
+              "answer": 0,
+              "explanation": "Slope = (y₂ - y₁) / (x₂ - x₁) = (11 - 3) / (6 - 2) = 8 / 4 = 2."
+            },
+            {
+              "q": "A line with a negative slope does what as you move from left to right?",
+              "options": ["Goes up.", "Stays flat.", "Goes down.", "Curves."],
+              "answer": 2,
+              "explanation": "A negative slope means for every unit you move right, y decreases. The line falls as you read it from left to right."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-slope",
+          "title": "Protocol: Slope Calculation",
+          "type": "challenge",
+          "prompt": "Calculate the slope of the line passing through the points (1, 4) and (5, 12).\n\nWrite only the number.",
+          "solution": "2",
+          "validation": [
+            {
+              "rule": "^2$",
+              "message": "error: slope = (y2 - y1) / (x2 - x1) = (12 - 4) / (5 - 1) = 8 / 4 = 2."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-read-equation",
+          "title": "Protocol: Read the Equation",
+          "type": "challenge",
+          "prompt": "Given the equation y = -4x + 9, write the y-intercept.\n\nWrite only the number.",
+          "solution": "9",
+          "validation": [
+            {
+              "rule": "^9$",
+              "message": "error: in y = mx + b, b is the y-intercept. here b = 9."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 10: Writing Linear Equations",
+      "lessons": [
+        {
+          "id": "l-write-equations",
+          "title": "Building the Equation",
+          "type": "document",
+          "content": "Given enough information, you can write the equation of any line.\n\nIf you are given the slope and y-intercept, simply substitute them into y = mx + b. Done.\n\nIf you are given the slope and one point on the line, use point-slope form:\ny - y₁ = m(x - x₁)\nSubstitute the slope for m and the point's coordinates for x₁ and y₁. Then simplify to slope-intercept form.\n\nIf you are given two points, first calculate the slope using the slope formula. Then use that slope and one of the points in point-slope form.\n\nParallel lines have identical slopes but different y-intercepts. They never touch.\nPerpendicular lines have slopes that are negative reciprocals of each other — they multiply to -1. If one line has slope 2, a perpendicular line has slope -1/2.",
+          "examples": [
+            {
+              "label": "Writing an Equation from a Point and Slope",
+              "code": "Given: slope = 3, passes through (2, 7)\n\nPoint-slope form:\ny - 7 = 3(x - 2)\ny - 7 = 3x - 6\n    y = 3x + 1\n\nGiven two points: (0, 4) and (3, 10)\n\nStep 1: slope = (10 - 4) / (3 - 0) = 6/3 = 2\nStep 2: y-intercept is 4 (from point (0, 4))\nEquation: y = 2x + 4"
+            }
+          ]
+        },
+        {
+          "id": "l-write-questions",
+          "title": "Equation Construction",
+          "questions": [
+            {
+              "q": "What is the equation of a line with slope -3 and y-intercept 5?",
+              "options": ["y = 5x - 3", "y = -3x - 5", "y = -3x + 5", "y = 3x + 5"],
+              "answer": 2,
+              "explanation": "Substitute directly into y = mx + b. m = -3, b = 5. Equation: y = -3x + 5."
+            },
+            {
+              "q": "Two lines are parallel. What must be true about their slopes?",
+              "options": ["Their slopes multiply to -1.", "Their slopes are equal.", "One slope is zero.", "Their slopes are reciprocals."],
+              "answer": 1,
+              "explanation": "Parallel lines never intersect because they rise at the exact same rate. Equal slopes produce lines that run at the exact same angle."
+            },
+            {
+              "q": "A line has slope 4. What is the slope of a line perpendicular to it?",
+              "options": ["-4", "4", "-1/4", "1/4"],
+              "answer": 2,
+              "explanation": "Perpendicular slopes are negative reciprocals. Flip the fraction and change the sign. The reciprocal of 4 is 1/4, and the negative is -1/4."
+            },
+            {
+              "q": "Write the equation of the line with slope 2 passing through (3, 8) in slope-intercept form.",
+              "options": ["y = 2x + 2", "y = 2x + 8", "y = 2x + 3", "y = 3x + 2"],
+              "answer": 0,
+              "explanation": "Point-slope: y - 8 = 2(x - 3) → y - 8 = 2x - 6 → y = 2x + 2."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-write-equation",
+          "title": "Protocol: Write the Equation",
+          "type": "challenge",
+          "prompt": "Write the equation of the line in slope-intercept form (y = mx + b) that passes through the points (0, 3) and (2, 7).",
+          "solution": "y = 2x + 3",
+          "validation": [
+            {
+              "rule": "^y = 2x \\+ 3$",
+              "message": "error: slope = (7-3)/(2-0) = 4/2 = 2. y-intercept is 3 from point (0,3). equation: y = 2x + 3."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 11: Systems of Equations",
+      "lessons": [
+        {
+          "id": "l-systems",
+          "title": "Two Equations, One Solution",
+          "type": "document",
+          "content": "A system of equations is two or more equations with the same variables. The solution to the system is the ordered pair (x, y) that satisfies all equations simultaneously — the point where the lines intersect.\n\nSubstitution method: Solve one equation for one variable, then substitute that expression into the other equation. This reduces two equations to one, which you can then solve normally.\n\nElimination method: Add or subtract the equations in a way that eliminates one variable. You may need to multiply one or both equations by a constant first to make the coefficients match.\n\nLike single equations, systems can have:\n- One solution: the two lines intersect at exactly one point.\n- No solution: the lines are parallel — they never intersect.\n- Infinitely many solutions: the lines are the same — every point on one is on the other.",
+          "examples": [
+            {
+              "label": "Substitution and Elimination",
+              "code": "Substitution:\ny = 2x + 1\n3x + y = 16\n\nSubstitute y:\n3x + (2x + 1) = 16\n5x + 1 = 16\n5x = 15\nx = 3\ny = 2(3) + 1 = 7\nSolution: (3, 7)\n\nElimination:\n2x + 3y = 12\n2x -  y = 4\n\nSubtract second from first:\n    4y = 8\n     y = 2\n2x + 3(2) = 12 → 2x = 6 → x = 3\nSolution: (3, 2)"
+            }
+          ]
+        },
+        {
+          "id": "l-systems-questions",
+          "title": "System Mechanics",
+          "questions": [
+            {
+              "q": "What does the solution to a system of two linear equations represent graphically?",
+              "options": ["The slope of both lines.", "The y-intercept of the first line.", "The point where the two lines intersect.", "The average of both equations."],
+              "answer": 2,
+              "explanation": "Each equation is a line. The solution is the one ordered pair (x, y) that lies on both lines simultaneously — their intersection point."
+            },
+            {
+              "q": "Using substitution to solve: y = x + 2 and x + y = 10. What is the value of x?",
+              "options": ["x = 6", "x = 4", "x = 8", "x = 2"],
+              "answer": 1,
+              "explanation": "Substitute y = x + 2 into x + y = 10: x + (x + 2) = 10 → 2x + 2 = 10 → 2x = 8 → x = 4."
+            },
+            {
+              "q": "If a system of equations has no solution, what must be true about the two lines?",
+              "options": ["They are perpendicular.", "They are the same line.", "They are parallel.", "They both pass through the origin."],
+              "answer": 2,
+              "explanation": "Parallel lines have the same slope but different y-intercepts. They never cross, so there is no point that satisfies both equations."
+            },
+            {
+              "q": "When using the elimination method, what is the goal of the first step?",
+              "options": ["To find the y-intercept.", "To arrange the equations so that adding or subtracting them eliminates one variable.", "To substitute one equation into the other.", "To divide both equations by x."],
+              "answer": 1,
+              "explanation": "Elimination works by making the coefficients of one variable equal and opposite so they cancel when the equations are added or subtracted."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-substitution",
+          "title": "Protocol: System by Substitution",
+          "type": "challenge",
+          "prompt": "Solve the system using substitution:\n\ny = 3x\nx + y = 20\n\nWrite the solution as an ordered pair: (x, y)",
+          "solution": "(5, 15)",
+          "validation": [
+            {
+              "rule": "^\\(5, 15\\)$",
+              "message": "error: substitute y = 3x into x + y = 20. x + 3x = 20 → 4x = 20 → x = 5. then y = 3(5) = 15. solution: (5, 15)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 12: Exponents",
+      "lessons": [
+        {
+          "id": "l-exponents",
+          "title": "Repeated Multiplication",
+          "type": "document",
+          "content": "An exponent tells you how many times to use a base as a factor. In 2⁴, the base is 2 and the exponent is 4. It means 2 × 2 × 2 × 2 = 16.\n\nThe exponent rules make working with powers much faster:\n\nProduct Rule: When multiplying the same base, add the exponents. x³ × x⁵ = x⁸\n\nQuotient Rule: When dividing the same base, subtract the exponents. x⁷ ÷ x² = x⁵\n\nPower Rule: When raising a power to a power, multiply the exponents. (x³)⁴ = x¹²\n\nZero Exponent: Anything raised to the zero power equals 1. x⁰ = 1\n\nNegative Exponent: A negative exponent means the reciprocal. x⁻² = 1/x². It does not produce a negative number — it flips the base into the denominator.\n\nThese rules apply to numbers too, not just variables. 3⁴ × 3² = 3⁶ = 729.",
+          "examples": [
+            {
+              "label": "Exponent Rules Applied",
+              "code": "x³ × x⁴ = x⁷           (add exponents)\nx⁸ ÷ x³ = x⁵           (subtract exponents)\n(x²)⁵  = x¹⁰          (multiply exponents)\n5⁰     = 1             (zero rule)\n2⁻³    = 1/2³ = 1/8    (negative exponent)"
+            }
+          ]
+        },
+        {
+          "id": "l-exponent-questions",
+          "title": "Power Rules",
+          "questions": [
+            {
+              "q": "Simplify: x⁴ × x⁶",
+              "options": ["x²⁴", "x¹⁰", "x²", "2x¹⁰"],
+              "answer": 1,
+              "explanation": "Product rule: when multiplying the same base, add the exponents. 4 + 6 = 10. Answer: x¹⁰."
+            },
+            {
+              "q": "Simplify: x⁹ ÷ x³",
+              "options": ["x²⁷", "x³", "x⁶", "x¹²"],
+              "answer": 2,
+              "explanation": "Quotient rule: when dividing the same base, subtract the exponents. 9 - 3 = 6. Answer: x⁶."
+            },
+            {
+              "q": "Simplify: (x⁵)³",
+              "options": ["x⁸", "x¹⁵", "x²", "3x⁵"],
+              "answer": 1,
+              "explanation": "Power rule: when a power is raised to a power, multiply the exponents. 5 × 3 = 15. Answer: x¹⁵."
+            },
+            {
+              "q": "What is 7⁰?",
+              "options": ["0", "7", "1", "Undefined"],
+              "answer": 2,
+              "explanation": "Any nonzero base raised to the zero power equals 1. This comes from the quotient rule: x² ÷ x² = x⁰ = 1."
+            },
+            {
+              "q": "What does x⁻⁴ equal?",
+              "options": ["-x⁴", "-4x", "1/x⁴", "x/4"],
+              "answer": 2,
+              "explanation": "A negative exponent means take the reciprocal. x⁻⁴ = 1/x⁴. It is not negative — the base moves to the denominator."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-exponents",
+          "title": "Protocol: Exponent Rule",
+          "type": "challenge",
+          "prompt": "Simplify using the product rule:\n\nx⁵ × x⁷\n\nWrite your answer using an exponent. Example format: x^12",
+          "solution": "x^12",
+          "validation": [
+            {
+              "rule": "^x\\^12$",
+              "message": "error: product rule — add the exponents. 5 + 7 = 12. answer: x^12."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 13: Polynomials",
+      "lessons": [
+        {
+          "id": "l-polynomials",
+          "title": "Adding and Subtracting",
+          "type": "document",
+          "content": "A polynomial is an expression made up of one or more terms, where each term is a number, a variable, or a number times a variable raised to a whole number exponent.\n\nA monomial has one term: 4x²\nA binomial has two terms: 3x + 7\nA trinomial has three terms: x² + 5x + 6\n\nThe degree of a polynomial is the highest exponent. x³ + 2x + 1 has degree 3.\n\nAdding polynomials: combine like terms. Group terms with the same variable and exponent and add their coefficients.\n\nSubtracting polynomials: distribute the negative sign through the second polynomial first, then combine like terms. (3x + 5) - (x + 2) becomes 3x + 5 - x - 2 = 2x + 3.\n\nMultiplying a polynomial by a monomial: distribute the monomial to every term inside. 3x(2x + 4) = 6x² + 12x.\n\nMultiplying two binomials: use FOIL — First, Outer, Inner, Last. This ensures every term in the first binomial is multiplied by every term in the second.",
+          "examples": [
+            {
+              "label": "FOIL Multiplication",
+              "code": "(x + 3)(x + 5)\n\nFirst:  x × x  = x²\nOuter:  x × 5  = 5x\nInner:  3 × x  = 3x\nLast:   3 × 5  = 15\n\nCombine: x² + 5x + 3x + 15\n       = x² + 8x + 15"
+            }
+          ]
+        },
+        {
+          "id": "l-polynomial-questions",
+          "title": "Polynomial Operations",
+          "questions": [
+            {
+              "q": "What is the degree of the polynomial 4x³ + 2x - 7?",
+              "options": ["2", "4", "7", "3"],
+              "answer": 3,
+              "explanation": "The degree of a polynomial is the highest exponent present. The highest exponent here is 3, so the degree is 3."
+            },
+            {
+              "q": "Add: (3x + 5) + (2x - 1)",
+              "options": ["6x + 4", "5x + 4", "5x - 4", "5x + 6"],
+              "answer": 1,
+              "explanation": "Combine x terms: 3x + 2x = 5x. Combine constants: 5 + (-1) = 4. Result: 5x + 4."
+            },
+            {
+              "q": "Subtract: (6x + 8) - (2x + 3)",
+              "options": ["8x + 11", "4x + 5", "4x + 11", "8x + 5"],
+              "answer": 1,
+              "explanation": "Distribute the negative: 6x + 8 - 2x - 3. Combine x terms: 4x. Combine constants: 5. Result: 4x + 5."
+            },
+            {
+              "q": "Multiply using FOIL: (x + 2)(x + 6)",
+              "options": ["x² + 8x + 12", "x² + 12x + 8", "x² + 6x + 12", "x² + 8x + 8"],
+              "answer": 0,
+              "explanation": "FOIL: x² + 6x + 2x + 12 = x² + 8x + 12."
+            },
+            {
+              "q": "Simplify: 2x(x + 5)",
+              "options": ["2x² + 5", "2x + 10x", "2x² + 10x", "2x² + 10"],
+              "answer": 2,
+              "explanation": "Distribute 2x to each term: 2x × x = 2x², and 2x × 5 = 10x. Result: 2x² + 10x."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-foil",
+          "title": "Protocol: FOIL Multiplication",
+          "type": "challenge",
+          "prompt": "Multiply using FOIL and simplify completely:\n\n(x + 4)(x + 3)\n\nWrite your answer in the form x² + bx + c.",
+          "solution": "x² + 7x + 12",
+          "validation": [
+            {
+              "rule": "^x² \\+ 7x \\+ 12$",
+              "message": "error: FOIL — first: x², outer: 3x, inner: 4x, last: 12. combine middle terms: 3x + 4x = 7x. result: x² + 7x + 12."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 14: Factoring",
+      "lessons": [
+        {
+          "id": "l-factoring",
+          "title": "Undoing Multiplication",
+          "type": "document",
+          "content": "Factoring is the reverse of multiplying. You start with a polynomial and rewrite it as a product of simpler expressions.\n\nGreatest Common Factor (GCF): Always check for a GCF first. If every term shares a common factor, pull it out front. 6x² + 9x = 3x(2x + 3).\n\nFactoring trinomials of the form x² + bx + c: Find two numbers that multiply to c and add to b. Those numbers become the constants in two binomial factors. x² + 7x + 12 = (x + 3)(x + 4) because 3 × 4 = 12 and 3 + 4 = 7.\n\nDifference of Squares: a² - b² = (a + b)(a - b). This pattern appears so often it is worth memorizing. x² - 25 = (x + 5)(x - 5).\n\nA perfect square trinomial: a² + 2ab + b² = (a + b)². For example, x² + 6x + 9 = (x + 3)².\n\nAlways check your work by expanding your factored form back out. If it matches the original, you factored correctly.",
+          "examples": [
+            {
+              "label": "Factoring Techniques",
+              "code": "GCF: 4x² + 8x = 4x(x + 2)\n\nTrinomial: x² + 5x + 6\nNeed two numbers: multiply to 6, add to 5\n→ 2 and 3 (2 × 3 = 6, 2 + 3 = 5)\n= (x + 2)(x + 3)\n\nDifference of squares: x² - 49\n= (x + 7)(x - 7)"
+            }
+          ]
+        },
+        {
+          "id": "l-factor-questions",
+          "title": "Factoring Patterns",
+          "questions": [
+            {
+              "q": "Factor out the GCF: 10x³ + 15x²",
+              "options": ["5x(2x² + 3x)", "5x²(2x + 3)", "10x²(x + 5)", "x²(10x + 15)"],
+              "answer": 1,
+              "explanation": "The GCF of 10x³ and 15x² is 5x². Factor it out: 5x²(2x + 3). Verify: 5x² × 2x = 10x³ and 5x² × 3 = 15x²."
+            },
+            {
+              "q": "Factor: x² + 9x + 14",
+              "options": ["(x + 2)(x + 7)", "(x + 7)(x + 2)", "(x + 1)(x + 14)", "Both A and B are correct"],
+              "answer": 3,
+              "explanation": "Find two numbers that multiply to 14 and add to 9: 2 and 7. The factors are (x + 2)(x + 7). This is the same as (x + 7)(x + 2) — order does not matter in multiplication."
+            },
+            {
+              "q": "Factor: x² - 36",
+              "options": ["(x - 6)²", "(x + 6)(x - 6)", "(x + 6)²", "(x - 6)(x - 6)"],
+              "answer": 1,
+              "explanation": "This is a difference of squares: a² - b² = (a + b)(a - b). x² - 36 = x² - 6² = (x + 6)(x - 6)."
+            },
+            {
+              "q": "To verify a factored expression is correct, what should you do?",
+              "options": ["Divide both factors by x.", "Substitute x = 0 only.", "Expand the factored form back out and check it matches the original.", "Compare the degree of each factor."],
+              "answer": 2,
+              "explanation": "Expanding (multiplying out) the factored form is the definitive check. If the result equals the original expression, the factoring is correct."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-factor",
+          "title": "Protocol: Factor the Trinomial",
+          "type": "challenge",
+          "prompt": "Factor completely:\n\nx² + 10x + 24\n\nWrite your answer in the form (x + a)(x + b).",
+          "solution": "(x + 4)(x + 6)",
+          "validation": [
+            {
+              "rule": "^\\(x \\+ 4\\)\\(x \\+ 6\\)$|^\\(x \\+ 6\\)\\(x \\+ 4\\)$",
+              "message": "error: find two numbers that multiply to 24 and add to 10. that's 4 and 6. answer: (x + 4)(x + 6)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 15: Functions",
+      "lessons": [
+        {
+          "id": "l-functions",
+          "title": "Input, Rule, Output",
+          "type": "document",
+          "content": "A function is a rule that assigns exactly one output to each input. You feed in a number, the function processes it, and you get one number out. Every input has exactly one output. If any input produces two different outputs, it is not a function.\n\nFunction notation uses f(x) — read as 'f of x'. The x inside the parentheses is the input. f(3) means: plug 3 in for x and evaluate.\n\nIf f(x) = 2x + 5, then f(3) = 2(3) + 5 = 11.\n\nThe domain is the set of all valid inputs — the x values the function will accept. The range is the set of all possible outputs — the y values the function can produce.\n\nThe Vertical Line Test: if you can draw a vertical line anywhere on a graph and it hits the curve in more than one point, the graph does not represent a function. That input has two outputs, violating the rule.\n\nA linear function produces a straight line. Its graph passes the vertical line test at every point.",
+          "examples": [
+            {
+              "label": "Function Notation",
+              "code": "f(x) = 4x - 3\n\nf(0) = 4(0) - 3 = -3\nf(2) = 4(2) - 3 = 5\nf(-1) = 4(-1) - 3 = -7\n\nIf f(x) = 17, find x:\n4x - 3 = 17\n   4x = 20\n    x = 5"
+            }
+          ]
+        },
+        {
+          "id": "l-function-questions",
+          "title": "Function Mechanics",
+          "questions": [
+            {
+              "q": "What makes a relation a function?",
+              "options": ["Every output has exactly one input.", "Every input has exactly one output.", "All inputs are positive numbers.", "The graph is a straight line."],
+              "answer": 1,
+              "explanation": "A function's defining rule: each input maps to exactly one output. An input can repeat the same output, but it cannot produce two different outputs."
+            },
+            {
+              "q": "If f(x) = 3x + 2, what is f(5)?",
+              "options": ["17", "13", "30", "10"],
+              "answer": 0,
+              "explanation": "Substitute x = 5: f(5) = 3(5) + 2 = 15 + 2 = 17."
+            },
+            {
+              "q": "What is the domain of a function?",
+              "options": ["The highest output value.", "The set of all valid input values.", "The y-intercept of the function.", "The slope of the function."],
+              "answer": 1,
+              "explanation": "The domain is all allowed x inputs. The range is all possible y outputs. Both together describe the full scope of the function."
+            },
+            {
+              "q": "A vertical line drawn on a graph crosses a curve at two points. What does this tell you?",
+              "options": ["The function has two y-intercepts.", "The graph does not represent a function.", "The function has a negative slope.", "The domain is limited."],
+              "answer": 1,
+              "explanation": "The Vertical Line Test: if any vertical line hits the graph at more than one point, a single x value maps to two y values, which violates the definition of a function."
+            },
+            {
+              "q": "If f(x) = 5x - 4 and f(x) = 11, what is x?",
+              "options": ["x = 3", "x = 7", "x = 55", "x = 15"],
+              "answer": 0,
+              "explanation": "Set the function equal to 11: 5x - 4 = 11. Add 4: 5x = 15. Divide by 5: x = 3."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-function-eval",
+          "title": "Protocol: Function Evaluation",
+          "type": "challenge",
+          "prompt": "Given f(x) = 6x - 4, evaluate f(7).\n\nWrite only the number.",
+          "solution": "38",
+          "validation": [
+            {
+              "rule": "^38$",
+              "message": "error: substitute x = 7. f(7) = 6(7) - 4 = 42 - 4 = 38."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

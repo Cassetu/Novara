@@ -1,0 +1,1110 @@
+{
+  "id": "cpp-core",
+  "title": "C++: The Machine Layer",
+  "sections": [
+    {
+      "title": "Module 1: The Compiled World",
+      "lessons": [
+        {
+          "id": "l-intro-cpp",
+          "title": "What C++ Actually Is",
+          "type": "document",
+          "content": "Most languages you will encounter are interpreted. A Python script is read and executed line by line at runtime. C++ is different. It is a compiled language. You write source code, a program called a compiler translates the entire thing into raw machine code, and that machine code is what actually runs on the CPU. There is no interpreter sitting in the middle.\n\nThis is why C++ programs are fast. The CPU is executing instructions directly. There is no layer converting your code on the fly.\n\nThe tradeoff is that you must compile before you run. A single syntax error will stop the entire build. The compiler is strict because it has to be — it cannot ask you what you meant at runtime.\n\nEvery C++ program starts execution from one specific function: `main()`. It returns an integer to the operating system. Returning `0` tells the OS the program completed successfully. Any other value signals an error.\n\nThe `#include` directive at the top of a file tells the compiler to pull in another file's contents. `#include <iostream>` gives you access to input and output tools. `std::cout` outputs text to the terminal. `std::endl` ends the line.",
+          "examples": [
+            {
+              "label": "Minimal C++ Program",
+              "code": "#include <iostream>\n\nint main() {\n    std::cout << \"System online.\" << std::endl;\n    return 0;\n}"
+            }
+          ]
+        },
+        {
+          "id": "l-intro-questions",
+          "title": "Compilation Fundamentals",
+          "questions": [
+            {
+              "q": "What is the fundamental difference between a compiled language like C++ and an interpreted language like Python?",
+              "options": ["C++ can only run on Windows.", "C++ is translated entirely into machine code before running; Python is read and executed line by line at runtime.", "C++ programs are always larger in file size.", "C++ does not support functions."],
+              "answer": 1,
+              "explanation": "Compilation translates your entire source file into CPU-native machine code ahead of time. No interpreter is involved at runtime, which is the primary source of C++'s speed advantage."
+            },
+            {
+              "q": "Every C++ program must contain which specific function as its entry point?",
+              "options": ["`start()`", "`run()`", "`init()`", "`main()`"],
+              "answer": 3,
+              "explanation": "The operating system looks for `main()` to begin execution. Without it, the linker will fail and the program cannot be built."
+            },
+            {
+              "q": "What does returning `0` from `main()` communicate to the operating system?",
+              "options": ["The program crashed.", "The program is still running.", "The program completed successfully.", "The program produced no output."],
+              "answer": 2,
+              "explanation": "By convention, a return value of `0` means success. Non-zero values are error codes that shell scripts and other programs can read to detect failures."
+            },
+            {
+              "q": "What is the purpose of `#include <iostream>` at the top of a file?",
+              "options": ["It imports a Python library.", "It tells the compiler to pull in the input/output stream library so you can use `std::cout`.", "It defines the `main` function.", "It sets the program's window title."],
+              "answer": 1,
+              "explanation": "`#include` is a preprocessor directive. `<iostream>` is a standard library header that provides `std::cout`, `std::cin`, and related I/O tools."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-hello",
+          "title": "Protocol: First Transmission",
+          "type": "challenge",
+          "prompt": "Construct the body of a minimal C++ `main` function.\n\nOutput the text `Initialized.` to the terminal using `std::cout`, followed by `std::endl`. Then return `0`.",
+          "solution": "std::cout << \"Initialized.\" << std::endl;\nreturn 0;",
+          "validation": [
+            {
+              "rule": "std::cout",
+              "message": "error: must use std::cout to produce output."
+            },
+            {
+              "rule": "\"Initialized\\.\"",
+              "message": "error: output string must be exactly 'Initialized.'"
+            },
+            {
+              "rule": "std::endl",
+              "message": "error: must terminate the output line with std::endl."
+            },
+            {
+              "rule": "return 0;",
+              "message": "error: main must return 0."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Types and Variables",
+      "lessons": [
+        {
+          "id": "l-types",
+          "title": "Static Typing",
+          "type": "document",
+          "content": "In Python, a variable can hold anything. In C++, every variable has a fixed type that is declared at the moment of creation and cannot change. This is called static typing. The compiler uses the type to determine exactly how many bytes of memory to allocate.\n\nCore primitive types:\n- `int`: A whole number. Typically 4 bytes. Range is roughly -2.1 billion to 2.1 billion.\n- `double`: A decimal number with high precision. 8 bytes.\n- `float`: A decimal number with lower precision. 4 bytes. Requires an `f` suffix on the literal value.\n- `char`: A single character. 1 byte. Written with single quotes: `'A'`.\n- `bool`: A boolean. Can only be `true` or `false`. 1 byte.\n- `std::string`: A sequence of characters. Requires `#include <string>`.\n\nTo declare a variable, you write the type first, then the name, then optionally assign a value.\n\nThe `const` keyword in front of a declaration makes that variable immutable. The compiler will refuse to compile any line that tries to change it after the initial assignment. This is how you enforce constants.",
+          "examples": [
+            {
+              "label": "Variable Declarations",
+              "code": "#include <string>\n\nint main() {\n    int nodeCount = 12;\n    double signalStrength = 98.6;\n    float voltage = 3.3f;\n    char grade = 'A';\n    bool isOnline = true;\n    std::string hostname = \"Alpha-7\";\n\n    const int MAX_CONNECTIONS = 100;\n\n    return 0;\n}"
+            }
+          ]
+        },
+        {
+          "id": "l-types-questions",
+          "title": "Type System",
+          "questions": [
+            {
+              "q": "What does it mean that C++ is statically typed?",
+              "options": ["Variables cannot be changed once set.", "Every variable's type is declared at creation and cannot change.", "The program runs without a compiler.", "All variables are stored in RAM permanently."],
+              "answer": 1,
+              "explanation": "Static typing means the compiler knows the exact type of every variable at compile time. This allows it to allocate exact memory and catch type errors before the program ever runs."
+            },
+            {
+              "q": "Which type would you use to store a single letter like 'X'?",
+              "options": ["`string`", "`int`", "`char`", "`letter`"],
+              "answer": 2,
+              "explanation": "`char` holds exactly one character and occupies 1 byte. String literals use double quotes; char literals use single quotes."
+            },
+            {
+              "q": "What is the difference between `float` and `double`?",
+              "options": ["They are identical.", "`float` is for negative numbers; `double` is for positive.", "`float` is 4 bytes with lower precision; `double` is 8 bytes with higher precision.", "`double` requires a special library."],
+              "answer": 2,
+              "explanation": "Both store decimal numbers, but `double` uses twice the memory and provides significantly more decimal precision. `double` is the default choice for most decimal math."
+            },
+            {
+              "q": "What does the `const` keyword do when placed before a variable declaration?",
+              "options": ["It makes the variable visible globally.", "It stores the variable in faster memory.", "It makes the variable immutable — the compiler refuses any future assignment.", "It converts the variable to a string."],
+              "answer": 2,
+              "explanation": "`const` is a compile-time contract. If any code tries to modify the variable after declaration, the compiler throws an error and the build fails."
+            },
+            {
+              "q": "Which suffix must be appended to a decimal literal when assigning it to a `float` variable?",
+              "options": ["`d`", "`fl`", "`f`", "No suffix is needed."],
+              "answer": 2,
+              "explanation": "Without the `f` suffix, a decimal literal like `3.14` is treated as a `double` by default. Writing `3.14f` explicitly marks it as a float."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-declare",
+          "title": "Protocol: Variable Initialization",
+          "type": "challenge",
+          "prompt": "Declare three variables:\n\n1. An `int` named `port` with the value `8080`.\n2. A `bool` named `isSecure` with the value `true`.\n3. A `const double` named `TIMEOUT` with the value `30.0`.",
+          "solution": "int port = 8080;\nbool isSecure = true;\nconst double TIMEOUT = 30.0;",
+          "validation": [
+            {
+              "rule": "int port = 8080;",
+              "message": "error: missing 'int port = 8080;' declaration."
+            },
+            {
+              "rule": "bool isSecure = true;",
+              "message": "error: missing 'bool isSecure = true;' declaration."
+            },
+            {
+              "rule": "const double TIMEOUT = 30\\.0;",
+              "message": "error: missing 'const double TIMEOUT = 30.0;' declaration."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Operators and Expressions",
+      "lessons": [
+        {
+          "id": "l-operators",
+          "title": "Arithmetic and Logic",
+          "type": "document",
+          "content": "C++ supports all standard arithmetic operators: `+`, `-`, `*`, `/`, and `%`. The `%` (modulo) operator returns the remainder of integer division. `7 % 3` gives `2`. It is commonly used to check if a number is even or odd, or to wrap a value within a range.\n\nImportant: integer division discards the decimal. `7 / 2` in C++ gives `3`, not `3.5`. If you want the decimal result, at least one operand must be a `double` or `float`.\n\nComparison operators return a `bool`: `==` (equal), `!=` (not equal), `>`, `<`, `>=`, `<=`.\n\nLogical operators combine boolean expressions: `&&` (AND) requires both sides to be true. `||` (OR) requires at least one side to be true. `!` (NOT) inverts a boolean.\n\nC++ also provides shorthand assignment operators. Instead of writing `x = x + 5`, you can write `x += 5`. This works for all arithmetic operators: `-=`, `*=`, `/=`, `%=`. The increment `++` and decrement `--` operators add or subtract exactly 1.",
+          "examples": [
+            {
+              "label": "Operators in Use",
+              "code": "int a = 10;\nint b = 3;\n\nint sum = a + b;       // 13\nint remainder = a % b; // 1\nint divided = a / b;   // 3, not 3.33\n\nbool check = (a > 5) && (b != 0); // true\n\na += 5;  // a is now 15\na++;     // a is now 16"
+            }
+          ]
+        },
+        {
+          "id": "l-operator-questions",
+          "title": "Expression Evaluation",
+          "questions": [
+            {
+              "q": "What is the result of `9 % 4` in C++?",
+              "options": ["`2`", "`2.25`", "`1`", "`4`"],
+              "answer": 0,
+              "explanation": "The `%` modulo operator returns the remainder. 9 divided by 4 is 2 with a remainder of 1. Wait — 4 * 2 = 8, 9 - 8 = 1. The answer is `1`."
+            },
+            {
+              "q": "What is the result of `7 / 2` when both variables are declared as `int`?",
+              "options": ["`3.5`", "`4`", "`3`", "`3.0`"],
+              "answer": 2,
+              "explanation": "Integer division in C++ truncates toward zero. The fractional part is discarded entirely. To get `3.5`, at least one operand must be a `double` or `float`."
+            },
+            {
+              "q": "What does the `&&` operator do?",
+              "options": ["It concatenates two strings.", "It returns true only if both operands are true.", "It returns true if at least one operand is true.", "It performs bitwise AND."],
+              "answer": 1,
+              "explanation": "`&&` is the logical AND operator. Both the left and right expressions must evaluate to `true` for the entire expression to be `true`."
+            },
+            {
+              "q": "What is the shorthand for `x = x * 3`?",
+              "options": ["`x ** 3`", "`x *3`", "`x *= 3`", "`x =* 3`"],
+              "answer": 2,
+              "explanation": "`*=` is the multiply-and-assign shorthand. `x *= 3` is exactly equivalent to `x = x * 3`."
+            },
+            {
+              "q": "What does `!true` evaluate to?",
+              "options": ["`1`", "`false`", "`null`", "`true`"],
+              "answer": 1,
+              "explanation": "The `!` operator is logical NOT. It inverts the boolean value. `!true` is `false`, and `!false` is `true`."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-operators",
+          "title": "Protocol: Expression Block",
+          "type": "challenge",
+          "prompt": "Write three lines of code:\n\n1. Declare an `int` named `score` with value `50`.\n2. Add `25` to `score` using the shorthand operator.\n3. Declare a `bool` named `passed` that is `true` if `score` is greater than or equal to `70`.",
+          "solution": "int score = 50;\nscore += 25;\nbool passed = (score >= 70);",
+          "validation": [
+            {
+              "rule": "int score = 50;",
+              "message": "error: missing 'int score = 50;'."
+            },
+            {
+              "rule": "score \\+= 25;",
+              "message": "error: must use += shorthand to add 25 to score."
+            },
+            {
+              "rule": "bool passed",
+              "message": "error: missing bool named 'passed'."
+            },
+            {
+              "rule": "score >= 70",
+              "message": "error: passed must be evaluated using 'score >= 70'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 4: Control Flow",
+      "lessons": [
+        {
+          "id": "l-conditionals",
+          "title": "Branching Logic",
+          "type": "document",
+          "content": "A program that always does the same thing is a script, not a program. Control flow lets execution branch based on conditions.\n\nThe `if` statement evaluates a boolean expression. If it is `true`, the block executes. If not, execution skips it. `else if` chains additional conditions. `else` is the final catch-all that runs only when no prior condition was true.\n\nFor comparing a single variable against many specific values, the `switch` statement is cleaner than a long chain of `else if`. You `switch` on a variable, then define `case` labels for each value. Each case must end with a `break` statement to prevent 'fallthrough' — where execution continues into the next case automatically. The `default` label is the catch-all, equivalent to `else`.\n\nThe ternary operator is a compact one-line conditional: `condition ? valueIfTrue : valueIfFalse`. It is an expression, not a statement, so it can be used directly inside an assignment.",
+          "examples": [
+            {
+              "label": "Conditional Structures",
+              "code": "int signal = 2;\n\nif (signal == 1) {\n    std::cout << \"Low\" << std::endl;\n} else if (signal == 2) {\n    std::cout << \"Medium\" << std::endl;\n} else {\n    std::cout << \"High\" << std::endl;\n}\n\nswitch (signal) {\n    case 1:\n        std::cout << \"Low\" << std::endl;\n        break;\n    case 2:\n        std::cout << \"Medium\" << std::endl;\n        break;\n    default:\n        std::cout << \"Unknown\" << std::endl;\n        break;\n}\n\nstd::string status = (signal > 0) ? \"Active\" : \"Offline\";"
+            }
+          ]
+        },
+        {
+          "id": "l-conditional-questions",
+          "title": "Branch Execution",
+          "questions": [
+            {
+              "q": "What happens in a `switch` statement if you forget to include a `break` at the end of a `case`?",
+              "options": ["The program crashes.", "The compiler throws an error.", "Execution falls through into the next case and runs its code too.", "The switch exits automatically."],
+              "answer": 2,
+              "explanation": "Fallthrough is intentional C++ behavior. Without `break`, execution continues into the next case regardless of whether it matches. This is usually a bug."
+            },
+            {
+              "q": "What is the purpose of the `default` label in a `switch` statement?",
+              "options": ["It runs first, before any case.", "It sets the variable's default value.", "It executes when none of the `case` values match the switch expression.", "It is required syntax and must always be present."],
+              "answer": 2,
+              "explanation": "`default` is the switch equivalent of `else`. It is optional but recommended as a safety net for unexpected values."
+            },
+            {
+              "q": "What does this expression evaluate to: `(10 > 5) ? \"yes\" : \"no\"`?",
+              "options": ["`\"no\"`", "`true`", "`\"yes\"`", "`1`"],
+              "answer": 2,
+              "explanation": "The ternary operator evaluates the condition `10 > 5`, which is `true`, so it returns the first value: `\"yes\"`."
+            },
+            {
+              "q": "An `else` block executes under which condition?",
+              "options": ["Always.", "When the `if` condition is true.", "When all preceding `if` and `else if` conditions were false.", "When the variable equals zero."],
+              "answer": 2,
+              "explanation": "`else` is a final fallback. It only runs when every condition above it in the chain evaluated to `false`."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-conditional",
+          "title": "Protocol: Status Router",
+          "type": "challenge",
+          "prompt": "Declare an `int` named `code` with the value `404`.\n\nWrite an `if` / `else if` / `else` chain:\n- If `code` equals `200`, output `OK`.\n- Else if `code` equals `404`, output `Not Found`.\n- Else, output `Unknown`.",
+          "solution": "int code = 404;\nif (code == 200) {\n    std::cout << \"OK\" << std::endl;\n} else if (code == 404) {\n    std::cout << \"Not Found\" << std::endl;\n} else {\n    std::cout << \"Unknown\" << std::endl;\n}",
+          "validation": [
+            {
+              "rule": "int code = 404;",
+              "message": "error: missing 'int code = 404;'."
+            },
+            {
+              "rule": "code == 200",
+              "message": "error: missing condition checking code == 200."
+            },
+            {
+              "rule": "\"OK\"",
+              "message": "error: missing output for 'OK'."
+            },
+            {
+              "rule": "code == 404",
+              "message": "error: missing condition checking code == 404."
+            },
+            {
+              "rule": "\"Not Found\"",
+              "message": "error: missing output for 'Not Found'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 5: Loops",
+      "lessons": [
+        {
+          "id": "l-loops",
+          "title": "Iteration Engines",
+          "type": "document",
+          "content": "Loops repeat a block of code until a condition is no longer true.\n\nThe `for` loop is the most structured. It packs three things into one line: initialization, condition, and update. It is the right tool when you know exactly how many iterations you need.\n\nThe `while` loop is simpler. It checks a condition before each iteration and runs the block as long as the condition is true. Use it when the number of iterations is unknown in advance.\n\nThe `do-while` loop is nearly identical to `while`, but it checks the condition after the block runs. This guarantees the block executes at least once, even if the condition starts out false.\n\nInside any loop, two keywords modify flow. `break` immediately exits the loop entirely. `continue` skips the rest of the current iteration and jumps straight to the next one.\n\nThe range-based `for` loop (added in C++11) is a cleaner syntax for iterating over collections. Instead of managing an index, you declare a variable that takes the value of each element in turn.",
+          "examples": [
+            {
+              "label": "Loop Structures",
+              "code": "for (int i = 0; i < 5; i++) {\n    std::cout << i << std::endl;\n}\n\nint count = 0;\nwhile (count < 3) {\n    std::cout << count << std::endl;\n    count++;\n}\n\ndo {\n    std::cout << \"Runs at least once.\" << std::endl;\n} while (false);"
+            }
+          ]
+        },
+        {
+          "id": "l-loop-questions",
+          "title": "Loop Mechanics",
+          "questions": [
+            {
+              "q": "A `for` loop header contains three parts separated by semicolons. What are they in order?",
+              "options": ["condition; update; initialization", "initialization; update; condition", "initialization; condition; update", "type; name; value"],
+              "answer": 2,
+              "explanation": "The standard `for` loop format is `for (initialization; condition; update)`. The initialization runs once, the condition is checked before each iteration, and the update runs after each iteration."
+            },
+            {
+              "q": "What is the core difference between a `while` loop and a `do-while` loop?",
+              "options": ["`do-while` is faster.", "`while` uses `&&`; `do-while` uses `||`.", "A `do-while` always executes its body at least once; a `while` may never execute if the condition starts false.", "`do-while` runs backwards."],
+              "answer": 2,
+              "explanation": "The `do-while` loop places the condition check at the end, after the block has already run once. This is useful for menus or prompts where at least one execution is always required."
+            },
+            {
+              "q": "Inside a loop, what does the `continue` keyword do?",
+              "options": ["Exits the loop immediately.", "Restarts the program.", "Skips the remainder of the current iteration and moves to the next one.", "Pauses execution for one second."],
+              "answer": 2,
+              "explanation": "`continue` jumps to the loop's update expression (in a `for` loop) or back to the condition check (in a `while` loop), skipping any remaining code in the current iteration."
+            },
+            {
+              "q": "How many times will this loop run: `for (int i = 0; i < 4; i++)`?",
+              "options": ["3 times", "5 times", "4 times", "Infinite times"],
+              "answer": 2,
+              "explanation": "Starting at `i = 0` and running while `i < 4`, the loop executes for i = 0, 1, 2, and 3. That is 4 iterations."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-for-loop",
+          "title": "Protocol: Countdown",
+          "type": "challenge",
+          "prompt": "Write a `for` loop that counts down from `5` to `1` inclusive.\n\nOn each iteration, output the current value of the counter using `std::cout` followed by `std::endl`.",
+          "solution": "for (int i = 5; i >= 1; i--) {\n    std::cout << i << std::endl;\n}",
+          "validation": [
+            {
+              "rule": "for\\s*\\(",
+              "message": "error: must use a for loop."
+            },
+            {
+              "rule": "i = 5",
+              "message": "error: loop must initialize at 5."
+            },
+            {
+              "rule": "i >= 1",
+              "message": "error: loop must run while i >= 1."
+            },
+            {
+              "rule": "i--",
+              "message": "error: loop must decrement with i--."
+            },
+            {
+              "rule": "std::cout << i",
+              "message": "error: must output the counter value with std::cout."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 6: Functions",
+      "lessons": [
+        {
+          "id": "l-functions",
+          "title": "Reusable Logic Blocks",
+          "type": "document",
+          "content": "A function is a named, reusable block of code. You define it once and call it as many times as needed from anywhere in the program.\n\nA C++ function definition has four parts: the return type, the name, the parameter list, and the body. The return type is written first. If the function produces no output, the return type is `void`.\n\nParameters are declared exactly like variables inside the parentheses. Each parameter has a type and a name. When you call the function, the values you pass in are called arguments.\n\nC++ requires that a function is either defined or at least declared (via a prototype) before it is called. A function prototype is the function's signature followed by a semicolon, placed before `main`. It tells the compiler the function exists and what its types are, so the full definition can appear after `main`.\n\nFunction overloading lets you define multiple functions with the same name but different parameter types or counts. The compiler picks the right one based on the arguments you pass. This is a first glimpse of what makes C++ powerful.",
+          "examples": [
+            {
+              "label": "Function Definition and Overloading",
+              "code": "#include <iostream>\n\nvoid greet(std::string name) {\n    std::cout << \"Hello, \" << name << std::endl;\n}\n\nint add(int a, int b) {\n    return a + b;\n}\n\ndouble add(double a, double b) {\n    return a + b;\n}\n\nint main() {\n    greet(\"Cassetu\");\n    std::cout << add(3, 4) << std::endl;    // calls int version\n    std::cout << add(1.5, 2.5) << std::endl; // calls double version\n    return 0;\n}"
+            }
+          ]
+        },
+        {
+          "id": "l-function-questions",
+          "title": "Function Architecture",
+          "questions": [
+            {
+              "q": "What return type do you use for a function that performs an action but produces no output value?",
+              "options": ["`null`", "`none`", "`void`", "`empty`"],
+              "answer": 2,
+              "explanation": "`void` means the function returns nothing. The compiler enforces this — a void function cannot have a `return value;` statement."
+            },
+            {
+              "q": "What is a function prototype?",
+              "options": ["The first call to a function in main.", "The function's full definition including its body.", "A forward declaration that tells the compiler a function's signature before its full definition.", "A function that returns void."],
+              "answer": 2,
+              "explanation": "A prototype is just the return type, name, and parameter types followed by a semicolon. It lets you define functions in any order in the file."
+            },
+            {
+              "q": "What is function overloading?",
+              "options": ["Calling a function more than 100 times.", "Defining multiple functions with the same name but different parameter signatures.", "A function that calls itself.", "Using a function from an external library."],
+              "answer": 1,
+              "explanation": "Overloading lets you use the same function name for logically similar operations on different types. The compiler resolves which version to call based on the argument types at the call site."
+            },
+            {
+              "q": "In a function definition, what is the difference between a parameter and an argument?",
+              "options": ["They are the same thing.", "A parameter is the variable in the function definition; an argument is the actual value passed when calling it.", "An argument is defined inside the function; a parameter is outside.", "Parameters are for int only; arguments are for all other types."],
+              "answer": 1,
+              "explanation": "Parameter is the placeholder name in the function signature. Argument is the concrete value supplied at the call site. `void greet(std::string name)` — `name` is a parameter. `greet(\"Alice\")` — `\"Alice\"` is an argument."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-function",
+          "title": "Protocol: Function Definition",
+          "type": "challenge",
+          "prompt": "Define a function named `multiply` that takes two `int` parameters named `a` and `b`, and returns their product as an `int`.",
+          "solution": "int multiply(int a, int b) {\n    return a * b;\n}",
+          "validation": [
+            {
+              "rule": "int multiply",
+              "message": "error: function must be named 'multiply' and return int."
+            },
+            {
+              "rule": "int a",
+              "message": "error: first parameter must be 'int a'."
+            },
+            {
+              "rule": "int b",
+              "message": "error: second parameter must be 'int b'."
+            },
+            {
+              "rule": "return a \\* b;",
+              "message": "error: must return a * b."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 7: Memory — The Stack",
+      "lessons": [
+        {
+          "id": "l-stack",
+          "title": "How Local Variables Live",
+          "type": "document",
+          "content": "This is where C++ separates from everything else. Understanding memory is not optional — it is the whole point.\n\nWhen your program runs, the OS gives it two main memory regions: the stack and the heap.\n\nThe stack is an ordered, automatically managed chunk of memory. When a function is called, the system allocates a 'stack frame' for it — a block of memory containing all of its local variables and parameters. When the function returns, that entire stack frame is wiped instantly and the memory is reclaimed. This happens with zero manual effort on your part.\n\nThis is why local variables only exist for the lifetime of their function. A variable declared inside `calculateScore()` does not exist before the function is called or after it returns. Trying to use it outside is a compile-time error.\n\nThe stack is fast because allocating and deallocating just means moving a single pointer up or down. But the stack has a size limit. Declaring a massive array on the stack or having deeply recursive function calls can overflow it — this is what a 'stack overflow' literally is.",
+          "examples": [
+            {
+              "label": "Stack Lifetime",
+              "code": "#include <iostream>\n\nint computeScore(int base) {\n    int bonus = 50;          // 'bonus' lives on the stack here\n    return base + bonus;\n}                            // 'bonus' is destroyed here\n\nint main() {\n    int result = computeScore(100); // result = 150\n    std::cout << result << std::endl;\n    // 'bonus' from computeScore no longer exists\n    return 0;\n}"
+            }
+          ]
+        },
+        {
+          "id": "l-stack-questions",
+          "title": "Stack Mechanics",
+          "questions": [
+            {
+              "q": "What is a stack frame?",
+              "options": ["A CSS layout technique.", "A block of memory the system allocates for a function call, containing its local variables.", "A type of loop in C++.", "The global memory region."],
+              "answer": 1,
+              "explanation": "Every function call pushes a new stack frame onto the stack. It holds the function's local variables and parameters. When the function returns, the frame is popped and the memory is instantly reclaimed."
+            },
+            {
+              "q": "What happens to a local variable when its function returns?",
+              "options": ["It is moved to the heap.", "It is saved to disk.", "It is destroyed — its memory is immediately reclaimed.", "It persists until the program ends."],
+              "answer": 2,
+              "explanation": "Local variables live exactly as long as their enclosing function. The moment the function returns, its stack frame is destroyed and all its variables go with it."
+            },
+            {
+              "q": "What causes a stack overflow?",
+              "options": ["Using too many `#include` directives.", "Storing a string longer than 255 characters.", "Exhausting the stack's size limit, usually from deep recursion or huge local arrays.", "Returning a value from main."],
+              "answer": 2,
+              "explanation": "The stack has a fixed size limit set by the OS. Infinitely recursive functions or functions with enormous local arrays consume the stack until it runs out, causing a crash."
+            },
+            {
+              "q": "Why is the stack fast for memory allocation?",
+              "options": ["It uses the GPU for memory operations.", "Allocating and deallocating memory just moves a single stack pointer up or down.", "Stack memory is stored in the CPU's cache.", "The compiler pre-allocates stack memory at compile time."],
+              "answer": 1,
+              "explanation": "The stack pointer is a register that tracks the top of the stack. Pushing a frame just decrements the pointer. Popping a frame increments it back. This is essentially free in CPU time."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-stack",
+          "title": "Protocol: Scope Boundary",
+          "type": "challenge",
+          "prompt": "Define a function named `getBonus` that takes no parameters and returns an `int`.\n\nInside it, declare an `int` named `bonus` with the value `200` and return it.",
+          "solution": "int getBonus() {\n    int bonus = 200;\n    return bonus;\n}",
+          "validation": [
+            {
+              "rule": "int getBonus\\(\\)",
+              "message": "error: function must be named 'getBonus' with no parameters and return int."
+            },
+            {
+              "rule": "int bonus = 200;",
+              "message": "error: must declare 'int bonus = 200;' inside the function."
+            },
+            {
+              "rule": "return bonus;",
+              "message": "error: must return bonus."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 8: Pointers",
+      "lessons": [
+        {
+          "id": "l-pointers",
+          "title": "Addresses and Indirection",
+          "type": "document",
+          "content": "Every variable in memory lives at a specific address. A pointer is a variable that stores one of those addresses instead of a regular value.\n\nTo declare a pointer, add `*` after the type: `int* ptr;`. This variable holds the address of an `int`.\n\nTo get the address of an existing variable, use the `&` (address-of) operator: `ptr = &score;`. Now `ptr` holds the memory address where `score` lives.\n\nTo read or write the value at the address the pointer holds, use the `*` (dereference) operator: `*ptr = 99;`. This goes to the address stored in `ptr` and writes `99` there. It changes `score` directly.\n\nPointers are what make C++ powerful and dangerous at the same time. A pointer that hasn't been assigned an address yet is uninitialized and contains garbage data. Dereferencing it will corrupt memory or crash the program. Always initialize pointers. If you have nothing to point to yet, set the pointer to `nullptr` — the null pointer constant.",
+          "examples": [
+            {
+              "label": "Pointer Operations",
+              "code": "int score = 75;\nint* ptr = &score;  // ptr holds the address of score\n\nstd::cout << score << std::endl;  // 75\nstd::cout << ptr << std::endl;   // prints memory address e.g. 0x7ffd...\nstd::cout << *ptr << std::endl;  // 75 — dereferences the address\n\n*ptr = 99;  // modifies score through the pointer\nstd::cout << score << std::endl; // 99\n\nint* empty = nullptr; // safe uninitialized pointer"
+            }
+          ]
+        },
+        {
+          "id": "l-pointer-questions",
+          "title": "Address Mechanics",
+          "questions": [
+            {
+              "q": "What does a pointer variable actually store?",
+              "options": ["A copy of another variable's value.", "The memory address of another variable.", "A boolean indicating if memory is available.", "The size of a variable in bytes."],
+              "answer": 1,
+              "explanation": "A pointer stores a memory address. It points to a location in memory where a value of the specified type lives."
+            },
+            {
+              "q": "Which operator retrieves the memory address of an existing variable?",
+              "options": ["`*`", "`@`", "`#`", "`&`"],
+              "answer": 3,
+              "explanation": "The `&` address-of operator returns the memory address of its operand. `&score` gives you the address in RAM where the variable `score` is stored."
+            },
+            {
+              "q": "If `ptr` is a pointer to an `int`, what does `*ptr = 42` do?",
+              "options": ["Creates a new variable named ptr with value 42.", "Moves ptr to a new address.", "Goes to the address ptr holds and writes 42 to that location.", "Makes ptr equal to 42."],
+              "answer": 2,
+              "explanation": "The `*` dereference operator follows the pointer to its destination address and performs the operation there. This modifies whatever variable ptr is pointing to."
+            },
+            {
+              "q": "What is `nullptr` and why should you use it?",
+              "options": ["A way to delete a variable.", "A null pointer constant used to safely initialize pointers that don't point to anything yet.", "A special memory address reserved by the OS.", "A boolean value for empty strings."],
+              "answer": 1,
+              "explanation": "Uninitialized pointers contain garbage addresses. Dereferencing them causes undefined behavior. Setting a pointer to `nullptr` makes its empty state explicit and testable."
+            },
+            {
+              "q": "You declare `int* p;` but never assign it an address. What happens if you write `*p = 5`?",
+              "options": ["It creates a new int with value 5.", "It safely writes to a zero address.", "It causes undefined behavior — the pointer holds a garbage address and writing to it may corrupt memory or crash the program.", "The compiler sets p to a safe address automatically."],
+              "answer": 2,
+              "explanation": "Uninitialized pointers point to random memory locations. Dereferencing them writes to arbitrary memory, which can corrupt data, crash the program, or create security vulnerabilities."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-pointer",
+          "title": "Protocol: Address Binding",
+          "type": "challenge",
+          "prompt": "Declare an `int` named `level` with the value `5`.\n\nDeclare an `int` pointer named `ptr` and assign it the address of `level`.\n\nUsing the pointer, change the value at that address to `10`.",
+          "solution": "int level = 5;\nint* ptr = &level;\n*ptr = 10;",
+          "validation": [
+            {
+              "rule": "int level = 5;",
+              "message": "error: missing 'int level = 5;'."
+            },
+            {
+              "rule": "int\\* ptr = &level;",
+              "message": "error: missing pointer declaration 'int* ptr = &level;'."
+            },
+            {
+              "rule": "\\*ptr = 10;",
+              "message": "error: must dereference ptr and assign 10 to modify the value at that address."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 9: The Heap and Dynamic Memory",
+      "lessons": [
+        {
+          "id": "l-heap",
+          "title": "Manual Memory Management",
+          "type": "document",
+          "content": "The stack is automatic and fast but limited in size and tied to scope. The heap is a much larger memory region where you explicitly request and release memory at will.\n\nTo allocate memory on the heap, use the `new` keyword. It returns a pointer to the allocated block. `int* p = new int;` allocates space for one `int` on the heap and returns its address.\n\nHere is the critical difference from the stack: heap memory does not clean itself up. When you are done with it, you must release it manually using the `delete` keyword. `delete p;` tells the OS it can reclaim that memory.\n\nFailing to `delete` heap memory is called a memory leak. The memory stays occupied for the entire lifetime of the program. In a long-running application, leaks accumulate until the program consumes all available RAM and either slows to a halt or crashes.\n\nAfter calling `delete`, the pointer still holds the old address. This creates a 'dangling pointer'. You should immediately set it to `nullptr` after deleting to prevent accidental re-use.\n\nTo allocate an array on the heap, use `new Type[size]`. To free it, use `delete[] p` — note the square brackets. Using `delete` without brackets on an array is undefined behavior.",
+          "examples": [
+            {
+              "label": "Heap Allocation and Cleanup",
+              "code": "int* p = new int;    // allocate one int on the heap\n*p = 42;\nstd::cout << *p << std::endl; // 42\ndelete p;            // release the memory\np = nullptr;         // prevent dangling pointer\n\nint* arr = new int[5]; // allocate array of 5 ints\narr[0] = 100;\ndelete[] arr;        // must use delete[] for arrays\narr = nullptr;"
+            }
+          ]
+        },
+        {
+          "id": "l-heap-questions",
+          "title": "Dynamic Allocation",
+          "questions": [
+            {
+              "q": "What keyword allocates memory on the heap and returns a pointer to it?",
+              "options": ["`malloc`", "`alloc`", "`new`", "`heap`"],
+              "answer": 2,
+              "explanation": "`new` is C++'s heap allocation operator. It allocates the requested memory, runs any constructor for the type, and returns a typed pointer."
+            },
+            {
+              "q": "What is a memory leak?",
+              "options": ["RAM physically draining from the motherboard.", "Heap memory that was allocated but never freed, causing cumulative memory waste.", "A pointer that points to the wrong address.", "Using more stack space than available."],
+              "answer": 1,
+              "explanation": "A memory leak occurs when allocated heap memory is never released with `delete`. Over time, leaked memory accumulates and can exhaust available RAM."
+            },
+            {
+              "q": "After calling `delete p`, what should you do with `p` immediately?",
+              "options": ["Call `delete p` a second time to be safe.", "Assign it a new value.", "Set it to `nullptr` to prevent a dangling pointer.", "Cast it to void."],
+              "answer": 2,
+              "explanation": "After `delete`, the pointer still holds the old address, which is now invalid. Setting it to `nullptr` makes its empty state explicit and prevents accidental dereference."
+            },
+            {
+              "q": "You allocate `int* arr = new int[10]`. How must you free this memory?",
+              "options": ["`delete arr;`", "`free(arr);`", "`delete[] arr;`", "`arr = nullptr;`"],
+              "answer": 2,
+              "explanation": "Arrays allocated with `new[]` must be freed with `delete[]`. Using plain `delete` on a heap array is undefined behavior and may only free the first element."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-heap",
+          "title": "Protocol: Heap Allocation",
+          "type": "challenge",
+          "prompt": "Allocate a single `int` on the heap and store the pointer in a variable named `data`.\n\nSet the value at that address to `256`.\n\nThen free the memory correctly and set the pointer to `nullptr`.",
+          "solution": "int* data = new int;\n*data = 256;\ndelete data;\ndata = nullptr;",
+          "validation": [
+            {
+              "rule": "int\\* data = new int;",
+              "message": "error: must allocate a single int on the heap with 'int* data = new int;'."
+            },
+            {
+              "rule": "\\*data = 256;",
+              "message": "error: must dereference data and assign 256."
+            },
+            {
+              "rule": "delete data;",
+              "message": "error: must free the memory with 'delete data;'."
+            },
+            {
+              "rule": "data = nullptr;",
+              "message": "error: must set data to nullptr after deletion."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 10: Arrays and Strings",
+      "lessons": [
+        {
+          "id": "l-arrays",
+          "title": "Contiguous Data Blocks",
+          "type": "document",
+          "content": "An array is a fixed-size, contiguous block of memory holding elements of a single type. All elements are stored back-to-back in RAM, which is why accessing any element by index is instantaneous — the computer just does pointer arithmetic.\n\nYou declare a stack array by specifying the type, name, and size in square brackets: `int scores[5]`. The size must be a constant known at compile time. Elements are zero-indexed: `scores[0]` is the first, `scores[4]` is the last.\n\nAccessing `scores[5]` on an array of size 5 is undefined behavior. There is no bounds checking. The program will read whatever bytes happen to be in memory after the array. This is the source of a class of real security vulnerabilities called buffer overflows.\n\nC-style strings are null-terminated character arrays. The string `\"Hello\"` in memory is actually `H`, `e`, `l`, `l`, `o`, `\\0` — six characters. The `\\0` null terminator tells functions where the string ends. Modern C++ prefers `std::string` which handles all of this automatically.",
+          "examples": [
+            {
+              "label": "Array Operations",
+              "code": "int scores[4] = {95, 87, 72, 100};\n\nstd::cout << scores[0] << std::endl; // 95\nstd::cout << scores[3] << std::endl; // 100\n\nscores[1] = 90; // modify element at index 1\n\nfor (int i = 0; i < 4; i++) {\n    std::cout << scores[i] << std::endl;\n}"
+            }
+          ]
+        },
+        {
+          "id": "l-array-questions",
+          "title": "Array Mechanics",
+          "questions": [
+            {
+              "q": "If you declare `int data[6]`, what is the valid index range?",
+              "options": ["1 through 6", "0 through 6", "0 through 5", "1 through 5"],
+              "answer": 2,
+              "explanation": "Arrays in C++ are zero-indexed. A 6-element array has valid indices 0, 1, 2, 3, 4, and 5. Index 6 is out of bounds."
+            },
+            {
+              "q": "What happens if you read from an out-of-bounds array index in C++?",
+              "options": ["The compiler throws an error.", "The program throws a runtime exception.", "It is undefined behavior — you read arbitrary memory and the results are unpredictable.", "The array automatically resizes."],
+              "answer": 2,
+              "explanation": "C++ arrays have no bounds checking. Reading past the end accesses whatever bytes happen to follow the array in memory. This is a buffer over-read vulnerability."
+            },
+            {
+              "q": "What terminates a C-style character string in memory?",
+              "options": ["A space character.", "A newline character.", "A null terminator `\\0`.", "The length stored in the first byte."],
+              "answer": 2,
+              "explanation": "C-style strings are null-terminated. The `\\0` character marks the end of the string. String functions like `strlen` scan forward until they hit it."
+            },
+            {
+              "q": "Why is element access on an array O(1) — instantaneous regardless of array size?",
+              "options": ["The CPU pre-loads all array elements into cache.", "Arrays store a sorted index.", "All elements are contiguous in memory, so any element's address is just `base address + (index * element size)`.", "The OS reserves a direct lookup table for each array."],
+              "answer": 2,
+              "explanation": "Because array elements are stored back-to-back in memory, the CPU calculates any element's address with a single multiplication and addition. No searching required."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-array",
+          "title": "Protocol: Array Initialization",
+          "type": "challenge",
+          "prompt": "Declare an `int` array named `temps` with exactly 3 elements: `22`, `35`, and `18`.\n\nThen output the second element (index 1) using `std::cout` followed by `std::endl`.",
+          "solution": "int temps[3] = {22, 35, 18};\nstd::cout << temps[1] << std::endl;",
+          "validation": [
+            {
+              "rule": "int temps\\[3\\]",
+              "message": "error: must declare 'int temps[3]'."
+            },
+            {
+              "rule": "22, 35, 18",
+              "message": "error: array must be initialized with values 22, 35, 18."
+            },
+            {
+              "rule": "temps\\[1\\]",
+              "message": "error: must access element at index 1."
+            },
+            {
+              "rule": "std::cout",
+              "message": "error: must output the element with std::cout."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 11: References",
+      "lessons": [
+        {
+          "id": "l-references",
+          "title": "Aliases, Not Copies",
+          "type": "document",
+          "content": "A reference is an alias for an existing variable. It is not a copy and it is not a pointer — it is another name for the exact same memory location.\n\nYou declare a reference by adding `&` after the type: `int& ref = score;`. Now `ref` and `score` are the same variable. Modifying `ref` modifies `score` directly. Unlike a pointer, you cannot rebind a reference to point to a different variable after creation.\n\nReferences are most useful as function parameters. When you pass a variable to a function normally, C++ makes a copy. Changes inside the function do not affect the original. When you pass by reference, the function receives the actual variable. Changes inside do affect the original.\n\nPass by `const` reference is the standard way to pass large objects to functions that should not modify them. `void print(const std::string& name)` — no copy is made (efficient), and the `const` prevents modification (safe).",
+          "examples": [
+            {
+              "label": "References and Pass by Reference",
+              "code": "void doubleValue(int& n) {\n    n = n * 2; // modifies the original variable\n}\n\nvoid printName(const std::string& name) {\n    std::cout << name << std::endl;\n    // name = \"other\"; // compiler error — const prevents this\n}\n\nint main() {\n    int x = 10;\n    doubleValue(x);\n    std::cout << x << std::endl; // 20\n\n    std::string hostname = \"Alpha-7\";\n    printName(hostname);\n    return 0;\n}"
+            }
+          ]
+        },
+        {
+          "id": "l-reference-questions",
+          "title": "Reference vs Copy vs Pointer",
+          "questions": [
+            {
+              "q": "When you pass a variable to a function by value in C++, what happens inside the function?",
+              "options": ["The function receives the original variable.", "The function receives a pointer to the variable.", "The function receives a copy. Modifications do not affect the original.", "The variable is moved and the original is destroyed."],
+              "answer": 2,
+              "explanation": "Pass by value copies the argument. The function has its own local version. Any changes are isolated inside the function and discarded when it returns."
+            },
+            {
+              "q": "What does `void increment(int& n)` indicate about how `n` is passed?",
+              "options": ["n is passed by value.", "n is passed as a pointer.", "n is passed by reference — the function receives the actual variable, not a copy.", "n is a const that cannot be modified."],
+              "answer": 2,
+              "explanation": "The `&` in the parameter type declares it as a reference parameter. The function operates directly on the caller's variable."
+            },
+            {
+              "q": "What is the advantage of passing a large object as `const std::string&` instead of `std::string`?",
+              "options": ["It is the only way to pass strings.", "It avoids copying the string (efficient) while the `const` guarantees the function cannot modify it (safe).", "It converts the string to lowercase first.", "It stores the string in heap memory."],
+              "answer": 1,
+              "explanation": "Copying large objects is expensive. A const reference passes the original directly with zero copy cost, while `const` enforces read-only access as a compile-time guarantee."
+            },
+            {
+              "q": "What is a key behavioral difference between a reference and a pointer?",
+              "options": ["References can be null; pointers cannot.", "Pointers must be const; references can change.", "A reference cannot be rebound to a different variable after initialization; a pointer can be reassigned to point elsewhere.", "References use the `*` operator; pointers use `&`."],
+              "answer": 2,
+              "explanation": "References are permanently bound to their target at creation. Pointers can be reassigned to point to different variables. References also cannot be null, unlike pointers."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-reference",
+          "title": "Protocol: Pass by Reference",
+          "type": "challenge",
+          "prompt": "Define a function named `triple` that takes a single `int` reference parameter named `n` and returns `void`.\n\nInside the function, multiply `n` by `3` using the `*=` operator.",
+          "solution": "void triple(int& n) {\n    n *= 3;\n}",
+          "validation": [
+            {
+              "rule": "void triple",
+              "message": "error: function must be named 'triple' and return void."
+            },
+            {
+              "rule": "int& n",
+              "message": "error: parameter must be 'int& n' (pass by reference)."
+            },
+            {
+              "rule": "n \\*= 3;",
+              "message": "error: must multiply n by 3 using the *= operator."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 12: Structs and Custom Types",
+      "lessons": [
+        {
+          "id": "l-structs",
+          "title": "Grouping Related Data",
+          "type": "document",
+          "content": "Primitive types store one thing. A `struct` lets you group multiple variables under a single custom type name. It is how you model real-world entities in your program.\n\nYou define a struct with the `struct` keyword, a name, and a block of member variables. After the definition, you can declare variables of that type just like any other type.\n\nYou access members using the dot operator `.` on a regular struct variable, or the arrow operator `->` if you have a pointer to a struct.\n\nStructs can also contain functions, called member functions or methods. In C++, a `struct` where you start adding access control (`public`, `private`) and more complex behavior is effectively a `class`. The only real difference between a `struct` and a `class` in C++ is the default access level: struct members are public by default, class members are private by default.",
+          "examples": [
+            {
+              "label": "Struct Definition and Usage",
+              "code": "struct Node {\n    int id;\n    std::string label;\n    bool active;\n};\n\nint main() {\n    Node n1;\n    n1.id = 7;\n    n1.label = \"Gateway\";\n    n1.active = true;\n\n    Node n2 = {12, \"Relay\", false};\n\n    std::cout << n1.label << std::endl; // Gateway\n\n    Node* ptr = &n1;\n    std::cout << ptr->id << std::endl;  // 7 via arrow operator\n\n    return 0;\n}"
+            }
+          ]
+        },
+        {
+          "id": "l-struct-questions",
+          "title": "Struct Mechanics",
+          "questions": [
+            {
+              "q": "What is the primary purpose of a `struct` in C++?",
+              "options": ["To define a loop pattern.", "To group related variables of different types under a single named type.", "To allocate memory on the heap.", "To create a namespace for functions."],
+              "answer": 1,
+              "explanation": "A struct lets you model a conceptual entity by bundling its related properties together. Instead of passing five separate variables around, you pass one struct."
+            },
+            {
+              "q": "If `n` is a struct variable, which operator accesses its members?",
+              "options": ["`->`", "`*`", "`.`", "`:`"],
+              "answer": 2,
+              "explanation": "The dot operator `.` accesses members of a struct through a direct variable. The arrow operator `->` is used when accessing members through a pointer to a struct."
+            },
+            {
+              "q": "If `ptr` is a pointer to a struct, which operator accesses its members?",
+              "options": ["`.`", "`*`", "`&`", "`->`"],
+              "answer": 3,
+              "explanation": "`ptr->member` is shorthand for `(*ptr).member`. It dereferences the pointer and accesses the member in one operation."
+            },
+            {
+              "q": "What is the practical difference in default behavior between a `struct` and a `class` in C++?",
+              "options": ["Structs cannot have functions; classes can.", "Structs allocate on the stack; classes allocate on the heap.", "Struct members are public by default; class members are private by default.", "Classes support inheritance; structs do not."],
+              "answer": 2,
+              "explanation": "This is the one syntactic difference. In all other respects, structs and classes in C++ are functionally identical — both support member functions, inheritance, and access control."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-struct",
+          "title": "Protocol: Struct Definition",
+          "type": "challenge",
+          "prompt": "Define a `struct` named `Packet`.\n\nIt must contain three members: an `int` named `id`, a `bool` named `valid`, and a `double` named `size`.",
+          "solution": "struct Packet {\n    int id;\n    bool valid;\n    double size;\n};",
+          "validation": [
+            {
+              "rule": "struct Packet",
+              "message": "error: struct must be named 'Packet'."
+            },
+            {
+              "rule": "int id;",
+              "message": "error: missing member 'int id;'."
+            },
+            {
+              "rule": "bool valid;",
+              "message": "error: missing member 'bool valid;'."
+            },
+            {
+              "rule": "double size;",
+              "message": "error: missing member 'double size;'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 13: Vectors and the Standard Library",
+      "lessons": [
+        {
+          "id": "l-vectors",
+          "title": "Dynamic Arrays",
+          "type": "document",
+          "content": "Raw C++ arrays have a fixed size that cannot change at runtime. The standard library's `std::vector` solves this. It is a dynamic array that automatically resizes itself as you add elements.\n\nYou must `#include <vector>`. A vector is a template — you specify the element type inside angle brackets: `std::vector<int> scores;`.\n\nKey operations:\n- `.push_back(value)` appends an element to the end.\n- `.pop_back()` removes the last element.\n- `.size()` returns the number of elements currently in the vector.\n- `.at(index)` accesses an element with bounds checking (throws an exception if out of range, unlike `[]`).\n- `[]` accesses an element without bounds checking, like a raw array.\n- `.clear()` removes all elements.\n- `.empty()` returns `true` if the vector contains no elements.\n\nYou can iterate a vector with a standard `for` loop using an index, or with a range-based `for` loop which is cleaner when you don't need the index.",
+          "examples": [
+            {
+              "label": "Vector Operations",
+              "code": "#include <vector>\n#include <iostream>\n\nint main() {\n    std::vector<int> scores;\n\n    scores.push_back(85);\n    scores.push_back(92);\n    scores.push_back(78);\n\n    std::cout << scores.size() << std::endl; // 3\n    std::cout << scores[1] << std::endl;     // 92\n\n    for (int s : scores) {\n        std::cout << s << std::endl;\n    }\n\n    scores.pop_back();\n    std::cout << scores.size() << std::endl; // 2\n\n    return 0;\n}"
+            }
+          ]
+        },
+        {
+          "id": "l-vector-questions",
+          "title": "Vector Mechanics",
+          "questions": [
+            {
+              "q": "What is the key advantage of `std::vector` over a raw C++ array?",
+              "options": ["Vectors are faster.", "Vectors use less memory.", "Vectors resize dynamically as elements are added or removed.", "Vectors can store multiple types."],
+              "answer": 2,
+              "explanation": "Raw arrays have a compile-time fixed size. Vectors manage their own memory and resize automatically, making them the standard tool for collections of unknown or variable size."
+            },
+            {
+              "q": "Which method appends a new element to the end of a vector?",
+              "options": ["`.append()`", "`.add()`", "`.insert()`", "`.push_back()`"],
+              "answer": 3,
+              "explanation": "`.push_back()` is the standard way to add an element to the end of a vector. It handles any necessary reallocation internally."
+            },
+            {
+              "q": "What is the difference between `.at(index)` and `[index]` on a vector?",
+              "options": ["`.at()` is faster.", "`[index]` uses pointer arithmetic; `.at()` does not.", "`.at()` performs bounds checking and throws an exception for invalid indices; `[index]` does not and causes undefined behavior.", "They are identical."],
+              "answer": 2,
+              "explanation": "`.at()` is the safer access method. Out-of-bounds access throws a `std::out_of_range` exception that you can catch. `[]` silently accesses invalid memory."
+            },
+            {
+              "q": "How do you declare a vector that holds `double` values?",
+              "options": ["`vector<double> v;`", "`std::vector[double] v;`", "`std::vector<double> v;`", "`double vector v;`"],
+              "answer": 2,
+              "explanation": "Vectors are a class template. The type parameter goes inside angle brackets. The `std::` prefix is required unless you have `using namespace std;`."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-vector",
+          "title": "Protocol: Vector Build",
+          "type": "challenge",
+          "prompt": "Declare a `std::vector<int>` named `log`.\n\nAppend the values `1`, `2`, and `3` to it using the correct method.\n\nThen output its size using `std::cout` followed by `std::endl`.",
+          "solution": "std::vector<int> log;\nlog.push_back(1);\nlog.push_back(2);\nlog.push_back(3);\nstd::cout << log.size() << std::endl;",
+          "validation": [
+            {
+              "rule": "std::vector<int> log;",
+              "message": "error: must declare 'std::vector<int> log;'."
+            },
+            {
+              "rule": "log\\.push_back\\(1\\);",
+              "message": "error: must push_back the value 1."
+            },
+            {
+              "rule": "log\\.push_back\\(2\\);",
+              "message": "error: must push_back the value 2."
+            },
+            {
+              "rule": "log\\.push_back\\(3\\);",
+              "message": "error: must push_back the value 3."
+            },
+            {
+              "rule": "log\\.size\\(\\)",
+              "message": "error: must output log.size()."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 14: Classes and Object-Oriented Programming",
+      "lessons": [
+        {
+          "id": "l-classes",
+          "title": "Encapsulation",
+          "type": "document",
+          "content": "A class bundles data and the functions that operate on that data into a single unit. The data is called member variables. The functions are called member functions or methods. This bundling is called encapsulation.\n\nAccess control defines what is visible outside the class. `private` members are accessible only by the class's own methods — outside code cannot touch them. `public` members are accessible from anywhere. The convention is to keep data `private` and expose controlled access through `public` methods.\n\nA constructor is a special function that runs automatically every time an object of the class is created. It has the same name as the class and no return type. Use it to initialize member variables to a valid state.\n\nA destructor runs automatically when an object goes out of scope or is deleted. It has the same name as the class preceded by `~`. It is where you release any heap memory the object allocated during its lifetime. If you allocate with `new` in the constructor, you must `delete` in the destructor.",
+          "examples": [
+            {
+              "label": "Class with Constructor and Destructor",
+              "code": "#include <iostream>\n#include <string>\n\nclass Connection {\nprivate:\n    std::string host;\n    int port;\n    bool open;\n\npublic:\n    Connection(std::string h, int p) {\n        host = h;\n        port = p;\n        open = false;\n    }\n\n    ~Connection() {\n        std::cout << \"Connection closed.\" << std::endl;\n    }\n\n    void connect() {\n        open = true;\n        std::cout << \"Connected to \" << host << \":\" << port << std::endl;\n    }\n\n    bool isOpen() {\n        return open;\n    }\n};\n\nint main() {\n    Connection c(\"192.168.1.1\", 8080);\n    c.connect();\n    std::cout << c.isOpen() << std::endl; // 1\n    return 0;\n} // destructor fires here"
+            }
+          ]
+        },
+        {
+          "id": "l-class-questions",
+          "title": "OOP Fundamentals",
+          "questions": [
+            {
+              "q": "What is encapsulation?",
+              "options": ["Storing a class inside another class.", "Bundling data and the functions that operate on it into a single unit, with controlled access.", "Making all class members public.", "A type of loop used inside classes."],
+              "answer": 1,
+              "explanation": "Encapsulation hides internal state behind a public interface. Outside code interacts only through defined methods, not by directly touching internal data."
+            },
+            {
+              "q": "A class member declared as `private` can be accessed by:",
+              "options": ["Any function anywhere in the program.", "Any function in the same file.", "Only by the class's own member functions.", "Only by `main()`."],
+              "answer": 2,
+              "explanation": "`private` members are invisible to all outside code. They can only be read or modified by the class's own methods, which is the entire point of encapsulation."
+            },
+            {
+              "q": "What is a constructor and when does it run?",
+              "options": ["A function you call manually to build an object.", "A special function with the same name as the class that runs automatically when an object is created.", "A function that returns a copy of the object.", "A function that runs when the program starts."],
+              "answer": 1,
+              "explanation": "The constructor is called by the runtime the moment an object is instantiated, whether on the stack or heap. Its job is to put the object in a valid initial state."
+            },
+            {
+              "q": "When does a destructor execute?",
+              "options": ["When you call `delete` on the class name.", "When the program starts.", "Automatically when the object goes out of scope or is deleted with `delete`.", "Only on heap-allocated objects."],
+              "answer": 2,
+              "explanation": "The destructor is called automatically by the runtime. Stack objects' destructors fire when they go out of scope. Heap objects' destructors fire when `delete` is called on them."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-class",
+          "title": "Protocol: Class Definition",
+          "type": "challenge",
+          "prompt": "Define a class named `Counter`.\n\nIt must have one `private` `int` member named `count`. It must have a `public` constructor that takes no parameters and sets `count` to `0`. It must have a `public` method named `increment` that returns `void` and adds `1` to `count`.",
+          "solution": "class Counter {\nprivate:\n    int count;\npublic:\n    Counter() {\n        count = 0;\n    }\n    void increment() {\n        count++;\n    }\n};",
+          "validation": [
+            {
+              "rule": "class Counter",
+              "message": "error: class must be named 'Counter'."
+            },
+            {
+              "rule": "private:",
+              "message": "error: class must have a private section."
+            },
+            {
+              "rule": "int count;",
+              "message": "error: missing private member 'int count;'."
+            },
+            {
+              "rule": "Counter\\(\\)",
+              "message": "error: missing public default constructor."
+            },
+            {
+              "rule": "count = 0;",
+              "message": "error: constructor must initialize count to 0."
+            },
+            {
+              "rule": "void increment",
+              "message": "error: missing public method 'void increment'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 15: Enumerations and Type Safety",
+      "lessons": [
+        {
+          "id": "l-enums",
+          "title": "Named Constants",
+          "type": "document",
+          "content": "Imagine representing connection states as raw integers: 0 means disconnected, 1 means connecting, 2 means connected. This works but it is error-prone and unreadable. An `enum` solves this by giving meaningful names to a fixed set of integer constants.\n\nA traditional `enum` dumps its names into the surrounding scope: `enum Status { IDLE, ACTIVE, ERROR };`. You can then write `Status s = ACTIVE;`.\n\nThe modern and preferred approach is `enum class` (also called scoped enum). It requires you to qualify the name with the enum type: `Status s = Status::ACTIVE;`. This prevents name collisions and makes code significantly more readable.\n\nBy default, enum values start at 0 and increment by 1. You can explicitly assign values: `enum class Priority { LOW = 1, MEDIUM = 5, HIGH = 10 };`.\n\nUsing an `enum class` in a `switch` statement is a common pattern. Because the values are exhaustive and named, the compiler can even warn you if your `switch` is missing a case.",
+          "examples": [
+            {
+              "label": "Enum Class Usage",
+              "code": "enum class State {\n    IDLE,\n    CONNECTING,\n    CONNECTED,\n    ERROR\n};\n\nvoid report(State s) {\n    switch (s) {\n        case State::IDLE:       std::cout << \"Idle\" << std::endl; break;\n        case State::CONNECTING: std::cout << \"Connecting\" << std::endl; break;\n        case State::CONNECTED:  std::cout << \"Connected\" << std::endl; break;\n        case State::ERROR:      std::cout << \"Error\" << std::endl; break;\n    }\n}\n\nint main() {\n    State current = State::CONNECTING;\n    report(current);\n    return 0;\n}"
+            }
+          ]
+        },
+        {
+          "id": "l-enum-questions",
+          "title": "Enumeration Mechanics",
+          "questions": [
+            {
+              "q": "What problem does an `enum` solve compared to using raw integers for states?",
+              "options": ["Enums are stored as strings, not integers.", "Enums use less memory.", "Enums replace magic numbers with meaningful names, making code readable and less error-prone.", "Enums prevent the values from being used in arithmetic."],
+              "answer": 2,
+              "explanation": "A raw integer value of `2` in a comparison is meaningless without context. `State::CONNECTED` is self-documenting and the compiler enforces that you only use valid values."
+            },
+            {
+              "q": "What is the key difference between a plain `enum` and an `enum class`?",
+              "options": ["`enum class` values are strings; plain enum values are integers.", "`enum class` scopes its names to the type, preventing leakage into the surrounding namespace.", "Plain enums allow custom values; `enum class` does not.", "`enum class` must be declared inside a class."],
+              "answer": 1,
+              "explanation": "`enum class` requires the `TypeName::VALUE` prefix. This prevents two different enums from clashing if they happen to use the same name."
+            },
+            {
+              "q": "If you define `enum class Level { LOW, MEDIUM, HIGH };`, what integer values do they hold by default?",
+              "options": ["1, 2, 3", "0, 1, 2", "They hold no integer value.", "10, 20, 30"],
+              "answer": 1,
+              "explanation": "By default, enum values start at 0 and increment by 1. `LOW = 0`, `MEDIUM = 1`, `HIGH = 2`. You can override this with explicit assignments."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-enum",
+          "title": "Protocol: Scoped Enum",
+          "type": "challenge",
+          "prompt": "Define an `enum class` named `Direction` with four values: `NORTH`, `SOUTH`, `EAST`, and `WEST`.\n\nThen declare a variable named `heading` of type `Direction` and assign it `Direction::NORTH`.",
+          "solution": "enum class Direction {\n    NORTH,\n    SOUTH,\n    EAST,\n    WEST\n};\nDirection heading = Direction::NORTH;",
+          "validation": [
+            {
+              "rule": "enum class Direction",
+              "message": "error: must define 'enum class Direction'."
+            },
+            {
+              "rule": "NORTH",
+              "message": "error: enum must contain NORTH."
+            },
+            {
+              "rule": "SOUTH",
+              "message": "error: enum must contain SOUTH."
+            },
+            {
+              "rule": "EAST",
+              "message": "error: enum must contain EAST."
+            },
+            {
+              "rule": "WEST",
+              "message": "error: enum must contain WEST."
+            },
+            {
+              "rule": "Direction heading = Direction::NORTH;",
+              "message": "error: must declare 'Direction heading = Direction::NORTH;'."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

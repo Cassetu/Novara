@@ -12,15 +12,20 @@
 </head>
 <body>
 
-<div id="auth-view" class="auth">
-    <div class="auth-box">
-        <h1>Sign In</h1>
-        <form id="auth-form">
-            <input type="email" id="email" placeholder="Email" required>
-            <button type="submit">Verify</button>
-        </form>
-        <p id="message"></p>
+<div id="view-auth" class="view-layer" style="display: block; max-width: 400px; margin: 100px auto; text-align: center;">
+    <h2>System Access</h2>
+
+    <button id="auth-google-btn" style="width: 100%; padding: 15px; margin-top: 20px; font-weight: bold; background-color: var(--surface); color: var(--text-main); border: 1px solid var(--border);">
+        Sign in with Google
+    </button>
+
+    <div id="auth-email-fallback" style="margin-top: 40px; border-top: 1px solid var(--border); padding-top: 30px;">
+        <p style="color: var(--text-dim); font-size: 12px; margin-bottom: 15px;">Email:</p>
+        <input type="email" id="auth-email-input" placeholder="enter email address" spellcheck="false" style="width: 100%; padding: 10px; background: var(--void); color: var(--text-main); border: 1px solid var(--border); outline: none; margin-bottom: 10px;">
+        <button id="auth-magic-btn" style="width: 100%; border-color: var(--text-dim); color: var(--text-dim);">Dispatch Link (Check Spam Folder)</button>
     </div>
+
+    <p id="auth-status" style="margin-top: 20px; font-size: 14px; color: var(--text-dim);"></p>
 </div>
 
 <div id="app-view" class="app" style="display: none;">
