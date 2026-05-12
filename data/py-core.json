@@ -1,0 +1,1070 @@
+{
+  "id": "py-core",
+  "title": "Python: Data and Logic",
+  "sections": [
+    {
+      "title": "Module 1: How Python Works",
+      "lessons": [
+        {
+          "id": "l-intro-python",
+          "title": "The Interpreted Language",
+          "type": "document",
+          "content": "Python is an interpreted language. You write source code in a `.py` file and a program called the Python interpreter reads and executes it line by line, top to bottom. There is no separate compilation step. If there is an error on line 10, lines 1 through 9 still run before the program stops.\n\nThis makes Python fast to write and test, but slower to execute than compiled languages like C++. For most tasks — scripting, data analysis, automation, web backends — the speed difference does not matter.\n\nPython uses indentation to define structure. Where other languages use curly braces `{}`, Python uses consistent indentation with spaces or tabs to group code into blocks. Mixing them causes errors. The standard is 4 spaces per level.\n\nThe `print()` function outputs text to the terminal. It is the simplest way to see what your program is doing. You can pass it strings, numbers, or variables and it will display them.\n\nComments start with `#`. Everything after the `#` on that line is ignored by the interpreter. Use them to explain intent.",
+          "examples": [
+            {
+              "label": "First Python Program",
+              "code": "# This is a comment\nprint(\"System online.\")\nprint(42)\nprint(\"Status:\", \"Active\")"
+            }
+          ]
+        },
+        {
+          "id": "l-intro-questions",
+          "title": "Interpreter Fundamentals",
+          "questions": [
+            {
+              "q": "What does it mean that Python is an interpreted language?",
+              "options": ["Python code is translated to machine code before running.", "Python uses curly braces to define code blocks.", "The interpreter reads and executes code line by line at runtime, without a separate compilation step.", "Python can only run on Linux."],
+              "answer": 2,
+              "explanation": "Interpreted execution means no build step — you run the file directly. The interpreter processes each line in sequence, which is why an error midway through still lets earlier lines execute."
+            },
+            {
+              "q": "What does Python use to define code blocks instead of curly braces?",
+              "options": ["Semicolons", "Parentheses", "Indentation", "Square brackets"],
+              "answer": 2,
+              "explanation": "Python's indentation is not cosmetic — it is structural. The interpreter uses it to determine what belongs inside a function, loop, or conditional."
+            },
+            {
+              "q": "What character starts a single-line comment in Python?",
+              "options": ["`//`", "`--`", "`/*`", "`#`"],
+              "answer": 3,
+              "explanation": "Everything after a `#` on the same line is ignored by the interpreter. Comments are for humans reading the code."
+            },
+            {
+              "q": "You have a Python script with 20 lines. There is a syntax error on line 15. What happens when you run it?",
+              "options": ["Nothing runs.", "Lines 1-14 run, then the program stops with an error on line 15.", "The entire file is skipped.", "Python fixes the error automatically."],
+              "answer": 1,
+              "explanation": "Python executes line by line. It reaches line 15, encounters the error, and stops there. Everything before it has already executed."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-print",
+          "title": "Protocol: First Output",
+          "type": "challenge",
+          "prompt": "Write a single line of Python that outputs the exact text:\n\nInitialized.\n\nInclude the period.",
+          "solution": "print(\"Initialized.\")",
+          "validation": [
+            {
+              "rule": "print\\([\"']Initialized\\.[\"']\\)",
+              "message": "error: use print() with the exact string 'Initialized.' including the period."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Variables and Data Types",
+      "lessons": [
+        {
+          "id": "l-variables",
+          "title": "Dynamic Typing",
+          "type": "document",
+          "content": "Python uses dynamic typing. You do not declare a type — you just assign a value and Python figures out the type from the value itself. The type is attached to the value, not the variable name. The same variable can hold a string on one line and an integer on the next.\n\nCore built-in types:\n- `int`: Whole numbers. `42`, `-7`, `0`.\n- `float`: Decimal numbers. `3.14`, `-0.5`, `2.0`.\n- `str`: A string of text. Defined with single or double quotes. `'hello'` and `\"hello\"` are identical.\n- `bool`: Boolean. Exactly two values: `True` or `False`. Case matters — `true` is not valid Python.\n- `None`: Represents the absence of a value. It is not zero, not an empty string — it is nothing.\n\nThe `type()` function returns the type of any value. `type(42)` returns `<class 'int'>`.\n\nVariable names are case-sensitive. `score` and `Score` are different variables. By convention, Python variable names use lowercase with underscores: `user_name`, `total_score`.",
+          "examples": [
+            {
+              "label": "Variable Assignment",
+              "code": "node_count = 12\nsignal = 98.6\nhostname = \"Alpha-7\"\nis_online = True\nresult = None\n\nprint(type(node_count))  # <class 'int'>\nprint(type(hostname))    # <class 'str'>\n\nnode_count = \"twelve\"    # valid — type changed"
+            }
+          ]
+        },
+        {
+          "id": "l-types-questions",
+          "title": "Type System",
+          "questions": [
+            {
+              "q": "What is dynamic typing in Python?",
+              "options": ["Variables must be declared with a type before use.", "Types are determined at compile time.", "Python infers the type from the value assigned — no explicit declaration needed.", "All variables are strings by default."],
+              "answer": 2,
+              "explanation": "In Python, the type belongs to the value, not the variable name. You assign a value and Python determines the type automatically at runtime."
+            },
+            {
+              "q": "What is the type of the value `3.14`?",
+              "options": ["`int`", "`str`", "`double`", "`float`"],
+              "answer": 3,
+              "explanation": "Any number with a decimal point is a `float` in Python. `3` is an int; `3.0` is a float."
+            },
+            {
+              "q": "What does `None` represent in Python?",
+              "options": ["The number zero.", "An empty string.", "The boolean value False.", "The intentional absence of any value."],
+              "answer": 3,
+              "explanation": "`None` is Python's null type. It is a distinct value meaning 'nothing here'. It is not `0`, not `False`, not `''` — it is its own thing."
+            },
+            {
+              "q": "Which of these is a valid boolean value in Python?",
+              "options": ["`true`", "`TRUE`", "`True`", "`yes`"],
+              "answer": 2,
+              "explanation": "Python booleans are capitalized: `True` and `False`. Lowercase `true` is not valid Python and will raise a NameError."
+            },
+            {
+              "q": "What does `type(\"hello\")` return?",
+              "options": ["`string`", "`<class 'str'>`", "`<class 'string'>`", "`text`"],
+              "answer": 1,
+              "explanation": "Python's string type is named `str`. The `type()` function returns the class object, formatted as `<class 'str'>`."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-variables",
+          "title": "Protocol: Variable Declaration",
+          "type": "challenge",
+          "prompt": "Declare three variables in order:\n\n1. An integer named `port` with the value `8080`.\n2. A string named `host` with the value `localhost`.\n3. A boolean named `secure` with the value `False`.",
+          "solution": "port = 8080\nhost = \"localhost\"\nsecure = False",
+          "validation": [
+            {
+              "rule": "port = 8080",
+              "message": "error: missing 'port = 8080'."
+            },
+            {
+              "rule": "host = [\"']localhost[\"']",
+              "message": "error: missing 'host = \"localhost\"'."
+            },
+            {
+              "rule": "secure = False",
+              "message": "error: missing 'secure = False'. remember — capital F."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Strings",
+      "lessons": [
+        {
+          "id": "l-strings",
+          "title": "Text Manipulation",
+          "type": "document",
+          "content": "Strings are sequences of characters. In Python, they are objects with built-in methods that make text manipulation clean and direct.\n\nConcatenation joins strings together with `+`. `\"Hello\" + \" \" + \"World\"` produces `\"Hello World\"`.\n\nf-strings (formatted string literals) are the modern way to embed values directly into a string. Prefix the string with `f` and wrap expressions in curly braces: `f\"Score: {score}\"`. They are readable, clean, and preferred over concatenation for anything beyond the simplest cases.\n\nUseful string methods:\n- `.upper()` and `.lower()`: convert case.\n- `.strip()`: removes leading and trailing whitespace.\n- `.replace(old, new)`: swaps every occurrence of one substring with another.\n- `.split(separator)`: splits a string into a list by a separator.\n- `.startswith(prefix)` and `.endswith(suffix)`: return True/False.\n- `len(string)`: returns the number of characters.\n\nStrings are zero-indexed. `name[0]` is the first character. Negative indexing works from the end: `name[-1]` is the last character.\n\nSlicing extracts a portion: `name[1:4]` returns characters at indices 1, 2, and 3 — the end index is excluded.",
+          "examples": [
+            {
+              "label": "String Operations",
+              "code": "name = \"Alpha-7\"\n\nprint(len(name))          # 7\nprint(name.upper())       # ALPHA-7\nprint(name[0])            # A\nprint(name[-1])           # 7\nprint(name[0:5])          # Alpha\n\nlabel = \"  online  \"\nprint(label.strip())      # 'online'\n\nstatus = \"inactive\"\nprint(status.replace(\"inactive\", \"active\"))  # active\n\nversion = 3\nprint(f\"Node version: {version}\")  # Node version: 3"
+            }
+          ]
+        },
+        {
+          "id": "l-string-questions",
+          "title": "String Mechanics",
+          "questions": [
+            {
+              "q": "What does the f-string `f\"Port: {port}\"` do when `port = 443`?",
+              "options": ["It raises an error.", "It prints the literal text {port}.", "It produces the string 'Port: 443'.", "It converts port to a float."],
+              "answer": 2,
+              "explanation": "f-strings evaluate the expression inside `{}` and embed the result directly into the string. `{port}` is replaced with the value of the variable `port`."
+            },
+            {
+              "q": "Given `s = \"network\"`, what does `s[0]` return?",
+              "options": ["`\"network\"`", "`\"n\"`", "`\"e\"`", "`7`"],
+              "answer": 1,
+              "explanation": "Strings are zero-indexed. Index 0 is the first character. `\"network\"[0]` is `\"n\"`."
+            },
+            {
+              "q": "What does `\"hello world\".split(\" \")` return?",
+              "options": ["`\"helloworld\"`", "`[\"hello\", \"world\"]`", "`(\"hello\", \"world\")`", "`\"hello\", \"world\"`"],
+              "answer": 1,
+              "explanation": "`.split()` breaks a string into a list of substrings at each occurrence of the separator. Splitting on a space produces a list of the words."
+            },
+            {
+              "q": "Given `s = \"Python\"`, what does `s[1:4]` return?",
+              "options": ["`\"Pyt\"`", "`\"yth\"`", "`\"ytho\"`", "`\"ython\"`"],
+              "answer": 1,
+              "explanation": "Slicing `[1:4]` returns characters at indices 1, 2, and 3. The end index (4) is excluded. `P=0, y=1, t=2, h=3`. Result: `\"yth\"`."
+            },
+            {
+              "q": "Which method removes whitespace from both ends of a string?",
+              "options": ["`.clean()`", "`.trim()`", "`.strip()`", "`.remove()`"],
+              "answer": 2,
+              "explanation": "`.strip()` removes leading and trailing whitespace characters. `.lstrip()` and `.rstrip()` target only the left or right side respectively."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-fstring",
+          "title": "Protocol: f-string Output",
+          "type": "challenge",
+          "prompt": "Given the variable `user = \"Cassetu\"`, write one line using an f-string that outputs:\n\nWelcome, Cassetu.",
+          "solution": "print(f\"Welcome, {user}.\")",
+          "validation": [
+            {
+              "rule": "f[\"']Welcome, \\{user\\}\\.[\"']",
+              "message": "error: use an f-string with {user} embedded. include the period at the end."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 4: Operators and Control Flow",
+      "lessons": [
+        {
+          "id": "l-operators",
+          "title": "Logic and Branching",
+          "type": "document",
+          "content": "Python's arithmetic operators are standard: `+`, `-`, `*`, `/`, `%`. Two important extras: `//` is floor division — it divides and rounds down to the nearest integer. `**` is the exponentiation operator. `2 ** 8` is 256.\n\nNote: `/` in Python 3 always returns a float. `7 / 2` is `3.5`. Use `//` if you want integer division.\n\nComparison operators return booleans: `==`, `!=`, `>`, `<`, `>=`, `<=`. Logical operators combine boolean expressions: `and`, `or`, `not`. Python uses plain English words, not symbols like `&&` or `||`.\n\nConditional branching uses `if`, `elif`, and `else`. The colon `:` is required after each condition. The body must be indented. Python evaluates conditions top to bottom and executes only the first block whose condition is true.\n\nThe `in` operator tests membership. `\"a\" in \"data\"` is `True`. `5 in [1, 2, 3]` is `False`.\n\nPython's ternary expression is compact: `value_if_true if condition else value_if_false`.",
+          "examples": [
+            {
+              "label": "Operators and Conditionals",
+              "code": "x = 10\nprint(x ** 3)      # 1000\nprint(x // 3)      # 3\nprint(x % 3)       # 1\n\nstatus = \"online\"\nif status == \"online\":\n    print(\"Connected\")\nelif status == \"standby\":\n    print(\"Waiting\")\nelse:\n    print(\"Offline\")\n\nlabel = \"active\" if x > 5 else \"inactive\"\nprint(label)  # active"
+            }
+          ]
+        },
+        {
+          "id": "l-operator-questions",
+          "title": "Operator and Branch Logic",
+          "questions": [
+            {
+              "q": "What does `9 // 2` return in Python?",
+              "options": ["`4.5`", "`5`", "`4`", "`4.0`"],
+              "answer": 2,
+              "explanation": "`//` is floor division. It divides and truncates toward negative infinity. 9 / 2 = 4.5, floored to 4."
+            },
+            {
+              "q": "What does `2 ** 10` evaluate to?",
+              "options": ["`20`", "`12`", "`100`", "`1024`"],
+              "answer": 3,
+              "explanation": "`**` is the exponentiation operator. 2 to the power of 10 is 1024."
+            },
+            {
+              "q": "What Python keyword replaces `&&` from other languages?",
+              "options": ["`&&`", "`and`", "`both`", "`also`"],
+              "answer": 1,
+              "explanation": "Python uses plain English for logical operators: `and`, `or`, `not`. There are no `&&` or `||` symbols."
+            },
+            {
+              "q": "What is the result of `\"py\" in \"python\"`?",
+              "options": ["`False`", "`0`", "`True`", "`None`"],
+              "answer": 2,
+              "explanation": "The `in` operator tests whether the left operand is a substring of the right. `\"py\"` is contained in `\"python\"`, so the result is `True`."
+            },
+            {
+              "q": "What does `7 / 2` return in Python 3?",
+              "options": ["`3`", "`3.5`", "`4`", "`3.0`"],
+              "answer": 1,
+              "explanation": "In Python 3, `/` always performs true division and returns a float. `7 / 2` is `3.5`. Use `//` for integer division."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-conditional",
+          "title": "Protocol: Branch Logic",
+          "type": "challenge",
+          "prompt": "Write a conditional block.\n\nIf the variable `score` is greater than or equal to `90`, print `A`. Elif it is greater than or equal to `70`, print `B`. Else, print `C`.\n\nAssume `score` is already declared.",
+          "solution": "if score >= 90:\n    print(\"A\")\nelif score >= 70:\n    print(\"B\")\nelse:\n    print(\"C\")",
+          "validation": [
+            {
+              "rule": "if score >= 90:",
+              "message": "error: first condition must be 'if score >= 90:'."
+            },
+            {
+              "rule": "elif score >= 70:",
+              "message": "error: second condition must be 'elif score >= 70:'."
+            },
+            {
+              "rule": "else:",
+              "message": "error: missing else block."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 5: Loops",
+      "lessons": [
+        {
+          "id": "l-loops",
+          "title": "Iteration Patterns",
+          "type": "document",
+          "content": "Python has two loop types: `for` and `while`.\n\nA `for` loop iterates over any sequence — a list, string, range, or other iterable. The variable after `for` takes each value in turn. The `range()` function generates a sequence of numbers. `range(5)` produces 0, 1, 2, 3, 4. `range(2, 8)` produces 2 through 7. `range(0, 10, 2)` produces 0, 2, 4, 6, 8 — the third argument is the step.\n\nA `while` loop runs as long as its condition remains True. You are responsible for making sure the condition eventually becomes False, otherwise the loop runs forever.\n\n`break` exits the loop immediately. `continue` skips to the next iteration. `else` on a loop (rarely used but useful to know) runs when the loop completes normally without hitting a `break`.\n\nThe `enumerate()` function gives you both the index and the value while iterating: `for i, val in enumerate(items)`. This avoids manually tracking a counter variable.",
+          "examples": [
+            {
+              "label": "Loop Structures",
+              "code": "for i in range(3):\n    print(i)          # 0, 1, 2\n\nfruits = [\"apple\", \"mango\", \"kiwi\"]\nfor fruit in fruits:\n    print(fruit)\n\nfor i, fruit in enumerate(fruits):\n    print(i, fruit)   # 0 apple, 1 mango, 2 kiwi\n\ncount = 0\nwhile count < 3:\n    print(count)\n    count += 1\n\nfor n in range(10):\n    if n == 5:\n        break\n    print(n)          # prints 0 through 4"
+            }
+          ]
+        },
+        {
+          "id": "l-loop-questions",
+          "title": "Loop Mechanics",
+          "questions": [
+            {
+              "q": "What sequence does `range(1, 6)` produce?",
+              "options": ["1, 2, 3, 4, 5, 6", "0, 1, 2, 3, 4, 5", "1, 2, 3, 4, 5", "1, 2, 3, 4, 5, 6, 7"],
+              "answer": 2,
+              "explanation": "`range(start, stop)` produces integers from start up to but not including stop. `range(1, 6)` gives 1, 2, 3, 4, 5."
+            },
+            {
+              "q": "What does `enumerate(items)` provide that a plain `for item in items` does not?",
+              "options": ["It sorts the items first.", "It provides both the index and the value on each iteration.", "It skips None values.", "It runs the loop in reverse."],
+              "answer": 1,
+              "explanation": "`enumerate()` wraps an iterable and yields tuples of (index, value) on each pass. This eliminates the need for a separate counter variable."
+            },
+            {
+              "q": "What happens if the condition of a `while` loop never becomes False?",
+              "options": ["Python raises a LoopError.", "The loop runs exactly 1000 times then stops.", "The loop runs forever — an infinite loop.", "The loop skips automatically after 10 seconds."],
+              "answer": 2,
+              "explanation": "A `while` loop has no built-in iteration limit. If the condition never becomes False, the loop runs indefinitely until the process is killed or the machine runs out of resources."
+            },
+            {
+              "q": "What does `continue` do inside a loop?",
+              "options": ["Exits the loop entirely.", "Restarts the program.", "Skips the rest of the current iteration and moves to the next one.", "Pauses execution."],
+              "answer": 2,
+              "explanation": "`continue` jumps back to the top of the loop for the next iteration, skipping any remaining code in the current pass."
+            },
+            {
+              "q": "What does `range(0, 10, 3)` produce?",
+              "options": ["0, 3, 6, 9", "0, 3, 6, 9, 12", "3, 6, 9", "0, 1, 2, 3"],
+              "answer": 0,
+              "explanation": "The third argument to `range()` is the step. Starting at 0, incrementing by 3, stopping before 10: 0, 3, 6, 9."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-for-loop",
+          "title": "Protocol: Range Loop",
+          "type": "challenge",
+          "prompt": "Write a for loop that iterates over `range(1, 6)` and prints each number multiplied by 10.\n\nEach result should be on its own line.",
+          "solution": "for i in range(1, 6):\n    print(i * 10)",
+          "validation": [
+            {
+              "rule": "for i in range\\(1, 6\\):",
+              "message": "error: loop must use range(1, 6)."
+            },
+            {
+              "rule": "print\\(i \\* 10\\)",
+              "message": "error: must print each value multiplied by 10."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 6: Functions",
+      "lessons": [
+        {
+          "id": "l-functions",
+          "title": "Defining Reusable Logic",
+          "type": "document",
+          "content": "Functions are defined with the `def` keyword, followed by the function name, parentheses containing any parameters, and a colon. The body is indented.\n\nA function runs only when called. It does nothing by default just sitting in the file. The `return` statement sends a value back to the caller and exits the function. If no `return` is reached, the function returns `None`.\n\nParameters can have default values: `def greet(name, greeting=\"Hello\")`. If the caller does not pass `greeting`, it defaults to `\"Hello\"`. Arguments with defaults must come after arguments without defaults.\n\nPython supports keyword arguments — you can call a function by naming the parameters explicitly: `greet(greeting=\"Hey\", name=\"Cassetu\")`. This makes call sites self-documenting and allows passing arguments in any order.\n\nDocstrings are string literals placed as the first statement inside a function. They document what the function does. Tools and IDEs read them automatically.",
+          "examples": [
+            {
+              "label": "Function Patterns",
+              "code": "def add(a, b):\n    \"\"\"Returns the sum of a and b.\"\"\"\n    return a + b\n\ndef greet(name, greeting=\"Hello\"):\n    return f\"{greeting}, {name}.\"\n\nprint(add(3, 4))                      # 7\nprint(greet(\"Cassetu\"))               # Hello, Cassetu.\nprint(greet(\"Cassetu\", \"Hey\"))        # Hey, Cassetu.\nprint(greet(greeting=\"Hi\", name=\"K\")) # Hi, K."
+            }
+          ]
+        },
+        {
+          "id": "l-function-questions",
+          "title": "Function Architecture",
+          "questions": [
+            {
+              "q": "What keyword is used to define a function in Python?",
+              "options": ["`func`", "`function`", "`define`", "`def`"],
+              "answer": 3,
+              "explanation": "`def` is the keyword that begins a function definition. It is followed by the function name, parameter list in parentheses, and a colon."
+            },
+            {
+              "q": "What does a function return if it has no `return` statement?",
+              "options": ["`0`", "`False`", "`None`", "An empty string"],
+              "answer": 2,
+              "explanation": "Every Python function returns a value. If no `return` statement is reached, Python implicitly returns `None`."
+            },
+            {
+              "q": "In the definition `def connect(host, port=80)`, what is `80`?",
+              "options": ["A return value.", "A required argument.", "A default parameter value.", "A global variable."],
+              "answer": 2,
+              "explanation": "`port=80` makes `port` an optional parameter with a default value of 80. If the caller does not supply it, the function uses 80."
+            },
+            {
+              "q": "What is a docstring?",
+              "options": ["A comment that starts with `##`.", "A string used as the return value.", "A string literal placed at the start of a function that documents its purpose.", "A string with special formatting characters."],
+              "answer": 2,
+              "explanation": "A docstring is a triple-quoted string placed as the first statement of a function. It is used by documentation generators and IDE tooltips."
+            },
+            {
+              "q": "You call `greet(greeting=\"Hi\", name=\"Alex\")`. What kind of arguments are these?",
+              "options": ["Positional arguments", "Default arguments", "Keyword arguments", "Optional arguments"],
+              "answer": 2,
+              "explanation": "Keyword arguments are passed by explicitly naming the parameter. They can appear in any order and make call sites easier to read."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-function",
+          "title": "Protocol: Function Definition",
+          "type": "challenge",
+          "prompt": "Define a function named `multiply` that takes two parameters `a` and `b` and returns their product.",
+          "solution": "def multiply(a, b):\n    return a * b",
+          "validation": [
+            {
+              "rule": "def multiply\\(a, b\\):",
+              "message": "error: function must be named 'multiply' with parameters a and b."
+            },
+            {
+              "rule": "return a \\* b",
+              "message": "error: must return a * b."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 7: Lists",
+      "lessons": [
+        {
+          "id": "l-lists",
+          "title": "Ordered Collections",
+          "type": "document",
+          "content": "A list is an ordered, mutable collection of items. Items can be of any type and can be mixed. Lists are defined with square brackets: `[1, \"two\", 3.0]`.\n\nLists are zero-indexed. `items[0]` is the first element. Negative indexing works: `items[-1]` is the last. Slicing works the same as with strings.\n\nKey list methods:\n- `.append(item)`: adds one item to the end.\n- `.extend(other_list)`: adds all items from another list.\n- `.insert(index, item)`: inserts at a specific position.\n- `.remove(item)`: removes the first occurrence of a value.\n- `.pop(index)`: removes and returns the item at an index. Without an argument, removes the last item.\n- `.sort()`: sorts the list in place.\n- `.reverse()`: reverses in place.\n- `len(list)`: returns the number of items.\n- `in` operator: tests membership.\n\nList comprehensions are a clean, Pythonic way to build a new list from an existing one in a single line: `[expression for item in iterable if condition]`.",
+          "examples": [
+            {
+              "label": "List Operations",
+              "code": "nodes = [\"alpha\", \"beta\", \"gamma\"]\n\nprint(nodes[0])          # alpha\nprint(nodes[-1])         # gamma\nprint(len(nodes))        # 3\nprint(\"beta\" in nodes)   # True\n\nnodes.append(\"delta\")\nnodes.remove(\"beta\")\nprint(nodes)             # ['alpha', 'gamma', 'delta']\n\nsquares = [x ** 2 for x in range(5)]\nprint(squares)           # [0, 1, 4, 9, 16]\n\nevens = [x for x in range(10) if x % 2 == 0]\nprint(evens)             # [0, 2, 4, 6, 8]"
+            }
+          ]
+        },
+        {
+          "id": "l-list-questions",
+          "title": "List Mechanics",
+          "questions": [
+            {
+              "q": "Given `items = [10, 20, 30, 40]`, what does `items[-2]` return?",
+              "options": ["`10`", "`40`", "`20`", "`30`"],
+              "answer": 3,
+              "explanation": "Negative indexing counts from the end. `items[-1]` is 40, `items[-2]` is 30."
+            },
+            {
+              "q": "What is the difference between `.append()` and `.extend()`?",
+              "options": ["They are identical.", "`.append()` adds one item to the end; `.extend()` adds every item from another iterable.", "`.extend()` adds at the start; `.append()` adds at the end.", "`.append()` sorts first; `.extend()` does not."],
+              "answer": 1,
+              "explanation": "`list.append([1,2])` adds the list as a single nested element. `list.extend([1,2])` unpacks it and adds 1 and 2 as separate elements."
+            },
+            {
+              "q": "What does `.pop()` do with no arguments?",
+              "options": ["Removes the first element.", "Empties the list.", "Removes and returns the last element.", "Returns but does not remove the last element."],
+              "answer": 2,
+              "explanation": "`.pop()` without arguments targets the last index. It removes the item and returns it, so you can use the value."
+            },
+            {
+              "q": "What does this list comprehension produce: `[x * 2 for x in [1, 2, 3]]`?",
+              "options": ["`[1, 2, 3]`", "`[2, 4, 6]`", "`[1, 4, 9]`", "`[2, 4, 6, 8]`"],
+              "answer": 1,
+              "explanation": "The comprehension evaluates `x * 2` for each item in the list. 1×2=2, 2×2=4, 3×2=6. Result: `[2, 4, 6]`."
+            },
+            {
+              "q": "You call `.sort()` on a list. What does it return?",
+              "options": ["A new sorted list.", "The sorted list's length.", "`None` — it sorts the list in place.", "A tuple of the sorted values."],
+              "answer": 2,
+              "explanation": "`.sort()` modifies the list directly and returns `None`. If you need a new sorted list without modifying the original, use the built-in `sorted(list)` function instead."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-comprehension",
+          "title": "Protocol: List Comprehension",
+          "type": "challenge",
+          "prompt": "Write a single line that creates a list named `cubes` containing the cubes of numbers from 1 to 5 inclusive, using a list comprehension.",
+          "solution": "cubes = [x ** 3 for x in range(1, 6)]",
+          "validation": [
+            {
+              "rule": "cubes = \\[",
+              "message": "error: must assign to a variable named 'cubes' using a list comprehension."
+            },
+            {
+              "rule": "x \\*\\* 3",
+              "message": "error: expression must cube each value with x ** 3."
+            },
+            {
+              "rule": "range\\(1, 6\\)",
+              "message": "error: must use range(1, 6) to cover 1 through 5."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 8: Tuples and Sets",
+      "lessons": [
+        {
+          "id": "l-tuples-sets",
+          "title": "Immutable and Unique",
+          "type": "document",
+          "content": "A tuple is like a list but immutable — once created, its contents cannot be changed. Defined with parentheses: `(1, 2, 3)`. Tuples support indexing and slicing. You cannot append, remove, or modify elements.\n\nTuples are used when the data should not change — coordinates, RGB values, database rows, function return values when returning multiple items. They are also faster than lists for read-only access.\n\nA single-element tuple requires a trailing comma: `(42,)`. Without the comma, Python treats the parentheses as grouping, not a tuple.\n\nA set is an unordered collection with no duplicate values. Defined with curly braces: `{1, 2, 3}`. Because it is unordered, sets have no indexing. Their primary use is membership testing (faster than lists) and removing duplicates.\n\nKey set operations: `add()`, `remove()`, `discard()` (like remove but no error if missing), `union()`, `intersection()`, `difference()`.\n\nTo create an empty set, use `set()` — not `{}`, which creates an empty dict.",
+          "examples": [
+            {
+              "label": "Tuples and Sets",
+              "code": "coords = (40.7, -74.0)\nprint(coords[0])     # 40.7\n# coords[0] = 0      # TypeError — immutable\n\nsingle = (99,)       # single-element tuple\nprint(type(single))  # <class 'tuple'>\n\ntags = {\"python\", \"data\", \"python\", \"code\"}\nprint(tags)          # {'python', 'data', 'code'} — no duplicates\n\na = {1, 2, 3}\nb = {2, 3, 4}\nprint(a & b)         # {2, 3}  — intersection\nprint(a | b)         # {1, 2, 3, 4} — union\nprint(a - b)         # {1} — difference"
+            }
+          ]
+        },
+        {
+          "id": "l-tuple-set-questions",
+          "title": "Tuple and Set Behavior",
+          "questions": [
+            {
+              "q": "What makes a tuple different from a list?",
+              "options": ["Tuples can only hold numbers.", "Tuples are ordered; lists are not.", "Tuples are immutable — their contents cannot be changed after creation.", "Tuples use square brackets."],
+              "answer": 2,
+              "explanation": "Tuples and lists are both ordered sequences, but tuples cannot be modified. Any attempt to change an element raises a TypeError."
+            },
+            {
+              "q": "Why does `(42,)` have a trailing comma?",
+              "options": ["It is a syntax error.", "To indicate the tuple contains a float.", "Without the comma, Python treats the parentheses as grouping, not a tuple.", "It is optional but preferred style."],
+              "answer": 2,
+              "explanation": "`(42)` is just the integer 42 wrapped in parentheses. `(42,)` is a tuple containing one element. The comma is what makes it a tuple."
+            },
+            {
+              "q": "What property of a set guarantees?",
+              "options": ["Elements are sorted.", "Elements are immutable.", "All elements are unique — no duplicates allowed.", "Elements are all the same type."],
+              "answer": 2,
+              "explanation": "Sets automatically enforce uniqueness. Adding a duplicate value to a set has no effect."
+            },
+            {
+              "q": "How do you create an empty set in Python?",
+              "options": ["`{}`", "`set()`", "`[]`", "`()`"],
+              "answer": 1,
+              "explanation": "`{}` creates an empty dictionary, not a set. `set()` is the correct way to create an empty set."
+            },
+            {
+              "q": "Given `a = {1, 2, 3}` and `b = {3, 4, 5}`, what does `a & b` return?",
+              "options": ["`{1, 2, 3, 4, 5}`", "`{1, 2}`", "`{3}`", "`{4, 5}`"],
+              "answer": 2,
+              "explanation": "`&` is the intersection operator. It returns only the elements that exist in both sets. Only `3` is in both `a` and `b`."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-set",
+          "title": "Protocol: Deduplication",
+          "type": "challenge",
+          "prompt": "Create a set named `unique_ids` containing the values `101`, `202`, `101`, `303`.\n\nThen print the length of the set.",
+          "solution": "unique_ids = {101, 202, 101, 303}\nprint(len(unique_ids))",
+          "validation": [
+            {
+              "rule": "unique_ids = \\{",
+              "message": "error: must create a set named 'unique_ids' using curly braces."
+            },
+            {
+              "rule": "print\\(len\\(unique_ids\\)\\)",
+              "message": "error: must print the length using len(unique_ids)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 9: Dictionaries",
+      "lessons": [
+        {
+          "id": "l-dicts",
+          "title": "Key-Value Storage",
+          "type": "document",
+          "content": "A dictionary stores data as key-value pairs. Instead of accessing items by position, you access them by a meaningful key. Keys must be immutable (strings, numbers, tuples) and unique. Values can be anything.\n\nDefined with curly braces: `{\"key\": value}`. Access a value with `dict[key]`. If the key does not exist, this raises a `KeyError`.\n\nThe safer way to access is `.get(key)`, which returns `None` if the key is missing instead of crashing. You can also provide a fallback: `.get(key, default_value)`.\n\nKey dictionary methods:\n- `.keys()`: returns all keys.\n- `.values()`: returns all values.\n- `.items()`: returns all key-value pairs as tuples — essential for looping.\n- `.update(other_dict)`: merges another dict in, overwriting on collision.\n- `key in dict`: checks if a key exists.\n- `del dict[key]`: removes a key-value pair.\n\nDictionaries maintain insertion order as of Python 3.7. They are the most used data structure for structured data in Python.",
+          "examples": [
+            {
+              "label": "Dictionary Operations",
+              "code": "node = {\n    \"id\": 7,\n    \"host\": \"alpha\",\n    \"online\": True\n}\n\nprint(node[\"host\"])              # alpha\nprint(node.get(\"port\", 80))      # 80 (key missing, default used)\n\nnode[\"port\"] = 443               # add new key\ndel node[\"online\"]               # remove key\n\nfor key, value in node.items():\n    print(f\"{key}: {value}\")\n\nprint(\"id\" in node)              # True"
+            }
+          ]
+        },
+        {
+          "id": "l-dict-questions",
+          "title": "Dictionary Mechanics",
+          "questions": [
+            {
+              "q": "What happens if you access a dictionary with a key that does not exist using `dict[key]`?",
+              "options": ["It returns None.", "It returns 0.", "It raises a KeyError.", "It adds the key with a None value."],
+              "answer": 2,
+              "explanation": "Direct bracket access raises `KeyError` if the key is absent. Use `.get()` to avoid this when the key's presence is uncertain."
+            },
+            {
+              "q": "What does `node.get(\"timeout\", 30)` return if `\"timeout\"` is not in `node`?",
+              "options": ["`None`", "`KeyError`", "`0`", "`30`"],
+              "answer": 3,
+              "explanation": "`.get(key, default)` returns the default value when the key is not found. This avoids a crash and lets you specify a fallback."
+            },
+            {
+              "q": "Which method returns all key-value pairs and is most useful for looping?",
+              "options": ["`.keys()`", "`.values()`", "`.pairs()`", "`.items()`"],
+              "answer": 3,
+              "explanation": "`.items()` returns each pair as a tuple `(key, value)`. Combined with `for key, value in dict.items()`, it is the standard way to loop over a dictionary."
+            },
+            {
+              "q": "What type must dictionary keys be?",
+              "options": ["Strings only.", "Integers only.", "Any immutable type — strings, numbers, or tuples.", "Any type including lists."],
+              "answer": 2,
+              "explanation": "Keys must be hashable, which means immutable. Lists are mutable and cannot be keys. Strings, integers, and tuples are valid key types."
+            },
+            {
+              "q": "How do you add a new key `\"region\"` with value `\"west\"` to an existing dictionary `config`?",
+              "options": ["`config.add(\"region\", \"west\")`", "`config[\"region\"] = \"west\"`", "`config.insert(\"region\", \"west\")`", "`config.append({\"region\": \"west\"})`"],
+              "answer": 1,
+              "explanation": "Assigning to a new key directly creates it. If the key already exists, it updates the value."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-dict",
+          "title": "Protocol: Dictionary Construction",
+          "type": "challenge",
+          "prompt": "Create a dictionary named `server` with three keys:\n- `\"host\"` with value `\"localhost\"`\n- `\"port\"` with value `5432`\n- `\"active\"` with value `True`\n\nThen print the value of `\"port\"`.",
+          "solution": "server = {\n    \"host\": \"localhost\",\n    \"port\": 5432,\n    \"active\": True\n}\nprint(server[\"port\"])",
+          "validation": [
+            {
+              "rule": "server = \\{",
+              "message": "error: must create a dictionary named 'server'."
+            },
+            {
+              "rule": "[\"']host[\"']: [\"']localhost[\"']",
+              "message": "error: missing key 'host' with value 'localhost'."
+            },
+            {
+              "rule": "[\"']port[\"']: 5432",
+              "message": "error: missing key 'port' with value 5432."
+            },
+            {
+              "rule": "[\"']active[\"']: True",
+              "message": "error: missing key 'active' with value True."
+            },
+            {
+              "rule": "print\\(server\\[[\"']port[\"']\\]\\)",
+              "message": "error: must print server['port']."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 10: Error Handling",
+      "lessons": [
+        {
+          "id": "l-errors",
+          "title": "Exceptions and Recovery",
+          "type": "document",
+          "content": "When Python encounters an error at runtime, it raises an exception. If the exception is not caught, the program crashes and prints a traceback. The traceback tells you exactly what went wrong and where.\n\nCommon built-in exceptions:\n- `ValueError`: right type, wrong value. `int(\"hello\")`.\n- `TypeError`: wrong type entirely. `\"text\" + 5`.\n- `KeyError`: dictionary key not found.\n- `IndexError`: list index out of range.\n- `ZeroDivisionError`: dividing by zero.\n- `FileNotFoundError`: file path does not exist.\n\nYou handle exceptions with `try` / `except`. Put the risky code in the `try` block. Put the recovery code in the `except` block. The program does not crash — it runs the except block instead.\n\nYou can catch specific exception types to handle them differently. The `else` block runs if no exception was raised. The `finally` block always runs, whether an exception occurred or not — useful for cleanup like closing files.\n\nTo raise your own exception intentionally, use `raise`.",
+          "examples": [
+            {
+              "label": "Try / Except Structure",
+              "code": "try:\n    value = int(input(\"Enter a number: \"))\n    result = 100 / value\nexcept ValueError:\n    print(\"That was not a number.\")\nexcept ZeroDivisionError:\n    print(\"Cannot divide by zero.\")\nelse:\n    print(f\"Result: {result}\")\nfinally:\n    print(\"Execution complete.\")\n\n# Raising manually\ndef set_port(p):\n    if p < 0:\n        raise ValueError(\"Port cannot be negative.\")\n    return p"
+            }
+          ]
+        },
+        {
+          "id": "l-error-questions",
+          "title": "Exception Mechanics",
+          "questions": [
+            {
+              "q": "What exception does `int(\"abc\")` raise?",
+              "options": ["`TypeError`", "`ParseError`", "`ValueError`", "`ConversionError`"],
+              "answer": 2,
+              "explanation": "`ValueError` is raised when a function receives the right type of argument but an inappropriate value. `\"abc\"` is a string, which is the right type for `int()`, but it cannot be converted."
+            },
+            {
+              "q": "When does the `finally` block execute?",
+              "options": ["Only if no exception occurred.", "Only if an exception occurred.", "Always — whether an exception was raised or not.", "Only if the `else` block was skipped."],
+              "answer": 2,
+              "explanation": "`finally` is a guaranteed execution block. It runs regardless of whether the try succeeded, an exception was caught, or an exception was unhandled."
+            },
+            {
+              "q": "What is the purpose of the `else` block in a try/except structure?",
+              "options": ["It catches any remaining exceptions.", "It runs only if an exception occurred in the try block.", "It runs only if the try block completed without raising any exception.", "It is identical to finally."],
+              "answer": 2,
+              "explanation": "The `else` block is for code that should run when the try block succeeds. It only executes if no exception was raised, keeping the success path separate from the error recovery path."
+            },
+            {
+              "q": "How do you intentionally raise an exception in your own code?",
+              "options": ["`throw ValueError(\"message\")`", "`error ValueError(\"message\")`", "`raise ValueError(\"message\")`", "`except ValueError(\"message\")`"],
+              "answer": 2,
+              "explanation": "`raise` is the keyword for manually triggering an exception. You can raise built-in exception types or custom ones you define."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-try-except",
+          "title": "Protocol: Exception Guard",
+          "type": "challenge",
+          "prompt": "Write a try/except block.\n\nIn the try block, declare `result = 10 / 0`.\nIn the except block, catch a `ZeroDivisionError` and print `Cannot divide by zero.`",
+          "solution": "try:\n    result = 10 / 0\nexcept ZeroDivisionError:\n    print(\"Cannot divide by zero.\")",
+          "validation": [
+            {
+              "rule": "try:",
+              "message": "error: must have a try block."
+            },
+            {
+              "rule": "result = 10 / 0",
+              "message": "error: try block must contain 'result = 10 / 0'."
+            },
+            {
+              "rule": "except ZeroDivisionError:",
+              "message": "error: must catch ZeroDivisionError specifically."
+            },
+            {
+              "rule": "print\\([\"']Cannot divide by zero\\.[\"']\\)",
+              "message": "error: must print 'Cannot divide by zero.' in the except block."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 11: File I/O",
+      "lessons": [
+        {
+          "id": "l-files",
+          "title": "Reading and Writing Files",
+          "type": "document",
+          "content": "Python makes file operations clean and safe with the `with` statement. It automatically closes the file when the block exits, even if an error occurs. You never have to call `.close()` manually when using `with`.\n\nThe `open()` function opens a file. It takes a file path and a mode:\n- `\"r\"`: read (default). Raises `FileNotFoundError` if the file does not exist.\n- `\"w\"`: write. Creates the file if it does not exist. Overwrites if it does.\n- `\"a\"`: append. Creates if needed. Adds to the end without overwriting.\n- `\"r+\"`: read and write.\n\nReading methods:\n- `.read()`: reads the entire file as one string.\n- `.readlines()`: reads all lines into a list.\n- Iterating directly: `for line in file` reads one line at a time without loading everything into memory — efficient for large files.\n\nWriting uses `.write(string)`. It does not add newlines automatically — you must include `\\n` yourself.",
+          "examples": [
+            {
+              "label": "File Read and Write",
+              "code": "# Writing\nwith open(\"log.txt\", \"w\") as f:\n    f.write(\"System start\\n\")\n    f.write(\"Node connected\\n\")\n\n# Reading entire file\nwith open(\"log.txt\", \"r\") as f:\n    content = f.read()\n    print(content)\n\n# Reading line by line\nwith open(\"log.txt\", \"r\") as f:\n    for line in f:\n        print(line.strip())\n\n# Appending\nwith open(\"log.txt\", \"a\") as f:\n    f.write(\"Node disconnected\\n\")"
+            }
+          ]
+        },
+        {
+          "id": "l-file-questions",
+          "title": "File Operation Modes",
+          "questions": [
+            {
+              "q": "What is the main advantage of using `with open()` over `open()` alone?",
+              "options": ["It reads files faster.", "It automatically closes the file when the block exits, even if an error occurs.", "It encrypts the file.", "It creates a backup before opening."],
+              "answer": 1,
+              "explanation": "`with` is a context manager. It guarantees cleanup code runs regardless of what happens inside the block. For files, this means `.close()` is always called."
+            },
+            {
+              "q": "You open a file with mode `\"w\"` but the file already has content. What happens?",
+              "options": ["Python raises a FileExistsError.", "The new content is appended to the end.", "The file's existing content is overwritten.", "Nothing — the file is opened read-only."],
+              "answer": 2,
+              "explanation": "Mode `\"w\"` truncates the file to zero length before writing. To preserve existing content and add to the end, use mode `\"a\"` (append)."
+            },
+            {
+              "q": "Why iterate over a file line by line instead of using `.read()` for large files?",
+              "options": ["Line iteration is faster for small files.", ".read() only works on text files.", "Line iteration reads one line at a time without loading the entire file into memory.", ".read() does not return newline characters."],
+              "answer": 2,
+              "explanation": "`.read()` loads the entire file as one string in memory. For a 10GB log file, that crashes your program. Iterating line by line processes one chunk at a time."
+            },
+            {
+              "q": "You want to add new entries to an existing log file without erasing what is already there. Which mode do you use?",
+              "options": ["`\"r\"`", "`\"w\"`", "`\"a\"`", "`\"rw\"`"],
+              "answer": 2,
+              "explanation": "`\"a\"` (append mode) opens the file and positions the write cursor at the end. Existing content is preserved and new content is added after it."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-file-write",
+          "title": "Protocol: File Write",
+          "type": "challenge",
+          "prompt": "Write a with block that opens a file named `output.txt` in write mode and writes the single line `Hello, file.` followed by a newline character.",
+          "solution": "with open(\"output.txt\", \"w\") as f:\n    f.write(\"Hello, file.\\n\")",
+          "validation": [
+            {
+              "rule": "with open\\([\"']output\\.txt[\"'], [\"']w[\"']\\)",
+              "message": "error: must open 'output.txt' in write mode 'w'."
+            },
+            {
+              "rule": "f\\.write\\([\"']Hello, file\\.\\\\n[\"']\\)",
+              "message": "error: must write 'Hello, file.\\n' to the file."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 12: Classes and Object-Oriented Programming",
+      "lessons": [
+        {
+          "id": "l-classes",
+          "title": "Objects and Methods",
+          "type": "document",
+          "content": "A class is a blueprint for creating objects. An object is an instance of a class — it has its own copy of the class's data and has access to its methods.\n\nThe `__init__` method is the constructor. It runs automatically when a new object is created. The first parameter of every method must be `self` — it is the reference to the object itself. You do not pass it when calling; Python injects it automatically.\n\nAttributes store data on the object. `self.name = name` creates an attribute called `name` on the instance.\n\nThe `__str__` method defines what gets printed when you call `print()` on an object. Without it, Python prints something like `<__main__.Node object at 0x...>` which is not useful.\n\nInheritance lets one class extend another. The child class gets all the parent's methods and can override them or add new ones. `super()` calls the parent class's version of a method.",
+          "examples": [
+            {
+              "label": "Class Definition and Inheritance",
+              "code": "class Node:\n    def __init__(self, node_id, host):\n        self.node_id = node_id\n        self.host = host\n        self.active = False\n\n    def connect(self):\n        self.active = True\n\n    def __str__(self):\n        return f\"Node({self.node_id}) @ {self.host}\"\n\nclass SecureNode(Node):\n    def __init__(self, node_id, host, key):\n        super().__init__(node_id, host)\n        self.key = key\n\n    def connect(self):\n        print(f\"Authenticating with key: {self.key}\")\n        super().connect()\n\nn = Node(1, \"192.168.0.1\")\nn.connect()\nprint(n)          # Node(1) @ 192.168.0.1\nprint(n.active)   # True"
+            }
+          ]
+        },
+        {
+          "id": "l-class-questions",
+          "title": "OOP Mechanics",
+          "questions": [
+            {
+              "q": "What is the purpose of the `__init__` method?",
+              "options": ["It runs when the program starts.", "It is called automatically when a new object is created, initializing its attributes.", "It destroys the object when called.", "It converts the object to a string."],
+              "answer": 1,
+              "explanation": "`__init__` is the constructor. Every time you call `ClassName(args)`, Python creates a new object and immediately calls `__init__` with those arguments."
+            },
+            {
+              "q": "Why is `self` the first parameter of every instance method?",
+              "options": ["It is just a naming convention with no function.", "It refers to the class itself, not the instance.", "It is a reference to the specific object the method is called on, giving the method access to its attributes.", "It prevents the method from being called on subclasses."],
+              "answer": 2,
+              "explanation": "`self` is how a method accesses its own object's data. Without it, a method would have no way to read or write the instance's attributes."
+            },
+            {
+              "q": "What does the `__str__` method define?",
+              "options": ["How the object is stored in memory.", "The string returned when `print()` is called on the object.", "The object's identifier.", "How objects are compared with `==`."],
+              "answer": 1,
+              "explanation": "`__str__` is a magic method that Python calls when it needs a human-readable string representation. `print(obj)` triggers `__str__` internally."
+            },
+            {
+              "q": "What does `super().__init__(args)` do in a child class?",
+              "options": ["Creates a new parent class instance.", "Calls the parent class's `__init__` method to run the parent's setup logic.", "Deletes the parent class.", "Copies all parent attributes to the child without calling any methods."],
+              "answer": 1,
+              "explanation": "`super()` returns a proxy for the parent class. Calling `.__init__()` on it runs the parent's constructor, ensuring the parent's setup logic still executes."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-class",
+          "title": "Protocol: Class Definition",
+          "type": "challenge",
+          "prompt": "Define a class named `Packet`.\n\nIt must have an `__init__` method that takes `self`, `packet_id`, and `size` as parameters and stores them as instance attributes.\n\nIt must also have a method named `is_large` that returns `True` if `size` is greater than `1000`, and `False` otherwise.",
+          "solution": "class Packet:\n    def __init__(self, packet_id, size):\n        self.packet_id = packet_id\n        self.size = size\n\n    def is_large(self):\n        return self.size > 1000",
+          "validation": [
+            {
+              "rule": "class Packet:",
+              "message": "error: class must be named 'Packet'."
+            },
+            {
+              "rule": "def __init__\\(self, packet_id, size\\):",
+              "message": "error: __init__ must accept self, packet_id, and size."
+            },
+            {
+              "rule": "self\\.packet_id = packet_id",
+              "message": "error: must store packet_id as self.packet_id."
+            },
+            {
+              "rule": "self\\.size = size",
+              "message": "error: must store size as self.size."
+            },
+            {
+              "rule": "def is_large\\(self\\):",
+              "message": "error: missing method 'is_large'."
+            },
+            {
+              "rule": "return self\\.size > 1000",
+              "message": "error: is_large must return self.size > 1000."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 13: Modules and Imports",
+      "lessons": [
+        {
+          "id": "l-modules",
+          "title": "The Standard Library",
+          "type": "document",
+          "content": "Python ships with a large standard library — a collection of modules covering math, file paths, dates, random numbers, JSON, HTTP, and much more. You do not install these; they are included with Python.\n\nThe `import` statement loads a module. `import math` gives you access to math functions via `math.sqrt()`, `math.floor()`, etc.\n\n`from module import name` imports a specific item directly into your namespace, so you can call it without the module prefix. `from math import sqrt` lets you call `sqrt()` directly.\n\n`import module as alias` gives a module a shorter name. `import datetime as dt` is common.\n\nUseful standard library modules:\n- `math`: mathematical functions and constants.\n- `random`: random number generation.\n- `datetime`: dates and times.\n- `os`: operating system interface — file paths, environment variables.\n- `sys`: interpreter-level access — arguments, exit.\n- `json`: JSON encoding and decoding.\n- `re`: regular expressions.\n- `collections`: specialized data structures like `Counter` and `defaultdict`.",
+          "examples": [
+            {
+              "label": "Module Usage",
+              "code": "import math\nimport random\nfrom datetime import datetime\nimport json\n\nprint(math.sqrt(144))       # 12.0\nprint(math.pi)              # 3.14159...\nprint(random.randint(1, 100))\nprint(datetime.now())\n\ndata = {\"id\": 7, \"online\": True}\njson_str = json.dumps(data)\nprint(json_str)             # '{\"id\": 7, \"online\": true}'\n\nparsed = json.loads(json_str)\nprint(parsed[\"id\"])         # 7"
+            }
+          ]
+        },
+        {
+          "id": "l-module-questions",
+          "title": "Import Mechanics",
+          "questions": [
+            {
+              "q": "What is the difference between `import math` and `from math import sqrt`?",
+              "options": ["They are identical.", "`import math` loads the full module; you call `math.sqrt()`. `from math import sqrt` imports just `sqrt` so you call it directly as `sqrt()`.", "`from math import sqrt` is slower.", "`import math` only works in scripts; `from` only works in notebooks."],
+              "answer": 1,
+              "explanation": "The difference is namespace. `import math` keeps functions namespaced under `math.`. `from math import sqrt` puts `sqrt` directly in your local namespace."
+            },
+            {
+              "q": "Which module would you use to generate a random integer between 1 and 50?",
+              "options": ["`math`", "`sys`", "`random`", "`os`"],
+              "answer": 2,
+              "explanation": "The `random` module provides random number generation. `random.randint(1, 50)` returns a random integer in the range 1 to 50 inclusive."
+            },
+            {
+              "q": "What does `json.dumps(data)` do?",
+              "options": ["Writes data to a JSON file.", "Deletes a JSON object.", "Converts a Python dictionary or list into a JSON-formatted string.", "Parses a JSON string into a Python object."],
+              "answer": 2,
+              "explanation": "`json.dumps()` serializes a Python object to a JSON string. `json.loads()` does the reverse — it deserializes a JSON string into a Python object."
+            },
+            {
+              "q": "What does `import os` give you access to?",
+              "options": ["Online services and APIs.", "Operating system interfaces like file paths, environment variables, and directory operations.", "Object storage.", "Output stream utilities."],
+              "answer": 1,
+              "explanation": "The `os` module provides a portable interface to operating system functionality — creating directories, reading environment variables, manipulating file paths, and more."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-json",
+          "title": "Protocol: JSON Serialization",
+          "type": "challenge",
+          "prompt": "Import the `json` module.\n\nCreate a dictionary named `config` with keys `\"host\"` set to `\"localhost\"` and `\"port\"` set to `3000`.\n\nConvert it to a JSON string named `json_str` using `json.dumps`.",
+          "solution": "import json\nconfig = {\"host\": \"localhost\", \"port\": 3000}\njson_str = json.dumps(config)",
+          "validation": [
+            {
+              "rule": "import json",
+              "message": "error: must import the json module."
+            },
+            {
+              "rule": "config = \\{",
+              "message": "error: must create a dictionary named 'config'."
+            },
+            {
+              "rule": "json_str = json\\.dumps\\(config\\)",
+              "message": "error: must convert config to a JSON string with json.dumps(config)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 14: Comprehensions and Functional Tools",
+      "lessons": [
+        {
+          "id": "l-comprehensions",
+          "title": "Pythonic Patterns",
+          "type": "document",
+          "content": "Python has several tools for transforming and filtering data without writing explicit loops.\n\nList comprehensions you have already seen. Dictionary comprehensions work the same way: `{k: v for k, v in items}`. Set comprehensions use curly braces without a colon.\n\n`map(function, iterable)` applies a function to every item and returns an iterator. `filter(function, iterable)` keeps only items where the function returns True. Both return lazy iterators — wrap them in `list()` to materialize.\n\nLambda functions are anonymous one-liner functions. `lambda x: x * 2` is a function that doubles its input. Lambdas are useful as arguments to `map`, `filter`, and `sorted`.\n\n`sorted(iterable, key=func)` sorts any iterable by a custom key. `sorted(words, key=lambda w: len(w))` sorts a list of strings by length.\n\n`zip(a, b)` pairs elements from two iterables together. `zip([1,2,3], [\"a\",\"b\",\"c\"])` yields `(1,\"a\"), (2,\"b\"), (3,\"c\")`. Useful for iterating two lists in parallel.",
+          "examples": [
+            {
+              "label": "Functional Tools",
+              "code": "data = [1, 2, 3, 4, 5, 6]\n\n# map\ndoubled = list(map(lambda x: x * 2, data))\nprint(doubled)  # [2, 4, 6, 8, 10, 12]\n\n# filter\nevens = list(filter(lambda x: x % 2 == 0, data))\nprint(evens)    # [2, 4, 6]\n\n# dict comprehension\nsquares = {x: x**2 for x in range(1, 5)}\nprint(squares)  # {1:1, 2:4, 3:9, 4:16}\n\n# sorted with key\nwords = [\"banana\", \"kiwi\", \"fig\", \"mango\"]\nprint(sorted(words, key=lambda w: len(w)))  # ['fig', 'kiwi', 'mango', 'banana']\n\n# zip\nids = [1, 2, 3]\nhosts = [\"alpha\", \"beta\", \"gamma\"]\nfor node_id, host in zip(ids, hosts):\n    print(node_id, host)"
+            }
+          ]
+        },
+        {
+          "id": "l-functional-questions",
+          "title": "Functional Patterns",
+          "questions": [
+            {
+              "q": "What does `map(lambda x: x + 1, [10, 20, 30])` produce?",
+              "options": ["A list `[11, 21, 31]` immediately.", "An iterator that yields 11, 21, 31.", "`None`", "A single value 61."],
+              "answer": 1,
+              "explanation": "`map()` returns a lazy iterator, not a list. Wrap it in `list()` to get `[11, 21, 31]`. This laziness saves memory when working with large datasets."
+            },
+            {
+              "q": "What is a lambda function?",
+              "options": ["A function stored in a module.", "A function that runs automatically on startup.", "An anonymous, single-expression function defined inline.", "A function that only accepts keyword arguments."],
+              "answer": 2,
+              "explanation": "A lambda is a compact, unnamed function. `lambda x: x * 2` is equivalent to `def f(x): return x * 2` but without a name and restricted to a single expression."
+            },
+            {
+              "q": "What does `zip([1, 2], [\"a\", \"b\"])` yield?",
+              "options": ["`[1, 2, \"a\", \"b\"]`", "`{1: \"a\", 2: \"b\"}`", "Tuples `(1, \"a\")` and `(2, \"b\")` in sequence.", "`[[1, \"a\"], [2, \"b\"]]`"],
+              "answer": 2,
+              "explanation": "`zip()` pairs elements from multiple iterables positionally. It yields tuples `(1, \"a\")` then `(2, \"b\")`. Stops at the shortest iterable."
+            },
+            {
+              "q": "What does `{k: len(k) for k in [\"cat\", \"mouse\", \"ox\"]}` produce?",
+              "options": ["`[3, 5, 2]`", "`{\"cat\": 3, \"mouse\": 5, \"ox\": 2}`", "`{3, 5, 2}`", "`{\"cat\", \"mouse\", \"ox\"}`"],
+              "answer": 1,
+              "explanation": "A dictionary comprehension maps each key to an expression. Here each word maps to its length. Result: `{\"cat\": 3, \"mouse\": 5, \"ox\": 2}`."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-filter",
+          "title": "Protocol: Filter with Lambda",
+          "type": "challenge",
+          "prompt": "Given the list `numbers = [5, 12, 3, 18, 7, 21, 9]`, write one line that creates a new list named `large` containing only the values greater than `10`, using `filter` and a `lambda`.",
+          "solution": "large = list(filter(lambda x: x > 10, numbers))",
+          "validation": [
+            {
+              "rule": "large = list\\(",
+              "message": "error: must assign to 'large' and wrap in list()."
+            },
+            {
+              "rule": "filter\\(",
+              "message": "error: must use filter()."
+            },
+            {
+              "rule": "lambda x: x > 10",
+              "message": "error: lambda must test x > 10."
+            },
+            {
+              "rule": "numbers\\)",
+              "message": "error: must pass 'numbers' as the iterable to filter."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 15: Decorators and Generators",
+      "lessons": [
+        {
+          "id": "l-decorators-generators",
+          "title": "Advanced Function Patterns",
+          "type": "document",
+          "content": "A decorator is a function that wraps another function to extend its behavior without modifying it directly. The `@decorator_name` syntax is placed directly above the function definition. Internally, it is equivalent to `func = decorator(func)`.\n\nDecorators are used extensively in frameworks for logging, authentication, caching, and timing. Understanding them unlocks much of Python's ecosystem.\n\nA generator is a function that uses `yield` instead of `return`. Instead of computing and returning a full collection at once, it produces values one at a time and pauses between each one. The caller drives the execution forward.\n\nGenerators are memory-efficient. A function that yields 1 billion numbers uses almost no memory — it only holds one value at a time. You iterate a generator exactly like a list, but you can only go through it once.\n\n`yield from` delegates to another iterable, useful for composing generators.\n\nThe `next()` function manually advances a generator by one step.",
+          "examples": [
+            {
+              "label": "Decorators and Generators",
+              "code": "import time\n\ndef timer(func):\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time()\n        print(f\"{func.__name__} took {end - start:.4f}s\")\n        return result\n    return wrapper\n\n@timer\ndef compute(n):\n    return sum(range(n))\n\ncompute(1000000)  # prints execution time\n\n# Generator\ndef count_up(limit):\n    n = 0\n    while n < limit:\n        yield n\n        n += 1\n\nfor val in count_up(5):\n    print(val)  # 0, 1, 2, 3, 4\n\n# memory efficient — only one value exists at a time"
+            }
+          ]
+        },
+        {
+          "id": "l-advanced-questions",
+          "title": "Decorators and Generators",
+          "questions": [
+            {
+              "q": "What does a decorator fundamentally do?",
+              "options": ["It renames a function.", "It wraps a function to extend or modify its behavior without changing the original function's code.", "It converts a function into a class.", "It makes a function run asynchronously."],
+              "answer": 1,
+              "explanation": "A decorator is a higher-order function. It takes a function, wraps it in new behavior, and returns the enhanced version. The original function's code is untouched."
+            },
+            {
+              "q": "What is the key difference between `return` and `yield` in a function?",
+              "options": ["`yield` is just an alias for `return`.", "`return` exits the function permanently; `yield` pauses the function and produces a value, resuming from where it left off on the next call.", "`yield` can only be used in classes.", "`return` is used in loops; `yield` is for conditionals."],
+              "answer": 1,
+              "explanation": "`yield` turns a function into a generator. Execution pauses at each `yield`, preserving local state. The next `next()` call resumes from the exact line after `yield`."
+            },
+            {
+              "q": "What is the main practical advantage of a generator over a list?",
+              "options": ["Generators are faster for small datasets.", "Generators support indexing; lists do not.", "Generators produce values on demand, using almost no memory regardless of how large the sequence is.", "Generators can hold multiple types; lists cannot."],
+              "answer": 2,
+              "explanation": "A list with one billion integers occupies gigabytes of memory. A generator that yields one billion integers occupies almost nothing — it only holds the current value and the function's state."
+            },
+            {
+              "q": "You have a generator `g`. You call `next(g)` five times. On the sixth call, what happens if the generator is exhausted?",
+              "options": ["It returns `None`.", "It starts over from the beginning.", "It raises a `StopIteration` exception.", "It returns `0`."],
+              "answer": 2,
+              "explanation": "When a generator has no more values to yield, calling `next()` raises `StopIteration`. Python's `for` loop catches this automatically, which is how it knows when to stop."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-generator",
+          "title": "Protocol: Generator Function",
+          "type": "challenge",
+          "prompt": "Define a generator function named `squares` that takes a parameter `n` and yields the square of each integer from `1` to `n` inclusive.",
+          "solution": "def squares(n):\n    for i in range(1, n + 1):\n        yield i ** 2",
+          "validation": [
+            {
+              "rule": "def squares\\(n\\):",
+              "message": "error: function must be named 'squares' and accept parameter n."
+            },
+            {
+              "rule": "range\\(1, n \\+ 1\\)",
+              "message": "error: must iterate range(1, n + 1) to cover 1 through n inclusive."
+            },
+            {
+              "rule": "yield i \\*\\* 2",
+              "message": "error: must yield i ** 2 on each iteration."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
