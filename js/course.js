@@ -65,7 +65,7 @@ navExplorer.addEventListener("click", async (e) => {
         const res = await fetch("data/catalog.json");
         catalogData = await res.json();
     }
-    renderExplorer();
+    await renderExplorer();
     switchView("view-explorer");
 });
 
@@ -117,7 +117,7 @@ execWipeBtn.addEventListener("click", async () => {
     wipeAuthBlock.style.display = "none";
     reqWipeBtn.style.display = "inline-block";
 
-    renderExplorer();
+    await renderExplorer();
     navExplorer.click();
 });
 
@@ -129,19 +129,54 @@ async function enrollInCourse(course) {
     userData.enrolled.push(course.id);
     const userRef = window.doc(window.db, "users", currentUser.uid);
     await window.setDoc(userRef, { enrolled: userData.enrolled }, { merge: true });
-    renderExplorer();
+    await renderExplorer();
 }
 
-function renderExplorer() {
+async function getCourseProgress(courseId) {
+    const courseMeta = catalogData.find(c => c.id === courseId);
+    if (!courseMeta) return 0;
+    const courseData = await fetchCourseData(courseMeta);
+    let earned = 0;
+    let total = 0;
+
+    courseData.sections.forEach(sec => {
+        sec.lessons.forEach(lesson => {
+            const safeLessonId = lesson.id || lesson.title.replace(/\s+/g, '-').toLowerCase();
+            const hasQuestions = lesson.questions && lesson.questions.length > 0;
+            const maxPoints = (lesson.type === "challenge" || (!hasQuestions && lesson.type === "document")) ? 1 : 4;
+
+            total += maxPoints;
+            earned += Math.min(userData.scores[safeLessonId] || 0, maxPoints);
+        });
+    });
+
+    return total === 0 ? 0 : Math.round((earned / total) * 100);
+}
+
+async function renderExplorer() {
     catalogGrid.innerHTML = "";
-    catalogData.forEach(course => {
+    for (const course of catalogData) {
         const isEnrolled = userData.enrolled.includes(course.id);
         const card = document.createElement("div");
         card.className = "course-card";
+
+        let progressHtml = "";
+        if (isEnrolled) {
+            const progress = await getCourseProgress(course.id);
+            progressHtml = `
+                <div class="course-progress-wrapper">
+                    <div class="course-progress-fill progress-animator" data-target="${progress}%" style="width: 0%;"></div>
+                </div>
+                <p style="font-size: 12px; color: var(--accent); margin-top: -10px; margin-bottom: 15px; text-align: right;">${progress}% completion</p>
+            `;
+        }
+
         card.innerHTML = `
             <h3>${course.title}</h3>
             <p>${course.description}</p>
+            ${progressHtml}
         `;
+
         const actionBtn = document.createElement("button");
         if (isEnrolled) {
             actionBtn.innerText = "continue";
@@ -154,8 +189,14 @@ function renderExplorer() {
         }
         card.appendChild(actionBtn);
         catalogGrid.appendChild(card);
-    });
+    }
     renderSidebar();
+
+    setTimeout(() => {
+        document.querySelectorAll('.progress-animator').forEach(bar => {
+            bar.style.width = bar.getAttribute('data-target');
+        });
+    }, 50);
 }
 
 function renderSidebar() {
@@ -207,6 +248,16 @@ async function openSyllabus(courseMeta) {
     const contentDiv = document.getElementById("syllabus-content");
     contentDiv.innerHTML = "";
 
+    const progress = await getCourseProgress(courseMeta.id);
+    const progressHeader = document.createElement("div");
+    progressHeader.innerHTML = `
+        <div class="course-progress-wrapper" style="margin-top: 5px; margin-bottom: 15px;">
+            <div class="course-progress-fill progress-animator" data-target="${progress}%" style="width: 0%;"></div>
+        </div>
+        <p style="font-size: 14px; color: var(--accent); margin-top: -5px; margin-bottom: 30px; text-align: right;">${progress}% module completion</p>
+    `;
+    contentDiv.appendChild(progressHeader);
+
     activeCurriculumData.sections.forEach(section => {
         const sectionBlock = document.createElement("div");
         sectionBlock.className = "section-block";
@@ -245,6 +296,18 @@ async function openSyllabus(courseMeta) {
         });
         contentDiv.appendChild(sectionBlock);
     });
+
+    const masterRow = document.createElement("div");
+    masterRow.className = "master-test-row";
+    masterRow.innerHTML = `<div class="master-test-title">Curriculum Test</div><div class="master-subtitle">Full Course Exam</div>`;
+    masterRow.addEventListener("click", () => compileMasterTest());
+    contentDiv.appendChild(masterRow);
+
+    setTimeout(() => {
+        document.querySelectorAll('.progress-animator').forEach(bar => {
+            bar.style.width = bar.getAttribute('data-target');
+        });
+    }, 50);
 }
 
 function startLesson(lesson) {
@@ -317,6 +380,38 @@ async function openPracticeHub() {
     }
 }
 
+async function compileMasterTest() {
+    let allQuestions = [];
+    activeCurriculumData.sections.forEach(sec => {
+        sec.lessons.forEach(lesson => {
+            const safeLessonId = lesson.id || lesson.title.replace(/\s+/g, '-').toLowerCase();
+            if (lesson.questions) {
+                lesson.questions.forEach((q, idx) => {
+                    let qCopy = JSON.parse(JSON.stringify(q));
+                    qCopy.parentLessonId = safeLessonId;
+                    qCopy.globalId = `${safeLessonId}-q${idx}`;
+                    allQuestions.push(qCopy);
+                });
+            }
+        });
+    });
+
+    if (allQuestions.length === 0) {
+        alert("No Question Data Available.");
+        return;
+    }
+
+    allQuestions = shuffleArray(allQuestions).slice(0, 15);
+
+    startLesson({
+        id: "master-test",
+        courseId: activeCurriculumData.id,
+        title: "Curriculum Master Test",
+        type: "master_test",
+        questions: allQuestions
+    });
+}
+
 async function compileStandardPractice(courseMeta) {
     activeCurriculumData = await fetchCourseData(courseMeta);
     let allQuestions = [];
@@ -346,7 +441,7 @@ async function compileStandardPractice(courseMeta) {
     const targetQuestions = allQuestions.slice(0, 10);
 
     if (targetQuestions.length === 0) {
-        alert("Insufficient data. Complete more lessons.");
+        alert("Insufficient Data. Complete more lessons.");
         return;
     }
 
@@ -625,11 +720,38 @@ async function finishLesson() {
             userData.survivalScores[courseId] = correctAnswersCount;
             const userRef = window.doc(window.db, "users", currentUser.uid);
             await window.setDoc(userRef, { survivalScores: userData.survivalScores }, { merge: true });
-            recordText = `<br><span style='color: #ff4444; font-size: 16px; display: block; margin-top: 10px;'>New Survival Record!</span>`;
+            recordText = `<br><span style='color: #ff4444; font-size: 16px; display: block; margin-top: 10px;'>new survival record!</span>`;
         }
 
         accuracyText = `you survived ${correctAnswersCount} iterations.${recordText}`;
-        ratingText = survivalStrikes >= 3 ? "Terminated." : "Cleared.";
+        ratingText = survivalStrikes >= 3 ? "protocol terminated." : "gauntlet cleared.";
+
+    } else if (activeLessonData.type === "master_test") {
+        accuracyText = `master test complete: ${correctAnswersCount} / ${activeLessonData.questions.length}`;
+        ratingText = "Updated.";
+
+        let lessonStats = {};
+        activeLessonData.questions.forEach((q, i) => {
+            const lid = q.parentLessonId;
+            if (!lessonStats[lid]) lessonStats[lid] = { correct: 0, total: 0 };
+            lessonStats[lid].total++;
+            if (questionResults[i]) lessonStats[lid].correct++;
+        });
+
+        for (const [lid, stats] of Object.entries(lessonStats)) {
+            const percentage = stats.correct / stats.total;
+            const projectedScore = Math.round(percentage * 4);
+            const finalProjected = (projectedScore === 0 && stats.correct > 0) ? 1 : projectedScore;
+
+            const currentHighscore = userData.scores[lid] || 0;
+            if (finalProjected > currentHighscore) {
+                userData.scores[lid] = finalProjected;
+            }
+        }
+
+        const userRef = window.doc(window.db, "users", currentUser.uid);
+        await window.setDoc(userRef, { scores: userData.scores }, { merge: true });
+
     } else if (activeLessonData.type === "practice_standard") {
         accuracyText = `accuracy: ${correctAnswersCount} / ${activeLessonData.questions.length}`;
         ratingText = "Complete.";
@@ -656,7 +778,7 @@ async function finishLesson() {
         </div>
     `;
 
-    if (activeLessonData.type !== "practice_standard" && activeLessonData.type !== "practice_survival") {
+    if (activeLessonData.type !== "practice_standard" && activeLessonData.type !== "practice_survival" && activeLessonData.type !== "master_test") {
         if (!userData.scores) userData.scores = {};
         const currentHighscore = userData.scores[activeLessonData.id] || 0;
         if (finalScore > currentHighscore) {

@@ -3,7 +3,7 @@
     --surface: #f0f0f0;
     --text-main: #0a0a0a;
     --text-dim: #777777;
-    --accent: #0a0a0a;
+    --accent: #2563eb;
     --border: #0a0a0a;
     --border-light: #d0d0d0;
     --bg: #ffffff;
@@ -648,4 +648,55 @@ code {
 .strike-dot.lost {
     background-color: #ff4444;
     border-color: #ff4444;
+}
+
+.course-progress-wrapper {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    height: 6px;
+    background-color: var(--void);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.course-progress-fill {
+    height: 100%;
+    background-color: var(--accent);
+    width: 0%;
+    transition: width 0.8s ease-out;
+}
+
+.master-test-row {
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px dashed var(--accent);
+    background-color: rgba(0, 170, 255, 0.05);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.master-test-row:hover {
+    background-color: var(--accent);
+    color: var(--void);
+}
+
+.master-test-row:hover .master-subtitle {
+    color: var(--void);
+}
+
+.master-test-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+}
+
+.master-subtitle {
+    font-size: 12px;
+    color: var(--accent);
+    margin-top: 5px;
+    transition: color 0.2s ease;
 }
