@@ -103,7 +103,6 @@ body.lesson-active .sidebar {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    /* Subtle dot grid for the workspace */
     background-image: radial-gradient(var(--text-dim) 1px, transparent 1px);
     background-size: 30px 30px;
 }
@@ -122,6 +121,7 @@ body.lesson-active .workspace {
     box-shadow: 12px 12px 0px rgba(0,0,0,0.05);
     animation: fadeIn 0.3s ease;
     box-sizing: border-box;
+    height: auto;
 }
 
 @keyframes fadeIn {
@@ -293,20 +293,24 @@ body.lesson-active .workspace {
 }
 
 #view-lesson {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    height: auto;
+    display: block;
+    overflow: visible;
+    box-sizing: border-box;
 }
 
 .lesson-workspace {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     max-width: 760px;
-    margin: 0 auto;
     width: 100%;
+    margin: 0 auto;
+    justify-content: flex-start;
+    height: auto;
+    overflow: visible;
+    padding-bottom: 80px;
+    box-sizing: border-box;
 }
+
+
 
 #course-header,
 #module-content,
@@ -707,4 +711,38 @@ button:disabled {
     font-size: 14px;
     font-weight: bold;
     color: #ff4444;
+}
+
+#view-lesson {
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.lesson-workspace {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.challenge-workspace {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.mcq-option {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+#module-content {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    box-sizing: border-box;
+}
+
+#module-content pre {
+    max-width: 100%;
+    overflow-x: auto;
+    box-sizing: border-box;
 }
