@@ -2,21 +2,64 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     console.log("Js loaded");
 
+    const viewLanding = document.getElementById("view-landing");
     const authView = document.getElementById("view-auth");
     const appView = document.getElementById("app-view");
+    const viewPublicCourses = document.getElementById("view-public-courses");
+
+    const btnLandingCourses = document.getElementById("btn-landing-courses");
+    const btnLandingSignin = document.getElementById("btn-landing-signin");
+    const btnBackLanding = document.getElementById("btn-back-landing");
+    const heroCta = document.querySelector(".hero-cta");
+
     const authMagicBtn = document.getElementById("auth-magic-btn");
     const emailInput = document.getElementById("auth-email-input");
     const messageBox = document.getElementById("auth-status");
 
     console.log("DOM elements identified");
 
+    if (btnLandingSignin) {
+        btnLandingSignin.addEventListener("click", (e) => {
+            e.preventDefault();
+            viewLanding.style.display = "none";
+            authView.style.display = "block";
+        });
+    }
+
+    const openPublicCatalog = (e) => {
+        e.preventDefault();
+        viewLanding.style.display = "none";
+        viewPublicCourses.style.display = "block";
+    };
+    if (btnLandingCourses) btnLandingCourses.addEventListener("click", openPublicCatalog);
+    if (heroCta) heroCta.addEventListener("click", openPublicCatalog);
+
+    if (btnBackLanding) {
+        btnBackLanding.addEventListener("click", () => {
+            viewPublicCourses.style.display = "none";
+            viewLanding.style.display = "flex";
+        });
+    }
+
+    document.querySelectorAll(".public-signin-trigger").forEach(btn => {
+        btn.addEventListener("click", () => {
+            viewPublicCourses.style.display = "none";
+            authView.style.display = "block";
+        });
+    });
+
+
     window.firebaseAuth.onAuthStateChanged((user) => {
         if (user) {
+            viewLanding.style.display = "none";
+            viewPublicCourses.style.display = "none";
             authView.style.display = "none";
             appView.style.display = "flex";
             console.log("Welcome back, ", user.email);
         } else {
-            authView.style.display = "block";
+            viewLanding.style.display = "flex";
+            viewPublicCourses.style.display = "none";
+            authView.style.display = "none";
             appView.style.display = "none";
         }
     });

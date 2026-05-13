@@ -8,6 +8,7 @@ body {
     font-family: 'Courier New', Courier, monospace;
     color: #0a0a0a;
     background: #ffffff;
+    overflow-x: hidden;
 }
 
 .auth {
@@ -164,6 +165,12 @@ body {
     letter-spacing: 1px;
     color: #3a3a3a;
     text-transform: uppercase;
+}
+
+.sidebar::-webkit-scrollbar,
+.sidebar nav::-webkit-scrollbar,
+.sidebar ul::-webkit-scrollbar {
+    display: none !important;
 }
 
 .workspace {
