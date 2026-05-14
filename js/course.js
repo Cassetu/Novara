@@ -30,6 +30,7 @@ const authGoogleBtn = document.getElementById("auth-google-btn");
 const authMagicBtn = document.getElementById("auth-magic-btn");
 const authEmailInput = document.getElementById("auth-email-input");
 const authStatus = document.getElementById("auth-status");
+const searchBar = document.getElementById("search-bar");
 
 window.firebaseAuth.onAuthStateChanged(async (user) => {
     if (user) {
@@ -278,6 +279,7 @@ async function renderExplorer() {
         } else {
             const enrollBtn = document.createElement("button");
             enrollBtn.innerText = "Enroll";
+            enrollBtn.className = "b-enroll-btn";
             enrollBtn.style.flex = "1";
             enrollBtn.addEventListener("click", () => enrollInCourse(course));
             btnGroup.appendChild(enrollBtn);
@@ -962,5 +964,23 @@ async function finishLesson() {
             if (courseMeta) openSyllabus(courseMeta);
             else navExplorer.click();
         }
+    });
+}
+
+if (searchBar) {
+    searchBar.addEventListener("input", (e) => {
+        const searchQuery = e.target.value.toLowerCase();
+
+        const courseCards = document.querySelectorAll(".course-card");
+
+        courseCards.forEach(card => {
+            const cardText = card.innerText.toLowerCase();
+
+            if (cardText.includes(searchQuery)) {
+                card.style.display = "flex";
+            } else {
+                card.style.display = "none";
+            }
+        });
     });
 }

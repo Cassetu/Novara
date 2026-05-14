@@ -770,3 +770,16 @@ button:disabled {
     overflow-x: auto;
     box-sizing: border-box;
 }
+
+.b-enroll-btn {
+    background-color: var(--border) !important;
+    color: var(--surface) !important;
+    border: 2px solid var(--border) !important;
+    box-shadow: 4px 4px 0px var(--accent) !important;
+}
+
+.b-enroll-btn:hover {
+    background-color: var(--accent) !important;
+    color: #ffffff !important;
+    border-color: var(--border) !important;
+}
