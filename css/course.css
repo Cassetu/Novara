@@ -99,10 +99,10 @@ body.lesson-active .sidebar {
     color: var(--text-main);
     padding: 60px;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    overflow-x: hidden;
+    display: block;
+    height: 100vh;
+    box-sizing: border-box;
     background-image: radial-gradient(var(--text-dim) 1px, transparent 1px);
     background-size: 30px 30px;
 }
@@ -114,14 +114,13 @@ body.lesson-active .workspace {
 .view-layer {
     width: 100%;
     max-width: 900px;
-    margin: auto 0;
+    margin: 0 auto;
     padding: 40px;
     background: var(--surface);
     border: 4px solid var(--border);
     box-shadow: 12px 12px 0px rgba(0,0,0,0.05);
     animation: fadeIn 0.3s ease;
     box-sizing: border-box;
-    height: auto;
 }
 
 @keyframes fadeIn {
@@ -498,6 +497,31 @@ body.lesson-active .workspace {
     min-height: 20px;
     font-family: monospace;
     font-weight: bold;
+}
+
+.preview-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.preview-frame {
+    flex-grow: 1;
+    width: 100%;
+    border: 3px solid var(--border);
+    background-color: #ffffff;
+    box-shadow: 4px 4px 0px var(--border);
+    box-sizing: border-box;
+}
+
+.preview-label {
+    font-size: 10px;
+    font-family: monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    color: var(--text-dim);
 }
 
 .explanation-box {

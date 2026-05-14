@@ -163,6 +163,25 @@ execWipeBtn.addEventListener("click", async () => {
     navExplorer.click();
 });
 
+document.addEventListener('keydown', function(e) {
+    if (e.target && e.target.classList.contains('challenge-editor')) {
+
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const editor = e.target;
+            const start = editor.selectionStart;
+            const end = editor.selectionEnd;
+
+            const tabSpaces = "    ";
+
+            editor.value = editor.value.substring(0, start)
+                         + tabSpaces
+                         + editor.value.substring(end);
+            editor.selectionStart = editor.selectionEnd = start + tabSpaces.length;
+        }
+    }
+});
+
 async function enrollInCourse(course) {
     if (userData.enrolled.length >= 3) {
         alert("system limit: maximum 3 active curriculums.");
@@ -410,6 +429,8 @@ function startLesson(lesson) {
         renderDocument();
     } else if (activeLessonData.type === "challenge") {
         renderChallenge();
+    } else if (activeLessonData.type === "code_fix") {
+            renderCodeFix();
     } else {
         renderQuestion();
     }
@@ -779,6 +800,73 @@ function renderChallenge() {
                 footer.insertBefore(solBtn, document.getElementById('lesson-action-btn'));
             }
         }
+    });
+}
+
+function renderCodeFix() {
+    const lessonView = document.getElementById("view-lesson");
+
+    lessonView.innerHTML = `
+        <div class="lesson-workspace" style="max-width: 900px;">
+            <div id="course-header">
+                <span>SYS.MODULE</span>
+                <span>DIAGNOSTIC PROTOCOL</span>
+            </div>
+
+            <div id="module-content">
+                <h3>${activeLessonData.title}</h3>
+                <p>${activeLessonData.prompt}</p>
+            </div>
+
+            <div class="challenge-workspace">
+                <div class="challenge-editor-wrapper">
+                    <textarea id="fix-editor" class="challenge-editor" spellcheck="false">${activeLessonData.initialCode}</textarea>
+
+                    <div class="controls" style="justify-content: flex-start; margin-top: 15px;">
+                        <button id="run-code-btn" style="background-color: var(--border); color: var(--surface);">RUN DIAGNOSTIC ↗</button>
+                    </div>
+                </div>
+
+                <div class="preview-wrapper">
+                    <div class="preview-label">Live Output Feed</div>
+                    <iframe id="preview-frame" class="preview-frame"></iframe>
+                </div>
+            </div>
+
+            <div class="lesson-footer">
+                <button id="lesson-action-btn" disabled>SUBMIT FIX</button>
+            </div>
+        </div>
+    `;
+
+    const runBtn = document.getElementById('run-code-btn');
+    const editor = document.getElementById('fix-editor');
+    const frame = document.getElementById('preview-frame');
+    const submitBtn = document.getElementById('lesson-action-btn');
+
+    runBtn.addEventListener('click', () => {
+        const code = editor.value;
+
+        const doc = frame.contentDocument || frame.contentWindow.document;
+
+        doc.open();
+        doc.write(code);
+        doc.close();
+
+        if (activeLessonData.targetFix && code.includes(activeLessonData.targetFix)) {
+            submitBtn.disabled = false;
+            submitBtn.style.backgroundColor = "var(--accent)";
+            correctSound.currentTime = 0;
+            correctSound.play();
+        } else {
+            submitBtn.disabled = true;
+            incorrectSound.currentTime = 0;
+            incorrectSound.play();
+        }
+    });
+
+    submitBtn.addEventListener('click', () => {
+        finishLesson();
     });
 }
 
