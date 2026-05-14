@@ -20,7 +20,7 @@
         <nav class="landing-nav">
             <a href="#" id="btn-landing-courses">COURSES</a>
             <a href="#">JOURNAL</a>
-            <a href="about.html">ABOUT</a>
+            <a href="html/about.html">ABOUT</a>
             <a href="#" id="btn-landing-signin" style="margin-left: 40px;">SIGN IN</a>
         </nav>
     </header>
@@ -78,8 +78,9 @@
 </div>
 
 <div id="view-auth" class="view-layer" style="display: none; max-width: 420px; margin: 100px auto; text-align: center; font-family: 'Space Grotesk', system-ui, sans-serif; color: #0a0a0a; background: #ffffff; padding: 40px; border: 4px solid #0a0a0a; box-shadow: 12px 12px 0px #77BBA2; box-sizing: border-box;">
-
-    <img src="assets/img/favicon.png" alt="Novara" style="width: 40px; margin-bottom: 20px;">
+    <a href="index.html">
+        <img src="assets/img/favicon.png" alt="Novara" style="width: 40px; margin-bottom: 20px;">
+    </a>
 
     <h2 style="font-size: 28px; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; margin-bottom: 30px;">NOVARA SIGN-IN</h2>
 
@@ -138,7 +139,7 @@
                     <button class="filter-btn" data-filter="data">Data</button>
                     <button class="filter-btn" data-filter="design">Design</button>
                 </div>
-                <input type="text" id="search-bar" placeholder="search matrix...">
+                <input type="text" id="search-bar" placeholder="search">
             </div>
             <div id="catalog-grid" class="catalog-grid"></div>
         </div>
@@ -153,6 +154,12 @@
 
         <div id="view-settings" class="view-layer" style="display: none;">
             <h2>System Settings</h2>
+
+            <div class="settings-section" style="margin-top: 30px; margin-bottom: 50px;">
+                <p style="color: var(--text-main); margin-bottom: 20px; font-size: 14px; font-weight: bold;">If you're reading this... Have a nice day! :)</p>
+                <div style="display: flex; gap: 15px;">
+                    <button id="sign-out-btn" style="background-color: var(--surface); color: var(--text-main);">SIGN OUT ↗</button>
+                </div>
 
             <div class="danger-zone">
                 <h3>Danger Zone</h3>

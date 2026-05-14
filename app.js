@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const authMagicBtn = document.getElementById("auth-magic-btn");
     const emailInput = document.getElementById("auth-email-input");
     const messageBox = document.getElementById("auth-status");
+    const signOutBtn = document.getElementById("sign-out-btn");
 
     console.log("DOM elements identified");
 
@@ -48,6 +49,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 
+    if (signOutBtn) {
+        signOutBtn.addEventListener("click", () => {
+            window.firebaseAuth.signOut().catch((error) => {
+                console.error("Error signing out: ", error);
+            });
+        });
+    }
 
     window.firebaseAuth.onAuthStateChanged((user) => {
         if (user) {
