@@ -119,6 +119,14 @@
           ]
         },
         {
+          "id": "l-fix-variables",
+          "title": "Diagnostic: Broken Variable Declarations",
+          "type": "code_fix",
+          "prompt": "This script is supposed to display a user's name and login status on the page. It has three bugs: a const is being reassigned, a let is used for a value that never changes, and a variable is declared with var. Fix all three so the output renders correctly.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<h2 id=\"output\"></h2>\n<script>\n  const APP_NAME = 'Launchpad';\n\n  let TAX_RATE = 0.08;\n\n  var isLoggedIn = true;\n\n  APP_NAME = 'Launchpad Pro';\n\n  document.getElementById('output').textContent =\n    APP_NAME + ' | Tax: ' + TAX_RATE + ' | Logged in: ' + isLoggedIn;\n</script>\n</body>\n</html>",
+          "targetFix": "let APP_NAME"
+        },
+        {
           "id": "l-typeof",
           "title": "Checking Types with typeof",
           "type": "document",
@@ -235,6 +243,14 @@
           ]
         },
         {
+          "id": "l-fix-comparisons",
+          "title": "Diagnostic: Broken Access Gate",
+          "type": "code_fix",
+          "prompt": "This access control script is supposed to grant access only when both isAdmin AND isVerified are true, and deny it otherwise. It has two bugs: it uses = instead of === in one comparison, and || instead of &&. Fix both so 'Access granted.' appears in the output.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<p id=\"result\" style=\"font-family:monospace;font-size:18px;\"></p>\n<script>\n  const isAdmin = true;\n  const isVerified = true;\n\n  if (isAdmin = true || isVerified === true) {\n    document.getElementById('result').textContent = 'Access granted.';\n  } else {\n    document.getElementById('result').textContent = 'Access denied.';\n  }\n</script>\n</body>\n</html>",
+          "targetFix": "isAdmin === true && isVerified === true"
+        },
+        {
           "id": "l-truthy-falsy",
           "title": "Truthy and Falsy Values",
           "type": "document",
@@ -305,6 +321,14 @@
               "explanation": "continue skips the current iteration and moves on to the next one. The loop itself keeps running. break would stop the entire loop."
             }
           ]
+        },
+        {
+          "id": "l-fix-loop",
+          "title": "Diagnostic: Infinite Loop",
+          "type": "code_fix",
+          "prompt": "This script is supposed to display the numbers 1 through 5 in a list. It has two bugs: the loop condition uses > instead of <=, and the counter uses i-- instead of i++, causing it to never terminate. Fix both so the numbers render correctly.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<ul id=\"list\"></ul>\n<script>\n  const list = document.getElementById('list');\n\n  for (let i = 1; i > 5; i--) {\n    const item = document.createElement('li');\n    item.textContent = i;\n    list.appendChild(item);\n  }\n</script>\n</body>\n</html>",
+          "targetFix": "i <= 5; i++"
         },
         {
           "id": "l-chal-loop",
@@ -383,6 +407,14 @@
               "explanation": "Function declarations are hoisted to the top of their scope during compilation, so you can call them before the line where they are written. Function expressions are not hoisted and must be defined before they are called."
             }
           ]
+        },
+        {
+          "id": "l-fix-function",
+          "title": "Diagnostic: Missing Return",
+          "type": "code_fix",
+          "prompt": "This page should display the area of a rectangle (width 8, height 5 = 40). The function calcArea is defined but has two bugs: it uses = instead of * for multiplication, and the return keyword is missing entirely. Fix both so '40' appears on the page.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<p id=\"output\" style=\"font-family:monospace;font-size:24px;\"></p>\n<script>\n  function calcArea(width, height) {\n    const area = width = height;\n    area;\n  }\n\n  document.getElementById('output').textContent = calcArea(8, 5);\n</script>\n</body>\n</html>",
+          "targetFix": "return width * height"
         },
         {
           "id": "l-parameters",
@@ -517,6 +549,14 @@
           ]
         },
         {
+          "id": "l-fix-arrays",
+          "title": "Diagnostic: Off-By-One Index",
+          "type": "code_fix",
+          "prompt": "This script should display the first and last fruit from the array on the page. Both reads use the wrong index — the first item is fetched with index 1, and the last item is fetched with index 3 (one past the end). Fix both index values so 'apple' and 'grape' appear.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<p id=\"first\" style=\"font-family:monospace;\"></p>\n<p id=\"last\" style=\"font-family:monospace;\"></p>\n<script>\n  const fruits = ['apple', 'banana', 'mango', 'grape'];\n\n  document.getElementById('first').textContent = 'First: ' + fruits[1];\n  document.getElementById('last').textContent  = 'Last: '  + fruits[4];\n</script>\n</body>\n</html>",
+          "targetFix": "fruits[0]"
+        },
+        {
           "id": "l-objects",
           "title": "Objects",
           "type": "document",
@@ -555,6 +595,14 @@
               "explanation": "Object.keys(obj) returns an array of all the property names (keys) in an object. Object.values() returns the values. Object.entries() returns both as nested arrays."
             }
           ]
+        },
+        {
+          "id": "l-fix-objects",
+          "title": "Diagnostic: Wrong Property Access",
+          "type": "code_fix",
+          "prompt": "This profile card should display a user's name and role. There are two bugs: the name is accessed with the wrong key ('username' instead of 'name'), and the role is accessed with arrow notation (user->role) which is not valid JavaScript. Fix both so 'Jordan — admin' appears.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<p id=\"card\" style=\"font-family:monospace;font-size:18px;\"></p>\n<script>\n  const user = {\n    name: 'Jordan',\n    role: 'admin'\n  };\n\n  const display = user.username + ' — ' + user->role;\n  document.getElementById('card').textContent = display;\n</script>\n</body>\n</html>",
+          "targetFix": "user.name + ' — ' + user.role"
         },
         {
           "id": "l-destructuring",
@@ -632,6 +680,14 @@
           ]
         },
         {
+          "id": "l-fix-dom-select",
+          "title": "Diagnostic: Broken Selector",
+          "type": "code_fix",
+          "prompt": "This page should update a heading and a paragraph when the script runs. It has two bugs: the heading is selected by tag name 'h2' instead of 'h1', and the paragraph is selected with a dot prefix on its ID ('#.info' instead of '#info'). Fix both selectors so the correct text appears.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n  <h1>Old Heading</h1>\n  <p id=\"info\">Old paragraph.</p>\n<script>\n  document.querySelector('h2').textContent = 'System Online';\n  document.querySelector('#.info').textContent = 'All diagnostics passed.';\n</script>\n</body>\n</html>",
+          "targetFix": "querySelector('#info')"
+        },
+        {
           "id": "l-events",
           "title": "Event Listeners",
           "type": "document",
@@ -672,6 +728,14 @@
           ]
         },
         {
+          "id": "l-fix-events",
+          "title": "Diagnostic: Dead Button",
+          "type": "code_fix",
+          "prompt": "This page has a counter button that should increment a number each time it is clicked. It has two bugs: the event type is 'hover' instead of 'click', and the count is updated with count = 0 (reset) instead of count + 1 (increment). Fix both so the counter works correctly.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n  <button id=\"btn\">Click me</button>\n  <p id=\"display\" style=\"font-family:monospace;font-size:20px;\">Count: 0</p>\n<script>\n  let count = 0;\n  const btn = document.querySelector('#btn');\n  const display = document.querySelector('#display');\n\n  btn.addEventListener('hover', function() {\n    count = 0;\n    display.textContent = 'Count: ' + count;\n  });\n</script>\n</body>\n</html>",
+          "targetFix": "addEventListener('click'"
+        },
+        {
           "id": "l-dom-manipulation",
           "title": "Modifying the DOM",
           "type": "document",
@@ -704,6 +768,14 @@
               "explanation": "classList.toggle() is convenient for features like opening and closing menus. It adds the class if the element does not have it, and removes it if the element already has it."
             }
           ]
+        },
+        {
+          "id": "l-fix-dom-create",
+          "title": "Diagnostic: List Not Rendering",
+          "type": "code_fix",
+          "prompt": "This script should build a to-do list by creating li elements and appending them to a ul. It has two bugs: it uses document.createNode('li') instead of document.createElement('li'), and it calls list.push(item) instead of list.appendChild(item). Fix both so all three tasks appear.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<ul id=\"todo\"></ul>\n<script>\n  const tasks = ['Buy groceries', 'Walk the dog', 'Write tests'];\n  const list = document.querySelector('#todo');\n\n  tasks.forEach(task => {\n    const item = document.createNode('li');\n    item.textContent = task;\n    list.push(item);\n  });\n</script>\n</body>\n</html>",
+          "targetFix": "document.createElement('li')"
         }
       ]
     },
@@ -779,6 +851,14 @@
               "explanation": "A rejected Promise inside a try block causes execution to jump immediately to the catch block, where you can handle the error gracefully."
             }
           ]
+        },
+        {
+          "id": "l-fix-async",
+          "title": "Diagnostic: Broken Async Loader",
+          "type": "code_fix",
+          "prompt": "This script fetches a simulated user object using a Promise and is supposed to display the user's name. It has two bugs: the function is missing the async keyword, and the result of the awaited Promise is never stored in a variable — it just calls await without capturing the value. Fix both so 'Loaded: Morgan' appears.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<p id=\"out\" style=\"font-family:monospace;font-size:18px;\">Loading...</p>\n<script>\n  function fakeRequest() {\n    return new Promise(resolve => {\n      setTimeout(() => resolve({ name: 'Morgan' }), 300);\n    });\n  }\n\n  function loadUser() {\n    await fakeRequest();\n    document.getElementById('out').textContent = 'Loaded: ' + user.name;\n  }\n\n  loadUser();\n</script>\n</body>\n</html>",
+          "targetFix": "async function loadUser"
         },
         {
           "id": "l-chal-async",
@@ -879,6 +959,14 @@
               "explanation": "A JSON string is just text. You must call JSON.parse() on it to convert it into a JavaScript object before you can access its properties."
             }
           ]
+        },
+        {
+          "id": "l-fix-json",
+          "title": "Diagnostic: Unformatted Data",
+          "type": "code_fix",
+          "prompt": "This page receives a JSON string from a server and should display the user's name and city. It has two bugs: it tries to access properties directly on the raw JSON string without parsing it first, and it uses JSON.stringify() on the already-parsed object when displaying it instead of accessing the properties. Fix both so 'Alex from Seattle' appears.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<p id=\"out\" style=\"font-family:monospace;font-size:18px;\"></p>\n<script>\n  const serverResponse = '{\"name\":\"Alex\",\"city\":\"Seattle\"}';\n\n  const name = serverResponse.name;\n  const city = serverResponse.city;\n\n  const user = JSON.parse(serverResponse);\n  document.getElementById('out').textContent = JSON.stringify(user) + ' from ' + JSON.stringify(user);\n</script>\n</body>\n</html>",
+          "targetFix": "user.name + ' from ' + user.city"
         }
       ]
     },
@@ -950,6 +1038,14 @@
               "explanation": "filter() always returns an array. If no items pass the test, it returns an empty array. It never returns null or undefined."
             }
           ]
+        },
+        {
+          "id": "l-fix-map-filter",
+          "title": "Diagnostic: Wrong Transformation",
+          "type": "code_fix",
+          "prompt": "This script should display only the names of users who are active, in a list. It has two bugs: map() and filter() are used in the wrong order (it maps first, which drops the active property before filter can see it), and the map callback returns the entire user object instead of user.name. Fix both so only 'Alex' and 'Morgan' appear.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<ul id=\"list\"></ul>\n<script>\n  const users = [\n    { name: 'Alex', active: true },\n    { name: 'Sam', active: false },\n    { name: 'Morgan', active: true }\n  ];\n\n  const names = users\n    .map(user => user)\n    .filter(user => user.active);\n\n  const list = document.querySelector('#list');\n  names.forEach(name => {\n    const li = document.createElement('li');\n    li.textContent = name;\n    list.appendChild(li);\n  });\n</script>\n</body>\n</html>",
+          "targetFix": ".filter(user => user.active).map(user => user.name)"
         },
         {
           "id": "l-reduce",
@@ -1049,6 +1145,14 @@
           ]
         },
         {
+          "id": "l-fix-class",
+          "title": "Diagnostic: Broken Blueprint",
+          "type": "code_fix",
+          "prompt": "This page creates a Product instance and should display its name and price. The class has two bugs: the constructor assigns name to this.title (wrong property name), and the display method references this.cost instead of this.price. Fix both so 'Keyboard — $79' appears.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<p id=\"out\" style=\"font-family:monospace;font-size:18px;\"></p>\n<script>\n  class Product {\n    constructor(name, price) {\n      this.title = name;\n      this.price = price;\n    }\n\n    display() {\n      return this.title + ' — $' + this.cost;\n    }\n  }\n\n  const p = new Product('Keyboard', 79);\n  document.getElementById('out').textContent = p.display();\n</script>\n</body>\n</html>",
+          "targetFix": "this.name = name"
+        },
+        {
           "id": "l-inheritance",
           "title": "Inheritance",
           "type": "document",
@@ -1073,6 +1177,14 @@
               "explanation": "This is called method overriding. When a child class defines a method with the same name as the parent, calling it on a child instance runs the child's version, not the parent's."
             }
           ]
+        },
+        {
+          "id": "l-fix-inheritance",
+          "title": "Diagnostic: Missing super()",
+          "type": "code_fix",
+          "prompt": "This page creates an AdminUser that extends User and should display the admin's greeting. The child class has two bugs: super() is never called in the constructor, and the role property is assigned before super() would appear, which means this is accessed before the parent is initialized. Fix the constructor so 'Hello, I am Dana — role: admin' appears.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<p id=\"out\" style=\"font-family:monospace;font-size:18px;\"></p>\n<script>\n  class User {\n    constructor(name) {\n      this.name = name;\n    }\n    greet() {\n      return 'Hello, I am ' + this.name;\n    }\n  }\n\n  class AdminUser extends User {\n    constructor(name, role) {\n      this.role = role;\n    }\n    describe() {\n      return this.greet() + ' — role: ' + this.role;\n    }\n  }\n\n  const admin = new AdminUser('Dana', 'admin');\n  document.getElementById('out').textContent = admin.describe();\n</script>\n</body>\n</html>",
+          "targetFix": "super(name)"
         }
       ]
     },
@@ -1126,6 +1238,14 @@
               "explanation": "error.message is a string describing what went wrong. It is the string you pass into new Error('...'), or the default message JavaScript generates for built-in errors like TypeError."
             }
           ]
+        },
+        {
+          "id": "l-fix-try-catch",
+          "title": "Diagnostic: Unguarded Crash",
+          "type": "code_fix",
+          "prompt": "This script tries to parse a broken JSON string and display the result. Because the JSON is malformed, JSON.parse() will throw a SyntaxError, crashing the page. There is also no catch block to handle the failure gracefully. Wrap the parse call in a try/catch so 'Parse failed: Unexpected token' appears instead of crashing.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<body>\n<p id=\"out\" style=\"font-family:monospace;font-size:16px;\">Waiting...</p>\n<script>\n  const broken = '{name: Jordan, age: 24}';\n\n  const data = JSON.parse(broken);\n  document.getElementById('out').textContent = data.name;\n</script>\n</body>\n</html>",
+          "targetFix": "catch"
         },
         {
           "id": "l-custom-errors",
