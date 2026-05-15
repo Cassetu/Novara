@@ -783,3 +783,18 @@ button:disabled {
     color: #ffffff !important;
     border-color: var(--border) !important;
 }
+
+.back-btn {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 999;
+    background: var(--surface);
+    color: var(--text-main);
+    border: 2px solid var(--border);
+    padding: 10px 16px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    box-shadow: 4px 4px 0px var(--border);
+    cursor: pointer;
+}

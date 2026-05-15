@@ -427,6 +427,24 @@ function startLesson(lesson) {
     document.body.classList.add("lesson-active");
     switchView("view-lesson");
 
+    const existingBack = document.getElementById("lesson-back-btn");
+    if (existingBack) existingBack.remove();
+
+    const backBtn = document.createElement("button");
+    backBtn.id = "lesson-back-btn";
+    backBtn.innerText = "Return";
+    backBtn.className = "back-btn";
+    document.body.appendChild(backBtn);
+
+    backBtn.addEventListener("click", () => {
+        if (!confirm("Return to curriculum? Your current progress on this lesson will not be saved.")) return;
+        backBtn.remove();
+        document.body.classList.remove("lesson-active");
+        const courseMeta = catalogData.find(c => c.id === activeCurriculumData.id);
+        if (courseMeta) openSyllabus(courseMeta);
+        else navExplorer.click();
+    });
+
     if (activeLessonData.type === "document" || activeLessonData.content) {
         renderDocument();
     } else if (activeLessonData.type === "challenge") {
@@ -879,6 +897,9 @@ async function finishLesson() {
     let ratingText = "";
 
     const hasQuestions = activeLessonData.questions && activeLessonData.questions.length > 0;
+    const lessonBackBtn = document.getElementById("lesson-back-btn");
+
+    if (lessonBackBtn) lessonBackBtn.remove();
 
     if (activeLessonData.type === "practice_survival") {
         const courseId = activeLessonData.courseId || activeCurriculumData.id;
