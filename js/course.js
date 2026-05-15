@@ -215,7 +215,7 @@ async function getCourseProgress(courseId) {
         sec.lessons.forEach(lesson => {
             const safeLessonId = lesson.id || lesson.title.replace(/\s+/g, '-').toLowerCase();
             const hasQuestions = lesson.questions && lesson.questions.length > 0;
-            const maxPoints = (lesson.type === "challenge" || (!hasQuestions && lesson.type === "document")) ? 1 : 4;
+            const maxPoints = (lesson.type === "challenge" || lesson.type === "code_fix" || (!hasQuestions && lesson.type === "document")) ? 1 : 4;
 
             total += maxPoints;
             earned += Math.min(userData.scores[safeLessonId] || 0, maxPoints);
@@ -379,7 +379,7 @@ async function openSyllabus(courseMeta) {
             const hasQuestions = lesson.questions && lesson.questions.length > 0;
             let dotsHtml = '';
 
-            if (lesson.type === "challenge" || (!hasQuestions && lesson.type === "document")) {
+            if (lesson.type === "challenge" || lesson.type === "code_fix" || (!hasQuestions && lesson.type === "document")) {
                 dotsHtml = `<div class="rating-dot ${score >= 1 ? 'filled' : ''}"></div>`;
             } else {
                 dotsHtml = `
@@ -822,7 +822,7 @@ function renderCodeFix() {
 
             <div class="challenge-workspace">
                 <div class="challenge-editor-wrapper">
-                    <textarea id="fix-editor" class="challenge-editor" spellcheck="false">${activeLessonData.initialCode}</textarea>
+                    <textarea id="fix-editor" class="challenge-editor" spellcheck="false"></textarea>
 
                     <div class="controls" style="justify-content: flex-start; margin-top: 15px;">
                         <button id="run-code-btn" style="background-color: var(--border); color: var(--surface);">RUN DIAGNOSTIC ↗</button>
@@ -845,6 +845,7 @@ function renderCodeFix() {
     const editor = document.getElementById('fix-editor');
     const frame = document.getElementById('preview-frame');
     const submitBtn = document.getElementById('lesson-action-btn');
+    editor.value = activeLessonData.initialCode;
 
     runBtn.addEventListener('click', () => {
         const code = editor.value;
@@ -923,7 +924,7 @@ async function finishLesson() {
     } else if (activeLessonData.type === "practice_standard") {
         accuracyText = `accuracy: ${correctAnswersCount} / ${activeLessonData.questions.length}`;
         ratingText = "Complete.";
-    } else if (activeLessonData.type === "challenge" || (!hasQuestions && activeLessonData.type === "document")) {
+    } else if (activeLessonData.type === "challenge" || activeLessonData.type === "code_fix" || (!hasQuestions && activeLessonData.type === "document")) {
         finalScore = 1;
         accuracyText = activeLessonData.type === "challenge" ? "Passed" : "Complete";
         ratingText = "Rating: 1 / 1";
