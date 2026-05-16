@@ -7,9 +7,7 @@
     --text-dim: #666666;
     --accent: #77BBA2;
     --border: #0a0a0a;
-    --border-light: #0a0a0a;
     --bg: #ffffff;
-    --blue: #77BBA2;
 }
 
 body, .app {
@@ -42,12 +40,13 @@ h1, h2, h3 {
     flex-direction: column;
     box-sizing: border-box;
     z-index: 10;
-    transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
     flex-shrink: 0;
-
     overflow-x: hidden;
     overflow-y: auto;
     scrollbar-width: none;
+    transition: width 0.4s cubic-bezier(0.77, 0, 0.175, 1),
+                padding 0.4s cubic-bezier(0.77, 0, 0.175, 1),
+                border 0.4s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 .sidebar::-webkit-scrollbar {
@@ -109,10 +108,6 @@ body.lesson-active .sidebar {
     background-size: 30px 30px;
 }
 
-body.lesson-active .workspace {
-    padding-left: 60px;
-}
-
 .view-layer {
     width: 100%;
     max-width: 900px;
@@ -127,7 +122,7 @@ body.lesson-active .workspace {
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 .explorer-header {
@@ -137,13 +132,6 @@ body.lesson-active .workspace {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-}
-
-.explorer-header h1 {
-    font-size: 11px;
-    letter-spacing: 4px;
-    color: var(--text-dim);
-    margin-bottom: 20px;
 }
 
 .category-filters {
@@ -170,7 +158,7 @@ body.lesson-active .workspace {
 
 .filter-btn:active {
     transform: translate(2px, 2px);
-    box-shadow: 0px 0px 0px transparent;
+    box-shadow: none;
 }
 
 .filter-btn.active {
@@ -284,7 +272,6 @@ body.lesson-active .workspace {
     width: 8px;
     height: 8px;
     border: 2px solid var(--border);
-    border-radius: 0;
     background-color: transparent;
 }
 
@@ -298,29 +285,22 @@ body.lesson-active .workspace {
     display: block;
     overflow: visible;
     box-sizing: border-box;
+    max-width: 100%;
 }
 
 .lesson-workspace {
     max-width: 760px;
     width: 100%;
     margin: 0 auto;
-    justify-content: flex-start;
     height: auto;
     overflow: visible;
     padding-bottom: 80px;
     box-sizing: border-box;
 }
 
-
-
-#course-header,
-#module-content,
-.controls {
+#course-header {
     width: 100%;
     background-color: var(--bg);
-}
-
-#course-header {
     margin-bottom: 32px;
     padding-bottom: 18px;
     border-bottom: 4px solid var(--border);
@@ -336,6 +316,10 @@ body.lesson-active .workspace {
     font-size: 16px;
     line-height: 1.8;
     margin-bottom: 40px;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    box-sizing: border-box;
 }
 
 #module-content p {
@@ -363,6 +347,8 @@ body.lesson-active .workspace {
     line-height: 1.8;
     margin: 20px 0;
     box-shadow: 6px 6px 0px var(--accent);
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 #module-content pre code {
@@ -391,6 +377,7 @@ body.lesson-active .workspace {
     white-space: normal;
     overflow-wrap: break-word;
     word-wrap: break-word;
+    max-width: 100%;
 }
 
 .mcq-option:hover:not(.locked) {
@@ -401,7 +388,7 @@ body.lesson-active .workspace {
 
 .mcq-option:active:not(.locked) {
     transform: translate(4px, 4px);
-    box-shadow: 0px 0px 0px transparent;
+    box-shadow: none;
 }
 
 .mcq-option.locked {
@@ -413,43 +400,12 @@ body.lesson-active .workspace {
 
 .mcq-option.reveal-correct {
     border-color: var(--accent);
-    color: var(--void);
     background-color: rgba(119, 187, 162, 0.2);
 }
 
 .mcq-option.reveal-incorrect {
     border-color: #ff4444;
-    color: var(--void);
     background-color: rgba(255, 68, 68, 0.1);
-}
-
-.notepad-container {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    height: 50%;
-    border-top: 4px solid var(--border);
-    padding-top: 20px;
-}
-
-.notepad-container h3 {
-    margin-bottom: 12px;
-    font-size: 12px;
-}
-
-#notepad {
-    flex-grow: 1;
-    resize: none;
-    padding: 20px;
-    background-color: var(--text-main);
-    color: var(--surface);
-    border: 4px solid var(--border);
-    font-family: monospace;
-    font-size: 14px;
-    outline: none;
-    line-height: 1.8;
-    min-height: 140px;
-    box-shadow: 6px 6px 0px var(--accent);
 }
 
 .challenge-workspace {
@@ -458,6 +414,8 @@ body.lesson-active .workspace {
     gap: 20px;
     height: 400px;
     margin-top: 24px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .challenge-prompt {
@@ -559,7 +517,7 @@ button {
 
 button:active:not(:disabled) {
     transform: translate(4px, 4px) !important;
-    box-shadow: 0px 0px 0px transparent !important;
+    box-shadow: none !important;
 }
 
 button:disabled {
@@ -571,7 +529,6 @@ button:disabled {
 
 #lesson-action-btn,
 #lesson-read-btn,
-.course-card button:first-of-type,
 .controls button {
     background-color: var(--accent);
     color: #ffffff;
@@ -583,9 +540,11 @@ button:disabled {
     justify-content: flex-end;
     gap: 12px;
     margin-top: 24px;
+    width: 100%;
+    background-color: var(--bg);
 }
 
-.danger-btn, .course-card button:last-of-type {
+.danger-btn {
     color: #ff4444;
     border-color: var(--border);
 }
@@ -614,24 +573,12 @@ button:disabled {
     width: 12px;
     height: 12px;
     border: 2px solid var(--border);
-    border-radius: 0;
     background-color: var(--surface);
 }
 
-.p-dot.active {
-    border-color: var(--accent);
-    background-color: transparent;
-}
-
-.p-dot.correct {
-    background-color: var(--accent);
-    border-color: var(--accent);
-}
-
-.p-dot.incorrect {
-    background-color: var(--border);
-    border-color: var(--border);
-}
+.p-dot.active    { border-color: var(--accent); background-color: transparent; }
+.p-dot.correct   { background-color: var(--accent); border-color: var(--accent); }
+.p-dot.incorrect { background-color: var(--border); border-color: var(--border); }
 
 .course-progress-wrapper {
     margin-top: 15px;
@@ -640,7 +587,6 @@ button:disabled {
     height: 12px;
     background-color: var(--surface);
     border: 2px solid var(--border);
-    position: relative;
 }
 
 .course-progress-fill {
@@ -666,7 +612,6 @@ button:disabled {
     height: 14px;
     background-color: transparent;
     border: 2px solid var(--border);
-    border-radius: 0;
 }
 
 .strike-dot.lost {
@@ -685,15 +630,8 @@ button:disabled {
     transition: transform 0.1s, box-shadow 0.1s;
 }
 
-.master-test-row:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 4px 4px 0px var(--accent);
-}
-
-.master-test-row:active {
-    transform: translate(6px, 6px);
-    box-shadow: 0px 0px 0px transparent;
-}
+.master-test-row:hover  { transform: translate(2px, 2px); box-shadow: 4px 4px 0px var(--accent); }
+.master-test-row:active { transform: translate(6px, 6px); box-shadow: none; }
 
 .master-test-title {
     font-size: 20px;
@@ -736,41 +674,6 @@ button:disabled {
     margin-bottom: 20px;
 }
 
-#wipe-status {
-    margin-top: 15px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #ff4444;
-}
-
-#view-lesson {
-    overflow: hidden;
-    box-sizing: border-box;
-}
-
-.challenge-workspace {
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-.mcq-option {
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-#module-content {
-    max-width: 100%;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    box-sizing: border-box;
-}
-
-#module-content pre {
-    max-width: 100%;
-    overflow-x: auto;
-    box-sizing: border-box;
-}
-
 .b-enroll-btn {
     background-color: var(--border) !important;
     color: var(--surface) !important;
@@ -781,20 +684,4 @@ button:disabled {
 .b-enroll-btn:hover {
     background-color: var(--accent) !important;
     color: #ffffff !important;
-    border-color: var(--border) !important;
-}
-
-.back-btn {
-    position: fixed;
-    top: 24px;
-    left: 24px;
-    z-index: 999;
-    background: var(--surface);
-    color: var(--text-main);
-    border: 2px solid var(--border);
-    padding: 10px 16px;
-    font-size: 12px;
-    letter-spacing: 2px;
-    box-shadow: 4px 4px 0px var(--border);
-    cursor: pointer;
 }

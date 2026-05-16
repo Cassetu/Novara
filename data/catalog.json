@@ -2,35 +2,35 @@
   {
     "id": "js-core",
     "title": "Javascript",
-    "category": "engineering",
+    "category": "programming",
     "description": "The fundamental matrix of the web. variables, loops, and logic.",
     "file": "data/js-core.json"
   },
   {
     "id": "py-core",
     "title": "Python",
-    "category": "data",
+    "category": "programming",
     "description": "Data structures and scripting algorithms.*Generated*",
     "file": "data/py-core.json"
   },
   {
     "id": "css-arch",
     "title": "CSS Architecture",
-    "category": "design",
+    "category": "programming",
     "description": "Design patterns and layout engines.*Generated*",
     "file": "data/css-arch.json"
   },
   {
     "id": "html-core",
     "title": "HTML Architecture",
-    "category": "design",
+    "category": "programming",
     "description": "Nodes, semantic integrity, and data ingestion.",
     "file": "data/html-core.json"
   },
   {
     "id": "cpp-core",
     "title": "C++",
-    "category": "engineering",
+    "category": "programming",
     "description": "Pointers, memory, and compiled logic.*Generated*",
     "file": "data/cpp-core.json"
   },
@@ -40,5 +40,12 @@
     "category": "math",
     "description": "Variables, equations, and functions. *Generated*",
     "file": "data/algebra1-core.json"
+  },
+  {
+    "id": "godot-core",
+    "title": "Godot 4: Game Development",
+    "category": "gamedev",
+    "description": "Nodes, scenes, GDScript, signals, physics, UI, and game architecture. Build real games from the ground up in Godot 4.",
+    "file": "data/godot-core.json"
   }
 ]

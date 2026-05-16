@@ -1,0 +1,253 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&display=swap');
+
+.gd-workspace {
+    max-width: 100%;
+    padding-bottom: 40px;
+}
+
+.gd-prompt {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    box-shadow: 4px 4px 0px var(--border);
+}
+
+.gd-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 16px;
+    height: 480px;
+}
+
+.gd-panel {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid var(--border);
+    background: var(--surface);
+    box-shadow: 4px 4px 0px var(--border);
+    overflow: hidden;
+}
+
+.gd-panel-header {
+    background: var(--border);
+    color: var(--surface);
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.gd-add-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.gd-add-row select {
+    font-family: monospace;
+    font-size: 11px;
+    padding: 4px 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-main);
+    outline: none;
+    cursor: pointer;
+}
+
+.gd-add-row button {
+    font-size: 10px;
+    padding: 4px 8px;
+    box-shadow: 2px 2px 0px var(--accent);
+    background: var(--surface);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+}
+
+.gd-tree-hint {
+    font-size: 10px;
+    font-family: monospace;
+    color: var(--text-dim);
+    padding: 6px 14px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.gd-tree-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 8px 0;
+    scrollbar-width: thin;
+}
+
+.gd-node {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    cursor: grab;
+    border-left: 3px solid transparent;
+    transition: background 0.1s, border-color 0.1s;
+    user-select: none;
+}
+
+.gd-node:hover {
+    background: #f0f0f0;
+    border-left-color: var(--accent);
+}
+
+.gd-node.dragging {
+    opacity: 0.4;
+}
+
+.gd-node.drag-over {
+    background: rgba(119, 187, 162, 0.15);
+    border-left-color: var(--accent);
+}
+
+.gd-node-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+    color: var(--accent);
+}
+
+.gd-node-name {
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--text-main);
+    outline: none;
+    border-bottom: 1px solid transparent;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gd-node-name:focus {
+    border-bottom-color: var(--accent);
+    white-space: normal;
+    overflow: visible;
+}
+
+.gd-node-type {
+    font-family: monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+}
+
+.gd-del-btn {
+    font-size: 10px;
+    padding: 2px 6px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-dim);
+    box-shadow: none;
+    opacity: 0;
+    transition: opacity 0.1s;
+    flex-shrink: 0;
+}
+
+.gd-node:hover .gd-del-btn {
+    opacity: 1;
+    border-color: #ff4444;
+    color: #ff4444;
+}
+
+.gd-children {
+    border-left: 2px solid #e0e0e0;
+    margin-left: 26px;
+}
+
+.gd-script-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.gd-editor-wrap {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.gd-line-numbers {
+    background: #1a1a1a;
+    color: #555;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 14px 10px;
+    text-align: right;
+    user-select: none;
+    min-width: 40px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    white-space: pre;
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+.gd-script-editor {
+    flex: 1;
+    background: var(--void);
+    color: var(--surface);
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 14px;
+    border: none;
+    outline: none;
+    resize: none;
+    white-space: pre;
+    overflow-x: auto;
+    overflow-y: auto;
+    overflow-wrap: normal;
+    word-wrap: normal;
+}
+
+.gd-console-row {
+    margin-top: 14px;
+    border: 3px solid var(--border);
+    box-shadow: 4px 4px 0px var(--border);
+}
+
+.gd-console {
+    background: var(--void);
+    color: #aaaaaa;
+    font-family: monospace;
+    font-size: 13px;
+    padding: 14px;
+    min-height: 70px;
+    max-height: 120px;
+    overflow-y: auto;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+#gd-run-btn {
+    background: var(--border);
+    color: var(--surface);
+    box-shadow: 4px 4px 0px var(--accent);
+}
+
+#gd-submit-btn {
+    opacity: 0.5;
+}
+
+#gd-submit-btn:not(:disabled) {
+    opacity: 1;
+}

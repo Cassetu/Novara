@@ -1,36 +1,37 @@
+import { parseCode, shuffleArray } from "./utils/parse.js";
+import { renderDocument } from "./renderers/document.js";
+import { renderQuestion, initQuestionState, getQuestionStats } from "./renderers/question.js";
+import { renderChallenge } from "./renderers/challenge.js";
+import { renderCodeFix } from "./renderers/codeFix.js";
+import { renderGodotScene } from "./renderers/godotScene.js";
+
 let currentUser = null;
 let userData = { enrolled: [], scores: {}, analytics: {}, survivalScores: {} };
 let catalogData = [];
 let activeCurriculumData = null;
 let activeLessonData = null;
-let currentQuestionIndex = 0;
-let correctAnswersCount = 0;
-let isQuestionSubmitted = false;
-let questionResults = [];
-let survivalStrikes = 0;
-
-const correctSound = new Audio("assets/sfx/correct.mp3");
-const incorrectSound = new Audio("assets/sfx/incorrect.mp3");
 
 const viewExplorer = document.getElementById("view-explorer");
 const viewSyllabus = document.getElementById("view-syllabus");
 const viewLesson = document.getElementById("view-lesson");
 const viewSettings = document.getElementById("view-settings");
 const viewPractice = document.getElementById("view-practice");
-
 const catalogGrid = document.getElementById("catalog-grid");
 const enrolledList = document.getElementById("enrolled-list");
 const practiceContent = document.getElementById("practice-content");
-
 const navExplorer = document.getElementById("nav-explorer");
 const navSettings = document.getElementById("nav-settings");
 const navPractice = document.getElementById("nav-practice");
-const viewAuth = document.getElementById("view-auth");
 const authGoogleBtn = document.getElementById("auth-google-btn");
 const authMagicBtn = document.getElementById("auth-magic-btn");
 const authEmailInput = document.getElementById("auth-email-input");
 const authStatus = document.getElementById("auth-status");
 const searchBar = document.getElementById("search-bar");
+const reqWipeBtn = document.getElementById("request-wipe-btn");
+const wipeAuthBlock = document.getElementById("wipe-auth-block");
+const wipeConfirmInput = document.getElementById("wipe-confirm-input");
+const execWipeBtn = document.getElementById("execute-wipe-btn");
+
 
 window.firebaseAuth.onAuthStateChanged(async (user) => {
     if (user) {
@@ -42,10 +43,9 @@ window.firebaseAuth.onAuthStateChanged(async (user) => {
 
 authGoogleBtn.addEventListener("click", async () => {
     try {
-        const provider = new window.GoogleAuthProvider();
-        await window.signInWithPopup(window.firebaseAuth, provider);
-    } catch (error) {
-        authStatus.innerText = "Google Auth Flopped!: " + error.message;
+        await window.signInWithPopup(window.firebaseAuth, new window.GoogleAuthProvider());
+    } catch (e) {
+        authStatus.innerText = "Google sign-in failed: " + e.message;
         authStatus.style.color = "#ff4444";
     }
 });
@@ -53,58 +53,58 @@ authGoogleBtn.addEventListener("click", async () => {
 authMagicBtn.addEventListener("click", async () => {
     const email = authEmailInput.value.trim();
     if (!email) {
-        authStatus.innerText = "Email Required";
+        authStatus.innerText = "Email required.";
         authStatus.style.color = "#ff4444";
         return;
     }
-
-    authStatus.innerText = "Dispatching Authorization Link...";
+    authStatus.innerText = "Sending link...";
     authStatus.style.color = "var(--text-dim)";
-
-    const actionCodeSettings = {
-        url: window.location.origin + window.location.pathname,
-        handleCodeInApp: true
-    };
-
     try {
-        await window.sendSignInLinkToEmail(window.firebaseAuth, email, actionCodeSettings);
-        window.localStorage.setItem('emailForSignIn', email);
-        authStatus.innerText = "Link sent! check your inbox/spam folder.";
+        await window.sendSignInLinkToEmail(window.firebaseAuth, email, {
+            url: window.location.origin + window.location.pathname,
+            handleCodeInApp: true
+        });
+        window.localStorage.setItem("emailForSignIn", email);
+        authStatus.innerText = "Link sent. Check your inbox.";
         authStatus.style.color = "var(--accent)";
-    } catch (error) {
-        authStatus.innerText = "T   ransmission failed: " + error.message;
+    } catch (e) {
+        authStatus.innerText = "Failed: " + e.message;
         authStatus.style.color = "#ff4444";
     }
 });
 
 async function loadUserData() {
-    const userRef = window.doc(window.db, "users", currentUser.uid);
-    const snap = await window.getDoc(userRef);
+    const ref = window.doc(window.db, "users", currentUser.uid);
+    const snap = await window.getDoc(ref);
     if (snap.exists()) {
         userData = snap.data();
-        if (!userData.enrolled) userData.enrolled = [];
-        if (!userData.scores) userData.scores = {};
-        if (!userData.analytics) userData.analytics = {};
-        if (!userData.survivalScores) userData.survivalScores = {};
+        userData.enrolled = userData.enrolled || [];
+        userData.scores = userData.scores || {};
+        userData.analytics = userData.analytics || {};
+        userData.survivalScores = userData.survivalScores || {};
     } else {
         userData = { enrolled: [], scores: {}, analytics: {}, survivalScores: {} };
-        await window.setDoc(userRef, userData);
+        await window.setDoc(ref, userData);
     }
 }
 
-function switchView(viewId) {
-    viewExplorer.style.display = "none";
-    viewSyllabus.style.display = "none";
-    viewLesson.style.display = "none";
-    viewSettings.style.display = "none";
-    viewPractice.style.display = "none";
-    document.getElementById(viewId).style.display = "block";
+async function saveUserField(field, value) {
+    const ref = window.doc(window.db, "users", currentUser.uid);
+    await window.setDoc(ref, { [field]: value }, { merge: true });
+}
+
+
+function switchView(id) {
+    [viewExplorer, viewSyllabus, viewLesson, viewSettings, viewPractice].forEach(v => {
+        v.style.display = "none";
+    });
+    document.getElementById(id).style.display = "block";
     document.body.classList.remove("lesson-active");
 }
 
 navExplorer.addEventListener("click", async (e) => {
     e.preventDefault();
-    if (catalogData.length === 0) {
+    if (!catalogData.length) {
         const res = await fetch("data/catalog.json");
         catalogData = await res.json();
     }
@@ -119,17 +119,17 @@ navSettings.addEventListener("click", (e) => {
 
 navPractice.addEventListener("click", async (e) => {
     e.preventDefault();
-    if (catalogData.length === 0) {
+    if (!catalogData.length) {
         const res = await fetch("data/catalog.json");
         catalogData = await res.json();
     }
     openPracticeHub();
 });
 
-const reqWipeBtn = document.getElementById("request-wipe-btn");
-const wipeAuthBlock = document.getElementById("wipe-auth-block");
-const wipeConfirmInput = document.getElementById("wipe-confirm-input");
-const execWipeBtn = document.getElementById("execute-wipe-btn");
+
+document.getElementById("sign-out-btn").addEventListener("click", () => {
+    window.firebaseAuth.signOut();
+});
 
 reqWipeBtn.addEventListener("click", () => {
     reqWipeBtn.style.display = "none";
@@ -137,90 +137,40 @@ reqWipeBtn.addEventListener("click", () => {
 });
 
 wipeConfirmInput.addEventListener("input", (e) => {
-    if (e.target.value === "PURGE") {
-        execWipeBtn.disabled = false;
-        execWipeBtn.style.backgroundColor = "#ff4444";
-        execWipeBtn.style.color = "var(--void)";
-    } else {
-        execWipeBtn.disabled = true;
-        execWipeBtn.style.backgroundColor = "transparent";
-        execWipeBtn.style.color = "#ff4444";
-    }
+    const ok = e.target.value === "PURGE";
+    execWipeBtn.disabled = !ok;
+    execWipeBtn.style.backgroundColor = ok ? "#ff4444" : "transparent";
+    execWipeBtn.style.color = ok ? "var(--void)" : "#ff4444";
 });
 
 execWipeBtn.addEventListener("click", async () => {
-    const userRef = window.doc(window.db, "users", currentUser.uid);
-    await window.setDoc(userRef, { enrolled: [], scores: {}, analytics: {}, survivalScores: {} });
-
-    userData = { enrolled: [], scores: {}, analytics: {}, survivalScores: {} };
+    const blank = { enrolled: [], scores: {}, analytics: {}, survivalScores: {} };
+    await window.setDoc(window.doc(window.db, "users", currentUser.uid), blank);
+    userData = blank;
     wipeConfirmInput.value = "";
     execWipeBtn.disabled = true;
     execWipeBtn.style.backgroundColor = "transparent";
     execWipeBtn.style.color = "#ff4444";
     wipeAuthBlock.style.display = "none";
     reqWipeBtn.style.display = "inline-block";
-
     await renderExplorer();
     navExplorer.click();
 });
 
-document.addEventListener('keydown', function(e) {
-    if (e.target && e.target.classList.contains('challenge-editor')) {
-
-        if (e.key === 'Tab') {
-            e.preventDefault();
-            const editor = e.target;
-            const start = editor.selectionStart;
-            const end = editor.selectionEnd;
-
-            const tabSpaces = "    ";
-
-            editor.value = editor.value.substring(0, start)
-                         + tabSpaces
-                         + editor.value.substring(end);
-            editor.selectionStart = editor.selectionEnd = start + tabSpaces.length;
-        }
-    }
-});
-
-async function enrollInCourse(course) {
-    if (userData.enrolled.length >= 3) {
-        alert("system limit: maximum 3 active curriculums.");
-        return;
-    }
-    userData.enrolled.push(course.id);
-    const userRef = window.doc(window.db, "users", currentUser.uid);
-    await window.setDoc(userRef, { enrolled: userData.enrolled }, { merge: true });
-    await renderExplorer();
-}
-
-async function unenrollFromCourse(course) {
-    if (!confirm(`drop protocol initiated: remove '${course.title}' from active matrix? \n\n(note: historical scores will be preserved in the database)`)) {
-        return;
-    }
-    userData.enrolled = userData.enrolled.filter(id => id !== course.id);
-    const userRef = window.doc(window.db, "users", currentUser.uid);
-    await window.setDoc(userRef, { enrolled: userData.enrolled }, { merge: true });
-    await renderExplorer();
-}
 
 async function getCourseProgress(courseId) {
-    const courseMeta = catalogData.find(c => c.id === courseId);
-    if (!courseMeta) return 0;
-    const courseData = await fetchCourseData(courseMeta);
-    let earned = 0;
-    let total = 0;
+    const meta = catalogData.find(c => c.id === courseId);
+    if (!meta) return 0;
+    const data = await fetchCourseData(meta);
+    let earned = 0, total = 0;
 
-    courseData.sections.forEach(sec => {
-        sec.lessons.forEach(lesson => {
-            const safeLessonId = lesson.id || lesson.title.replace(/\s+/g, '-').toLowerCase();
-            const hasQuestions = lesson.questions && lesson.questions.length > 0;
-            const maxPoints = (lesson.type === "challenge" || lesson.type === "code_fix" || (!hasQuestions && lesson.type === "document")) ? 1 : 4;
-
-            total += maxPoints;
-            earned += Math.min(userData.scores[safeLessonId] || 0, maxPoints);
-        });
-    });
+    data.sections.forEach(sec => sec.lessons.forEach(lesson => {
+        const id = lesson.id || lesson.title.replace(/\s+/g, "-").toLowerCase();
+        const hasQ = lesson.questions?.length > 0;
+        const max = (lesson.type === "challenge" || lesson.type === "code_fix" || lesson.type === "godot_scene" || (!hasQ && lesson.type === "document")) ? 1 : 4;
+        total += max;
+        earned += Math.min(userData.scores[id] || 0, max);
+    }));
 
     return total === 0 ? 0 : Math.round((earned / total) * 100);
 }
@@ -229,61 +179,52 @@ async function renderExplorer() {
     catalogGrid.innerHTML = "";
 
     for (const course of catalogData) {
-        const isEnrolled = userData.enrolled.includes(course.id);
+        const enrolled = userData.enrolled.includes(course.id);
         const card = document.createElement("div");
         card.className = "course-card";
         card.setAttribute("data-category", course.category || "");
-
-        card.style.display = "flex";
-        card.style.flexDirection = "column";
+        card.style.cssText = "display:flex;flex-direction:column;";
 
         let progressHtml = "";
-        if (isEnrolled) {
-            const progress = await getCourseProgress(course.id);
+        if (enrolled) {
+            const pct = await getCourseProgress(course.id);
             progressHtml = `
                 <div class="course-progress-wrapper">
-                    <div class="course-progress-fill progress-animator" data-target="${progress}%" style="width: 0%;"></div>
+                    <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%;"></div>
                 </div>
-                <p style="font-size: 12px; color: var(--accent); margin-top: -10px; margin-bottom: 15px; text-align: right;">${progress}% completion</p>
+                <p style="font-size:12px;color:var(--accent);margin-top:-10px;margin-bottom:15px;text-align:right;">${pct}% complete</p>
             `;
         }
 
         card.innerHTML = `
             <h3>${course.title}</h3>
-            <p style="flex-grow: 1;">${course.description}</p>
+            <p style="flex-grow:1;">${course.description}</p>
             ${progressHtml}
         `;
 
         const btnGroup = document.createElement("div");
-        btnGroup.style.display = "flex";
-        btnGroup.style.gap = "10px";
-        btnGroup.style.marginTop = "auto";
+        btnGroup.style.cssText = "display:flex;gap:10px;margin-top:auto;";
 
-        if (isEnrolled) {
-            const continueBtn = document.createElement("button");
-            continueBtn.innerText = "Continue";
-            continueBtn.style.flex = "2";
-            continueBtn.style.borderColor = "var(--text-dim)";
-            continueBtn.style.color = "var(--text-dim)";
-            continueBtn.addEventListener("click", () => openSyllabus(course));
+        if (enrolled) {
+            const cont = document.createElement("button");
+            cont.innerText = "Continue";
+            cont.style.cssText = "flex:2;border-color:var(--text-dim);color:var(--text-dim);";
+            cont.addEventListener("click", () => openSyllabus(course));
 
-            const dropBtn = document.createElement("button");
-            dropBtn.innerText = "drop";
-            dropBtn.style.flex = "1";
-            dropBtn.style.borderColor = "#ff4444";
-            dropBtn.style.color = "#ff4444";
-            dropBtn.style.backgroundColor = "transparent";
-            dropBtn.addEventListener("click", () => unenrollFromCourse(course));
+            const drop = document.createElement("button");
+            drop.innerText = "drop";
+            drop.style.cssText = "flex:1;border-color:#ff4444;color:#ff4444;background:transparent;";
+            drop.addEventListener("click", () => unenrollFromCourse(course));
 
-            btnGroup.appendChild(continueBtn);
-            btnGroup.appendChild(dropBtn);
+            btnGroup.appendChild(cont);
+            btnGroup.appendChild(drop);
         } else {
-            const enrollBtn = document.createElement("button");
-            enrollBtn.innerText = "Enroll";
-            enrollBtn.className = "b-enroll-btn";
-            enrollBtn.style.flex = "1";
-            enrollBtn.addEventListener("click", () => enrollInCourse(course));
-            btnGroup.appendChild(enrollBtn);
+            const enroll = document.createElement("button");
+            enroll.innerText = "Enroll";
+            enroll.className = "b-enroll-btn";
+            enroll.style.flex = "1";
+            enroll.addEventListener("click", () => enrollInCourse(course));
+            btnGroup.appendChild(enroll);
         }
 
         card.appendChild(btnGroup);
@@ -293,108 +234,103 @@ async function renderExplorer() {
     renderSidebar();
 
     setTimeout(() => {
-        document.querySelectorAll('.progress-animator').forEach(bar => {
-            bar.style.width = bar.getAttribute('data-target');
+        document.querySelectorAll(".progress-animator").forEach(bar => {
+            bar.style.width = bar.getAttribute("data-target");
         });
     }, 50);
 }
 
 function renderSidebar() {
     enrolledList.innerHTML = "";
-    if (userData.enrolled.length === 0) {
-        enrolledList.innerHTML = `<li><span style="color: var(--text-dim)">no active data</span></li>`;
+    if (!userData.enrolled.length) {
+        enrolledList.innerHTML = `<li><span style="color:var(--text-dim)">no active data</span></li>`;
         return;
     }
-    userData.enrolled.forEach(courseId => {
-        const course = catalogData.find(c => c.id === courseId);
+    userData.enrolled.forEach(id => {
+        const course = catalogData.find(c => c.id === id);
         if (!course) return;
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.href = "#";
         a.innerText = course.title;
-        a.addEventListener("click", (e) => {
-            e.preventDefault();
-            openSyllabus(course);
-        });
+        a.addEventListener("click", (e) => { e.preventDefault(); openSyllabus(course); });
         li.appendChild(a);
         enrolledList.appendChild(li);
     });
 }
 
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+async function enrollInCourse(course) {
+    if (userData.enrolled.length >= 3) {
+        alert("Maximum 3 active curriculums.");
+        return;
     }
-    return array;
+    userData.enrolled.push(course.id);
+    await saveUserField("enrolled", userData.enrolled);
+    await renderExplorer();
 }
 
-function parseCode(str) {
-    if (!str) return "";
-    const safeStr = str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return safeStr.replace(/`([^`]+)`/g, '<code>$1</code>');
+async function unenrollFromCourse(course) {
+    if (!confirm(`Remove '${course.title}'? Scores are preserved.`)) return;
+    userData.enrolled = userData.enrolled.filter(id => id !== course.id);
+    await saveUserField("enrolled", userData.enrolled);
+    await renderExplorer();
 }
 
-async function fetchCourseData(courseMeta) {
-    const res = await fetch(courseMeta.file);
-    return await res.json();
+
+async function fetchCourseData(meta) {
+    const res = await fetch(meta.file);
+    return res.json();
 }
 
-async function openSyllabus(courseMeta) {
+async function openSyllabus(meta) {
     switchView("view-syllabus");
-    document.getElementById("syllabus-title").innerText = courseMeta.title;
-    activeCurriculumData = await fetchCourseData(courseMeta);
+    document.getElementById("syllabus-title").innerText = meta.title;
+    activeCurriculumData = await fetchCourseData(meta);
 
     const contentDiv = document.getElementById("syllabus-content");
     contentDiv.innerHTML = "";
 
-    const progress = await getCourseProgress(courseMeta.id);
-    const progressHeader = document.createElement("div");
-    progressHeader.innerHTML = `
-        <div class="course-progress-wrapper" style="margin-top: 5px; margin-bottom: 15px;">
-            <div class="course-progress-fill progress-animator" data-target="${progress}%" style="width: 0%;"></div>
+    const pct = await getCourseProgress(meta.id);
+    const header = document.createElement("div");
+    header.innerHTML = `
+        <div class="course-progress-wrapper" style="margin-top:5px;margin-bottom:15px;">
+            <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%;"></div>
         </div>
-        <p style="font-size: 14px; color: var(--accent); margin-top: -5px; margin-bottom: 30px; text-align: right;">${progress}% module completion</p>
+        <p style="font-size:14px;color:var(--accent);margin-top:-5px;margin-bottom:30px;text-align:right;">${pct}% complete</p>
     `;
-    contentDiv.appendChild(progressHeader);
+    contentDiv.appendChild(header);
 
     activeCurriculumData.sections.forEach(section => {
-        const sectionBlock = document.createElement("div");
-        sectionBlock.className = "section-block";
-        const header = document.createElement("div");
-        header.className = "section-header";
-        header.innerText = section.title;
-        sectionBlock.appendChild(header);
+        const block = document.createElement("div");
+        block.className = "section-block";
+
+        const sHeader = document.createElement("div");
+        sHeader.className = "section-header";
+        sHeader.innerText = section.title;
+        block.appendChild(sHeader);
 
         section.lessons.forEach(lesson => {
-            const safeLessonId = lesson.id || lesson.title.replace(/\s+/g, '-').toLowerCase();
-            lesson.id = safeLessonId;
-
-            if (lesson.questions) {
-                lesson.questions.forEach((q, idx) => q.globalId = `${safeLessonId}-q${idx}`);
-            }
+            const id = lesson.id || lesson.title.replace(/\s+/g, "-").toLowerCase();
+            lesson.id = id;
+            lesson.questions?.forEach((q, i) => q.globalId = `${id}-q${i}`);
 
             const row = document.createElement("div");
             row.className = "lesson-row";
-            const score = userData.scores?.[safeLessonId] || 0;
-            const hasQuestions = lesson.questions && lesson.questions.length > 0;
-            let dotsHtml = '';
 
-            if (lesson.type === "challenge" || lesson.type === "code_fix" || (!hasQuestions && lesson.type === "document")) {
-                dotsHtml = `<div class="rating-dot ${score >= 1 ? 'filled' : ''}"></div>`;
-            } else {
-                dotsHtml = `
-                    <div class="rating-dot ${score >= 1 ? 'filled' : ''}"></div>
-                    <div class="rating-dot ${score >= 2 ? 'filled' : ''}"></div>
-                    <div class="rating-dot ${score >= 3 ? 'filled' : ''}"></div>
-                    <div class="rating-dot ${score >= 4 ? 'filled' : ''}"></div>
-                `;
-            }
+            const score = userData.scores?.[id] || 0;
+            const hasQ = lesson.questions?.length > 0;
+            const isBinary = lesson.type === "challenge" || lesson.type === "code_fix" || lesson.type === "godot_scene" || (!hasQ && lesson.type === "document");
+
+            const dotsHtml = isBinary
+                ? `<div class="rating-dot ${score >= 1 ? "filled" : ""}"></div>`
+                : [1,2,3,4].map(n => `<div class="rating-dot ${score >= n ? "filled" : ""}"></div>`).join("");
+
             row.innerHTML = `<div class="lesson-title">${lesson.title}</div><div class="rating-display">${dotsHtml}</div>`;
             row.addEventListener("click", () => startLesson(lesson));
-            sectionBlock.appendChild(row);
+            block.appendChild(row);
         });
-        contentDiv.appendChild(sectionBlock);
+
+        contentDiv.appendChild(block);
     });
 
     const masterRow = document.createElement("div");
@@ -404,617 +340,121 @@ async function openSyllabus(courseMeta) {
     contentDiv.appendChild(masterRow);
 
     setTimeout(() => {
-        document.querySelectorAll('.progress-animator').forEach(bar => {
-            bar.style.width = bar.getAttribute('data-target');
-        });
+        document.querySelectorAll(".progress-animator").forEach(b => b.style.width = b.getAttribute("data-target"));
     }, 50);
 }
+
 
 function startLesson(lesson) {
     activeLessonData = JSON.parse(JSON.stringify(lesson));
 
-    if (activeLessonData.questions && activeLessonData.questions.length > 0) {
-        if (activeLessonData.type !== "practice_standard") {
-            activeLessonData.questions = shuffleArray(activeLessonData.questions);
-        }
+    if (activeLessonData.questions?.length && activeLessonData.type !== "practice_standard") {
+        activeLessonData.questions = shuffleArray(activeLessonData.questions);
     }
 
-    currentQuestionIndex = 0;
-    correctAnswersCount = 0;
-    questionResults = [];
-    isQuestionSubmitted = false;
-    survivalStrikes = 0;
+    initQuestionState();
 
     switchView("view-lesson");
     document.body.classList.add("lesson-active");
 
-    const existingBack = document.getElementById("lesson-back-btn");
-    if (existingBack) existingBack.remove();
+    const existing = document.getElementById("lesson-back-btn");
+    if (existing) existing.remove();
 
     const backBtn = document.createElement("button");
     backBtn.id = "lesson-back-btn";
-    backBtn.innerText = "Return";
-    backBtn.className = "back-btn";
+    backBtn.innerText = "← Return";
+    backBtn.style.cssText = "position:fixed;top:24px;left:24px;z-index:999;background:var(--surface);color:var(--text-main);border:2px solid var(--border);padding:10px 16px;font-size:12px;letter-spacing:2px;box-shadow:4px 4px 0px var(--border);cursor:pointer;";
     document.body.appendChild(backBtn);
 
     backBtn.addEventListener("click", () => {
-        if (!confirm("Return to curriculum? Your current progress on this lesson will not be saved.")) return;
+        if (!confirm("Return to curriculum? Progress on this lesson will not be saved.")) return;
         backBtn.remove();
         document.body.classList.remove("lesson-active");
-        const courseMeta = catalogData.find(c => c.id === activeCurriculumData.id);
-        if (courseMeta) openSyllabus(courseMeta);
+        const meta = catalogData.find(c => c.id === activeCurriculumData?.id);
+        if (meta) openSyllabus(meta);
         else navExplorer.click();
     });
 
+    const onFinish = () => finishLesson();
+
     if (activeLessonData.type === "document") {
-        renderDocument();
+        if (activeLessonData.questions?.length) {
+            renderDocument(activeLessonData, () => renderQuestion(activeLessonData, getCourseAnalytics(), updateAnalytics, onFinish));
+        } else {
+            renderDocument(activeLessonData, onFinish);
+        }
     } else if (activeLessonData.type === "challenge") {
-        renderChallenge();
+        renderChallenge(activeLessonData, onFinish);
     } else if (activeLessonData.type === "code_fix") {
-            renderCodeFix();
+        renderCodeFix(activeLessonData, onFinish);
+    } else if (activeLessonData.type === "godot_scene") {
+        renderGodotScene(activeLessonData, onFinish);
     } else {
-        renderQuestion();
+        renderQuestion(activeLessonData, getCourseAnalytics(), updateAnalytics, onFinish);
     }
 }
 
-async function openPracticeHub() {
-    switchView("view-practice");
-    practiceContent.innerHTML = "";
-
-    if (userData.enrolled.length === 0) {
-        practiceContent.innerHTML = "<p style='color: var(--text-dim)'>no curriculums active.</p>";
-        return;
-    }
-
-    for (const courseId of userData.enrolled) {
-        const courseMeta = catalogData.find(c => c.id === courseId);
-        if (!courseMeta) continue;
-
-        const survivalScore = userData.survivalScores[courseId] || 0;
-
-        const card = document.createElement("div");
-        card.className = "practice-card";
-        card.innerHTML = `
-            <h3>${courseMeta.title}</h3>
-            <p style="font-size: 14px; color: var(--text-dim);">2 Modes</p>
-            <p style="font-size: 12px; color: #ff4444; margin-top: -5px; font-weight: bold;">Survival Record: ${survivalScore}</p>
-        `;
-
-        const btnGroup = document.createElement("div");
-        btnGroup.className = "practice-btn-group";
-
-        const standardBtn = document.createElement("button");
-        standardBtn.innerText = "standard";
-        standardBtn.addEventListener("click", () => compileStandardPractice(courseMeta));
-
-        const survivalBtn = document.createElement("button");
-        survivalBtn.innerText = "survival";
-        survivalBtn.style.color = "#ff4444";
-        survivalBtn.style.borderColor = "#ff4444";
-        survivalBtn.addEventListener("click", () => compileSurvivalPractice(courseMeta));
-
-        btnGroup.appendChild(standardBtn);
-        btnGroup.appendChild(survivalBtn);
-        card.appendChild(btnGroup);
-        practiceContent.appendChild(card);
-    }
+function getCourseAnalytics() {
+    if (!activeCurriculumData) return {};
+    return userData.analytics[activeCurriculumData.id] || {};
 }
 
-async function compileMasterTest() {
-    let allQuestions = [];
-    activeCurriculumData.sections.forEach(sec => {
-        sec.lessons.forEach(lesson => {
-            const safeLessonId = lesson.id || lesson.title.replace(/\s+/g, '-').toLowerCase();
-            if (lesson.questions) {
-                lesson.questions.forEach((q, idx) => {
-                    let qCopy = JSON.parse(JSON.stringify(q));
-                    qCopy.parentLessonId = safeLessonId;
-                    qCopy.globalId = `${safeLessonId}-q${idx}`;
-                    allQuestions.push(qCopy);
-                });
-            }
-        });
-    });
-
-    if (allQuestions.length === 0) {
-        alert("No Question Data Available.");
-        return;
-    }
-
-    allQuestions = shuffleArray(allQuestions).slice(0, 15);
-
-    startLesson({
-        id: "master-test",
-        courseId: activeCurriculumData.id,
-        title: "Curriculum Master Test",
-        type: "master_test",
-        questions: allQuestions
-    });
+async function updateAnalytics(analytics) {
+    if (!activeCurriculumData) return;
+    userData.analytics[activeCurriculumData.id] = analytics;
+    await saveUserField("analytics", userData.analytics);
 }
 
-async function compileStandardPractice(courseMeta) {
-    activeCurriculumData = await fetchCourseData(courseMeta);
-    let allQuestions = [];
-
-    activeCurriculumData.sections.forEach(sec => {
-        sec.lessons.forEach(lesson => {
-            const safeLessonId = lesson.id || lesson.title.replace(/\s+/g, '-').toLowerCase();
-            if (lesson.questions) {
-                lesson.questions.forEach((q, idx) => {
-                    q.globalId = `${safeLessonId}-q${idx}`;
-                    allQuestions.push(q);
-                });
-            }
-        });
-    });
-
-    const courseAnalytics = userData.analytics[activeCurriculumData.id] || {};
-
-    allQuestions.sort((a, b) => {
-        const aStats = courseAnalytics[a.globalId] || { correct: 0, incorrect: 0 };
-        const bStats = courseAnalytics[b.globalId] || { correct: 0, incorrect: 0 };
-        const aDelta = aStats.incorrect - aStats.correct;
-        const bDelta = bStats.incorrect - bStats.correct;
-        return bDelta - aDelta;
-    });
-
-    const targetQuestions = allQuestions.slice(0, 10);
-
-    if (targetQuestions.length === 0) {
-        alert("Insufficient Data. Complete more lessons.");
-        return;
-    }
-
-    startLesson({
-        id: "practice-standard",
-        title: "Standard",
-        type: "practice_standard",
-        questions: shuffleArray(targetQuestions)
-    });
-}
-
-async function compileSurvivalPractice(courseMeta) {
-    activeCurriculumData = await fetchCourseData(courseMeta);
-    let allQuestions = [];
-
-    activeCurriculumData.sections.forEach(sec => {
-        sec.lessons.forEach(lesson => {
-            const safeLessonId = lesson.id || lesson.title.replace(/\s+/g, '-').toLowerCase();
-            if (lesson.questions) {
-                lesson.questions.forEach((q, idx) => {
-                    q.globalId = `${safeLessonId}-q${idx}`;
-                    allQuestions.push(q);
-                });
-            }
-        });
-    });
-
-    if (allQuestions.length === 0) {
-        alert("Insufficient Data.");
-        return;
-    }
-
-    startLesson({
-        id: "practice-survival",
-        courseId: courseMeta.id,
-        title: "Survival",
-        type: "practice_survival",
-        questions: shuffleArray(allQuestions)
-    });
-}
-
-function renderDocument() {
-    const lessonView = document.getElementById("view-lesson");
-    const formattedContent = parseCode(activeLessonData.content).replace(/\n/g, '<br>');
-
-    let examplesHtml = "";
-    if (activeLessonData.examples && activeLessonData.examples.length > 0) {
-        examplesHtml = activeLessonData.examples.map(ex => `
-            <div style="margin-top: 25px; padding: 20px; background-color: var(--void); border: 1px solid var(--border);">
-                <strong style="color: var(--text-dim); display: block; margin-bottom: 12px; font-size: 14px;">${ex.label}</strong>
-                <div style="color: var(--surface); font-family: 'Courier New', Courier, monospace; font-size: 15px; white-space: pre-wrap; line-height: 1.5;">${parseCode(ex.code)}</div>
-            </div>
-        `).join("");
-    }
-
-    const hasQuestions = activeLessonData.questions && activeLessonData.questions.length > 0;
-    const btnText = hasQuestions ? "continue to quiz" : "mark as read";
-
-    lessonView.innerHTML = `
-        <div class="lesson-workspace" style="max-width: 800px;">
-            <h2>${activeLessonData.title}</h2>
-            <div id="module-content">
-                <p style="text-transform: none; text-align: left;">${formattedContent}</p>
-                ${examplesHtml}
-            </div>
-
-            <div class="lesson-footer">
-                <div class="progress-dots">
-                    <div class="p-dot active"></div>
-                </div>
-                <button id="lesson-read-btn">${btnText}</button>
-            </div>
-        </div>
-    `;
-
-    document.getElementById("lesson-read-btn").addEventListener("click", () => {
-        correctSound.currentTime = 0;
-        correctSound.play();
-        if (hasQuestions) renderQuestion();
-        else finishLesson();
-    });
-}
-
-function renderQuestion() {
-    const qData = activeLessonData.questions[currentQuestionIndex];
-    const lessonView = document.getElementById("view-lesson");
-    isQuestionSubmitted = false;
-
-    let optionsHtml = qData.options.map((opt, i) => `
-        <label class="mcq-option" id="opt-label-${i}">
-            <input type="radio" name="answer" value="${i}"> ${parseCode(opt)}
-        </label>
-    `).join("");
-
-    let statusHtml = "";
-    if (activeLessonData.type === "practice_survival") {
-        statusHtml = [1,2,3].map(i => `<div class="strike-dot ${survivalStrikes >= i ? 'lost' : ''}"></div>`).join("");
-    } else {
-        statusHtml = activeLessonData.questions.map((_, i) => {
-            let dotClass = i === currentQuestionIndex ? "active" : questionResults[i] === true ? "correct" : questionResults[i] === false ? "incorrect" : "";
-            return `<div class="p-dot ${dotClass}"></div>`;
-        }).join("");
-    }
-
-    lessonView.innerHTML = `
-        <div class="lesson-workspace">
-            <h2>${activeLessonData.title}</h2>
-            <div id="module-content">
-                <p>${parseCode(qData.q)}</p>
-                <form id="mcq-form">${optionsHtml}</form>
-                <div id="explanation-box" class="explanation-box" style="display: none;"></div>
-            </div>
-            <div class="lesson-footer">
-                <div class="progress-dots" style="${activeLessonData.type === 'practice_survival' ? 'gap: 10px;' : ''}">${statusHtml}</div>
-                <button id="lesson-action-btn" disabled>submit</button>
-            </div>
-        </div>
-    `;
-
-    document.querySelectorAll('input[name="answer"]').forEach(r => r.addEventListener("change", () => {
-        if (!isQuestionSubmitted) document.getElementById("lesson-action-btn").disabled = false;
-    }));
-
-    document.getElementById("lesson-action-btn").addEventListener("click", handleActionClick);
-}
-
-async function handleActionClick() {
-    const qData = activeLessonData.questions[currentQuestionIndex];
-    const actionBtn = document.getElementById("lesson-action-btn");
-
-    if (!isQuestionSubmitted) {
-        const selectedRadio = document.querySelector('input[name="answer"]:checked');
-        const selectedVal = parseInt(selectedRadio.value);
-        const isCorrect = selectedVal === qData.answer;
-
-        questionResults[currentQuestionIndex] = isCorrect;
-
-        if (qData.globalId && activeCurriculumData) {
-            const courseId = activeCurriculumData.id;
-            if (!userData.analytics[courseId]) userData.analytics[courseId] = {};
-            if (!userData.analytics[courseId][qData.globalId]) userData.analytics[courseId][qData.globalId] = { correct: 0, incorrect: 0 };
-
-            if (isCorrect) userData.analytics[courseId][qData.globalId].correct++;
-            else userData.analytics[courseId][qData.globalId].incorrect++;
-
-            const userRef = window.doc(window.db, "users", currentUser.uid);
-            await window.setDoc(userRef, { analytics: userData.analytics }, { merge: true });
-        }
-
-        if (isCorrect) {
-            correctAnswersCount++;
-            correctSound.currentTime = 0;
-            correctSound.play();
-        } else {
-            incorrectSound.currentTime = 0;
-            incorrectSound.play();
-            if (activeLessonData.type === "practice_survival") survivalStrikes++;
-        }
-
-        document.querySelectorAll('input[name="answer"]').forEach(r => r.disabled = true);
-        document.querySelectorAll('.mcq-option').forEach(l => l.classList.add("locked"));
-
-        const selectedLabel = document.getElementById(`opt-label-${selectedVal}`);
-        if (isCorrect) selectedLabel.classList.add("reveal-correct");
-        else {
-            selectedLabel.classList.add("reveal-incorrect");
-            document.getElementById(`opt-label-${qData.answer}`).classList.add("reveal-correct");
-        }
-
-        if (qData.explanation) {
-            const expBox = document.getElementById("explanation-box");
-            expBox.innerHTML = `<strong>analysis:</strong> ${parseCode(qData.explanation)}`;
-            expBox.style.display = "block";
-        }
-
-        if (activeLessonData.type === "practice_survival") {
-            const strikes = document.querySelectorAll('.strike-dot');
-            for (let i = 0; i < survivalStrikes; i++) if(strikes[i]) strikes[i].classList.add('lost');
-        } else {
-            const dots = document.querySelectorAll('.p-dot');
-            dots[currentQuestionIndex].classList.remove('active');
-            dots[currentQuestionIndex].classList.add(isCorrect ? 'correct' : 'incorrect');
-        }
-
-        actionBtn.innerText = "next";
-        isQuestionSubmitted = true;
-    } else {
-        if (activeLessonData.type === "practice_survival" && survivalStrikes >= 3) {
-            finishLesson();
-        } else {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < activeLessonData.questions.length) renderQuestion();
-            else finishLesson();
-        }
-    }
-}
-
-function renderChallenge() {
-    const lessonView = document.getElementById("view-lesson");
-    const formattedPrompt = parseCode(activeLessonData.prompt).replace(/\n/g, '<br>');
-
-    lessonView.innerHTML = `
-        <div class="lesson-workspace" style="max-width: 900px;">
-            <h2>${activeLessonData.title}</h2>
-            <div class="challenge-workspace">
-                <div class="challenge-prompt"><p style="text-transform: none;">${formattedPrompt}</p></div>
-                <div class="challenge-editor-wrapper">
-                    <textarea id="challenge-input" class="challenge-editor" spellcheck="false" placeholder=""></textarea>
-                    <div id="challenge-console" class="challenge-console"></div>
-                </div>
-            </div>
-            <div class="lesson-footer" id="challenge-footer">
-                <div class="progress-dots"><div class="p-dot active"></div></div>
-                <button id="lesson-action-btn">execute</button>
-            </div>
-        </div>
-    `;
-
-    document.getElementById("lesson-action-btn").addEventListener("click", () => {
-        const input = document.getElementById("challenge-input").value;
-        const consoleOut = document.getElementById("challenge-console");
-        consoleOut.innerText = "";
-        consoleOut.style.color = "#ff4444";
-
-        let passed = true;
-        for (const check of activeLessonData.validation) {
-            const regex = new RegExp(check.rule);
-            if (!regex.test(input)) {
-                consoleOut.innerText = check.message;
-                incorrectSound.currentTime = 0;
-                incorrectSound.play();
-                passed = false;
-                break;
-            }
-        }
-
-        if (passed) {
-            correctSound.currentTime = 0;
-            correctSound.play();
-            finishLesson();
-        } else {
-            if (activeLessonData.solution && !document.getElementById('solution-btn')) {
-                const footer = document.getElementById('challenge-footer');
-                const solBtn = document.createElement('button');
-                solBtn.id = 'solution-btn';
-                solBtn.innerText = 'view solution';
-                solBtn.style.marginRight = '15px';
-                solBtn.style.backgroundColor = 'transparent';
-                solBtn.style.borderColor = 'var(--text-dim)';
-                solBtn.style.color = 'var(--text-dim)';
-                solBtn.addEventListener('click', () => {
-                    document.getElementById("challenge-input").value = activeLessonData.solution;
-                    consoleOut.innerText = "Solution loaded.";
-                    consoleOut.style.color = "var(--text-dim)";
-                    solBtn.remove();
-                });
-                footer.insertBefore(solBtn, document.getElementById('lesson-action-btn'));
-            }
-        }
-    });
-}
-
-function renderCodeFix() {
-    const lessonView = document.getElementById("view-lesson");
-
-    lessonView.innerHTML = `
-        <div class="lesson-workspace" style="max-width:100%;padding-bottom:40px;">
-            <div id="course-header">
-                <span>SYS.MODULE</span>
-                <span>DIAGNOSTIC PROTOCOL</span>
-            </div>
-            <div id="module-content" style="margin-bottom:20px;">
-                <h3>${activeLessonData.title}</h3>
-                <p style="text-transform:none;">${activeLessonData.prompt}</p>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;height:520px;">
-                <div style="display:flex;flex-direction:column;height:100%;">
-                    <div class="preview-label">Editor</div>
-                    <div style="display:flex;flex:1;border:3px solid var(--border);box-shadow:4px 4px 0px var(--accent);overflow:hidden;">
-                        <div id="line-numbers" style="background:#1a1a1a;color:#555;font-family:monospace;font-size:13px;line-height:1.6;padding:14px 10px;text-align:right;user-select:none;min-width:40px;overflow-y:hidden;overflow-x:hidden;white-space:pre;pointer-events:none;"></div>
-                        <textarea id="fix-editor" class="challenge-editor" spellcheck="false" style="flex:1;border:none;box-shadow:none;font-size:13px;line-height:1.6;padding:14px;resize:none;white-space:pre;overflow-x:auto;overflow-y:auto;"></textarea>                    </div>
-                    <div style="display:flex;gap:10px;margin-top:12px;">
-                        <button id="run-code-btn" style="background-color:var(--border);color:var(--surface);flex:1;">RUN DIAGNOSTIC ↗</button>
-                        <button id="lesson-action-btn" disabled style="flex:1;">SUBMIT FIX</button>
-                    </div>
-                </div>
-                <div style="display:flex;flex-direction:column;height:100%;gap:12px;">
-                    <div style="flex:1;display:flex;flex-direction:column;">
-                        <div class="preview-label">Live Output</div>
-                        <iframe id="preview-frame" class="preview-frame" style="flex:1;box-shadow:4px 4px 0px var(--border);"></iframe>
-                    </div>
-                    <div style="flex:0 0 160px;display:flex;flex-direction:column;">
-                        <div class="preview-label">Console</div>
-                        <div id="fix-console" style="flex:1;background:var(--void);color:#ff4444;font-family:monospace;font-size:13px;padding:14px;border:3px solid var(--border);overflow-y:auto;white-space:pre-wrap;line-height:1.6;box-shadow:4px 4px 0px var(--border);">ready.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    const editor = document.getElementById("fix-editor");
-    const lineNumbers = document.getElementById("line-numbers");
-    const frame = document.getElementById("preview-frame");
-    const submitBtn = document.getElementById("lesson-action-btn");
-    const consoleBox = document.getElementById("fix-console");
-    const runBtn = document.getElementById("run-code-btn");
-
-    editor.value = activeLessonData.initialCode;
-
-    function updateLineNumbers() {
-        const lines = editor.value.split("\n").length;
-        lineNumbers.textContent = Array.from({length: lines}, (_, i) => i + 1).join("\n");
-    }
-
-    editor.addEventListener("scroll", () => {
-        lineNumbers.scrollTop = editor.scrollTop;
-    });
-
-    updateLineNumbers();
-    editor.addEventListener("input", updateLineNumbers);
-
-    editor.addEventListener("keydown", (e) => {
-        if (e.key === "Tab") {
-            e.preventDefault();
-            const start = editor.selectionStart;
-            const end = editor.selectionEnd;
-            editor.value = editor.value.substring(0, start) + "    " + editor.value.substring(end);
-            editor.selectionStart = editor.selectionEnd = start + 4;
-            updateLineNumbers();
-        }
-    });
-
-    runBtn.addEventListener("click", () => {
-        const code = editor.value;
-        consoleBox.style.color = "#aaaaaa";
-        consoleBox.textContent = "running...";
-
-        const errors = [];
-
-        const frameDoc = frame.contentDocument || frame.contentWindow.document;
-        frameDoc.open();
-
-        const injected = code.replace(
-            /<script\b[^>]*>/gi,
-            `<script>
-                window.onerror = function(msg, src, line, col) {
-                    window.parent.document.getElementById('fix-console').style.color = '#ff4444';
-                    window.parent.document.getElementById('fix-console').textContent = 'line ' + line + ': ' + msg;
-                    return true;
-                };
-                const _origLog = console.log;
-                console.log = function(...args) {
-                    const box = window.parent.document.getElementById('fix-console');
-                    box.style.color = '#77BBA2';
-                    box.textContent = args.join(' ');
-                    _origLog.apply(console, args);
-                };
-            `
-        );
-
-        frameDoc.write(injected);
-        frameDoc.close();
-
-        setTimeout(() => {
-            const currentConsole = document.getElementById("fix-console");
-            if (currentConsole && currentConsole.textContent === "running...") {
-                currentConsole.style.color = "#77BBA2";
-                currentConsole.textContent = "no errors.";
-            }
-        }, 400);
-
-        if (activeLessonData.targetFix && code.includes(activeLessonData.targetFix)) {
-            submitBtn.disabled = false;
-            submitBtn.style.backgroundColor = "var(--accent)";
-            submitBtn.style.color = "#ffffff";
-            correctSound.currentTime = 0;
-            correctSound.play();
-        } else {
-            submitBtn.disabled = true;
-            submitBtn.style.backgroundColor = "";
-            submitBtn.style.color = "";
-            incorrectSound.currentTime = 0;
-            incorrectSound.play();
-        }
-    });
-
-    submitBtn.addEventListener("click", () => {
-        finishLesson();
-    });
-}
 
 async function finishLesson() {
-    let finalScore = 0;
-    let accuracyText = "";
-    let ratingText = "";
+    const backBtn = document.getElementById("lesson-back-btn");
+    if (backBtn) backBtn.remove();
 
-    const hasQuestions = activeLessonData.questions && activeLessonData.questions.length > 0;
-    const lessonBackBtn = document.getElementById("lesson-back-btn");
-
-    if (lessonBackBtn) lessonBackBtn.remove();
+    const { correctAnswersCount, questionResults, survivalStrikes } = getQuestionStats();
+    const hasQ = activeLessonData.questions?.length > 0;
+    let finalScore = 0, accuracyText = "", ratingText = "";
 
     if (activeLessonData.type === "practice_survival") {
-        const courseId = activeLessonData.courseId || activeCurriculumData.id;
-        const currentHigh = userData.survivalScores[courseId] || 0;
-        let recordText = "";
-
-        if (correctAnswersCount > currentHigh) {
+        const courseId = activeLessonData.courseId || activeCurriculumData?.id;
+        const high = userData.survivalScores[courseId] || 0;
+        let recordHtml = "";
+        if (correctAnswersCount > high) {
             userData.survivalScores[courseId] = correctAnswersCount;
-            const userRef = window.doc(window.db, "users", currentUser.uid);
-            await window.setDoc(userRef, { survivalScores: userData.survivalScores }, { merge: true });
-            recordText = `<br><span style='color: #ff4444; font-size: 16px; display: block; margin-top: 10px;'>new survival record!</span>`;
+            await saveUserField("survivalScores", userData.survivalScores);
+            recordHtml = `<br><span style="color:#ff4444;font-size:16px;display:block;margin-top:10px;">new survival record!</span>`;
         }
-
-        accuracyText = `you survived ${correctAnswersCount} iterations.${recordText}`;
-        ratingText = survivalStrikes >= 3 ? "protocol terminated." : "gauntlet cleared.";
+        accuracyText = `survived ${correctAnswersCount} iterations.${recordHtml}`;
+        ratingText = survivalStrikes >= 3 ? "terminated." : "gauntlet cleared.";
 
     } else if (activeLessonData.type === "master_test") {
-        accuracyText = `master test complete: ${correctAnswersCount} / ${activeLessonData.questions.length}`;
-        ratingText = "Updated.";
-
-        let lessonStats = {};
+        accuracyText = `master test: ${correctAnswersCount} / ${activeLessonData.questions.length}`;
+        ratingText = "scores updated.";
+        const lessonStats = {};
         activeLessonData.questions.forEach((q, i) => {
             const lid = q.parentLessonId;
             if (!lessonStats[lid]) lessonStats[lid] = { correct: 0, total: 0 };
             lessonStats[lid].total++;
             if (questionResults[i]) lessonStats[lid].correct++;
         });
-
         for (const [lid, stats] of Object.entries(lessonStats)) {
-            const percentage = stats.correct / stats.total;
-            const projectedScore = Math.round(percentage * 4);
-            const finalProjected = (projectedScore === 0 && stats.correct > 0) ? 1 : projectedScore;
-
-            const currentHighscore = userData.scores[lid] || 0;
-            if (finalProjected > currentHighscore) {
-                userData.scores[lid] = finalProjected;
-            }
+            const projected = Math.round((stats.correct / stats.total) * 4);
+            const final = projected === 0 && stats.correct > 0 ? 1 : projected;
+            if (final > (userData.scores[lid] || 0)) userData.scores[lid] = final;
         }
-
-        const userRef = window.doc(window.db, "users", currentUser.uid);
-        await window.setDoc(userRef, { scores: userData.scores }, { merge: true });
+        await saveUserField("scores", userData.scores);
 
     } else if (activeLessonData.type === "practice_standard") {
         accuracyText = `accuracy: ${correctAnswersCount} / ${activeLessonData.questions.length}`;
-        ratingText = "Complete.";
-    } else if (activeLessonData.type === "challenge" || activeLessonData.type === "code_fix" || (!hasQuestions && activeLessonData.type === "document")) {
+        ratingText = "complete.";
+
+    } else if (activeLessonData.type === "challenge" || activeLessonData.type === "code_fix" || activeLessonData.type === "godot_scene" || (!hasQ && activeLessonData.type === "document")) {
         finalScore = 1;
-        accuracyText = activeLessonData.type === "challenge" ? "Passed" : "Complete";
-        ratingText = "Rating: 1 / 1";
+        accuracyText = "passed.";
+        ratingText = "rating: 1 / 1";
+
     } else {
         const total = activeLessonData.questions.length;
-        const percentage = correctAnswersCount / total;
-        finalScore = Math.round(percentage * 4);
+        finalScore = Math.round((correctAnswersCount / total) * 4);
         if (finalScore === 0 && correctAnswersCount > 0) finalScore = 1;
         accuracyText = `accuracy: ${correctAnswersCount} / ${total}`;
         ratingText = `rating: ${finalScore} / 4`;
@@ -1022,21 +462,20 @@ async function finishLesson() {
 
     const lessonView = document.getElementById("view-lesson");
     lessonView.innerHTML = `
-        <div class="lesson-workspace" style="text-align: center;">
+        <div class="lesson-workspace" style="text-align:center;">
             <h2>Complete</h2>
-            <p style="line-height: 1.5;">${accuracyText}</p>
-            <p style="color: var(--accent); font-size: 24px; margin-top: 20px;">${ratingText}</p>
-            <button id="return-btn" style="margin-top: 40px;">Return</button>
+            <p style="line-height:1.5;">${accuracyText}</p>
+            <p style="color:var(--accent);font-size:24px;margin-top:20px;">${ratingText}</p>
+            <button id="return-btn" style="margin-top:40px;">Return</button>
         </div>
     `;
 
-    if (activeLessonData.type !== "practice_standard" && activeLessonData.type !== "practice_survival" && activeLessonData.type !== "master_test") {
-        if (!userData.scores) userData.scores = {};
-        const currentHighscore = userData.scores[activeLessonData.id] || 0;
-        if (finalScore > currentHighscore) {
+    const isPractice = ["practice_standard", "practice_survival", "master_test"].includes(activeLessonData.type);
+    if (!isPractice) {
+        const current = userData.scores[activeLessonData.id] || 0;
+        if (finalScore > current) {
             userData.scores[activeLessonData.id] = finalScore;
-            const userRef = window.doc(window.db, "users", currentUser.uid);
-            await window.setDoc(userRef, { scores: userData.scores }, { merge: true });
+            await saveUserField("scores", userData.scores);
         }
     }
 
@@ -1044,27 +483,107 @@ async function finishLesson() {
         if (activeLessonData.type === "practice_standard" || activeLessonData.type === "practice_survival") {
             navPractice.click();
         } else {
-            const courseMeta = catalogData.find(c => c.id === activeCurriculumData.id);
-            if (courseMeta) openSyllabus(courseMeta);
+            const meta = catalogData.find(c => c.id === activeCurriculumData?.id);
+            if (meta) openSyllabus(meta);
             else navExplorer.click();
         }
     });
 }
 
-if (searchBar) {
-    searchBar.addEventListener("input", (e) => {
-        const searchQuery = e.target.value.toLowerCase();
-        document.querySelectorAll(".course-card").forEach(card => {
-            const title = card.querySelector("h3")?.innerText.toLowerCase() || "";
-            const desc = card.querySelector("p")?.innerText.toLowerCase() || "";
-            if (title.includes(searchQuery) || desc.includes(searchQuery)) {
-                card.style.display = "flex";
-            } else {
-                card.style.display = "none";
-            }
+
+async function openPracticeHub() {
+    switchView("view-practice");
+    practiceContent.innerHTML = "";
+
+    if (!userData.enrolled.length) {
+        practiceContent.innerHTML = "<p style='color:var(--text-dim)'>no curriculums active.</p>";
+        return;
+    }
+
+    for (const courseId of userData.enrolled) {
+        const meta = catalogData.find(c => c.id === courseId);
+        if (!meta) continue;
+
+        const card = document.createElement("div");
+        card.className = "practice-card";
+        card.innerHTML = `
+            <h3>${meta.title}</h3>
+            <p style="font-size:14px;color:var(--text-dim);">2 Modes</p>
+            <p style="font-size:12px;color:#ff4444;margin-top:-5px;font-weight:bold;">Survival Record: ${userData.survivalScores[courseId] || 0}</p>
+        `;
+
+        const btnGroup = document.createElement("div");
+        btnGroup.className = "practice-btn-group";
+
+        const stdBtn = document.createElement("button");
+        stdBtn.innerText = "standard";
+        stdBtn.addEventListener("click", () => compileStandardPractice(meta));
+
+        const surBtn = document.createElement("button");
+        surBtn.innerText = "survival";
+        surBtn.style.cssText = "color:#ff4444;border-color:#ff4444;";
+        surBtn.addEventListener("click", () => compileSurvivalPractice(meta));
+
+        btnGroup.appendChild(stdBtn);
+        btnGroup.appendChild(surBtn);
+        card.appendChild(btnGroup);
+        practiceContent.appendChild(card);
+    }
+}
+
+function collectAllQuestions(data) {
+    const questions = [];
+    data.sections.forEach(sec => sec.lessons.forEach(lesson => {
+        const id = lesson.id || lesson.title.replace(/\s+/g, "-").toLowerCase();
+        lesson.questions?.forEach((q, i) => {
+            questions.push({ ...q, globalId: `${id}-q${i}`, parentLessonId: id });
         });
+    }));
+    return questions;
+}
+
+async function compileMasterTest() {
+    const all = collectAllQuestions(activeCurriculumData);
+    if (!all.length) { alert("No questions available."); return; }
+    startLesson({
+        id: "master-test",
+        courseId: activeCurriculumData.id,
+        title: "Curriculum Master Test",
+        type: "master_test",
+        questions: shuffleArray(all).slice(0, 15)
     });
 }
+
+async function compileStandardPractice(meta) {
+    activeCurriculumData = await fetchCourseData(meta);
+    const all = collectAllQuestions(activeCurriculumData);
+    const analytics = userData.analytics[activeCurriculumData.id] || {};
+
+    all.sort((a, b) => {
+        const aS = analytics[a.globalId] || { correct: 0, incorrect: 0 };
+        const bS = analytics[b.globalId] || { correct: 0, incorrect: 0 };
+        return (bS.incorrect - bS.correct) - (aS.incorrect - aS.correct);
+    });
+
+    if (!all.length) { alert("Complete more lessons first."); return; }
+    startLesson({ id: "practice-standard", title: "Standard Practice", type: "practice_standard", questions: shuffleArray(all.slice(0, 10)) });
+}
+
+async function compileSurvivalPractice(meta) {
+    activeCurriculumData = await fetchCourseData(meta);
+    const all = collectAllQuestions(activeCurriculumData);
+    if (!all.length) { alert("No questions available."); return; }
+    startLesson({ id: "practice-survival", courseId: meta.id, title: "Survival", type: "practice_survival", questions: shuffleArray(all) });
+}
+
+searchBar?.addEventListener("input", (e) => {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll(".course-card").forEach(card => {
+        const title = card.querySelector("h3")?.innerText.toLowerCase() || "";
+        const desc = card.querySelector("p")?.innerText.toLowerCase() || "";
+        card.style.display = (title.includes(q) || desc.includes(q)) ? "flex" : "none";
+    });
+});
 
 document.querySelectorAll(".filter-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -1072,11 +591,18 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
         btn.classList.add("active");
         const filter = btn.getAttribute("data-filter");
         document.querySelectorAll(".course-card").forEach(card => {
-            if (filter === "all" || card.getAttribute("data-category") === filter) {
-                card.style.display = "flex";
-            } else {
-                card.style.display = "none";
-            }
+            const match = filter === "all" || card.getAttribute("data-category") === filter;
+            card.style.display = match ? "flex" : "none";
         });
     });
+});
+
+document.addEventListener("keydown", (e) => {
+    if (e.target?.classList.contains("challenge-editor") && e.key === "Tab") {
+        e.preventDefault();
+        const el = e.target;
+        const s = el.selectionStart;
+        el.value = el.value.substring(0, s) + "    " + el.value.substring(el.selectionEnd);
+        el.selectionStart = el.selectionEnd = s + 4;
+    }
 });
