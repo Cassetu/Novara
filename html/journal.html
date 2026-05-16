@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal | Novara</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../css/landing.css">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <style>
+        .journal-body {
+            max-width: 680px;
+            margin: 80px auto 0;
+            padding-bottom: 120px;
+        }
+
+        .journal-heading {
+            font-size: 64px;
+            font-weight: 900;
+            letter-spacing: -3px;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 12px;
+        }
+
+        .journal-subheading {
+            font-size: 13px;
+            font-family: monospace;
+            color: #666666;
+            letter-spacing: 2px;
+            margin-bottom: 60px;
+            border-bottom: 2px solid #0a0a0a;
+            padding-bottom: 20px;
+        }
+
+        .entry {
+            margin-bottom: 64px;
+            padding-bottom: 64px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .entry:last-child {
+            border-bottom: none;
+        }
+
+        .entry-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .entry-date {
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: bold;
+            color: #666666;
+            letter-spacing: 2px;
+        }
+
+        .entry-tag {
+            font-family: monospace;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border: 1px solid #0a0a0a;
+        }
+
+        .entry-tag.fix     { border-color: #ff4444; color: #ff4444; }
+        .entry-tag.feature { border-color: #77BBA2; color: #77BBA2; }
+        .entry-tag.content { border-color: #0a0a0a; color: #0a0a0a; }
+        .entry-tag.note    { border-color: #aaaaaa; color: #aaaaaa; }
+
+        .entry-title {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .entry-body {
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.9;
+            color: #333333;
+        }
+
+        .entry-body p {
+            margin-bottom: 14px;
+        }
+
+        .entry-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .entry-body code {
+            background: #f0f0f0;
+            padding: 1px 5px;
+            font-size: 13px;
+            border: 1px solid #dddddd;
+        }
+
+        .coming-soon {
+            margin-top: 60px;
+            padding: 30px;
+            border: 2px dashed #cccccc;
+            font-family: monospace;
+            font-size: 13px;
+            color: #aaaaaa;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body style="margin: 0; background-color: #ffffff;">
+
+<div style="background-color: #ffffff; color: #0a0a0a; min-height: 100vh; font-family: 'Space Grotesk', system-ui, sans-serif; padding: 4vw; box-sizing: border-box;">
+
+    <header class="landing-header">
+        <a href="../index.html" style="text-decoration: none; color: inherit;">
+            <img src="../assets/img/favicon.png" alt="Novara Logo" class="landing-logo">
+        </a>
+        <nav class="landing-nav">
+            <a href="../index.html">COURSES</a>
+            <a href="journal.html" style="border-bottom: 2px solid #77BBA2;">JOURNAL</a>
+            <a href="about.html">ABOUT</a>
+            <a href="../index.html" style="margin-left: 40px;">SIGN IN</a>
+        </nav>
+    </header>
+
+    <div class="journal-body">
+
+        <h1 class="journal-heading">JOURNAL</h1>
+        <p class="journal-subheading">NOVARA CHANGELOG</p>
+
+        <div class="entry">
+            <div class="entry-meta">
+                <span class="entry-date">MAY 16 2025</span>
+                <span class="entry-tag feature">Feature</span>
+            </div>
+            <h2 class="entry-title">Godot Scene Editor</h2>
+            <div class="entry-body">
+                <p>Added a new lesson type specifically for the Godot curriculum. I got Claude to quickly research and build a mimic of the editor: (I'm not great with complex ui elements unfortunately) scene tree on the left, script editor in the center, inspector on the right.</p>
+                <p>Originally I tried flattening the tree into arrays and comparing paths, but it became horrible once reordering nodes entered the picture. Recursive comparison ended up being simpler. Regex handles the script side the same way the existing challenge lessons work.</p>
+                <p>Obviously it can't run real GDScript. But the goal of introducing the editor and teaching how to do basic tasks still works well.</p>
+                <br>
+                <p>Also finally cleaned up the renderer code into separate files because it was becoming a mess, and I didn't want it to end up like some of my other projects.</p>
+            </div>
+        </div>
+
+        <div class="entry">
+            <div class="entry-meta">
+                <span class="entry-date">MAY 12 2025</span>
+                <span class="entry-tag fix">Fix</span>
+            </div>
+            <h2 class="entry-title">Practice Hub</h2>
+            <div class="entry-body">
+                <p>The Practice section wasn't rendering at all. Turns out the<code>view-practice</code> was nested inside <code>view-settings</code> in the HTML bbecause I was missing a closing div. So whenever settings was hidden, practice got hidden with it.</p>
+                <p>Also fixed the sidebar not collapsing during lessons. The CSS was using <code>transform: translateX(-100%)</code> which visually moved it but didn't free the space. Switched to <code>width: 0</code> with a transition and it works properly now.</p>
+            </div>
+        </div>
+
+        <div class="entry">
+            <div class="entry-meta">
+                <span class="entry-date">MAY 10 2025</span>
+                <span class="entry-tag feature">Feature</span>
+            </div>
+            <h2 class="entry-title">Code Fix Lessons</h2>
+            <div class="entry-body">
+                <p>Added a new lesson type where you're given broken code in an editor and have to fix it. Has live iframe preview and console</p>
+                <p>Difficulty with Line Numbering: <code>white-space: pre</code> and <code>overflow-x: auto</code> fixed it. CSS is wacky af</p>
+            </div>
+        </div>
+
+        <div class="entry">
+            <div class="entry-meta">
+                <span class="entry-date">MAY 8 2025</span>
+                <span class="entry-tag content">Content</span>
+            </div>
+            <h2 class="entry-title">JavaScript Curriculum</h2>
+            <div class="entry-body">
+                <p>Finished a first pass of the JS curriculum. Ten modules covering variables, control flow, functions, data structures, DOM, async, fetch, array methods, classes, and error handling.</p>
+                <p>Writing good quiz questions is quite difficult. The wrong answers need to close to correct, if they are obviously wrong, it becomes easy guessing.</p>
+            </div>
+        </div>
+
+        <div class="entry">
+            <div class="entry-meta">
+                <span class="entry-date">MAY 6 2025</span>
+                <span class="entry-tag note">Note</span>
+            </div>
+            <h2 class="entry-title">Why I Built This</h2>
+            <div class="entry-body">
+                <p>Learning misses many things, students sometimes struggle with their teachers, some important information is never covered in courses. With Novara, I can offer courses for any kind of information, with simple, modular structured lessons.</p>
+            </div>
+        </div>
+
+        <div class="coming-soon">
+            You reached the end of the page :O Have a nice day! :)
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
