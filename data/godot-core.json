@@ -543,8 +543,8 @@
                   "node": "CanvasLayer",
                   "name": "CanvasLayer",
                   "children": [
-                    { "node": "Label", "name": "ScoreLabel", "children": [] },
-                    { "node": "ProgressBar", "name": "HealthBar", "children": [] }
+                    { "node": "ProgressBar", "name": "HealthBar", "children": [] },
+                    { "node": "Label", "name": "ScoreLabel", "children": [] }
                   ]
                 }
               ]
