@@ -232,6 +232,7 @@ async function renderExplorer() {
         const isEnrolled = userData.enrolled.includes(course.id);
         const card = document.createElement("div");
         card.className = "course-card";
+        card.setAttribute("data-category", course.category || "");
 
         card.style.display = "flex";
         card.style.flexDirection = "column";
@@ -424,8 +425,8 @@ function startLesson(lesson) {
     isQuestionSubmitted = false;
     survivalStrikes = 0;
 
-    document.body.classList.add("lesson-active");
     switchView("view-lesson");
+    document.body.classList.add("lesson-active");
 
     const existingBack = document.getElementById("lesson-back-btn");
     if (existingBack) existingBack.remove();
@@ -445,7 +446,7 @@ function startLesson(lesson) {
         else navExplorer.click();
     });
 
-    if (activeLessonData.type === "document" || activeLessonData.content) {
+    if (activeLessonData.type === "document") {
         renderDocument();
     } else if (activeLessonData.type === "challenge") {
         renderChallenge();
@@ -827,66 +828,127 @@ function renderCodeFix() {
     const lessonView = document.getElementById("view-lesson");
 
     lessonView.innerHTML = `
-        <div class="lesson-workspace" style="max-width: 900px;">
+        <div class="lesson-workspace" style="max-width:100%;padding-bottom:40px;">
             <div id="course-header">
                 <span>SYS.MODULE</span>
                 <span>DIAGNOSTIC PROTOCOL</span>
             </div>
-
-            <div id="module-content">
+            <div id="module-content" style="margin-bottom:20px;">
                 <h3>${activeLessonData.title}</h3>
-                <p>${activeLessonData.prompt}</p>
+                <p style="text-transform:none;">${activeLessonData.prompt}</p>
             </div>
-
-            <div class="challenge-workspace">
-                <div class="challenge-editor-wrapper">
-                    <textarea id="fix-editor" class="challenge-editor" spellcheck="false"></textarea>
-
-                    <div class="controls" style="justify-content: flex-start; margin-top: 15px;">
-                        <button id="run-code-btn" style="background-color: var(--border); color: var(--surface);">RUN DIAGNOSTIC ↗</button>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;height:520px;">
+                <div style="display:flex;flex-direction:column;height:100%;">
+                    <div class="preview-label">Editor</div>
+                    <div style="display:flex;flex:1;border:3px solid var(--border);box-shadow:4px 4px 0px var(--accent);overflow:hidden;">
+                        <div id="line-numbers" style="background:#1a1a1a;color:#555;font-family:monospace;font-size:13px;line-height:1.6;padding:14px 10px;text-align:right;user-select:none;min-width:40px;overflow-y:hidden;overflow-x:hidden;white-space:pre;pointer-events:none;"></div>
+                        <textarea id="fix-editor" class="challenge-editor" spellcheck="false" style="flex:1;border:none;box-shadow:none;font-size:13px;line-height:1.6;padding:14px;resize:none;white-space:pre;overflow-x:auto;overflow-y:auto;"></textarea>                    </div>
+                    <div style="display:flex;gap:10px;margin-top:12px;">
+                        <button id="run-code-btn" style="background-color:var(--border);color:var(--surface);flex:1;">RUN DIAGNOSTIC ↗</button>
+                        <button id="lesson-action-btn" disabled style="flex:1;">SUBMIT FIX</button>
                     </div>
                 </div>
-
-                <div class="preview-wrapper">
-                    <div class="preview-label">Live Output Feed</div>
-                    <iframe id="preview-frame" class="preview-frame"></iframe>
+                <div style="display:flex;flex-direction:column;height:100%;gap:12px;">
+                    <div style="flex:1;display:flex;flex-direction:column;">
+                        <div class="preview-label">Live Output</div>
+                        <iframe id="preview-frame" class="preview-frame" style="flex:1;box-shadow:4px 4px 0px var(--border);"></iframe>
+                    </div>
+                    <div style="flex:0 0 160px;display:flex;flex-direction:column;">
+                        <div class="preview-label">Console</div>
+                        <div id="fix-console" style="flex:1;background:var(--void);color:#ff4444;font-family:monospace;font-size:13px;padding:14px;border:3px solid var(--border);overflow-y:auto;white-space:pre-wrap;line-height:1.6;box-shadow:4px 4px 0px var(--border);">ready.</div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="lesson-footer">
-                <button id="lesson-action-btn" disabled>SUBMIT FIX</button>
             </div>
         </div>
     `;
 
-    const runBtn = document.getElementById('run-code-btn');
-    const editor = document.getElementById('fix-editor');
-    const frame = document.getElementById('preview-frame');
-    const submitBtn = document.getElementById('lesson-action-btn');
+    const editor = document.getElementById("fix-editor");
+    const lineNumbers = document.getElementById("line-numbers");
+    const frame = document.getElementById("preview-frame");
+    const submitBtn = document.getElementById("lesson-action-btn");
+    const consoleBox = document.getElementById("fix-console");
+    const runBtn = document.getElementById("run-code-btn");
+
     editor.value = activeLessonData.initialCode;
 
-    runBtn.addEventListener('click', () => {
+    function updateLineNumbers() {
+        const lines = editor.value.split("\n").length;
+        lineNumbers.textContent = Array.from({length: lines}, (_, i) => i + 1).join("\n");
+    }
+
+    editor.addEventListener("scroll", () => {
+        lineNumbers.scrollTop = editor.scrollTop;
+    });
+
+    updateLineNumbers();
+    editor.addEventListener("input", updateLineNumbers);
+
+    editor.addEventListener("keydown", (e) => {
+        if (e.key === "Tab") {
+            e.preventDefault();
+            const start = editor.selectionStart;
+            const end = editor.selectionEnd;
+            editor.value = editor.value.substring(0, start) + "    " + editor.value.substring(end);
+            editor.selectionStart = editor.selectionEnd = start + 4;
+            updateLineNumbers();
+        }
+    });
+
+    runBtn.addEventListener("click", () => {
         const code = editor.value;
+        consoleBox.style.color = "#aaaaaa";
+        consoleBox.textContent = "running...";
 
-        const doc = frame.contentDocument || frame.contentWindow.document;
+        const errors = [];
 
-        doc.open();
-        doc.write(code);
-        doc.close();
+        const frameDoc = frame.contentDocument || frame.contentWindow.document;
+        frameDoc.open();
+
+        const injected = code.replace(
+            /<script\b[^>]*>/gi,
+            `<script>
+                window.onerror = function(msg, src, line, col) {
+                    window.parent.document.getElementById('fix-console').style.color = '#ff4444';
+                    window.parent.document.getElementById('fix-console').textContent = 'line ' + line + ': ' + msg;
+                    return true;
+                };
+                const _origLog = console.log;
+                console.log = function(...args) {
+                    const box = window.parent.document.getElementById('fix-console');
+                    box.style.color = '#77BBA2';
+                    box.textContent = args.join(' ');
+                    _origLog.apply(console, args);
+                };
+            `
+        );
+
+        frameDoc.write(injected);
+        frameDoc.close();
+
+        setTimeout(() => {
+            const currentConsole = document.getElementById("fix-console");
+            if (currentConsole && currentConsole.textContent === "running...") {
+                currentConsole.style.color = "#77BBA2";
+                currentConsole.textContent = "no errors.";
+            }
+        }, 400);
 
         if (activeLessonData.targetFix && code.includes(activeLessonData.targetFix)) {
             submitBtn.disabled = false;
             submitBtn.style.backgroundColor = "var(--accent)";
+            submitBtn.style.color = "#ffffff";
             correctSound.currentTime = 0;
             correctSound.play();
         } else {
             submitBtn.disabled = true;
+            submitBtn.style.backgroundColor = "";
+            submitBtn.style.color = "";
             incorrectSound.currentTime = 0;
             incorrectSound.play();
         }
     });
 
-    submitBtn.addEventListener('click', () => {
+    submitBtn.addEventListener("click", () => {
         finishLesson();
     });
 }
@@ -992,13 +1054,10 @@ async function finishLesson() {
 if (searchBar) {
     searchBar.addEventListener("input", (e) => {
         const searchQuery = e.target.value.toLowerCase();
-
-        const courseCards = document.querySelectorAll(".course-card");
-
-        courseCards.forEach(card => {
-            const cardText = card.innerText.toLowerCase();
-
-            if (cardText.includes(searchQuery)) {
+        document.querySelectorAll(".course-card").forEach(card => {
+            const title = card.querySelector("h3")?.innerText.toLowerCase() || "";
+            const desc = card.querySelector("p")?.innerText.toLowerCase() || "";
+            if (title.includes(searchQuery) || desc.includes(searchQuery)) {
                 card.style.display = "flex";
             } else {
                 card.style.display = "none";
@@ -1006,3 +1065,18 @@ if (searchBar) {
         });
     });
 }
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const filter = btn.getAttribute("data-filter");
+        document.querySelectorAll(".course-card").forEach(card => {
+            if (filter === "all" || card.getAttribute("data-category") === filter) {
+                card.style.display = "flex";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+});

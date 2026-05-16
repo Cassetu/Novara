@@ -55,8 +55,10 @@ h1, h2, h3 {
 }
 
 body.lesson-active .sidebar {
-    transform: translateX(-100%);
-    position: absolute;
+    width: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden;
 }
 
 .sidebar h2 {
@@ -488,6 +490,10 @@ body.lesson-active .workspace {
     outline: none;
     line-height: 1.8;
     box-shadow: 4px 4px 0px var(--accent);
+    white-space: pre;
+    overflow-x: auto;
+    overflow-wrap: normal;
+    word-wrap: normal;
 }
 
 .challenge-console {
@@ -740,12 +746,6 @@ button:disabled {
 #view-lesson {
     overflow: hidden;
     box-sizing: border-box;
-}
-
-.lesson-workspace {
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
 }
 
 .challenge-workspace {

@@ -1,0 +1,42 @@
+TYPES:
+
+  document
+    - Reading content only, no questions.
+    - Fields: id, title, type, content, examples[]
+    - Completion: single click "mark as read"
+    - Score: 1 point (binary)
+
+  document (with questions)
+    - Reading content followed by MCQ quiz.
+    - Fields: id, title, type, content, examples[], questions[]
+    - Completion: read screen → quiz
+    - Score: 0–4 points based on accuracy
+
+  challenge
+    - Blank editor, regex-validated code writing task.
+    - Fields: id, title, type, prompt, solution, validation[]
+    - validation[]: { rule: "regex string", message: "error string" }
+    - Completion: all regex rules pass
+    - Score: 1 point (binary)
+
+  code_fix
+    - Pre-filled editor with broken code. Live iframe preview.
+    - Fields: id, title, type, prompt, initialCode, targetFix
+    - targetFix: exact string that must appear in fixed code
+    - Completion: code contains targetFix string + submit clicked
+    - Score: 1 point (binary)
+    - Features: line numbers, console output, runtime error display
+
+PRACTICE MODES (not lesson types, compiled from enrolled courses):
+
+  practice_standard
+    - 10 questions sorted by weakest performance (analytics delta)
+    - No score saved, analytics updated
+
+  practice_survival
+    - All questions shuffled, 3 strikes and out
+    - Survival high score saved per course
+
+  master_test
+    - Up to 15 questions pulled from entire curriculum
+    - Projects score back onto individual lesson records
