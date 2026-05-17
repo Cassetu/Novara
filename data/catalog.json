@@ -47,5 +47,12 @@
     "category": "gamedev",
     "description": "Nodes, scenes, GDScript, signals, physics, UI, and game architecture. Build real games *Generated*",
     "file": "data/godot-core.json"
+  },
+  {
+    "id": "economics-core",
+    "title": "Economics",
+    "category": "other",
+    "description": "Supply and demand, market structures, fiscal policy *Generated*",
+    "file": "data/economics-core.json"
   }
 ]

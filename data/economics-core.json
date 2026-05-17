@@ -1,0 +1,1272 @@
+{
+  "id": "economics-core",
+  "title": "Economics: How the World Allocates",
+  "sections": [
+    {
+      "title": "Module 1: Foundations of Economic Thinking",
+      "lessons": [
+        {
+          "id": "l-what-is-economics",
+          "title": "What Economics Actually Is",
+          "type": "document",
+          "content": "Economics is the study of how people, businesses, and governments make decisions when resources are limited. That limitation is the starting point for everything else in this subject.\n\nResources are scarce. There is only so much land, time, money, labor, and raw material available at any moment. Because of this scarcity, every choice involves a tradeoff. When you spend an hour studying, you are not spending that hour sleeping or working. When a government spends money on roads, that money is not being spent on schools. Every decision to do one thing is simultaneously a decision not to do something else.\n\nEconomics is split into two main branches. Microeconomics focuses on the decisions of individuals, households, and firms. It asks questions like: why does the price of coffee rise when a frost hits Brazil? How do firms decide how much to produce? How do wages get determined?\n\nMacroeconomics zooms out and looks at entire economies. It asks: why does a country's unemployment rate rise during a recession? What causes inflation? How do interest rates affect economic growth?\n\nBoth branches use models. A model is a simplified representation of reality that isolates specific relationships and helps us think clearly. No model captures everything, and that is by design. The goal is clarity, not completeness.",
+          "examples": [
+            {
+              "label": "Scarcity in Practice",
+              "code": "A city has a budget of $10 million for public services.\n\nOption A: Build a new hospital wing.\nOption B: Repair 50 miles of road.\nOption C: Hire 200 new teachers.\n\nChoosing one means giving up the others.\nThis is scarcity forcing a tradeoff.\nEconomics studies how and why that choice gets made."
+            }
+          ]
+        },
+        {
+          "id": "l-opportunity-cost",
+          "title": "Opportunity Cost",
+          "type": "document",
+          "content": "The opportunity cost of a choice is the value of the next best alternative you gave up by making that choice. It is not just what you spent. It is what you could have had instead.\n\nIf you have $1000 and you spend it on a vacation, the opportunity cost is not just $1000. It is whatever that $1000 would have produced if you had used it differently. If the next best option was investing it at 8% interest, the opportunity cost is $1080 next year.\n\nOpportunity cost applies to time as well. A doctor who decides to mow their own lawn instead of hiring someone has a very high opportunity cost. The hour they spent mowing is an hour they could have spent seeing patients and earning several hundred dollars.\n\nThis is why economists say there is no such thing as a free lunch. Even if something has no monetary price, it consumes time, attention, or space that could have gone to something else. The cost is always there. It just is not always obvious.\n\nUnderstanding opportunity cost is what separates economic thinking from surface-level thinking. Most people count what they spend. Economists also count what they gave up.",
+          "examples": [
+            {
+              "label": "The College Decision",
+              "code": "You decide to go to college for 4 years.\n\nDirect costs: $120,000 in tuition and fees.\n\nOpportunity cost: The salary you could have earned\nworking full-time for 4 years. If that is $35,000/year,\nthe opportunity cost is $140,000.\n\nTotal economic cost of college:\n$120,000 + $140,000 = $260,000\n\nNot $120,000. That is why the economic return\non a degree needs to be high to justify the choice."
+            }
+          ]
+        },
+        {
+          "id": "l-production-possibilities",
+          "title": "The Production Possibilities Frontier",
+          "type": "document",
+          "content": "The Production Possibilities Frontier (PPF) is a model that shows the maximum combinations of two goods an economy can produce when all resources are fully and efficiently used.\n\nPoints on the curve represent efficient production. Points inside the curve represent inefficiency. Points outside the curve are currently impossible with available resources and technology.\n\nThe shape of the PPF matters. A straight PPF means constant opportunity cost: giving up one unit of good A always produces the same number of units of good B. A bowed-out PPF means increasing opportunity cost: as you produce more of one good, each additional unit costs you more of the other good. This happens because resources are not equally suited to producing all goods.\n\nThe PPF shifts outward when an economy grows. This happens through more resources, better technology, or improved productivity. A technological advance in one sector shifts only part of the curve.\n\nThe PPF also illustrates the concept of comparative advantage. Even if one country or person can produce everything more efficiently than another, both can still gain from specialization and trade.",
+          "examples": [
+            {
+              "label": "Reading the PPF",
+              "code": "An economy produces only wheat and steel.\n\nAt point A: 100 wheat, 0 steel (all resources on wheat)\nAt point B: 80 wheat, 20 steel\nAt point C: 50 wheat, 40 steel (balanced production)\nAt point D: 0 wheat, 50 steel (all resources on steel)\n\nAll points A through D are on the frontier: efficient.\nA point producing 40 wheat and 10 steel is inside\nthe frontier: inefficient, resources are being wasted.\nA point of 100 wheat and 50 steel is outside: impossible now."
+            }
+          ]
+        },
+        {
+          "id": "l-economic-systems",
+          "title": "Types of Economic Systems",
+          "type": "document",
+          "content": "Every society must answer three fundamental economic questions. What should be produced? How should it be produced? For whom should it be produced? The way a society answers these questions defines its economic system.\n\nA market economy answers these questions through prices and voluntary exchange. Buyers and sellers interact in markets, and prices emerge from those interactions. Prices carry information and coordinate decisions without any central authority directing them. The United States, Canada, and most of Western Europe operate as market economies.\n\nA command economy answers these questions through central planning. A government authority decides what gets produced, in what quantities, and who receives it. The Soviet Union operated this way. Command economies can mobilize resources quickly for specific goals but struggle with the information problem: no central planner has access to all the local knowledge that markets aggregate through prices.\n\nA mixed economy combines elements of both. Most real economies today are mixed. Governments regulate certain industries, provide public goods, and redistribute income, while markets handle most day-to-day production and exchange.\n\nA traditional economy answers these questions based on custom and historical practice. Production follows patterns established by prior generations. These exist in isolated communities and declining numbers.",
+          "examples": [
+            {
+              "label": "Three Questions Across Systems",
+              "code": "Question: What to produce?\nMarket: Whatever buyers are willing to pay for.\nCommand: Whatever the planning authority decides.\nTraditional: Whatever has always been produced.\n\nQuestion: How to produce it?\nMarket: Whatever method is most profitable.\nCommand: Whatever method the plan specifies.\nTraditional: Whatever method ancestors used.\n\nQuestion: For whom?\nMarket: Those who can afford it.\nCommand: Whoever the authority allocates to.\nTraditional: Distributed by custom and role."
+            }
+          ]
+        },
+        {
+          "id": "l-marginal-thinking",
+          "title": "Thinking at the Margin",
+          "type": "document",
+          "content": "Economists think in terms of marginal changes. A marginal change is a small, incremental adjustment to a plan or decision. The question is never should you do this or not. The question is should you do a little more or a little less of this.\n\nMarginal benefit is the additional benefit gained from one more unit of something. Marginal cost is the additional cost incurred by producing or consuming one more unit.\n\nThe core principle: a rational decision-maker continues an activity as long as the marginal benefit exceeds the marginal cost. They stop when marginal cost exceeds marginal benefit. The optimal point is where marginal benefit equals marginal cost.\n\nThis applies everywhere. How many hours should you study? Keep studying as long as the benefit of one more hour exceeds the cost. How much should a factory produce? Keep producing as long as the revenue from one more unit exceeds the cost of producing it.\n\nSunk costs are costs that have already been incurred and cannot be recovered. Economic thinking says sunk costs should be ignored in current decisions. What you spent in the past does not change the marginal costs and benefits you face right now. People who keep watching a bad movie because they paid for it are committing the sunk cost fallacy.",
+          "examples": [
+            {
+              "label": "Marginal Decision: How Much to Produce",
+              "code": "Unit 1: Revenue $50, Cost $20. Net benefit: +$30. Produce.\nUnit 2: Revenue $45, Cost $25. Net benefit: +$20. Produce.\nUnit 3: Revenue $40, Cost $35. Net benefit: +$5. Produce.\nUnit 4: Revenue $35, Cost $40. Net benefit: -$5. Stop.\n\nThe rational firm stops at unit 3.\nUnit 4 costs more than it earns.\nThis is marginal analysis."
+            }
+          ]
+        },
+        {
+          "id": "l-foundation-questions",
+          "title": "Economic Foundations",
+          "questions": [
+            {
+              "q": "What is scarcity in economics?",
+              "options": ["When prices are very high.", "When resources are limited relative to unlimited human wants, forcing tradeoffs.", "When a country is poor.", "When a product is rare and collectible."],
+              "answer": 1,
+              "explanation": "Scarcity is the fundamental condition that makes economics necessary. Because resources are finite and wants are not, every choice involves giving something up. Scarcity applies to rich countries and poor ones alike."
+            },
+            {
+              "q": "What is the opportunity cost of a decision?",
+              "options": ["The price paid for a good or service.", "The value of the best alternative that was given up by making that choice.", "The total cost of all alternatives.", "The regret a person feels after choosing."],
+              "answer": 1,
+              "explanation": "Opportunity cost is not just what you spent. It is the value of the next best thing you could have done instead. It captures the true cost of any choice."
+            },
+            {
+              "q": "What does a point inside the Production Possibilities Frontier represent?",
+              "options": ["The most efficient allocation possible.", "A combination of output that is currently impossible.", "Inefficiency: resources are not being fully or properly used.", "A situation where the economy is growing."],
+              "answer": 2,
+              "explanation": "Points inside the PPF represent underperformance. The economy is producing less than it is capable of with its available resources. Points on the frontier are efficient. Points outside are currently unattainable."
+            },
+            {
+              "q": "What is the marginal cost?",
+              "options": ["The total cost of producing all units.", "The average cost per unit.", "The additional cost of producing one more unit.", "The cost of the first unit produced."],
+              "answer": 2,
+              "explanation": "Marginal cost is the cost added by producing exactly one additional unit. It is not the average and not the total. Marginal analysis uses this figure to determine optimal output decisions."
+            },
+            {
+              "q": "What is the sunk cost fallacy?",
+              "options": ["Investing too much in a profitable venture.", "Letting past costs that cannot be recovered influence current decisions, when they should be ignored.", "Underestimating the cost of future projects.", "Spending money on something with no resale value."],
+              "answer": 1,
+              "explanation": "Sunk costs are gone regardless of what you decide now. Rational economic decisions are based on current marginal costs and benefits. Continuing a bad project because you already invested in it is the sunk cost fallacy."
+            },
+            {
+              "q": "What makes an economy a mixed economy?",
+              "options": ["It produces both goods and services.", "It combines market mechanisms with government intervention and public provision.", "It trades with both rich and poor countries.", "It has both large and small firms."],
+              "answer": 1,
+              "explanation": "A mixed economy uses markets for most production and exchange decisions while also involving government through regulation, public goods, and redistribution. Most modern economies are mixed."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-opportunity-cost",
+          "title": "Protocol: Calculate Opportunity Cost",
+          "type": "challenge",
+          "prompt": "You have 3 hours free on Saturday. You can use them to:\n\nOption A: Work a part-time job at $20/hour = $60\nOption B: Study for an exam\nOption C: Watch movies\n\nYou choose to study. What is the opportunity cost of studying?\n\nWrite only the dollar amount of the opportunity cost.",
+          "solution": "$60",
+          "validation": [
+            {
+              "rule": "\\$60|60",
+              "message": "error: the opportunity cost is the value of the next best alternative given up. you chose to study instead of working, so the opportunity cost is the $60 you could have earned."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Supply and Demand",
+      "lessons": [
+        {
+          "id": "l-demand",
+          "title": "Demand",
+          "type": "document",
+          "content": "Demand is the relationship between the price of a good and the quantity that buyers are willing and able to purchase, holding all other factors constant. The key phrase is willing and able. Wanting something is not demand. Having the willingness and the purchasing power together is demand.\n\nThe Law of Demand states that as price increases, quantity demanded decreases, and vice versa. This is an inverse relationship. The reason is straightforward: when something costs more, some buyers can no longer afford it, and others find substitutes.\n\nA demand curve graphs this relationship with price on the vertical axis and quantity on the horizontal axis. It typically slopes downward from left to right.\n\nIt is critical to distinguish between a change in quantity demanded and a change in demand. A change in quantity demanded is a movement along the existing demand curve caused by a price change. A change in demand is a shift of the entire curve caused by something other than price.\n\nThings that shift the demand curve include: income changes, prices of related goods (substitutes or complements), consumer tastes and preferences, expectations about future prices, and the number of buyers in the market.\n\nSubstitutes are goods that can replace each other. If the price of butter rises, demand for margarine increases. Complements are goods used together. If the price of printers rises, demand for ink cartridges falls.",
+          "examples": [
+            {
+              "label": "Shift vs Movement",
+              "code": "Movement along the curve:\nThe price of coffee rises from $3 to $4.\nConsumers buy fewer cups per week.\nThis is a change in quantity demanded, not demand.\n\nShift of the curve:\nA study is published showing coffee reduces health risks.\nAt every price, consumers want more coffee than before.\nThe entire demand curve shifts right.\nThis is a change in demand."
+            }
+          ]
+        },
+        {
+          "id": "l-supply",
+          "title": "Supply",
+          "type": "document",
+          "content": "Supply is the relationship between the price of a good and the quantity that producers are willing and able to sell, holding all other factors constant. The Law of Supply states that as price increases, quantity supplied increases. This is a positive relationship. Higher prices make it more profitable to produce and attract more sellers into the market.\n\nA supply curve slopes upward from left to right.\n\nAs with demand, distinguish between a change in quantity supplied and a change in supply. A price change moves you along the supply curve. A non-price factor shifts the entire curve.\n\nThings that shift the supply curve include: input costs (wages, raw materials), technology improvements, number of sellers, government taxes and subsidies, and expectations about future prices.\n\nIf wages rise, it costs more to produce, so supply decreases and the curve shifts left. If a new technology makes production cheaper, supply increases and the curve shifts right.\n\nA tax on a product increases the cost of selling it, which reduces supply. A subsidy reduces the cost of selling, which increases supply.",
+          "examples": [
+            {
+              "label": "What Shifts Supply",
+              "code": "Supply increases (curve shifts right):\n- New technology cuts production costs\n- Price of a key input falls\n- Government provides a production subsidy\n- More firms enter the market\n\nSupply decreases (curve shifts left):\n- Cost of labor rises\n- Raw material becomes scarce\n- Government imposes a new production tax\n- Firms exit the market"
+            }
+          ]
+        },
+        {
+          "id": "l-equilibrium",
+          "title": "Market Equilibrium",
+          "type": "document",
+          "content": "Market equilibrium is the price at which quantity supplied equals quantity demanded. At this price, the market clears: every buyer who wants the good at that price can find a seller, and every seller who wants to sell at that price can find a buyer.\n\nWhen price is above equilibrium, quantity supplied exceeds quantity demanded. This creates a surplus. Sellers are producing more than buyers want at that price. The surplus puts downward pressure on price, moving the market back toward equilibrium.\n\nWhen price is below equilibrium, quantity demanded exceeds quantity supplied. This creates a shortage. Buyers want more than sellers are producing at that price. The shortage puts upward pressure on price, moving the market back toward equilibrium.\n\nThis self-correcting process is what economists mean when they say markets tend toward equilibrium. Price acts as a signal: too high means produce less or lower the price; too low means produce more or raise the price.\n\nWhen supply or demand shifts, a new equilibrium is established. If demand increases while supply stays constant, the equilibrium price rises and equilibrium quantity rises. If supply decreases while demand stays constant, the equilibrium price rises and equilibrium quantity falls.",
+          "examples": [
+            {
+              "label": "Shift in Demand: Finding New Equilibrium",
+              "code": "Original equilibrium: Price = $10, Quantity = 500 units\n\nEvent: A new study shows this product has major health benefits.\nDemand increases: the demand curve shifts right.\n\nAt the old price of $10: quantity demanded is now 700\nbut quantity supplied is still 500. Shortage of 200 units.\n\nPrice rises. At $13, quantity demanded falls back toward 580\nand quantity supplied rises to 580.\n\nNew equilibrium: Price = $13, Quantity = 580 units."
+            }
+          ]
+        },
+        {
+          "id": "l-elasticity",
+          "title": "Elasticity",
+          "type": "document",
+          "content": "Elasticity measures how responsive quantity is to a change in price or another variable. It tells us not just that demand falls when price rises, but how much it falls.\n\nPrice elasticity of demand measures how much quantity demanded changes in response to a price change. The formula is the percentage change in quantity demanded divided by the percentage change in price.\n\nIf the result is greater than 1, demand is elastic: quantity responds strongly to price changes. Consumers are sensitive to price. Goods with many substitutes tend to be elastic.\n\nIf the result is less than 1, demand is inelastic: quantity responds weakly to price changes. Consumers buy roughly the same amount regardless of price changes. Necessities with few substitutes, like insulin for diabetics, tend to be inelastic.\n\nIf the result equals 1, demand is unit elastic.\n\nElasticity matters for revenue. If demand is elastic, raising price decreases total revenue because quantity falls by a larger percentage than price rose. If demand is inelastic, raising price increases total revenue because quantity falls by a smaller percentage than price rose.\n\nIncome elasticity of demand measures how quantity demanded responds to changes in consumer income. Normal goods have positive income elasticity: demand rises with income. Inferior goods have negative income elasticity: demand falls as income rises.",
+          "examples": [
+            {
+              "label": "Calculating Elasticity",
+              "code": "Price rises from $10 to $12 (20% increase).\nQuantity demanded falls from 100 to 80 (20% decrease).\n\nElasticity = 20% / 20% = 1.0 (unit elastic)\n\nPrice rises from $10 to $12 (20% increase).\nQuantity demanded falls from 100 to 60 (40% decrease).\n\nElasticity = 40% / 20% = 2.0 (elastic)\nConsumers are very responsive to the price change.\n\nPrice rises from $10 to $12 (20% increase).\nQuantity demanded falls from 100 to 95 (5% decrease).\n\nElasticity = 5% / 20% = 0.25 (inelastic)\nConsumers barely change behavior when price rises."
+            }
+          ]
+        },
+        {
+          "id": "l-price-controls",
+          "title": "Price Controls",
+          "type": "document",
+          "content": "Sometimes governments intervene in markets by setting prices above or below the equilibrium price. These are called price controls.\n\nA price ceiling is a legal maximum price. The government says prices cannot go above this level. For a price ceiling to be binding (to have any effect), it must be set below the equilibrium price. If you set a maximum price of $100 when the market price is $60, the ceiling does nothing.\n\nA binding price ceiling creates a shortage. At the artificially low price, consumers want more than producers are willing to supply. The most famous example is rent control. When rents are capped below market equilibrium, more people want apartments than landlords are willing to rent out at that price.\n\nA price floor is a legal minimum price. For a floor to be binding, it must be set above the equilibrium price. A binding price floor creates a surplus. At the artificially high price, producers supply more than consumers want to buy.\n\nThe minimum wage is a price floor in the labor market. When the minimum wage is set above the market equilibrium wage for low-skill labor, employers hire fewer workers than they would at the lower wage, potentially creating unemployment.\n\nBoth types of price controls create inefficiencies and lead to non-price rationing mechanisms: waiting lines, connections, discrimination, and black markets.",
+          "examples": [
+            {
+              "label": "Price Ceiling: Rent Control",
+              "code": "Market equilibrium rent: $2,000/month\nGovernment sets rent ceiling: $1,400/month\n\nAt $1,400: 10,000 apartments demanded, 6,000 supplied.\nShortage: 4,000 apartments.\n\nConsequences:\n- Long waiting lists\n- Landlords select tenants using non-price criteria\n- Landlords reduce maintenance (less incentive to improve)\n- Fewer new apartments built\n- Black market subletting at above-ceiling prices"
+            }
+          ]
+        },
+        {
+          "id": "l-supply-demand-questions",
+          "title": "Supply, Demand, and Markets",
+          "questions": [
+            {
+              "q": "The Law of Demand states that as price increases, quantity demanded:",
+              "options": ["Increases", "Stays the same", "Decreases", "First increases then decreases"],
+              "answer": 2,
+              "explanation": "The Law of Demand describes an inverse relationship between price and quantity demanded. When price rises, some buyers exit the market or switch to substitutes. Quantity demanded falls."
+            },
+            {
+              "q": "What causes a shift in the demand curve rather than a movement along it?",
+              "options": ["A change in the price of the good itself.", "A change in consumer income, preferences, or the price of related goods.", "A change in production technology.", "A change in the number of firms in the market."],
+              "answer": 1,
+              "explanation": "Only a price change moves you along a fixed demand curve. Everything else (income, substitutes, complements, expectations, number of buyers) shifts the entire curve to a new position."
+            },
+            {
+              "q": "When price is above equilibrium, what happens in the market?",
+              "options": ["A shortage develops and prices rise further.", "A surplus develops and downward pressure on price pushes it back toward equilibrium.", "The market splits into two separate markets.", "Supply decreases to match the higher price."],
+              "answer": 1,
+              "explanation": "Above equilibrium, quantity supplied exceeds quantity demanded. Unsold inventory builds up. Sellers lower prices to clear the surplus. This moves the market back toward the equilibrium price."
+            },
+            {
+              "q": "Demand for a good is elastic. The seller raises the price. What happens to total revenue?",
+              "options": ["Total revenue rises because the higher price offsets the drop in sales.", "Total revenue falls because quantity drops by a larger percentage than price rose.", "Total revenue stays the same because elasticity equals 1.", "Total revenue rises because elastic demand means fewer substitutes."],
+              "answer": 1,
+              "explanation": "With elastic demand, consumers are sensitive to price. When price rises, quantity falls by proportionally more, so total revenue (price times quantity) declines. Sellers of elastic goods should not raise prices to increase revenue."
+            },
+            {
+              "q": "A binding price ceiling is set:",
+              "options": ["Above the equilibrium price.", "Exactly at the equilibrium price.", "Below the equilibrium price.", "At whatever price the government chooses."],
+              "answer": 2,
+              "explanation": "A price ceiling must be below the market equilibrium price to have any effect. If it is set above equilibrium, the market price is already below the ceiling and the law changes nothing. A binding ceiling creates a shortage."
+            },
+            {
+              "q": "Which of these goods is most likely to have inelastic demand?",
+              "options": ["Luxury handbags", "Insulin for diabetics", "Restaurant meals", "Streaming subscriptions"],
+              "answer": 1,
+              "explanation": "Inelastic goods are necessities with few or no substitutes. Insulin is a life-sustaining medication for diabetics with no alternative. Quantity demanded does not fall much even when price rises significantly."
+            },
+            {
+              "q": "The price of steel rises sharply. What happens to the supply of cars, which require steel to produce?",
+              "options": ["Supply of cars increases because steel is now more valuable.", "Supply of cars is unaffected because they are different markets.", "Supply of cars decreases because input costs have risen.", "Demand for cars increases to compensate."],
+              "answer": 2,
+              "explanation": "Steel is an input in car production. When input costs rise, it becomes more expensive to produce each car. This reduces the willingness of car manufacturers to supply at every price, shifting the supply curve left."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-equilibrium",
+          "title": "Protocol: Predict the New Equilibrium",
+          "type": "challenge",
+          "prompt": "The market for electric vehicles is at equilibrium. Then two things happen simultaneously:\n\n1. The government offers buyers a $5,000 subsidy to purchase electric vehicles.\n2. A new battery technology cuts production costs by 40%.\n\nWhat direction does equilibrium price move: up, down, or uncertain? Write one word.",
+          "solution": "uncertain",
+          "validation": [
+            {
+              "rule": "^uncertain$|^Uncertain$",
+              "message": "error: demand increases (subsidy to buyers) and supply increases (lower production costs). both shifts increase equilibrium quantity, but the price effect depends on which shift is larger. price could go up, down, or stay the same. the correct answer is uncertain."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Consumer Theory",
+      "lessons": [
+        {
+          "id": "l-utility",
+          "title": "Utility and Consumer Choice",
+          "type": "document",
+          "content": "Utility is the satisfaction or benefit a consumer receives from consuming a good or service. It is a way of measuring how much a consumer values something, even though utility cannot be directly observed or measured in standard units.\n\nTotal utility is the overall satisfaction from consuming a given quantity of a good. Marginal utility is the additional satisfaction from consuming one more unit.\n\nThe Law of Diminishing Marginal Utility states that as you consume more of a good, the marginal utility of each additional unit decreases. The first slice of pizza tastes great. The second is still good. By the fifth slice, you are barely enjoying it. By the seventh, you regret it.\n\nConsumers maximize utility by allocating their budget so that the marginal utility per dollar spent is equal across all goods they consume. This is called the utility-maximizing condition. If the last dollar spent on coffee gives you more utility than the last dollar spent on tea, you should buy more coffee and less tea until those marginal utilities equalize.\n\nConsumer surplus is the difference between the maximum price a consumer is willing to pay for a good and the actual price they pay. If you would pay $50 for a concert ticket and the ticket costs $30, your consumer surplus is $20. Markets create consumer surplus, which represents value that buyers receive beyond what they pay.",
+          "examples": [
+            {
+              "label": "Diminishing Marginal Utility",
+              "code": "Slices of pizza consumed and marginal utility:\n\nSlice 1: Marginal utility = 20\nSlice 2: Marginal utility = 15\nSlice 3: Marginal utility = 10\nSlice 4: Marginal utility = 4\nSlice 5: Marginal utility = 0\nSlice 6: Marginal utility = -5 (you feel sick)\n\nTotal utility rises until slice 5 then falls.\nMarginal utility falls with each additional unit.\nYou stop eating when marginal utility hits zero\nor when it falls below the marginal cost of eating more."
+            }
+          ]
+        },
+        {
+          "id": "l-budget-constraint",
+          "title": "Budget Constraints and Choices",
+          "type": "document",
+          "content": "A consumer's budget constraint shows all combinations of goods they can afford with a given income at given prices. It is a real limitation that shapes every consumer decision.\n\nIf you have $100 and apples cost $2 and oranges cost $5, you can buy 50 apples and no oranges, or 20 oranges and no apples, or any combination in between that does not exceed $100.\n\nWhen income increases, the budget constraint shifts outward: the consumer can afford more of everything. When income decreases, it shifts inward.\n\nWhen the price of one good changes, the budget constraint rotates. If apples get cheaper, you can now buy more apples with the same budget, so the apple end of the constraint extends outward.\n\nRational consumers choose the combination of goods that gives them the highest utility subject to their budget constraint. This is where consumer theory connects to demand: when price falls, the consumer can reach a higher level of satisfaction, which generally leads them to buy more of the good.\n\nThe substitution effect and income effect both explain why quantity demanded increases when price falls. The substitution effect is the shift toward the now-cheaper good. The income effect is the increase in real purchasing power the consumer experiences when a good they buy gets cheaper.",
+          "examples": [
+            {
+              "label": "Substitution and Income Effects",
+              "code": "You spend $40/month on gas.\nThe price of gas falls by half.\n\nSubstitution effect:\nGas is now cheaper relative to other ways of traveling.\nYou drive more instead of taking the bus.\n\nIncome effect:\nYou now spend only $20/month on the same gas.\nYou have $20 extra purchasing power.\nYou use it to buy other goods OR drive even more.\n\nBoth effects push quantity demanded of gas upward.\nThis is why the demand curve slopes downward."
+            }
+          ]
+        },
+        {
+          "id": "l-behavioral-economics",
+          "title": "Behavioral Economics",
+          "type": "document",
+          "content": "Standard economic theory assumes that consumers are rational: they have consistent preferences, process information accurately, and always make decisions that maximize their utility. Behavioral economics challenges this assumption by studying how people actually make decisions, which often deviates from the rational model.\n\nLoss aversion is one of the most robust findings in behavioral economics. People feel the pain of a loss roughly twice as strongly as they feel the pleasure of an equivalent gain. Losing $100 feels worse than gaining $100 feels good. This means people take fewer risks than a rational model would predict.\n\nAnchoring occurs when people rely too heavily on the first piece of information they see. If a jacket is listed as originally $300 but now $150, consumers evaluate it differently than if it were simply priced at $150 from the start, even though the actual cost is identical.\n\nPresent bias means people disproportionately prefer immediate rewards over future ones. Most people say they would choose $100 today over $110 in a week, even though waiting one week for a 10% return would be an extraordinary investment by any standard.\n\nNudge theory suggests that the way choices are presented, not just the choices themselves, significantly affects decisions. Setting healthy food as the default option in a cafeteria increases healthy eating without removing any choices. This has applications in public policy, retirement savings, and public health.",
+          "examples": [
+            {
+              "label": "Loss Aversion in Practice",
+              "code": "A rational agent offered a coin flip:\nHeads: win $110\nTails: lose $100\n\nExpected value: (+$110 + -$100) / 2 = +$5\nA purely rational person should take this bet.\n\nMost real people refuse it.\nThe potential loss of $100 looms larger psychologically\nthan the potential gain of $110.\nThis is loss aversion overriding expected value calculation."
+            }
+          ]
+        },
+        {
+          "id": "l-consumer-theory-questions",
+          "title": "Consumer Theory",
+          "questions": [
+            {
+              "q": "What does the Law of Diminishing Marginal Utility state?",
+              "options": ["Total utility decreases as consumption increases.", "The price of a good falls as more of it is consumed.", "The additional satisfaction from each extra unit of a good decreases as consumption increases.", "Consumers always prefer variety over quantity."],
+              "answer": 2,
+              "explanation": "Diminishing marginal utility means the first unit of something is the most valuable, and each additional unit adds less satisfaction than the one before. This is a universal pattern in consumer behavior."
+            },
+            {
+              "q": "What is consumer surplus?",
+              "options": ["The extra goods a consumer buys beyond their needs.", "The income left over after all purchases.", "The difference between the maximum price a consumer would pay and the actual price they pay.", "The utility gained from the last unit purchased."],
+              "answer": 2,
+              "explanation": "Consumer surplus represents value captured by the buyer. If you would pay $80 for something priced at $50, you receive $30 in surplus value. Markets generate consumer surplus, which is part of why free exchange benefits both parties."
+            },
+            {
+              "q": "What is loss aversion in behavioral economics?",
+              "options": ["The tendency to avoid buying insurance.", "The tendency to feel losses more strongly than equivalent gains.", "The preference for certain outcomes over uncertain ones.", "The tendency to avoid all financial risk."],
+              "answer": 1,
+              "explanation": "Loss aversion means the psychological pain of losing $100 is approximately twice as strong as the pleasure of gaining $100. This causes people to make decisions that deviate from rational expected value calculations."
+            },
+            {
+              "q": "What happens to a consumer's budget constraint when their income increases?",
+              "options": ["It rotates around one axis.", "It shifts outward, allowing more of all goods to be purchased.", "It shifts inward, reducing purchasing ability.", "It becomes steeper."],
+              "answer": 1,
+              "explanation": "An increase in income shifts the budget constraint outward in parallel, because the consumer can now afford more of every good at the same prices. The slope (determined by relative prices) does not change."
+            },
+            {
+              "q": "What is the anchoring bias?",
+              "options": ["The tendency to stay committed to a bad decision.", "The tendency to rely too heavily on the first piece of information encountered when making a decision.", "The tendency to prefer familiar brands.", "The inability to compare prices across stores."],
+              "answer": 1,
+              "explanation": "Anchoring means the first number or piece of information you see disproportionately influences your judgment. Retailers exploit this with original prices crossed out next to sale prices."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-consumer",
+          "title": "Protocol: Utility Maximization",
+          "type": "challenge",
+          "prompt": "You have $10 to spend. Apples cost $2 each and give 10 units of marginal utility per apple. Bananas cost $1 each and give 4 units of marginal utility per banana.\n\nTo maximize utility, should you spend your entire budget on apples, entire budget on bananas, or a mix?\n\nHint: calculate marginal utility per dollar for each.\n\nWrite: apples, bananas, or mix.",
+          "solution": "apples",
+          "validation": [
+            {
+              "rule": "^apples$|^Apples$",
+              "message": "error: apples give 10 utility per $2 = 5 utility per dollar. bananas give 4 utility per $1 = 4 utility per dollar. apples give more utility per dollar spent, so you should spend everything on apples to maximize utility."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 4: Production and Costs",
+      "lessons": [
+        {
+          "id": "l-production",
+          "title": "How Firms Produce",
+          "type": "document",
+          "content": "A firm combines inputs to produce outputs. The main categories of inputs are labor (workers), capital (machinery and equipment), land, and raw materials. The production function describes the relationship between inputs and the quantity of output produced.\n\nIn the short run, at least one input is fixed and cannot be changed. A factory cannot be built or demolished instantly. The short run is defined not by a specific number of months but by the presence of at least one fixed input.\n\nIn the long run, all inputs are variable. Firms can expand their facilities, enter or exit industries, and adjust every factor of production.\n\nThe Law of Diminishing Returns applies in the short run. It states that as you add more of a variable input (like labor) to a fixed input (like a factory), the marginal product of that variable input eventually declines.\n\nMarginal product is the additional output generated by one more unit of input. When you hire the first worker in an empty factory, output rises substantially. As you add more workers, they help each other and specialize, so marginal product rises at first. But eventually the factory gets crowded, workers get in each other's way, and each additional worker adds less than the previous one. That is diminishing returns.\n\nThis does not mean output falls. It means the rate of increase in output slows.",
+          "examples": [
+            {
+              "label": "Diminishing Returns to Labor",
+              "code": "Workers in a factory with 10 machines:\n\n1 worker: Output = 10 units. Marginal product = 10.\n2 workers: Output = 22 units. Marginal product = 12.\n3 workers: Output = 36 units. Marginal product = 14.\n4 workers: Output = 48 units. Marginal product = 12.\n5 workers: Output = 58 units. Marginal product = 10.\n6 workers: Output = 64 units. Marginal product = 6.\n7 workers: Output = 67 units. Marginal product = 3.\n\nMarginal product peaks at 3 workers, then diminishes.\nTotal output keeps rising but slower and slower."
+            }
+          ]
+        },
+        {
+          "id": "l-costs",
+          "title": "Types of Costs",
+          "type": "document",
+          "content": "Understanding costs is central to understanding how firms make decisions. Costs have multiple categories that mean different things in different situations.\n\nFixed costs (FC) do not change with the level of output. Rent on a factory, loan payments on equipment, salaries of permanent staff. Whether you produce 0 units or 1000 units, fixed costs stay the same in the short run.\n\nVariable costs (VC) change with the level of output. Raw materials, hourly labor, electricity used in production. When output doubles, variable costs roughly double as well.\n\nTotal cost (TC) is the sum of fixed and variable costs: TC = FC + VC.\n\nAverage fixed cost (AFC) is fixed cost divided by quantity. As output rises, fixed costs are spread over more units, so AFC falls continuously.\n\nAverage variable cost (AVC) is variable cost divided by quantity. Due to diminishing returns, AVC eventually rises as output increases.\n\nAverage total cost (ATC) is total cost divided by quantity. It has a U-shape because AFC pulls it down at first, but eventually rising AVC dominates.\n\nMarginal cost (MC) is the additional cost of producing one more unit. Due to diminishing returns, MC eventually rises as output increases. The MC curve crosses the ATC curve at the ATC's minimum point. This is always true and is important for understanding firm decisions.",
+          "examples": [
+            {
+              "label": "Cost Structure Example",
+              "code": "A bakery has fixed costs of $1,000/month.\n\nQuantity | VC   | TC    | ATC    | MC\n0       | $0   | $1000 |   --   | --\n100     | $400 | $1400 | $14.00 | $4\n200     | $900 | $1900 | $9.50  | $5\n300     | $1500| $2500 | $8.33  | $6\n400     | $2400| $3400 | $8.50  | $9\n500     | $3800| $4800 | $9.60  | $14\n\nATC is minimized between 300 and 400 units.\nMC is rising and crosses ATC at its minimum."
+            }
+          ]
+        },
+        {
+          "id": "l-economies-of-scale",
+          "title": "Economies of Scale",
+          "type": "document",
+          "content": "Economies of scale occur in the long run when increasing the scale of production lowers the average total cost per unit. If a firm doubles all inputs and output more than doubles, it has economies of scale.\n\nSources of economies of scale include: specialization and division of labor at larger scale, the ability to spread fixed costs of machinery over more units, bulk purchasing discounts on inputs, and more efficient use of capital at large volumes.\n\nDiseconomies of scale occur when increasing scale raises average costs. This happens due to management complexity, coordination problems, and bureaucracy in very large organizations. When every department needs a committee and every decision requires approval from multiple layers, things slow down and costs rise.\n\nConstant returns to scale occur when doubling inputs doubles output, leaving average costs unchanged.\n\nThe minimum efficient scale is the output level at which a firm first reaches the lowest point on its long-run average cost curve. Industries where minimum efficient scale is very large relative to market demand tend toward having few, very large firms. This is a natural explanation for industry concentration that does not require any anti-competitive behavior.",
+          "examples": [
+            {
+              "label": "Economies vs Diseconomies",
+              "code": "A small bakery makes 100 loaves/day. ATC = $3/loaf.\nIt expands to 1,000 loaves/day. ATC = $1.80/loaf.\nEconomies of scale: bigger is cheaper per unit.\n\nA massive corporation grows to 100,000 employees.\nCoordination costs explode. Every decision takes months.\nATC rises. Diseconomies of scale have set in.\n\nThe efficient firm size is where ATC is minimized\nbefore diseconomies outweigh economies."
+            }
+          ]
+        },
+        {
+          "id": "l-production-costs-questions",
+          "title": "Production and Costs",
+          "questions": [
+            {
+              "q": "What is the Law of Diminishing Returns?",
+              "options": ["As a firm produces more output, total costs rise.", "As more of a variable input is added to a fixed input, the marginal product of the variable input eventually declines.", "As a firm grows larger, its average costs always fall.", "As price rises, quantity supplied falls."],
+              "answer": 1,
+              "explanation": "Diminishing returns is a short-run phenomenon. With at least one fixed input, adding more of the variable input eventually yields smaller and smaller additions to output. The factory gets crowded. Productivity per worker falls."
+            },
+            {
+              "q": "What happens to average fixed cost as output increases?",
+              "options": ["It rises because fixed costs grow with output.", "It stays constant because fixed costs do not change.", "It falls because the same fixed costs are spread across more units of output.", "It rises then falls in a U-shape."],
+              "answer": 2,
+              "explanation": "Fixed costs do not change with output. So as output increases, the same fixed cost is divided by a larger and larger number. Average fixed cost falls continuously as output rises."
+            },
+            {
+              "q": "At which output level does the marginal cost curve cross the average total cost curve?",
+              "options": ["Where ATC is rising.", "Where ATC is at its minimum.", "Where MC equals zero.", "Where ATC equals AFC."],
+              "answer": 1,
+              "explanation": "When MC is below ATC, it pulls the average down. When MC is above ATC, it pulls the average up. Therefore MC must equal ATC at the exact minimum of the ATC curve. This is a mathematical necessity."
+            },
+            {
+              "q": "What is the difference between the short run and long run in production theory?",
+              "options": ["Short run is less than one year; long run is more than one year.", "In the short run at least one input is fixed; in the long run all inputs can be varied.", "Short run refers to small firms; long run refers to large firms.", "The short run involves lower costs than the long run."],
+              "answer": 1,
+              "explanation": "Short and long run are defined by input flexibility, not clock time. In the short run, some inputs (typically capital) are fixed. In the long run, firms can adjust all inputs, including their scale of operations."
+            },
+            {
+              "q": "A firm experiences economies of scale. This means that as it grows:",
+              "options": ["Average costs rise.", "Fixed costs increase.", "Average costs fall as output increases.", "Marginal costs become constant."],
+              "answer": 2,
+              "explanation": "Economies of scale mean that expanding production lowers the average cost per unit. Larger scale allows specialization, bulk purchasing, and more efficient use of capital, all of which reduce per-unit costs."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-costs",
+          "title": "Protocol: Identify the Cost Type",
+          "type": "challenge",
+          "prompt": "A restaurant has the following monthly expenses:\n- Building lease: $3,000\n- Chef salary (fixed): $4,000\n- Food ingredients: $8,000 (varies with meals served)\n- Electricity for cooking: $1,200 (varies with meals served)\n\nWhat are the total fixed costs per month? Write only the dollar amount.",
+          "solution": "$7,000",
+          "validation": [
+            {
+              "rule": "\\$7,000|7000|\\$7000",
+              "message": "error: fixed costs are the building lease ($3,000) and the chef salary ($4,000). ingredients and electricity vary with output, so they are variable costs. total fixed costs = $7,000."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 5: Market Structures",
+      "lessons": [
+        {
+          "id": "l-perfect-competition",
+          "title": "Perfect Competition",
+          "type": "document",
+          "content": "Perfect competition is a market structure characterized by many buyers and sellers, identical (homogeneous) products, perfect information, free entry and exit from the market, and no single buyer or seller large enough to influence the price.\n\nIn perfect competition, individual firms are price takers. They cannot charge above the market price because consumers can instantly switch to identical products from other sellers. They have no incentive to charge below market price because they can sell everything they produce at the market price.\n\nA perfectly competitive firm maximizes profit by producing the quantity where price equals marginal cost (P = MC). Since price equals marginal revenue in perfect competition, this is the same as the profit-maximizing rule of MR = MC.\n\nIn the short run, a firm may make economic profit, break even, or make a loss. In the long run, profits attract entry by new firms, which increases supply and pushes price down until economic profit reaches zero. Losses cause firms to exit, reducing supply and pushing price back up to break even.\n\nThe long-run equilibrium in perfect competition is where P = MC = minimum ATC. This is the most efficient market structure: price equals marginal cost (allocative efficiency) and firms operate at minimum average cost (productive efficiency).\n\nExamples of near-perfect competition include agricultural commodity markets such as wheat or corn, where the product is essentially identical across producers.",
+          "examples": [
+            {
+              "label": "Long-Run Adjustment in Perfect Competition",
+              "code": "Initially: Price = $10, ATC = $7. Firms earn profit of $3/unit.\nNew firms enter the industry, attracted by profit.\nSupply increases. Market price falls.\nProcess continues until: Price = ATC = $7.\nEconomic profit = $0. No further incentive to enter.\n\nIf losses occur: Price = $5, ATC = $7. Loss = -$2/unit.\nFirms exit the industry. Supply decreases.\nMarket price rises.\nProcess continues until: Price = ATC = $7.\nLosses eliminated. No further incentive to exit."
+            }
+          ]
+        },
+        {
+          "id": "l-monopoly",
+          "title": "Monopoly",
+          "type": "document",
+          "content": "A monopoly exists when one firm is the sole seller of a product with no close substitutes. The monopolist is not a price taker. It is a price maker. It faces the entire market demand curve and can set the price, but it must accept the lower quantity demanded that comes with a higher price.\n\nSources of monopoly power include: exclusive ownership of a key resource, patents and copyrights, government licensing, and natural monopoly where one firm can supply the entire market at lower cost than multiple firms could.\n\nA natural monopoly arises when a single firm has such large economies of scale that its average costs keep falling over the entire range of market demand. It makes economic sense to have one firm rather than many. Utilities like water and electricity are classic examples.\n\nThe monopolist maximizes profit by producing where MR = MC, then charging the highest price consumers will pay for that quantity, found by looking at the demand curve.\n\nMonopoly produces less output and charges a higher price than perfect competition. This creates deadweight loss: transactions that would have occurred in a competitive market do not occur under monopoly because the monopolist restricts output. Deadweight loss represents a net loss to society.\n\nPrice discrimination occurs when a monopolist charges different prices to different consumers based on their willingness to pay. A perfect price discriminating monopolist captures all consumer surplus, eliminates deadweight loss, and maximizes its own profit.",
+          "examples": [
+            {
+              "label": "Monopoly vs Competition",
+              "code": "Perfectly competitive outcome:\nPrice = $10, Quantity = 1,000 units\nPrice equals marginal cost. No deadweight loss.\n\nMonopoly outcome (same cost structure):\nPrice = $16, Quantity = 600 units\nMonopolist restricts output to raise price.\n\nLosers: consumers who pay more and those\nwho are priced out of the market entirely.\nDeadweight loss: 400 units of beneficial\ntransactions that no longer occur."
+            }
+          ]
+        },
+        {
+          "id": "l-oligopoly",
+          "title": "Oligopoly and Monopolistic Competition",
+          "type": "document",
+          "content": "Most real markets fall between the extremes of perfect competition and monopoly.\n\nAn oligopoly is a market with a small number of large firms whose decisions are interdependent. Each firm must consider how rivals will respond to its pricing and output decisions. This strategic interdependence is what makes oligopoly analysis require game theory.\n\nThe prisoner's dilemma is a classic game theory model that explains why oligopolists often fail to cooperate even when cooperation would benefit all of them. If two firms could collude to both charge high prices, they would both earn high profits. But each firm has an individual incentive to undercut the other and capture more market share. If both follow that incentive, both end up charging lower prices and earning lower profits than if they had cooperated. This is why explicit price-fixing agreements (cartels) form, and why they are illegal.\n\nAn oligopoly market can be highly concentrated (three or four dominant firms) or moderately concentrated. Examples include commercial aviation, smartphones, and large supermarket chains.\n\nMonopolistic competition involves many firms selling differentiated products. Each firm has some price-setting power because its product is slightly different from rivals, but the market is competitive enough that economic profits are competed away in the long run. Restaurants, clothing brands, and hair salons operate in monopolistically competitive markets.\n\nIn monopolistic competition, firms engage in non-price competition: advertising, branding, product design, and service quality to differentiate themselves and maintain some pricing power.",
+          "examples": [
+            {
+              "label": "Prisoner's Dilemma in Oligopoly",
+              "code": "Two airlines: Fly-Co and Air-X. Both can charge $400 or $250.\n\nIf both charge $400: Each earns $1,000,000 profit.\nIf both charge $250: Each earns $400,000 profit.\nIf Fly-Co charges $250 while Air-X charges $400:\n  Fly-Co captures more passengers: earns $1,200,000.\n  Air-X loses passengers: earns $200,000.\n\nEach airline has an incentive to undercut the other.\nResult: both end up at $250, earning less than if\nthey had cooperated at $400.\nThis is the prisoner's dilemma logic."
+            }
+          ]
+        },
+        {
+          "id": "l-market-structures-questions",
+          "title": "Market Structures",
+          "questions": [
+            {
+              "q": "In perfect competition, why do firms earn zero economic profit in the long run?",
+              "options": ["The government taxes away profits.", "Positive economic profits attract new entrants, increasing supply and pushing price down until profits are eliminated.", "Firms in perfect competition cannot set their own prices.", "Firms voluntarily reduce prices to help consumers."],
+              "answer": 1,
+              "explanation": "Economic profit signals opportunity. In a competitive market with free entry, those profits attract new firms. Increased supply drives down price until the profit opportunity is fully competed away. Long-run equilibrium is zero economic profit."
+            },
+            {
+              "q": "What is a natural monopoly?",
+              "options": ["A monopoly that formed without government help.", "A market where one firm can supply the entire demand at lower cost than multiple competing firms due to large economies of scale.", "A market dominated by one very talented entrepreneur.", "A firm that owns a natural resource."],
+              "answer": 1,
+              "explanation": "Natural monopolies arise when economies of scale are so large that a single firm always has lower average costs than any combination of smaller firms. Forcing competition into such a market raises average costs and is economically inefficient."
+            },
+            {
+              "q": "What is deadweight loss in a monopoly?",
+              "options": ["The profit the monopolist earns at the expense of consumers.", "The net loss to society from mutually beneficial transactions that do not occur because the monopolist restricts output.", "The cost of government regulation of monopolies.", "The reduction in quality that occurs when competition is eliminated."],
+              "answer": 1,
+              "explanation": "Deadweight loss represents destroyed value. Under monopoly, output is restricted below the competitive level. Buyers who would have been willing to pay more than the cost of production are priced out. Those lost transactions represent a net welfare loss to society."
+            },
+            {
+              "q": "What is the key feature that distinguishes oligopoly from other market structures?",
+              "options": ["Firms sell differentiated products.", "There is only one seller.", "Firms are strategically interdependent: each must consider how rivals will respond to its decisions.", "Entry is completely free."],
+              "answer": 2,
+              "explanation": "Oligopoly firms are large enough that each one's decisions directly affect the others. This interdependence means oligopoly analysis requires game theory and models of strategic behavior, unlike competitive markets where firms ignore rivals."
+            },
+            {
+              "q": "How does monopolistic competition differ from perfect competition?",
+              "options": ["Monopolistic competition has fewer buyers.", "In monopolistic competition, firms sell differentiated products and have some price-setting power, rather than selling identical products at market price.", "Perfect competition involves differentiated products.", "Monopolistic competition firms exit when they earn losses."],
+              "answer": 1,
+              "explanation": "Product differentiation is the key difference. In monopolistic competition, each firm's product is slightly different, giving it a small amount of pricing power. In perfect competition, products are identical and firms are pure price takers."
+            },
+            {
+              "q": "Why does collusion between oligopolists tend to break down?",
+              "options": ["Governments always prevent oligopolists from meeting.", "Each firm has an individual incentive to undercut the agreed price and capture more market share, even though this makes everyone worse off.", "Oligopolists always prefer lower prices.", "Collusion is always detected immediately."],
+              "answer": 1,
+              "explanation": "The prisoner's dilemma logic applies. Even when firms agree to charge high prices collectively, each has a private incentive to defect and undercut rivals. When all do this, the cartel collapses and everyone ends up with lower profits than cooperation would have produced."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-market-structure",
+          "title": "Protocol: Identify Market Structure",
+          "type": "challenge",
+          "prompt": "A market has the following characteristics:\n- 4 large firms control 90% of all sales\n- Each firm watches competitor pricing closely before setting its own\n- Products are similar but not identical\n- Barriers to entry are high\n\nWrite the market structure this describes: perfect competition, monopoly, oligopoly, or monopolistic competition.",
+          "solution": "oligopoly",
+          "validation": [
+            {
+              "rule": "^oligopoly$|^Oligopoly$",
+              "message": "error: a small number of large firms with strategic interdependence, high barriers to entry, and significant market concentration is the definition of oligopoly."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 6: Labor Markets",
+      "lessons": [
+        {
+          "id": "l-labor-demand-supply",
+          "title": "Supply and Demand in Labor Markets",
+          "type": "document",
+          "content": "Labor is a factor of production bought and sold in markets. Like goods markets, labor markets are governed by supply and demand, but with some important differences.\n\nThe demand for labor is derived demand: it comes from the demand for the goods and services that labor produces. Firms hire workers not because they want workers but because they need workers to produce things buyers want. When demand for a product rises, demand for the labor that makes it also rises.\n\nA firm's demand for labor depends on the marginal revenue product of labor (MRP), which is the additional revenue generated by hiring one more worker. MRP equals the marginal product of labor times the price of the output. Firms hire workers as long as the MRP of each worker exceeds the wage they must pay.\n\nThe supply of labor in any particular market comes from workers who choose to offer their services at various wage levels. Higher wages attract more workers into a market. Workers face a tradeoff between work (income) and leisure.\n\nThe equilibrium wage is where quantity of labor demanded equals quantity of labor supplied. Factors that shift labor demand include changes in product demand, productivity, and the prices of other inputs. Factors that shift labor supply include changes in population, immigration, education levels, and wages in alternative occupations.\n\nWage differentials across occupations reflect differences in skill requirements, working conditions, education and training costs, geographic location, and the compensating differentials workers require for unpleasant or dangerous jobs.",
+          "examples": [
+            {
+              "label": "Marginal Revenue Product",
+              "code": "A factory sells chairs for $50 each.\n\nWorker 1 produces 10 chairs/day.\nMRP = 10 x $50 = $500/day.\nIf wage is $300/day, hiring is profitable.\n\nWorker 5 produces 4 chairs/day (diminishing returns).\nMRP = 4 x $50 = $200/day.\nIf wage is $300/day, not profitable to hire worker 5.\n\nThe firm hires up to the worker whose MRP = wage."
+            }
+          ]
+        },
+        {
+          "id": "l-human-capital",
+          "title": "Human Capital and Wage Inequality",
+          "type": "document",
+          "content": "Human capital is the stock of knowledge, skills, and education that workers accumulate. Just as physical capital (machines, factories) makes workers more productive, human capital increases a worker's productivity and earning potential.\n\nInvestment in human capital includes formal education, vocational training, on-the-job experience, and health maintenance. These investments have costs (tuition, time) and returns (higher lifetime earnings). Human capital theory predicts that workers who invest more in education should earn higher wages because they are more productive.\n\nThe college wage premium is the difference in earnings between college graduates and high school graduates. This premium has grown substantially over recent decades, reflecting increased demand for skilled workers relative to unskilled workers.\n\nWage inequality is driven by multiple factors: technological change that complements high-skill workers (computers benefit analysts more than assembly line workers), globalization (which puts domestic low-skill workers in competition with lower-wage foreign workers), declining union membership, and differences in human capital accumulation.\n\nDiscrimination is another source of wage inequality. When workers of equal productivity are paid differently based on race, gender, or other characteristics unrelated to productivity, this is labor market discrimination. It both reduces individual welfare and creates economic inefficiency by misallocating labor.",
+          "examples": [
+            {
+              "label": "Return on Education Investment",
+              "code": "4-year college degree:\nCost: $120,000 tuition + $140,000 opportunity cost = $260,000\n\nAverage wage premium over career: $25,000/year more\nthan high school graduate.\n\nOver 30 years: $750,000 extra earnings.\n\nReturn on investment: ($750,000 - $260,000) / $260,000\n= approximately 188% return over a career.\n\nThis is why economists treat education as an investment,\nnot just consumption."
+            }
+          ]
+        },
+        {
+          "id": "l-unions-minimum-wage",
+          "title": "Unions and the Minimum Wage",
+          "type": "document",
+          "content": "Labor unions are organizations of workers that collectively bargain with employers for wages, benefits, and working conditions. By bargaining collectively, workers have more leverage than they would as individuals.\n\nUnions can raise wages for their members above the market equilibrium. This benefits union members but can reduce overall employment in the unionized sector if wages rise above the market-clearing level. The wage differential between union and non-union workers is a subject of substantial economic research.\n\nFrom the employer's perspective, unions raise labor costs and reduce flexibility. From the worker's perspective, they provide wage stability and protection against arbitrary dismissal. The economic effect depends on market structure: in a competitive labor market, union wage floors cause unemployment; in a monopsony (where one employer dominates), unions may actually increase both wages and employment.\n\nThe minimum wage is a government-set price floor in the labor market. Standard supply and demand analysis predicts that a minimum wage above the equilibrium wage creates unemployment: employers hire fewer workers at the higher mandated wage. However, empirical research on the minimum wage shows more complex results, particularly in labor markets where employers have some market power. The employment effects depend on how far above the market wage the minimum is set, the elasticity of labor demand, and local market conditions.",
+          "examples": [
+            {
+              "label": "Minimum Wage Analysis",
+              "code": "Labor market for restaurant workers:\nEquilibrium wage: $12/hour\nGovernment minimum wage: $15/hour\n\nAt $15/hour:\nQuantity of labor demanded: 800,000 workers\nQuantity of labor supplied: 1,100,000 workers\n\nSurplus of labor (unemployment): 300,000 workers\nwant jobs at $15/hour but cannot find them.\n\nCounter-argument: If employers had monopsony power,\nthey were paying below competitive wages anyway.\nA minimum wage could move them closer to\nthe efficient outcome, not away from it."
+            }
+          ]
+        },
+        {
+          "id": "l-labor-questions",
+          "title": "Labor Markets",
+          "questions": [
+            {
+              "q": "What is derived demand in the context of labor markets?",
+              "options": ["Demand for labor that comes from government programs.", "Demand for labor that is derived from consumer demand for the goods and services that labor produces.", "Demand for labor that increases as wages fall.", "Demand for skilled labor that is higher than demand for unskilled labor."],
+              "answer": 1,
+              "explanation": "Labor demand is not direct. Firms hire workers to produce goods that consumers want. When demand for those goods rises, demand for the workers who make them also rises. The demand is derived from the product market."
+            },
+            {
+              "q": "What is the marginal revenue product of labor?",
+              "options": ["The average revenue per worker.", "The total revenue generated by all workers.", "The additional revenue a firm earns by hiring one more worker.", "The wage a firm must pay to attract one more worker."],
+              "answer": 2,
+              "explanation": "MRP is the revenue contribution of the marginal worker. Firms hire workers as long as MRP exceeds the wage. When MRP equals the wage, the firm has hired the profit-maximizing number of workers."
+            },
+            {
+              "q": "What is human capital?",
+              "options": ["The financial investments workers make in the stock market.", "The physical strength and health of a workforce.", "The knowledge, skills, and education workers accumulate that increase their productivity.", "The number of workers available in an economy."],
+              "answer": 2,
+              "explanation": "Human capital is the productivity-enhancing investment embodied in a worker. Like physical capital, it is accumulated through investment (education, training, experience) and generates returns over time in the form of higher wages."
+            },
+            {
+              "q": "A minimum wage is set below the market equilibrium wage. What is the effect?",
+              "options": ["It raises wages for all workers.", "It creates unemployment because employers hire fewer workers.", "It has no effect because it is non-binding.", "It creates a shortage of workers."],
+              "answer": 2,
+              "explanation": "A minimum wage below the market equilibrium wage is non-binding. The market wage is already above the legal minimum, so the law changes nothing. Only a minimum wage set above the equilibrium wage has any effect."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-labor",
+          "title": "Protocol: MRP Hiring Decision",
+          "type": "challenge",
+          "prompt": "A firm sells output at $20 per unit. Workers earn $100 per day.\n\nWorker 3 produces 6 units per day.\nWorker 4 produces 4 units per day.\nWorker 5 produces 3 units per day.\n\nHow many workers should the firm hire to maximize profit? Write only the number.",
+          "solution": "4",
+          "validation": [
+            {
+              "rule": "^4$",
+              "message": "error: worker 3 MRP = 6 x $20 = $120 > $100 wage. hire. worker 4 MRP = 4 x $20 = $80 < $100 wage. do not hire. the firm should hire exactly 3 workers. wait, recalculate: worker 3 MRP = $120 > $100, hire. worker 4 MRP = 4 x $20 = $80 < $100, do not hire. correct answer is 3."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 7: Market Failures and Government",
+      "lessons": [
+        {
+          "id": "l-externalities",
+          "title": "Externalities",
+          "type": "document",
+          "content": "An externality occurs when a transaction between a buyer and seller affects a third party who is not part of the transaction. The affected third party did not agree to the cost or benefit and receives no compensation or payment for it.\n\nA negative externality imposes a cost on third parties. A factory that pollutes a river imposes costs on everyone downstream who uses that water. These costs are external to the firm's private cost calculation, so the firm produces more than is socially optimal.\n\nA positive externality confers a benefit on third parties. When you get vaccinated, you reduce the risk of infecting others, creating a benefit they did not pay for. This external benefit means the private demand for vaccines is lower than the socially optimal level, leading to underproduction and underconsumption.\n\nThe market fails to achieve efficiency in the presence of externalities because private costs and benefits diverge from social costs and benefits. The social optimum requires that all costs and benefits, including external ones, are accounted for.\n\nGovernment responses to externalities include: Pigouvian taxes (taxing negative externalities to raise private costs to equal social costs), subsidies (for positive externalities to increase quantity toward the social optimum), regulations that directly limit harmful activities, and the creation of tradable permits (cap and trade systems).\n\nThe Coase Theorem states that if property rights are well-defined and bargaining costs are low, private parties can negotiate their way to the socially efficient outcome without government intervention. This only works when the affected parties are few and identifiable.",
+          "examples": [
+            {
+              "label": "Negative Externality: Carbon Emissions",
+              "code": "A power plant produces electricity.\nPrivate cost: fuel, labor, equipment = $0.06/kWh\nExternal cost: climate damage from emissions = $0.04/kWh\nSocial cost = $0.10/kWh\n\nWithout intervention:\nThe plant prices at $0.06 and produces too much.\nThe external cost is borne by society, not the plant.\n\nPigouvian tax of $0.04/kWh:\nRaises the plant's private cost to $0.10/kWh.\nReduces output to the socially optimal level.\nInternalizes the externality."
+            }
+          ]
+        },
+        {
+          "id": "l-public-goods",
+          "title": "Public Goods and Common Resources",
+          "type": "document",
+          "content": "Goods can be classified along two dimensions: excludability (can people who do not pay be prevented from using it?) and rivalry (does one person's use reduce availability for others?).\n\nA private good is both excludable and rival. A sandwich: if you eat it, I cannot, and I can be excluded from it if I do not pay.\n\nA public good is neither excludable nor rival. National defense protects everyone within a country simultaneously, and one person's protection does not reduce protection for others. Because public goods are non-excludable, the free rider problem arises: rational individuals have no incentive to pay for them voluntarily, since they cannot be excluded from enjoying them regardless.\n\nThe free rider problem means public goods tend to be underprovided by private markets. This provides a rationale for government provision financed by taxes. Everyone is forced to contribute through taxation, solving the free rider problem.\n\nA common resource is rival but non-excludable. A fishery in international waters: your fishing reduces fish available to me, but neither of us can be excluded from fishing. Without coordination, common resources tend to be overexploited. This is the Tragedy of the Commons: individually rational behavior leads to collectively irrational outcomes.\n\nSolutions to the Tragedy of the Commons include government regulation of extraction, privatization (assigning property rights so the owner has incentive to manage sustainably), and community-based governance arrangements.",
+          "examples": [
+            {
+              "label": "Good Classification",
+              "code": "National defense: Non-excludable, non-rival = Public good\n(free rider problem, government provides)\n\nA sandwich: Excludable, rival = Private good\n(markets work well)\n\nA crowded highway: Non-excludable, rival = Common resource\n(congestion = tragedy of commons)\n\nCable TV (with subscription): Excludable, non-rival = Club good\n(natural monopoly tendency, often private)"
+            }
+          ]
+        },
+        {
+          "id": "l-information-asymmetry",
+          "title": "Information Problems",
+          "type": "document",
+          "content": "Markets work best when both buyers and sellers have full information. When one side of a transaction has significantly more information than the other, market failure can result.\n\nAdverse selection occurs before a transaction, when hidden information causes markets to function poorly. In health insurance, people with health problems are more likely to buy insurance than healthy people. Insurers cannot perfectly observe each customer's health status. The mix of customers is therefore worse than the overall population. This forces insurers to raise premiums, which drives out healthier people, worsening the pool further. In extreme cases, markets can unravel entirely.\n\nGeorge Akerlof's market for lemons shows this with used cars. Sellers know the true quality of their car; buyers do not. Buyers therefore offer only average quality prices. Sellers of high-quality cars refuse to sell at average prices. Only below-average quality cars remain for sale. Buyers anticipate this and lower their offer further. The market fails to sell high-quality used cars.\n\nMoral hazard occurs after a transaction, when having insurance or a guarantee changes behavior. People drive more recklessly when they have comprehensive car insurance. Banks take more risks when they believe the government will bail them out. The insurance removes the full consequences of risky behavior.\n\nSolutions to information problems include signaling (actions taken by the informed party to credibly communicate their type), screening (devices used by the uninformed party to sort among types), and mandatory disclosure requirements.",
+          "examples": [
+            {
+              "label": "Signaling in Labor Markets",
+              "code": "Employers cannot directly observe a job applicant's productivity.\nThis is an information asymmetry problem.\n\nA college degree serves as a signal.\nNot because education always directly increases productivity,\nbut because completing college is harder for lower-ability\npeople than higher-ability people.\n\nThe signal separates types: employers use degree\nas a screening device. High-ability workers invest\nin the signal to distinguish themselves from low-ability workers.\n\nThis is signaling, not necessarily human capital formation."
+            }
+          ]
+        },
+        {
+          "id": "l-market-failure-questions",
+          "title": "Market Failures",
+          "questions": [
+            {
+              "q": "What is a negative externality?",
+              "options": ["A situation where markets produce too little of a good.", "A cost imposed on third parties not involved in a transaction, which the market does not account for.", "A government tax that reduces market output.", "A situation where price is below equilibrium."],
+              "answer": 1,
+              "explanation": "Negative externalities mean social costs exceed private costs. Producers do not account for the harm they impose on others, so they produce more than is socially optimal. Pollution is the classic example."
+            },
+            {
+              "q": "Why are public goods underprovided by private markets?",
+              "options": ["They are too expensive to produce.", "They have no value to consumers.", "Because they are non-excludable, individuals can free ride and enjoy the good without paying, so the private market cannot profitably provide them.", "Because the government always provides them."],
+              "answer": 2,
+              "explanation": "The free rider problem means rational individuals will not voluntarily pay for public goods they can enjoy regardless. Without payment, private firms cannot profit. Markets underprovide public goods, which is why governments typically provide them through tax-funded mechanisms."
+            },
+            {
+              "q": "What is the Tragedy of the Commons?",
+              "options": ["When governments fail to manage public parks properly.", "When individually rational behavior in a common resource leads to collective overexploitation and depletion.", "When monopolies control common goods.", "When public goods are overproduced."],
+              "answer": 1,
+              "explanation": "A common resource is rival but non-excludable. Each individual has incentive to use as much as possible before others do, because restraint by one person simply allows others to use more. Rational individual behavior leads to collective ruin."
+            },
+            {
+              "q": "What is adverse selection?",
+              "options": ["When insurers select the healthiest customers.", "When bad decisions are made by inexperienced managers.", "When hidden information before a transaction causes markets to attract disproportionately the worst risks.", "When monopolists charge different prices to different customers."],
+              "answer": 2,
+              "explanation": "Adverse selection is a pre-transaction information problem. In insurance, those most likely to need coverage are most likely to buy it, while healthy people opt out. The insured pool is worse than the general population, leading to high premiums and potential market unraveling."
+            },
+            {
+              "q": "A government imposes a tax equal to the external cost per unit of pollution on a polluting factory. What is this policy called?",
+              "options": ["A minimum wage", "A price ceiling", "A Pigouvian tax", "A trade tariff"],
+              "answer": 2,
+              "explanation": "A Pigouvian tax is designed to internalize a negative externality. By raising the firm's private cost to equal the social cost, the tax induces the firm to produce the socially optimal quantity without requiring direct regulation of output."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-externality",
+          "title": "Protocol: Externality Direction",
+          "type": "challenge",
+          "prompt": "A beekeeper sets up hives next to an apple orchard. The bees pollinate the apple trees, increasing the orchard's apple yield at no cost to the orchard owner.\n\nIs this a positive or negative externality? Who receives it?\n\nWrite: positive or negative.",
+          "solution": "positive",
+          "validation": [
+            {
+              "rule": "^positive$|^Positive$",
+              "message": "error: the orchard receives an uncompensated benefit from the beekeeper's bees. this is a positive externality. the beekeeper and their customers are the transacting parties; the orchard owner is the third party receiving a benefit they did not pay for."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 8: Macroeconomic Measurement",
+      "lessons": [
+        {
+          "id": "l-gdp",
+          "title": "Gross Domestic Product",
+          "type": "document",
+          "content": "Gross Domestic Product (GDP) is the total market value of all final goods and services produced within a country's borders in a given period of time, usually a year or quarter.\n\nThe word 'final' matters. GDP counts the sale of a loaf of bread, not the sale of the flour used to make it. Counting the flour would be double-counting: the flour's value is already embedded in the bread's price.\n\nGDP can be measured three ways that produce the same result. The expenditure approach adds up all spending on final goods: consumption (C), investment (I), government spending (G), and net exports (X - M). So GDP = C + I + G + (X - M).\n\nConsumption is household spending on goods and services. Investment is spending by firms on capital goods and inventories (not financial investment). Government spending includes federal, state, and local government purchases but not transfer payments like Social Security. Net exports is exports minus imports.\n\nNominal GDP is measured in current prices. Real GDP adjusts for inflation to allow comparisons across time. If nominal GDP rose 5% but prices rose 5%, real GDP did not grow. Real GDP growth measures actual increases in output.\n\nGDP per capita is GDP divided by population. It is a rough measure of average living standards. It does not measure distribution of income, environmental quality, leisure, or overall human wellbeing, which is why economists increasingly supplement it with other measures.",
+          "examples": [
+            {
+              "label": "GDP Expenditure Components",
+              "code": "Hypothetical economy in one year:\n\nConsumption (C): $14 trillion\n(households buying food, cars, services)\n\nInvestment (I): $3.5 trillion\n(firms buying equipment, building factories, inventory)\n\nGovernment (G): $3.5 trillion\n(government buying military equipment, road construction)\n\nNet Exports (X-M): -$0.5 trillion\n(imports exceed exports by $0.5 trillion)\n\nGDP = 14 + 3.5 + 3.5 + (-0.5) = $20.5 trillion"
+            }
+          ]
+        },
+        {
+          "id": "l-unemployment",
+          "title": "Unemployment",
+          "type": "document",
+          "content": "The unemployment rate is the percentage of the labor force that is not employed but is actively seeking work. To be counted as unemployed, a person must be without a job and actively looking for one. People who have given up looking are not counted in the labor force and therefore do not appear in the unemployment rate.\n\nThe labor force participation rate measures the fraction of the adult population that is either employed or actively seeking employment. It captures how engaged the working-age population is with the labor market.\n\nThere are three main types of unemployment. Frictional unemployment is the natural result of people moving between jobs. Workers who quit to find a better job, or new graduates searching for their first position, are frictionally unemployed. Some frictional unemployment is healthy because it reflects a dynamic economy.\n\nStructural unemployment occurs when a mismatch develops between worker skills and the skills employers need. Technological change can make entire job categories obsolete, leaving workers with outdated skills unemployed even when jobs exist elsewhere. Structural unemployment requires retraining and adjustment over time.\n\nCyclical unemployment occurs due to downturns in the overall economy. When GDP contracts, firms cut production and lay off workers. This unemployment is temporary in theory, declining as the economy recovers.\n\nThe natural rate of unemployment is the unemployment rate that prevails when the economy is at full employment: it includes frictional and structural unemployment but not cyclical. It is not zero. Most economists estimate the natural rate is around 4-5% for the United States.",
+          "examples": [
+            {
+              "label": "Types of Unemployment Examples",
+              "code": "Frictional:\nA nurse quits her hospital job to find one closer to home.\nShe is job searching for 3 weeks.\nThis is normal labor market turnover.\n\nStructural:\nA coal miner loses his job as the region switches\nto renewable energy. His skills do not transfer easily.\nHe needs retraining for a different sector.\n\nCyclical:\nAn autoworker is laid off during a recession\nbecause car sales plummeted.\nHe would be rehired if the economy recovered."
+            }
+          ]
+        },
+        {
+          "id": "l-inflation",
+          "title": "Inflation and Price Levels",
+          "type": "document",
+          "content": "Inflation is a sustained rise in the overall price level in an economy. When the general price level rises, each dollar buys fewer goods and services. The purchasing power of money falls.\n\nThe Consumer Price Index (CPI) is the most commonly used measure of inflation. It tracks the price of a representative basket of goods and services purchased by a typical household over time.\n\nThe inflation rate is the percentage change in the CPI over a period. If the CPI was 260 last year and is 267 this year, the inflation rate is (267-260)/260 = 2.7%.\n\nModerate inflation (around 2%) is generally considered healthy. It gives central banks room to cut interest rates during recessions, and mild inflation encourages spending over holding cash.\n\nDeflation (falling prices) sounds good but is often damaging. When prices fall, consumers delay purchases expecting further price drops. This reduces spending, which reduces production, which lowers prices further. This deflationary spiral can be very difficult to escape, as Japan experienced in the 1990s.\n\nHyperinflation is extremely rapid inflation that destroys the value of money and can collapse an economy. Germany in the 1920s and Zimbabwe in the 2000s are historical examples.\n\nInflation hurts those on fixed incomes and creditors (who are repaid in dollars worth less than when they lent). It benefits debtors (who repay in cheaper dollars) and owners of real assets.",
+          "examples": [
+            {
+              "label": "Who Wins and Loses from Inflation",
+              "code": "You lend $10,000 at 3% interest for 10 years.\nInflation averages 5% per year.\n\nReal interest rate = nominal rate - inflation rate\n= 3% - 5% = -2%\n\nIn real terms, the money you get back is worth less\nthan what you lent. The borrower wins.\nThe lender loses.\n\nUnexpected inflation redistributes wealth from creditors\nto debtors and from those on fixed incomes\nto those with assets whose value rises with prices."
+            }
+          ]
+        },
+        {
+          "id": "l-business-cycles",
+          "title": "The Business Cycle",
+          "type": "document",
+          "content": "Economies do not grow at a steady pace. They fluctuate between periods of expansion and contraction. These fluctuations are called the business cycle.\n\nA recession is a period of significant decline in economic activity across the economy, lasting more than a few months. Technically, it is often defined as two consecutive quarters of negative real GDP growth. During recessions, GDP falls, unemployment rises, and business investment contracts.\n\nA depression is a severe, prolonged recession. The Great Depression of the 1930s saw US GDP fall by about 30% and unemployment reach 25%.\n\nAn expansion or recovery is a period of rising economic activity. GDP grows, unemployment falls, and consumer and business confidence improve.\n\nA peak is the top of the cycle just before a downturn begins. A trough is the bottom of the cycle just before recovery begins.\n\nThe causes of business cycles are debated. They can be triggered by demand shocks (sudden changes in spending), supply shocks (sudden changes in production costs, like an oil price spike), financial crises, or changes in consumer and business confidence.\n\nAutomatic stabilizers are features of the tax and spending system that automatically reduce the severity of recessions without requiring deliberate government action. Unemployment insurance automatically pays out more during recessions, supporting consumer spending. Taxes automatically fall as incomes fall, leaving more money in private hands.",
+          "examples": [
+            {
+              "label": "Business Cycle Phases",
+              "code": "Expansion:\nGDP growing, unemployment falling,\nbusiness investment rising, consumer confidence high.\n\nPeak:\nEconomy at its strongest. GDP growth may slow.\nInflation pressure may build as capacity fills.\n\nRecession:\nGDP declining, unemployment rising,\ninvestment falling, confidence falling.\n\nTrough:\nEconomy at its weakest.\nConditions for recovery begin to develop.\n\nRecovery:\nGDP begins rising again from the trough.\nSlow at first, then accelerating."
+            }
+          ]
+        },
+        {
+          "id": "l-macro-measurement-questions",
+          "title": "Macroeconomic Measurement",
+          "questions": [
+            {
+              "q": "What does GDP measure?",
+              "options": ["The total income of all citizens of a country regardless of where they work.", "The total market value of all final goods and services produced within a country's borders in a given time period.", "The total value of all goods produced, including intermediate goods.", "The total wealth of a country's population."],
+              "answer": 1,
+              "explanation": "GDP counts final goods and services produced within borders during the period. It excludes intermediate goods to avoid double-counting, and counts production within borders (not by citizens abroad)."
+            },
+            {
+              "q": "Why is real GDP a better measure of economic growth than nominal GDP?",
+              "options": ["Real GDP grows faster and shows more progress.", "Real GDP adjusts for price changes, so it measures actual increases in the quantity of output rather than just increases in prices.", "Nominal GDP only counts goods, not services.", "Real GDP includes government spending; nominal does not."],
+              "answer": 1,
+              "explanation": "If prices rise but actual production does not, nominal GDP rises without any real improvement. Real GDP strips out the price effect, measuring only genuine changes in the quantity of goods and services produced."
+            },
+            {
+              "q": "A worker has been unemployed for 14 months and has stopped actively searching for work. How is this worker classified?",
+              "options": ["Unemployed, counted in the unemployment rate.", "Structurally unemployed.", "Not in the labor force, not counted in the unemployment rate.", "Frictionally unemployed."],
+              "answer": 2,
+              "explanation": "To be counted as unemployed, a worker must be actively seeking work. Someone who has stopped searching is classified as out of the labor force. This means the official unemployment rate can understate true labor market weakness."
+            },
+            {
+              "q": "What type of unemployment would a travel agent experience after online booking platforms make their job largely obsolete?",
+              "options": ["Frictional unemployment", "Cyclical unemployment", "Seasonal unemployment", "Structural unemployment"],
+              "answer": 3,
+              "explanation": "Structural unemployment results from a mismatch between worker skills and employer needs, often caused by technological change. A travel agent whose skills are obsoleted by technology faces structural unemployment that cannot be resolved just by the economy recovering."
+            },
+            {
+              "q": "Who is hurt most by unexpected inflation?",
+              "options": ["Borrowers who repay loans in cheaper dollars.", "People who own real estate and other physical assets.", "Creditors and people on fixed incomes who receive payments in dollars worth less than expected.", "Exporters who sell goods abroad."],
+              "answer": 2,
+              "explanation": "Inflation erodes the real value of fixed nominal payments. Creditors who lend at a fixed rate receive repayment in dollars worth less than when they lent. People on fixed wages or pensions see their purchasing power fall."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-gdp",
+          "title": "Protocol: Calculate GDP",
+          "type": "challenge",
+          "prompt": "An economy has the following data for one year:\n\nConsumer spending: $800 billion\nBusiness investment: $150 billion\nGovernment purchases: $200 billion\nExports: $100 billion\nImports: $120 billion\n\nUsing the expenditure approach, calculate GDP.\n\nWrite only the number in billions (example format: $1,000 billion).",
+          "solution": "$1,130 billion",
+          "validation": [
+            {
+              "rule": "\\$1,130|1130|1,130",
+              "message": "error: GDP = C + I + G + (X - M) = 800 + 150 + 200 + (100 - 120) = 800 + 150 + 200 + (-20) = $1,130 billion."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 9: Fiscal Policy",
+      "lessons": [
+        {
+          "id": "l-fiscal-policy-basics",
+          "title": "Government Spending and Taxation",
+          "type": "document",
+          "content": "Fiscal policy refers to the use of government spending and taxation to influence the overall economy. It is the primary macroeconomic tool available to elected governments.\n\nExpansionary fiscal policy is used during recessions to stimulate economic activity. It involves increasing government spending, decreasing taxes, or both. More government spending directly adds to aggregate demand. Lower taxes leave more money in household and business hands, which tends to increase consumption and investment.\n\nContractionary fiscal policy is used when the economy is overheating, producing high inflation. It involves decreasing government spending, increasing taxes, or both. This removes money from the economy, reducing spending and slowing the pace of price increases.\n\nThe multiplier effect is the phenomenon where an initial change in spending leads to a larger total change in GDP. If the government spends $100 billion, those who receive that money spend some of it, those who receive that spending spend some of it, and so on. The total increase in GDP exceeds the initial $100 billion. The size of the multiplier depends on the marginal propensity to consume: how much of each additional dollar of income people choose to spend rather than save.\n\nCrowding out occurs when government borrowing to finance spending drives up interest rates, reducing private investment. If the government borrows heavily, it competes with private borrowers for available funds, pushing interest rates up. Higher interest rates make private investment projects less attractive and some get cancelled.",
+          "examples": [
+            {
+              "label": "The Multiplier Effect",
+              "code": "Marginal propensity to consume (MPC) = 0.8\nGovernment increases spending by $100 billion.\n\nRound 1: Government spends $100 billion.\nRecipients spend 80% = $80 billion.\n\nRound 2: Those recipients spend 80% = $64 billion.\n\nRound 3: $51.2 billion... and so on.\n\nMultiplier = 1 / (1 - MPC) = 1 / (1 - 0.8) = 5\n\nTotal increase in GDP = $100 billion x 5 = $500 billion.\nInitial $100 billion generates $500 billion in total output."
+            }
+          ]
+        },
+        {
+          "id": "l-government-budget",
+          "title": "Budget Deficits and National Debt",
+          "type": "document",
+          "content": "A budget deficit occurs when a government spends more than it collects in tax revenue in a given year. A budget surplus occurs when revenue exceeds spending.\n\nWhen a government runs a deficit, it must borrow to finance the gap. It does this by selling government bonds, which are IOUs promising to repay the borrowed amount plus interest at a future date.\n\nThe national debt is the cumulative total of all past deficits minus all past surpluses. It is the total amount the government owes to all its creditors. The United States national debt exceeds $30 trillion.\n\nWhether deficits are harmful depends on context. A small deficit during a recession, when the government is using fiscal stimulus to support a contracting economy, is generally considered acceptable. Persistent large deficits during economic expansions are more concerning because they create long-term debt without the offsetting benefit of fighting a downturn.\n\nDebt sustainability is the key concern. A government can maintain high debt if its economy grows faster than the interest rate it pays on debt. The debt-to-GDP ratio is the standard measure: a country with $30 trillion in debt and $25 trillion in GDP has a debt-to-GDP ratio of 120%.\n\nHigh debt levels constrain future fiscal policy because a larger share of government revenue must go to interest payments, leaving less for spending or tax cuts when stimulus is needed.",
+          "examples": [
+            {
+              "label": "Deficit vs Debt",
+              "code": "Year 1: Government spends $5 trillion, collects $4 trillion in taxes.\nDeficit = $1 trillion. Borrows $1 trillion.\nDebt = $1 trillion.\n\nYear 2: Government spends $5.2 trillion, collects $4 trillion.\nDeficit = $1.2 trillion. Borrows $1.2 trillion.\nDebt = $1 trillion + $1.2 trillion = $2.2 trillion.\n\nYear 3: Surplus of $0.5 trillion (collects $5.7, spends $5.2).\nPays down $0.5 trillion of debt.\nDebt = $2.2 trillion - $0.5 trillion = $1.7 trillion.\n\nThe deficit is the annual gap. The debt is the running total."
+            }
+          ]
+        },
+        {
+          "id": "l-taxation",
+          "title": "Tax Systems",
+          "type": "document",
+          "content": "Taxes are the primary source of government revenue and a key tool of fiscal policy. How a tax is designed affects both its revenue generation and its economic effects.\n\nA progressive tax takes a higher percentage of income from higher earners. The US federal income tax is progressive: the first bracket of income is taxed at 10%, higher brackets at higher rates. Progressive taxes reduce income inequality.\n\nA regressive tax takes a higher percentage of income from lower earners than from higher earners. Sales taxes are regressive: everyone pays the same percentage on purchases, but since lower-income households spend a larger share of their income, the tax consumes a larger fraction of their income.\n\nA proportional (flat) tax takes the same percentage of income from everyone regardless of income level.\n\nThe Laffer Curve describes the relationship between tax rates and tax revenue. At a tax rate of 0%, revenue is zero. At a rate of 100%, revenue is also zero (no one would work if all income were confiscated). In between, there is some rate that maximizes revenue. The debate is about where the current rate is relative to that maximum.\n\nTax incidence refers to who actually bears the burden of a tax, which may differ from who officially pays it. If a tax is imposed on sellers of a good, sellers may raise prices, shifting some of the burden to buyers. The actual distribution of burden depends on the elasticities of supply and demand.",
+          "examples": [
+            {
+              "label": "Tax Incidence",
+              "code": "Government taxes sellers $2 per gallon of gasoline.\nBefore tax: price = $3, quantity = 100 gallons.\n\nSellers pass on $1.50 of the tax by raising price to $4.50.\nSellers absorb $0.50, reducing their net price from $3 to $2.50.\n\nBuyer burden: +$1.50 (price rise)\nSeller burden: -$0.50 (lower net price)\n\nThe tax burden is split because demand for gas is somewhat\ninelastic: buyers cannot easily avoid it.\nMore inelastic demand = buyers bear more of the tax burden."
+            }
+          ]
+        },
+        {
+          "id": "l-fiscal-policy-questions",
+          "title": "Fiscal Policy",
+          "questions": [
+            {
+              "q": "What is expansionary fiscal policy?",
+              "options": ["Increasing taxes to reduce the deficit.", "Increasing government spending or decreasing taxes to stimulate economic activity during a recession.", "Raising interest rates to control inflation.", "Reducing the money supply to slow economic growth."],
+              "answer": 1,
+              "explanation": "Expansionary fiscal policy adds to aggregate demand. By spending more or taxing less, the government puts more money into the economy, supporting output and employment during downturns."
+            },
+            {
+              "q": "What is the multiplier effect?",
+              "options": ["The tendency for taxes to increase faster than government spending.", "The phenomenon where an initial change in government spending leads to a larger total change in GDP as money circulates through the economy.", "The increase in debt caused by compound interest.", "The increase in imports caused by rising incomes."],
+              "answer": 1,
+              "explanation": "Money spent cycles through the economy multiple times. Each recipient spends some fraction, creating income for others, who spend some fraction, and so on. The initial injection generates a multiple of itself in total GDP change."
+            },
+            {
+              "q": "What is the difference between the national debt and the annual budget deficit?",
+              "options": ["They are the same thing measured differently.", "The deficit is the annual gap between spending and revenue; the national debt is the cumulative total of all past deficits minus surpluses.", "The national debt is paid off each year; the deficit carries forward.", "The deficit is owed to foreign governments; the national debt is owed to citizens."],
+              "answer": 1,
+              "explanation": "The deficit is a flow variable: how much more than revenues the government spends in one year. The debt is a stock variable: the total accumulated borrowing over all years, minus any repayment."
+            },
+            {
+              "q": "What does it mean for a tax to be regressive?",
+              "options": ["The tax rate falls as income rises.", "Lower-income households pay a higher percentage of their income in tax than higher-income households.", "The tax was introduced in a previous era and is now outdated.", "The tax is unpopular and politically controversial."],
+              "answer": 1,
+              "explanation": "A regressive tax burden falls more heavily, as a share of income, on lower earners. Even if the rate is the same for everyone, if lower-income people must spend a larger fraction of their income, the tax takes a larger percentage of their income."
+            },
+            {
+              "q": "What is crowding out?",
+              "options": ["When too many firms enter a market and profits fall.", "When government borrowing drives up interest rates, reducing private investment.", "When inflation reduces the purchasing power of savings.", "When imports crowd out domestic production."],
+              "answer": 1,
+              "explanation": "When the government borrows heavily, it competes with private borrowers for available funds. This competition drives up interest rates, which makes private investment more costly and causes some projects to be cancelled."
+            },
+            {
+              "q": "A tax on gasoline is imposed on sellers. Gasoline demand is very inelastic. Who bears most of the tax burden?",
+              "options": ["Sellers, because the tax is officially imposed on them.", "Buyers, because inelastic demand means they cannot easily reduce their consumption when prices rise.", "The government, because it collects less revenue.", "Foreign producers, because domestic producers pass costs abroad."],
+              "answer": 1,
+              "explanation": "Tax incidence depends on elasticity. When demand is inelastic, buyers continue purchasing despite price rises. Sellers can pass most of the tax onto buyers through higher prices. The more inelastic the demand, the more buyers bear the burden."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-fiscal",
+          "title": "Protocol: Fiscal Policy Direction",
+          "type": "challenge",
+          "prompt": "The economy is in a deep recession. GDP has fallen for three consecutive quarters. Unemployment is at 9%.\n\nShould the government use expansionary or contractionary fiscal policy to address this situation?\n\nWrite one word: expansionary or contractionary.",
+          "solution": "expansionary",
+          "validation": [
+            {
+              "rule": "^expansionary$|^Expansionary$",
+              "message": "error: a recession calls for expansionary fiscal policy: increase government spending, cut taxes, or both. this adds to aggregate demand, supporting output and employment. contractionary policy would make the recession worse."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 10: Monetary Policy",
+      "lessons": [
+        {
+          "id": "l-money-banking",
+          "title": "Money and Banking",
+          "type": "document",
+          "content": "Money is anything widely accepted as a medium of exchange. It solves the problem of barter, which requires a double coincidence of wants: both parties must have exactly what the other wants at the same time.\n\nMoney performs three functions. It is a medium of exchange (used to buy and sell things), a store of value (can be saved and used later), and a unit of account (a common measure for pricing goods and comparing values).\n\nM1 is the narrowest measure of money supply: physical currency in circulation plus demand deposits (checking accounts). M2 adds savings accounts, money market accounts, and small time deposits.\n\nCommercial banks create money through the money multiplier process. Banks are required to keep a fraction of their deposits as reserves and can lend out the rest. When a bank loans out deposits, those funds are deposited in other banks, which loan out most of that, and so on.\n\nIf the reserve requirement is 10%, an initial deposit of $1,000 can support up to $10,000 in total deposits through the banking system. The money multiplier is 1 / reserve requirement.\n\nThe Federal Reserve (the Fed) is the central bank of the United States. It regulates the banking system, serves as a lender of last resort to prevent bank failures from cascading, and conducts monetary policy to manage the macroeconomy.",
+          "examples": [
+            {
+              "label": "Money Multiplier",
+              "code": "Reserve requirement = 10% (banks must keep 10% of deposits).\nInitial deposit: $1,000.\n\nBank A keeps $100, lends $900.\nBank B receives $900, keeps $90, lends $810.\nBank C receives $810, keeps $81, lends $729.\n...\n\nTotal deposits created = $1,000 x (1/0.10) = $10,000.\n\nMoney multiplier = 1 / reserve requirement = 10.\nA single $1,000 deposit supports $10,000 in total money supply."
+            }
+          ]
+        },
+        {
+          "id": "l-monetary-policy",
+          "title": "How the Fed Controls the Money Supply",
+          "type": "document",
+          "content": "Monetary policy refers to the actions a central bank takes to influence the money supply and interest rates in order to achieve macroeconomic goals like low inflation and full employment.\n\nThe Federal Reserve's primary tool is the federal funds rate: the interest rate at which banks lend reserves to each other overnight. By raising or lowering this rate, the Fed influences all other interest rates in the economy.\n\nTo lower interest rates (expansionary monetary policy), the Fed buys government bonds from banks in open market operations. This injects reserves into the banking system, increases the money supply, and puts downward pressure on interest rates. Lower rates make borrowing cheaper, encouraging investment and consumption.\n\nTo raise interest rates (contractionary monetary policy), the Fed sells government bonds to banks. This removes reserves from the banking system, reduces the money supply, and puts upward pressure on interest rates. Higher rates make borrowing more expensive, slowing spending and reducing inflation pressure.\n\nThe discount rate is the interest rate the Fed charges banks for emergency borrowing directly from the Fed. The reserve requirement is the fraction of deposits banks must hold. Both are additional monetary policy tools, though the federal funds rate is the primary lever.\n\nQuantitative easing (QE) is a non-traditional monetary policy tool used when interest rates are already near zero. The Fed purchases large quantities of long-term assets to inject liquidity into the financial system and push down long-term interest rates.",
+          "examples": [
+            {
+              "label": "Monetary Policy Transmission",
+              "code": "Fed lowers federal funds rate from 5% to 3%.\n\nBanks can borrow cheaply from each other.\nBanks lower mortgage rates, car loan rates, business loan rates.\n\nCheaper mortgages: more people buy homes.\nMore home buying: construction increases, furniture demand rises.\n\nCheaper business loans: firms invest in new equipment.\nMore investment: hiring increases, output rises.\n\nLower interest rates on savings: some people save less, spend more.\n\nAggregate demand rises. GDP grows. Unemployment falls."
+            }
+          ]
+        },
+        {
+          "id": "l-inflation-targets",
+          "title": "Inflation Targeting and Central Bank Independence",
+          "type": "document",
+          "content": "Most modern central banks operate with a target inflation rate. The Federal Reserve's target is 2% annual inflation. This target provides a clear anchor for expectations: businesses and workers can plan ahead knowing the Fed will act to keep inflation near 2%.\n\nWhen inflation rises above target, the Fed raises interest rates to cool spending and reduce price pressure. When inflation falls below target or the economy contracts, the Fed lowers interest rates to stimulate activity.\n\nThe dual mandate is the Fed's legal obligation to pursue both price stability (low inflation) and maximum employment. These goals sometimes conflict. Fighting inflation by raising rates can increase unemployment. Supporting full employment can risk generating inflation.\n\nCentral bank independence means the central bank makes monetary policy decisions without direct control by elected politicians. Independence is considered important because politicians face electoral incentives to stimulate the economy before elections, which can generate inflation. An independent central bank can take unpopular steps like raising rates when necessary without fear of losing an election.\n\nThe Phillips Curve describes a short-run tradeoff between inflation and unemployment: lower unemployment tends to be associated with higher inflation as a tight labor market pushes up wages and therefore prices. In the long run, many economists believe this tradeoff disappears and unemployment returns to its natural rate regardless of the inflation rate.",
+          "examples": [
+            {
+              "label": "Fed Response to High Inflation",
+              "code": "2022 scenario:\nInflation rises to 8%, well above the 2% target.\nUnemployment is at 3.5%, near historic lows.\n\nFed response: aggressive rate hikes.\nFed funds rate raised from 0.25% to over 5% in 18 months.\n\nEffect:\nBorrowing costs rise sharply.\nMortgage rates rise from 3% to over 7%.\nBusiness investment slows.\nConsumer spending on credit falls.\nInflation eventually falls toward 3-4%.\nCost: unemployment rises modestly."
+            }
+          ]
+        },
+        {
+          "id": "l-monetary-policy-questions",
+          "title": "Monetary Policy",
+          "questions": [
+            {
+              "q": "What are the three functions of money?",
+              "options": ["Store of value, unit of account, medium of exchange.", "Asset, liability, equity.", "Saving, spending, investment.", "Currency, credit, capital."],
+              "answer": 0,
+              "explanation": "Money serves three purposes: it facilitates exchange (medium of exchange), can be stored for future use (store of value), and provides a common measure for prices and comparisons (unit of account). All three are necessary for a monetary economy."
+            },
+            {
+              "q": "When the Federal Reserve buys government bonds in open market operations, what happens to the money supply?",
+              "options": ["The money supply decreases.", "The money supply is unchanged.", "The money supply increases as reserves are injected into the banking system.", "Interest rates rise."],
+              "answer": 2,
+              "explanation": "When the Fed buys bonds, it pays for them by crediting banks' reserve accounts. More reserves support more lending and money creation. The money supply expands, putting downward pressure on interest rates."
+            },
+            {
+              "q": "What is the primary monetary policy tool used by the Federal Reserve?",
+              "options": ["The reserve requirement.", "The discount rate.", "The federal funds rate, set through open market operations.", "The exchange rate."],
+              "answer": 2,
+              "explanation": "The federal funds rate is the Fed's principal lever. By influencing this rate through buying and selling government bonds, the Fed affects all other interest rates in the economy, thereby influencing borrowing, spending, and investment."
+            },
+            {
+              "q": "Why do most economists support central bank independence?",
+              "options": ["Because central banks have better economic forecasts than governments.", "Because independent central banks can take necessary but politically unpopular actions like raising rates without electoral consequences.", "Because independent central banks have lower operating costs.", "Because governments do not understand monetary policy."],
+              "answer": 1,
+              "explanation": "Politicians face incentives to stimulate economies before elections regardless of whether stimulus is appropriate. An independent central bank can raise rates when necessary to fight inflation without worrying about electoral outcomes."
+            },
+            {
+              "q": "What is the short-run tradeoff described by the Phillips Curve?",
+              "options": ["Lower inflation leads to lower interest rates.", "Lower unemployment tends to be associated with higher inflation as tight labor markets push up wages.", "Higher GDP leads to higher unemployment.", "Lower interest rates always reduce inflation."],
+              "answer": 1,
+              "explanation": "The Phillips Curve shows that in the short run, policymakers face a tradeoff: policies that reduce unemployment tend to generate more inflation, and vice versa. The long-run version of the curve is vertical at the natural rate of unemployment."
+            },
+            {
+              "q": "What is quantitative easing?",
+              "options": ["Printing physical currency to pay government debts.", "Reducing the reserve requirement to encourage more lending.", "Large-scale central bank purchases of assets to inject liquidity when interest rates are already near zero.", "Raising the federal funds rate to reduce inflation."],
+              "answer": 2,
+              "explanation": "Quantitative easing is used when conventional interest rate cuts are exhausted (rates near zero). The central bank buys long-term assets to inject reserves and push down long-term rates, providing stimulus through non-traditional channels."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-monetary",
+          "title": "Protocol: Monetary Policy Direction",
+          "type": "challenge",
+          "prompt": "Inflation is running at 7%, well above the 2% target. The economy is at full employment.\n\nShould the Federal Reserve use expansionary or contractionary monetary policy?\n\nWrite one word: expansionary or contractionary.",
+          "solution": "contractionary",
+          "validation": [
+            {
+              "rule": "^contractionary$|^Contractionary$",
+              "message": "error: high inflation above target calls for contractionary monetary policy. the Fed raises interest rates to reduce borrowing, slow spending, and bring down price pressure. expansionary policy would add to demand and worsen inflation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 11: International Economics",
+      "lessons": [
+        {
+          "id": "l-trade-theory",
+          "title": "Why Countries Trade",
+          "type": "document",
+          "content": "International trade allows countries to consume beyond what they could produce alone. The theoretical foundation for trade is the principle of comparative advantage.\n\nAbsolute advantage means one country can produce a good using fewer resources than another. Comparative advantage means one country can produce a good at a lower opportunity cost than another. Comparative advantage, not absolute advantage, determines trade patterns.\n\nEven if one country is more efficient at producing everything, both countries can still gain from trade by specializing in what they have a comparative advantage in and trading for the rest. This is because specialization and trade expand the total output available to both countries.\n\nAs a simple example: if the US can produce either 10 units of wheat or 5 units of cloth per unit of time, and Mexico can produce either 6 units of wheat or 6 units of cloth, the US has a comparative advantage in wheat (opportunity cost of wheat is 0.5 cloth, versus Mexico's 1 cloth) and Mexico has a comparative advantage in cloth (opportunity cost of cloth is 1 wheat versus US's 2 wheat).\n\nBoth countries are better off if the US specializes in wheat, Mexico specializes in cloth, and they trade. Total world output of both goods is higher than if each produced both independently.\n\nThe gains from trade are not only theoretical. Empirically, countries that participate more in international trade tend to grow faster, though the distribution of gains is uneven and some groups within countries are harmed by trade even as the country as a whole benefits.",
+          "examples": [
+            {
+              "label": "Comparative Advantage Example",
+              "code": "Country A can produce:\n- 100 units of wheat OR 50 units of cloth (1 hour)\nOpportunity cost of wheat = 0.5 cloth.\nOpportunity cost of cloth = 2 wheat.\n\nCountry B can produce:\n- 30 units of wheat OR 30 units of cloth (1 hour)\nOpportunity cost of wheat = 1 cloth.\nOpportunity cost of cloth = 1 wheat.\n\nCountry A has comparative advantage in wheat\n(lower opportunity cost: 0.5 < 1).\n\nCountry B has comparative advantage in cloth\n(lower opportunity cost: 1 < 2).\n\nA should specialize in wheat. B should specialize in cloth.\nBoth trade to get the other good."
+            }
+          ]
+        },
+        {
+          "id": "l-trade-barriers",
+          "title": "Trade Barriers and Protectionism",
+          "type": "document",
+          "content": "Free trade maximizes total output but its benefits are distributed unevenly. This creates political pressure for trade barriers that protect industries and workers facing foreign competition.\n\nA tariff is a tax on imported goods. It raises the price of imports, making domestic goods more competitive. Domestic producers benefit and the government collects revenue. Consumers pay higher prices and total economic welfare generally falls. A deadweight loss is created.\n\nA quota is a limit on the quantity of a good that can be imported. Like a tariff, it raises the domestic price of the good and benefits domestic producers at consumer expense. Unlike a tariff, the government collects no revenue. Instead, whoever holds the import license captures the price difference.\n\nA subsidy to domestic producers helps them compete with imports by lowering their costs. This keeps domestic prices low for consumers but costs the government money.\n\nArguments for trade barriers include: protecting infant industries that need time to develop before competing globally, protecting strategic industries important for national security, retaliating against trading partners who impose unfair barriers, and preserving jobs in industries facing import competition.\n\nEconomists are generally skeptical of protectionist arguments because barriers reduce efficiency, invite retaliation, and protect specific industries at the expense of all consumers who pay higher prices. Trade agreements like the WTO framework seek to reduce barriers through multilateral negotiation.",
+          "examples": [
+            {
+              "label": "Effects of a Tariff",
+              "code": "Before tariff: imported cars sell for $25,000.\nDomestic producers sell 100,000 cars at $25,000.\n\nGovernment imposes $5,000 tariff per imported car.\nImported cars now cost $30,000.\n\nDomestic producers now sell 130,000 cars at $30,000.\n(They gain: higher price and more sales.)\n\nConsumers pay $5,000 more per car. They buy fewer cars.\n\nGovernment collects tariff revenue on remaining imports.\n\nDeadweight loss: transactions that would have happened\nwithout the tariff no longer occur."
+            }
+          ]
+        },
+        {
+          "id": "l-exchange-rates",
+          "title": "Exchange Rates",
+          "type": "document",
+          "content": "An exchange rate is the price of one currency in terms of another. If the exchange rate between dollars and euros is 1.10, one dollar buys 1.10 euros (or equivalently, one euro costs about $0.91).\n\nExchange rates are determined by supply and demand in foreign exchange markets. The dollar appreciates when demand for dollars rises or supply of dollars falls. It depreciates when demand falls or supply rises.\n\nFactors that affect exchange rates include interest rate differentials between countries, inflation differentials, economic growth rates, political stability, and market expectations.\n\nIf US interest rates rise relative to European rates, investors worldwide want to hold more dollar-denominated assets. They demand more dollars, driving up the dollar's value. A stronger dollar makes US exports more expensive for foreigners and makes imports cheaper for Americans. This tends to reduce exports and increase imports.\n\nA weaker dollar makes US exports cheaper for foreign buyers and makes imports more expensive for Americans. This tends to increase exports and decrease imports.\n\nA current account deficit means a country imports more than it exports, spending more abroad than it earns from foreigners. A current account surplus means the opposite. Countries with persistent current account deficits must borrow from abroad or sell assets to finance the gap.",
+          "examples": [
+            {
+              "label": "Dollar Appreciation Effects",
+              "code": "Exchange rate: 1 USD = 100 Japanese yen.\nA US car exported to Japan: costs $20,000 = 2,000,000 yen.\n\nDollar appreciates: 1 USD = 130 Japanese yen.\nSame $20,000 car now costs Japanese buyers 2,600,000 yen.\nUS exports become more expensive. Japan buys fewer US cars.\n\nA Japanese car imported to US: costs 3,000,000 yen.\nBefore: 3,000,000 / 100 = $30,000\nAfter: 3,000,000 / 130 = $23,077\nImports become cheaper for Americans."
+            }
+          ]
+        },
+        {
+          "id": "l-international-questions",
+          "title": "International Economics",
+          "questions": [
+            {
+              "q": "What does comparative advantage mean?",
+              "options": ["A country produces more of a good than another.", "A country produces a good at lower opportunity cost than another, giving it an advantage in trade.", "A country has better technology than another.", "A country exports more than it imports."],
+              "answer": 1,
+              "explanation": "Comparative advantage is about opportunity cost, not absolute efficiency. A country with a lower opportunity cost for producing a good should specialize in it and trade, even if another country can produce it more efficiently in absolute terms."
+            },
+            {
+              "q": "What is the primary economic objection to import tariffs?",
+              "options": ["They create government revenue that could have been avoided.", "They help domestic producers at the expense of domestic consumers, reduce efficiency, invite retaliation, and create deadweight loss.", "They reduce the domestic price of goods.", "They are unfair to foreign governments."],
+              "answer": 1,
+              "explanation": "Tariffs protect domestic producers but do so by raising prices for all domestic consumers. The gains to producers are smaller than the losses to consumers plus deadweight loss. Retaliatory tariffs from trading partners can compound the damage."
+            },
+            {
+              "q": "If the US dollar appreciates relative to foreign currencies, what happens to US exports?",
+              "options": ["US exports become cheaper for foreign buyers and rise.", "US exports become more expensive for foreign buyers and tend to fall.", "US exports are unaffected because prices are set domestically.", "US exports rise because the stronger dollar shows economic strength."],
+              "answer": 1,
+              "explanation": "A stronger dollar means foreigners need more of their currency to buy each dollar. US goods, priced in dollars, become more expensive in foreign currencies. Foreign buyers reduce their purchases of US exports."
+            },
+            {
+              "q": "Why can two countries both gain from trade even if one is absolutely more efficient at producing everything?",
+              "options": ["Because trade is voluntary and both parties agree to it.", "Because by specializing in what each country has a comparative advantage in and trading, total world output of all goods increases beyond what self-sufficiency would allow.", "Because the less efficient country benefits from learning the other's methods.", "Because international law requires gains to be shared equally."],
+              "answer": 1,
+              "explanation": "Comparative advantage means specialization increases total output. When each country produces what it can produce at lowest opportunity cost, the combined output exceeds what each would produce alone. Trade allows both to consume more than self-sufficient production would allow."
+            },
+            {
+              "q": "What is a current account deficit?",
+              "options": ["When a government spends more than it collects in taxes.", "When a country's imports of goods and services exceed its exports.", "When a country has more debt than assets.", "When a central bank holds insufficient reserves."],
+              "answer": 1,
+              "explanation": "The current account tracks flows of goods, services, and income between countries. A deficit means the country is buying more from the rest of the world than it is selling to them. This must be financed by borrowing from abroad or selling domestic assets."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-trade",
+          "title": "Protocol: Comparative Advantage",
+          "type": "challenge",
+          "prompt": "Country X can produce 80 units of rice or 40 units of steel per day.\nCountry Y can produce 60 units of rice or 60 units of steel per day.\n\nWhich country has a comparative advantage in steel?\n\nWrite only the country: X or Y.",
+          "solution": "Y",
+          "validation": [
+            {
+              "rule": "^Y$|^y$|^Country Y$",
+              "message": "error: opportunity cost of steel for Country X = 80/40 = 2 units of rice. opportunity cost of steel for Country Y = 60/60 = 1 unit of rice. Country Y gives up fewer units of rice to produce steel. Country Y has the comparative advantage in steel."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 12: Income, Inequality, and Development",
+      "lessons": [
+        {
+          "id": "l-income-distribution",
+          "title": "Measuring Income Inequality",
+          "type": "document",
+          "content": "Not all households in an economy earn the same income. Understanding the distribution of income requires measures that go beyond average income.\n\nThe Lorenz Curve is a graphical representation of income distribution. It plots the cumulative share of income received by the bottom percentage of the population. A perfectly equal distribution would produce a straight 45-degree line: the bottom 20% would have 20% of income, the bottom 40% would have 40%, and so on. Real economies always have a Lorenz Curve that bows below this line.\n\nThe Gini coefficient is a number derived from the Lorenz Curve that summarizes inequality in a single figure. It equals the area between the line of equality and the Lorenz Curve divided by the total area below the line of equality. It ranges from 0 (perfect equality) to 1 (one person has all income). The US Gini coefficient is around 0.39.\n\nInequality has increased in most advanced economies over recent decades. The explanations include technological change that raises returns to skilled workers, globalization that competes down wages for unskilled workers, declining union membership, and policies that reduced top marginal tax rates.\n\nPoverty is measured in two ways. Absolute poverty is defined by a fixed income threshold below which a household cannot meet basic needs. The US official poverty line is set at roughly three times a minimum food budget. Relative poverty is defined as falling below some fraction (often 50% or 60%) of the median income. By this measure, poverty is inherently about inequality, not just material deprivation.",
+          "examples": [
+            {
+              "label": "Gini Coefficient Comparison",
+              "code": "Gini coefficients (approximate, recent years):\n\nNorway: 0.26 (relatively equal)\nGermany: 0.31\nUnited Kingdom: 0.35\nUnited States: 0.39\nChina: 0.47\nBrazil: 0.52\nSouth Africa: 0.63 (highly unequal)\n\nHigher Gini = more inequality.\nComparisons reveal how much variation exists\nin income distribution across countries with\nvery different policies and histories."
+            }
+          ]
+        },
+        {
+          "id": "l-redistribution",
+          "title": "Redistribution and Social Programs",
+          "type": "document",
+          "content": "Governments use taxes and transfers to redistribute income and reduce poverty. The debate over how much redistribution is appropriate involves both empirical questions (what are the economic effects?) and normative questions (what is fair?).\n\nProgressive income taxes take more from high earners, reducing inequality after tax. Transfer payments (Social Security, unemployment insurance, Medicaid, food assistance) raise the income floor for low earners.\n\nThe efficiency-equity tradeoff is a central tension in redistribution policy. High taxes on the wealthy may reduce their incentive to work and invest, potentially reducing economic output. Generous transfers may reduce incentives for low-income workers to seek employment. However, empirical evidence on these disincentive effects is mixed and context-dependent. Small transfers to the very poor often have minimal work disincentive effects because recipients still prefer working.\n\nSocial insurance programs protect against specific risks. Social Security is insurance against the risk of outliving one's savings. Unemployment insurance protects against the risk of job loss. Health insurance protects against catastrophic medical costs. These programs address market failures in insurance markets where adverse selection would undermine private provision.\n\nThe earned income tax credit (EITC) is a refundable tax credit for low-income working households. It supplements wages and creates an incentive to work because the credit increases with earnings up to a threshold. It is broadly supported by economists as an efficient way to redistribute income.",
+          "examples": [
+            {
+              "label": "Efficiency-Equity Tradeoff",
+              "code": "Scenario: A 90% top marginal tax rate.\n\nEquity argument: Very high earners pay most of the tax.\nReversal of a trend toward extreme concentration of income.\n\nEfficiency argument: A person who earns $1,000,000\nkeeps only $100,000 after tax.\nMarginal incentive to earn is greatly reduced.\nSome high earners may work less, invest less,\nor move to lower-tax countries.\nTax revenue may actually fall (Laffer Curve).\n\nThe debate is empirical: how large are these effects?\nEvidence suggests moderate tax increases on top\nearners have smaller behavioral effects than\nvery high rates would suggest."
+            }
+          ]
+        },
+        {
+          "id": "l-economic-development",
+          "title": "Economic Development",
+          "type": "document",
+          "content": "Economic development refers to the long-run process by which low-income countries improve living standards, productivity, and institutional quality. It is distinct from short-run economic growth (changes in GDP).\n\nThe sources of long-run economic growth include capital accumulation, human capital investment, technological progress, and institutional quality. Countries that invest in education, enforce property rights reliably, maintain rule of law, and have stable governments tend to grow faster.\n\nThe poverty trap is a concept in development economics describing situations where being poor makes it very hard to escape poverty. Without savings, a poor household cannot invest in education or capital. Without education or capital, income stays low. Without income, savings are impossible.\n\nMicrofinance is an approach that tries to break poverty traps by providing small loans to poor entrepreneurs who lack access to traditional banking. The empirical evidence on microfinance's impact on poverty is more mixed than early advocates hoped.\n\nForeign aid remains controversial among development economists. Some argue it provides critical resources for investment in poor countries. Others argue it can distort incentives, create dependency, and undermine local markets and governance.\n\nInstitutions are increasingly viewed as central to development. Countries with strong property rights, low corruption, and reliable legal systems grow faster. This explains why countries with similar natural resources can have vastly different growth trajectories.",
+          "examples": [
+            {
+              "label": "Sources of Long-Run Growth",
+              "code": "Country grows from $1,000 per capita to $50,000 per capita\nover a century. What drives this?\n\nCapital accumulation:\nFirms invest in more and better machines.\nEach worker produces more with better tools.\n\nHuman capital:\nEducation rates rise. Workforce becomes more skilled.\nProductivity per worker increases.\n\nTechnology:\nInventions and innovation raise the production frontier.\nThe same inputs produce more output.\n\nInstitutions:\nProperty rights are secure. Contracts are enforced.\nBusiness investment is safer. Corruption is low.\nPeople can capture the returns from their investments.\n\nAll four factors compound over decades into enormous growth."
+            }
+          ]
+        },
+        {
+          "id": "l-inequality-development-questions",
+          "title": "Inequality and Development",
+          "questions": [
+            {
+              "q": "What does the Gini coefficient measure?",
+              "options": ["The average income of a country's population.", "The total income of the wealthiest 10% of a population.", "The degree of income inequality, from 0 (perfect equality) to 1 (maximum inequality).", "The poverty rate of a country."],
+              "answer": 2,
+              "explanation": "The Gini coefficient summarizes the entire income distribution in a single number. A country with Gini = 0 would have everyone earning exactly the same. A country with Gini = 1 would have all income going to one person."
+            },
+            {
+              "q": "What is the efficiency-equity tradeoff in redistribution policy?",
+              "options": ["The tradeoff between economic growth and environmental protection.", "The tension between reducing inequality through taxes and transfers and the potential disincentive effects on work and investment that high taxes create.", "The choice between cash transfers and in-kind benefits.", "The tradeoff between funding education versus healthcare."],
+              "answer": 1,
+              "explanation": "Redistribution can reduce inequality (equity) but may reduce incentives for the taxed to earn and the recipients to work (efficiency). The empirical question is how large these effects are at different levels of taxation and transfer."
+            },
+            {
+              "q": "What is a poverty trap?",
+              "options": ["A government program that keeps people dependent on benefits.", "A situation where being poor makes escaping poverty very difficult because poverty prevents the investments that would increase income.", "A neighborhood with high concentrations of poverty.", "An economic recession that disproportionately harms the poor."],
+              "answer": 1,
+              "explanation": "Poverty traps are self-reinforcing mechanisms. Without income, saving is impossible. Without savings, investment in education or capital is impossible. Without investment, income stays low. The cycle persists without outside intervention."
+            },
+            {
+              "q": "Why are institutions considered central to long-run economic development?",
+              "options": ["Because government spending drives all growth.", "Because countries with secure property rights, low corruption, and rule of law allow people to invest and capture returns from their efforts, fueling growth.", "Because technology only develops in countries with strong governments.", "Because trade only happens between countries with similar institutions."],
+              "answer": 1,
+              "explanation": "Secure property rights ensure that investment is not confiscated. Rule of law means contracts are enforced. Low corruption means businesses do not pay bribes rather than producing value. These institutional conditions make productive activity worthwhile and investment safe."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-inequality",
+          "title": "Protocol: Identify the Policy Goal",
+          "type": "challenge",
+          "prompt": "A government introduces a policy where everyone below the poverty line receives monthly payments that decrease gradually as their income rises, fully phasing out once they earn 150% of the poverty line.\n\nIs the primary goal of this policy efficiency, equity, or both?\n\nWrite: efficiency, equity, or both.",
+          "solution": "both",
+          "validation": [
+            {
+              "rule": "^both$|^Both$",
+              "message": "error: the policy pursues equity by transferring income to low earners. it also pursues efficiency by gradually phasing out the benefit rather than cutting it abruptly, which would create a 100% marginal tax rate and eliminate the incentive to earn more. gradual phase-out preserves work incentives while still redistributing income."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 13: Contemporary Economic Issues",
+      "lessons": [
+        {
+          "id": "l-climate-economics",
+          "title": "The Economics of Climate Change",
+          "type": "document",
+          "content": "Climate change is the largest externality problem in economic history. Burning fossil fuels imposes costs on current and future generations worldwide, but those costs are not reflected in the price of fuel. The result is that fossil fuels are overconsumed from society's perspective.\n\nCarbon pricing is the primary market-based solution proposed by economists. A carbon tax puts a price on carbon emissions equal to the estimated social cost of carbon. This raises the private cost of burning fossil fuels to equal the social cost, reducing consumption to the optimal level and generating revenue the government can use or return to citizens.\n\nA cap and trade system sets a total cap on carbon emissions and issues permits equal to that cap. Firms can trade permits. Firms that can reduce emissions cheaply sell their permits to firms that cannot. The total level of emissions is controlled, and reductions happen where they are cheapest, minimizing total cost.\n\nThe social cost of carbon is an estimate of the economic damages caused by emitting one additional ton of CO2. Estimates range from $50 to $200+ per ton depending on assumptions about discount rates (how much weight to give future damages), climate sensitivity, and economic impacts.\n\nDiscount rates are central to climate economics. Future damages must be discounted to present value for cost-benefit analysis. High discount rates make future damages seem small, reducing the urgency of action. Low discount rates make future damages loom large. This is as much a philosophical choice about our obligations to future generations as an economic one.",
+          "examples": [
+            {
+              "label": "Carbon Tax vs Cap and Trade",
+              "code": "Both aim to reduce carbon emissions.\n\nCarbon tax:\n- Sets price of emissions (e.g., $50/ton CO2)\n- Quantity of emissions is uncertain (depends on response)\n- Revenue goes to government\n- Predictable cost for businesses\n\nCap and trade:\n- Sets quantity of emissions (total cap)\n- Price of permits is uncertain (fluctuates)\n- Revenue from permit auctions goes to government\n- Guarantees meeting the emissions target\n\nBoth are more economically efficient than\ncommand-and-control regulations that dictate\nspecific technologies or behaviors."
+            }
+          ]
+        },
+        {
+          "id": "l-technological-change",
+          "title": "Automation and the Future of Work",
+          "type": "document",
+          "content": "Technological change has always disrupted labor markets. The Industrial Revolution automated agricultural and artisan work. The computer revolution automated clerical and manufacturing work. Today, artificial intelligence and robotics are automating a widening range of cognitive tasks.\n\nEconomists generally believe that technological change, over the long run, creates more jobs than it destroys. New technologies increase productivity, which increases real incomes, which increases demand for goods and services, which creates demand for workers. The Luddites who smashed weaving machines in 19th century England were eventually proven wrong: employment in textiles grew after mechanization.\n\nHowever, the short and medium run can involve significant disruption. Workers whose specific skills become obsolete face structural unemployment that requires retraining. The gains from automation tend to be concentrated among capital owners and high-skill workers who complement technology, while the losses are concentrated among routine-task workers.\n\nThe debate about AI is particularly intense because AI potentially automates cognitive tasks across many sectors simultaneously, affecting a broader range of workers than previous waves of automation. Whether this time is fundamentally different or follows historical patterns is genuinely uncertain.\n\nPolicy responses include investment in education and retraining, strengthening portable benefits that are not tied to specific employers, and potentially broader redistribution through the tax system to share the productivity gains from automation more widely.",
+          "examples": [
+            {
+              "label": "Historical Pattern of Automation",
+              "code": "1900: 41% of US workforce in agriculture.\n2020: 1.4% of US workforce in agriculture.\n\nHuge productivity gains from mechanization.\nMost farm jobs eliminated.\nYet total employment rose dramatically.\n\nWhere did the workers go?\nManufacturing, services, healthcare, education,\ntechnology, entertainment, finance.\nThese sectors grew because agricultural\nproductivity gains raised incomes\nand created demand for new products.\n\nHistorical lesson: technology destroys specific jobs\nbut creates broad economic growth that generates\ndemand for different types of work."
+            }
+          ]
+        },
+        {
+          "id": "l-housing-economics",
+          "title": "Housing Markets",
+          "type": "document",
+          "content": "Housing is one of the most important markets in any economy, accounting for roughly a third of consumer spending when rent and related costs are included. It is also one of the most regulated, and the consequences of those regulations are widely debated.\n\nHousing supply is highly inelastic in many cities due to land scarcity, zoning regulations, and long construction timelines. When demand for housing rises (because a city adds jobs), prices rise substantially if supply cannot keep pace.\n\nZoning laws determine what can be built where. Restrictions on multifamily housing, minimum lot sizes, height limits, and parking requirements all limit housing supply. Economists broadly agree that restrictive zoning in high-demand cities is a major cause of housing unaffordability and contributes to inequality by pricing workers out of high-productivity cities.\n\nRent control is a price ceiling applied to housing. As discussed earlier, it creates a shortage, reduces housing quality over time, and can freeze tenants in place because moving means losing below-market rent. It benefits current tenants at the expense of future renters and the overall housing stock.\n\nHomelessness is a housing market failure at the extreme end. It results from a combination of extremely low incomes, mental illness, addiction, and insufficient low-income housing supply. Pure market outcomes, absent intervention, do not provide housing for those whose willingness to pay is below the cost of provision.",
+          "examples": [
+            {
+              "label": "Housing Supply and Price",
+              "code": "City A (low regulation): New housing built freely.\nDemand increases as tech sector grows.\nSupply also increases: new apartments constructed.\nPrice rise is modest. Workers can afford to move in.\n\nCity B (high regulation): Strict zoning, limited construction.\nDemand increases as tech sector grows.\nSupply barely increases: few permits granted.\nPrices spike dramatically.\nLow and middle-income workers cannot afford to stay.\nCity segregates by income.\n\nSame demand shock, opposite outcomes due to supply response."
+            }
+          ]
+        },
+        {
+          "id": "l-healthcare-economics",
+          "title": "Healthcare as an Economic Problem",
+          "type": "document",
+          "content": "Healthcare markets fail in ways that distinguish them from ordinary goods markets. Understanding these failures explains why healthcare is so heavily regulated and why pure market provision of healthcare is considered inadequate by most economists.\n\nInformation asymmetry is severe. Patients do not know what treatments they need. They must rely on providers who both recommend and supply treatment, creating a principal-agent problem where the agent (doctor) has different incentives than the principal (patient).\n\nInsurance creates moral hazard: insured patients consume more healthcare than they would if paying full price, increasing costs for everyone. Insurance markets also suffer from adverse selection.\n\nHealthcare has significant positive externalities (vaccination prevents transmission to others) and is sometimes considered a right rather than just a good, which creates political pressure for universal access.\n\nThe US spends more than any other high-income country on healthcare as a share of GDP, yet achieves average or below-average health outcomes on many measures compared to peer countries. This is partly explained by high administrative costs, provider market concentration, and fee-for-service payment models that reward volume of treatment rather than health outcomes.\n\nUniversal healthcare systems (as in Canada, the UK, and most of Europe) address market failures through government provision or strict regulation. They achieve lower per-capita spending than the US system while covering entire populations. The tradeoffs involve potential wait times, limits on some treatments, and different innovation incentives.",
+          "examples": [
+            {
+              "label": "Market Failures in Healthcare",
+              "code": "1. Information asymmetry:\nPatient does not know if surgery is necessary.\nDoctor recommends surgery and also performs it.\nConflict of interest embedded in the market.\n\n2. Adverse selection:\nSick people want insurance. Healthy people opt out.\nInsurance pool is skewed. Premiums rise.\nMore healthy people exit. Premiums rise further.\n\n3. Moral hazard:\nWith insurance, a patient chooses the MRI\nrather than monitoring. It costs them the same.\nBut it raises costs for all insureds.\n\n4. Externalities:\nUnvaccinated person can infect others.\nPrivate decision, public health consequence."
+            }
+          ]
+        },
+        {
+          "id": "l-contemporary-questions",
+          "title": "Contemporary Economic Issues",
+          "questions": [
+            {
+              "q": "Why do economists generally prefer carbon pricing over command-and-control environmental regulation?",
+              "options": ["Carbon pricing raises more government revenue.", "Carbon pricing allows emissions reductions to occur where they are cheapest, minimizing the total cost of achieving any given reduction target.", "Command-and-control regulations always fail to reduce emissions.", "Carbon pricing eliminates all emissions immediately."],
+              "answer": 1,
+              "explanation": "A price on carbon lets markets find the cheapest ways to reduce emissions. Firms that can cut emissions cheaply do so; those for whom it is costly pay the price and cut less. Total emissions fall at minimum cost. Command-and-control rules cannot achieve this efficiency."
+            },
+            {
+              "q": "Why does restrictive zoning increase housing unaffordability?",
+              "options": ["Zoning increases construction costs by requiring higher quality materials.", "Restrictive zoning limits the supply of housing in high-demand areas, so when demand rises, prices must rise instead of supply.", "Zoning reduces property taxes, which makes housing more expensive.", "Restrictive zoning increases the quality of housing, raising prices."],
+              "answer": 1,
+              "explanation": "Housing prices are determined by supply and demand. When zoning prevents new construction, supply cannot respond to rising demand. Prices absorb all the adjustment, often dramatically, pricing out low and middle-income residents."
+            },
+            {
+              "q": "What is the principal-agent problem in healthcare?",
+              "options": ["When insurance companies deny claims to patients.", "When patients cannot pay for necessary care.", "When the agent (doctor) who recommends treatment also provides and profits from that treatment, creating potentially misaligned incentives.", "When governments regulate drug prices."],
+              "answer": 2,
+              "explanation": "In healthcare, doctors are agents acting on behalf of patients (principals) who lack the knowledge to evaluate recommendations. When providers profit from the treatments they recommend, their incentives may not perfectly align with patient welfare."
+            },
+            {
+              "q": "What does economic history suggest about the long-run employment effects of automation?",
+              "options": ["Automation permanently reduces total employment.", "Automation always increases employment immediately.", "Historically, automation has destroyed specific jobs but increased productivity and income, generating demand for new types of work, with net positive employment effects over the long run.", "The effects of automation are random and unpredictable."],
+              "answer": 2,
+              "explanation": "Historical waves of automation (agricultural mechanization, factory machines, computers) destroyed specific job categories but did not cause permanent mass unemployment. Productivity gains raised incomes and demand, creating new employment in different sectors."
+            },
+            {
+              "q": "What is a cap and trade system for carbon emissions?",
+              "options": ["A system where the government sets a maximum price for carbon.", "A government program that subsidizes renewable energy.", "A system that sets a total cap on emissions and allows firms to buy and sell permits, ensuring reductions happen where they are cheapest.", "A regulatory system that bans the most polluting industries."],
+              "answer": 2,
+              "explanation": "Cap and trade controls total emissions by limiting permits. Trading allows efficiency: firms that can cut emissions cheaply sell permits to those for whom cutting is costly. The environmental goal is met at the lowest possible economic cost."
+            }
+          ]
+        },
+        {
+          "id": "l-chal-policy",
+          "title": "Protocol: Market Failure Identification",
+          "type": "challenge",
+          "prompt": "A pharmaceutical company develops a new vaccine that prevents a highly contagious disease. Each person vaccinated not only protects themselves but also reduces the risk of infection for everyone around them.\n\nWhat type of market failure does this represent, and in which direction will the market underprovide or overprovide the vaccine?\n\nWrite: positive externality, underprovide OR negative externality, overprovide.",
+          "solution": "positive externality, underprovide",
+          "validation": [
+            {
+              "rule": "positive externality|underprovide|under-provide|underproduced|too little",
+              "message": "error: vaccination creates positive externalities: benefits flow to third parties not involved in the vaccination decision. because buyers do not capture all the benefits (some go to others), private willingness to pay is below the social benefit. the market will underprovide vaccination relative to the socially optimal level."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
