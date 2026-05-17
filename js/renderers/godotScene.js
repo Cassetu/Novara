@@ -39,6 +39,7 @@ let activeWsTab = "Script";
 let fsOpen = { "res://": true };
 let selectedNodeId = null;
 let scriptEditorRef = null;
+let autoloads = [];
 
 function makeNode(type, name) {
     return { id: nextId++, type, name: name || type, children: [], hasScript: false };
@@ -71,12 +72,13 @@ function insertAfter(nodes, targetId, node) {
 
 function treeMatches(actual, target) {
     if (!target || !target.length) return true;
-    if (actual.length !== target.length) return false;
-    return target.every((t, i) => {
-        const a = actual[i];
-        return a && a.type === t.node &&
-            (t.name ? a.name === t.name : true) &&
-            treeMatches(a.children, t.children || []);
+    if (actual.length < target.length) return false;
+    return target.every(t => {
+        const match = actual.find(a =>
+            a.type === t.node &&
+            (t.name ? a.name === t.name : true)
+        );
+        return match && treeMatches(match.children, t.children || []);
     });
 }
 
@@ -267,7 +269,7 @@ function buildWorkspace(lessonData) {
         return `
             <div class="gd-script-area">
                 <div class="gd-script-tab-bar">
-                    <span class="gd-script-file-tab">${treeData[0]?.name || "script"}.gd ×</span>
+                    <span class="gd-script-file-tab">📜 ${treeData[0]?.name || "script"}.gd ×</span>
                 </div>
                 <div class="gd-editor-wrap">
                     <div id="gd-line-numbers" class="gd-line-numbers"></div>
@@ -321,9 +323,31 @@ function renderGodotScene(lessonData, onFinish) {
             </div>
 
             <div class="gd-menubar">
-                ${["Scene","Project","Debug","Editor","Help"].map(m =>
+                ${["Scene","Debug","Editor","Help"].map(m =>
                     `<span class="gd-menu-item">${m}</span>`
                 ).join("")}
+                <div class="gd-menu-project-wrap" style="position:relative;">
+                    <span class="gd-menu-item" id="gd-project-menu-btn">Project</span>
+                    <div id="gd-project-dropdown" class="gd-project-dropdown" style="display:none;">
+                        <div class="gd-dropdown-item gd-dropdown-label">Project Settings</div>
+                        <div class="gd-dropdown-item gd-dropdown-sub" id="gd-open-autoloads">
+                            <span>Globals</span>
+                            <span class="gd-dropdown-arrow">▸</span>
+                        </div>
+                        <div id="gd-autoload-sub" class="gd-autoload-sub" style="display:none;">
+                            <div class="gd-dropdown-item gd-dropdown-label" style="padding-left:24px;">Autoload</div>
+                            <div id="gd-autoload-list" class="gd-autoload-list"></div>
+                            <div class="gd-autoload-add-row">
+                                <input id="gd-autoload-path" class="gd-autoload-input" placeholder="res://scripts/my_global.gd" spellcheck="false">
+                                <input id="gd-autoload-name" class="gd-autoload-input" placeholder="MyGlobal" spellcheck="false" style="width:90px;">
+                                <button class="gd-sm-btn" id="gd-autoload-add-btn">Add</button>
+                            </div>
+                        </div>
+                        <div class="gd-dropdown-divider"></div>
+                        <div class="gd-dropdown-item">Export...</div>
+                        <div class="gd-dropdown-item">Install Android Build Template...</div>
+                    </div>
+                </div>
                 <div class="gd-menubar-center">
                     ${["2D","3D","Script","Game","AssetLib"].map(t =>
                         `<button class="gd-ws-btn${t === activeWsTab ? " active" : ""}" data-ws="${t}">${t}</button>`
@@ -510,6 +534,74 @@ function renderGodotScene(lessonData, onFinish) {
     });
 
     submitBtn.addEventListener("click", () => onFinish());
+
+    autoloads = lessonData.initialAutoloads ? [...lessonData.initialAutoloads] : [];
+
+    const projectBtn = document.getElementById("gd-project-menu-btn");
+    const dropdown = document.getElementById("gd-project-dropdown");
+    const autoloadSub = document.getElementById("gd-autoload-sub");
+    const openAutoloads = document.getElementById("gd-open-autoloads");
+
+    projectBtn.addEventListener("click", e => {
+        e.stopPropagation();
+        dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+    });
+
+    openAutoloads.addEventListener("click", e => {
+        e.stopPropagation();
+        const open = autoloadSub.style.display !== "none";
+        autoloadSub.style.display = open ? "none" : "block";
+        openAutoloads.querySelector(".gd-dropdown-arrow").textContent = open ? "▸" : "▾";
+        renderAutoloadList();
+    });
+
+    document.getElementById("gd-autoload-add-btn").addEventListener("click", e => {
+        e.stopPropagation();
+        const path = document.getElementById("gd-autoload-path").value.trim();
+        const name = document.getElementById("gd-autoload-name").value.trim();
+        if (!path || !name) return;
+        autoloads.push({ path, name, enabled: true });
+        document.getElementById("gd-autoload-path").value = "";
+        document.getElementById("gd-autoload-name").value = "";
+        renderAutoloadList();
+    });
+
+    document.addEventListener("click", () => {
+        dropdown.style.display = "none";
+    }, { once: false, capture: true });
+
+    dropdown.addEventListener("click", e => e.stopPropagation());
+
+    function renderAutoloadList() {
+        const list = document.getElementById("gd-autoload-list");
+        if (!list) return;
+        if (!autoloads.length) {
+            list.innerHTML = `<div class="gd-autoload-empty">No autoloads configured.</div>`;
+            return;
+        }
+        list.innerHTML = autoloads.map((al, i) => `
+            <div class="gd-autoload-row">
+                <input type="checkbox" ${al.enabled ? "checked" : ""} data-ali="${i}" class="gd-al-toggle">
+                <span class="gd-al-name">${al.name}</span>
+                <span class="gd-al-path">${al.path}</span>
+                <span class="gd-al-del" data-ali="${i}">✕</span>
+            </div>
+        `).join("");
+        list.querySelectorAll(".gd-al-toggle").forEach(cb => {
+            cb.addEventListener("change", e => {
+                autoloads[parseInt(e.target.dataset.ali)].enabled = e.target.checked;
+            });
+        });
+        list.querySelectorAll(".gd-al-del").forEach(btn => {
+            btn.addEventListener("click", e => {
+                e.stopPropagation();
+                autoloads.splice(parseInt(btn.dataset.ali), 1);
+                renderAutoloadList();
+            });
+        });
+    }
+
+    renderAutoloadList();
 }
 
 export { renderGodotScene };
