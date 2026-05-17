@@ -9,7 +9,7 @@
           "id": "l-gd-what-is-node",
           "title": "Everything Is a Node",
           "type": "document",
-          "content": "In Godot, everything you place in a game is a node. A node is a building block. It has a name, a type, and a set of properties. On its own, a node does one specific job.\n\nA Sprite2D displays an image. A CollisionShape2D defines a hitbox. A Timer counts down. None of these do anything meaningful alone. The power comes from combining them.\n\nNodes are organized into a tree. Every node has exactly one parent, except the root. A node can have as many children as you need. When you move a parent node, all its children move with it. When you delete a parent, all children are deleted too.\n\nThis tree is called the Scene Tree. It is the backbone of every Godot project.",
+          "content": "In Godot, everything you place in a game is a node. A node is a building block with a name, a type, and a set of properties. On its own, a node does one specific job.\n\nA Sprite2D displays an image. A CollisionShape2D defines a hitbox. A Timer counts down. None of these do anything meaningful alone — the power comes from combining them.\n\nNodes are organized into a tree. Every node has exactly one parent, except the root. A node can have as many children as you need. When you move a parent node, all its children move with it. When you delete a parent, all children are deleted too.\n\nThis tree is called the Scene Tree. It is the backbone of every Godot project. Understanding it deeply is more important than memorizing any function.",
           "questions": [
             {
               "q": "What is the fundamental building block of every Godot scene?",
@@ -21,13 +21,19 @@
               "q": "What happens to child nodes when their parent is deleted?",
               "options": ["They become root nodes.", "They are deleted too.", "They move to the scene root.", "Nothing changes."],
               "answer": 1,
-              "explanation": "Child nodes are owned by their parent. Deleting the parent removes the entire branch."
+              "explanation": "Child nodes are owned by their parent. Deleting the parent removes the entire branch from the tree."
+            },
+            {
+              "q": "A Sprite2D displays an image and a CollisionShape2D defines a hitbox. Which statement is true?",
+              "options": ["They must always be siblings.", "They are useful on their own without any parent.", "They become powerful when combined as children of a physics body.", "They cannot exist in the same scene."],
+              "answer": 2,
+              "explanation": "Neither node does much alone. As children of a CharacterBody2D they give you a visible, collidable character. That is the node composition pattern."
             },
             {
               "q": "What is the Scene Tree?",
-              "options": ["A list of all your project files.", "The hierarchical tree of nodes that make up a scene.", "A timeline for animations.", "A folder of saved scenes."],
+              "options": ["A list of all your project files.", "The hierarchical tree of nodes that make up an active scene.", "A timeline for animations.", "A folder of saved scenes."],
               "answer": 1,
-              "explanation": "The Scene Tree is the live hierarchy of nodes currently active in your game. It is what runs when you press Play."
+              "explanation": "The Scene Tree is the live hierarchy of nodes currently running. It is what Godot processes every frame when you press Play."
             }
           ]
         },
@@ -35,66 +41,108 @@
           "id": "l-gd-scenes",
           "title": "Scenes as Blueprints",
           "type": "document",
-          "content": "A scene is a saved tree of nodes. You build it in the editor, save it as a .tscn file, and then instance it as many times as you need.\n\nThink of a scene as a blueprint. The blueprint for an Enemy defines its sprite, its collision, its health, and its movement logic. Once the blueprint exists, you can place fifty enemies in your level by instancing the same scene fifty times. Each instance is independent.\n\nThis is one of the most important patterns in Godot. Almost everything is a scene: the player, individual enemies, UI elements, projectiles, the entire level. Scenes reference other scenes. A Level scene instances a Player scene and multiple Enemy scenes.\n\nWhen you edit the original scene, every instance in every level updates automatically.",
+          "content": "A scene is a saved tree of nodes. You build it in the editor, save it as a .tscn file, and then instance it as many times as you need.\n\nThink of a scene as a blueprint. The blueprint for an Enemy defines its sprite, its collision, its health, and its movement logic. Once the blueprint exists, you can place fifty enemies in your level by instancing the same scene fifty times. Each instance is independent — its own copy of the data, running its own logic.\n\nThis is one of the most important patterns in Godot. Almost everything is a scene: the player, individual enemies, UI elements, projectiles, the entire level. Scenes reference other scenes. A Level scene instances a Player scene and multiple Enemy scenes.\n\nWhen you edit the original scene, every instance in every level updates automatically. This is the equivalent of editing a component in a design system — one change propagates everywhere.",
           "questions": [
             {
               "q": "What file extension does Godot use to save scenes?",
               "options": [".godot", ".scene", ".tscn", ".node"],
               "answer": 2,
-              "explanation": ".tscn stands for Text SCeNe. It is Godot's text-based scene format."
+              "explanation": ".tscn stands for Text SCeNe. It is Godot's human-readable scene format, which makes it friendly for version control."
             },
             {
-              "q": "If you have 50 Enemy instances in a level and you edit the Enemy scene, what happens?",
-              "options": ["Nothing. Instances are independent copies.", "All 50 instances update automatically.", "Only the first instance updates.", "You must manually update each one."],
+              "q": "You have 50 Enemy instances in a level and edit the Enemy scene. What happens to the instances?",
+              "options": ["Nothing. Instances are independent copies.", "All 50 update automatically.", "Only the first instance updates.", "You must manually re-instance each one."],
               "answer": 1,
-              "explanation": "Instances reference the original scene. Editing the scene propagates to all instances automatically."
+              "explanation": "Instances reference the original scene file. Editing that file propagates changes to every instance automatically."
             },
             {
-              "q": "Why is the scene-as-blueprint pattern powerful?",
-              "options": ["It reduces file size.", "It lets you reuse and instance complex objects without duplicating logic.", "It makes the game run faster.", "It removes the need for scripts."],
+              "q": "Each instance of a scene is:",
+              "options": ["Identical and always synchronized.", "Independent — its own copy of the data.", "Linked to all other instances so changing one changes all.", "Read-only."],
               "answer": 1,
-              "explanation": "Define something once, use it everywhere. This is the core of Godot's design philosophy."
+              "explanation": "Each instance is its own independent object. Changing a property on one instance only affects that instance, not the others."
+            },
+            {
+              "q": "Why is the scene-as-blueprint pattern so important?",
+              "options": ["It reduces file size significantly.", "It lets you define something once and reuse it anywhere without duplicating logic.", "It makes the game run faster.", "It removes the need for scripts entirely."],
+              "answer": 1,
+              "explanation": "Define once, use everywhere. This is core to how Godot projects are structured and why they scale well."
             }
           ]
         },
         {
           "id": "l-gd-signals",
-          "title": "Signals",
+          "title": "Signals — Godot's Event System",
           "type": "document",
-          "content": "A signal is Godot's way of letting one node notify other nodes that something happened, without needing to know anything about them.\n\nA Button emits a pressed signal when clicked. A Timer emits a timeout signal when it reaches zero. An Area2D emits body_entered when something enters its collision zone.\n\nInstead of a button directly calling a function on another node — which creates a hard dependency between the two — the button just emits a signal. Any node that cares can connect to that signal and respond. The button does not need to know who is listening.\n\nThis keeps your nodes loosely coupled. You can move nodes around, rename them, or remove listeners without breaking the emitter.\n\nYou connect signals in the editor by clicking the node, going to the Signals tab in the Inspector, and double-clicking the signal. You can also connect them in code using the connect() method.",
+          "content": "A signal is Godot's way of letting one node notify other nodes that something happened, without needing to know anything about them.\n\nA Button emits a pressed signal when clicked. A Timer emits timeout when it reaches zero. An Area2D emits body_entered when something enters its collision zone.\n\nThe key insight: instead of a button directly calling a function on another node — which creates a hard dependency — the button just emits a signal. Any node that cares can connect to that signal and respond. The button has no idea who is listening, or whether anyone is listening at all.\n\nThis is called loose coupling. It keeps your nodes independent and reusable. You can move nodes around, rename them, or add new listeners without touching the node that emits.\n\nYou connect signals in the editor: click a node, open the Node tab in the right panel, double-click a signal to connect it. You can also connect in code using .connect().\n\nYou can define your own signals at the top of any script using the signal keyword, and emit them with signal_name.emit().",
           "questions": [
             {
-              "q": "What problem do signals solve?",
-              "options": ["They make animations play faster.", "They let nodes communicate without hard dependencies on each other.", "They replace the need for variables.", "They automatically save the game."],
+              "q": "What core problem do signals solve in Godot?",
+              "options": ["They make the game run on multiple threads.", "They let nodes communicate without creating hard dependencies on each other.", "They replace variables for storing state.", "They automatically save progress."],
               "answer": 1,
-              "explanation": "Signals decouple nodes. The emitter does not need to know who is listening. Listeners can be added or removed freely."
+              "explanation": "Signals decouple nodes. The emitter does not need to know who is listening. This makes nodes reusable and scenes composable."
             },
             {
-              "q": "Which signal does a Timer emit when it finishes counting down?",
+              "q": "Which signal does a Timer node emit when it reaches zero?",
               "options": ["finished", "complete", "timeout", "done"],
               "answer": 2,
-              "explanation": "Timer emits the timeout signal when it reaches zero. You connect this signal to a function that should run when time is up."
+              "explanation": "Timer emits the timeout signal. You connect this to a function that should run when the timer expires."
             },
             {
-              "q": "A Button emits pressed. A ScoreManager needs to add points when it is clicked. What is the correct approach?",
-              "options": ["Have the Button directly call ScoreManager.add_points().", "Connect the Button's pressed signal to ScoreManager's add_points function.", "Have ScoreManager check the Button's state every frame.", "Use a global variable instead."],
+              "q": "A Button emits pressed. A ScoreManager needs to add points when it is clicked. What is the correct Godot approach?",
+              "options": ["Have the Button call ScoreManager.add_points() directly.", "Connect the Button's pressed signal to ScoreManager's add_points function.", "Have ScoreManager check the Button's state every frame in _process.", "Use a global variable the Button writes to."],
               "answer": 1,
-              "explanation": "Connecting the signal keeps the Button and ScoreManager independent. The Button does not need to reference ScoreManager at all."
+              "explanation": "Connecting the signal means the Button and ScoreManager never reference each other. The Button just emits — ScoreManager just listens."
+            },
+            {
+              "q": "How do you declare a custom signal in GDScript?",
+              "options": ["`func signal health_changed()`", "`signal health_changed`", "`emit health_changed`", "`var health_changed = Signal()`"],
+              "answer": 1,
+              "explanation": "The signal keyword followed by the name declares it. You can add parameters in parentheses: signal health_changed(new_value)."
+            },
+            {
+              "q": "What does `health_changed.emit(75)` do?",
+              "options": ["Declares a new signal called health_changed.", "Calls the health_changed function with 75.", "Fires the signal, passing 75 to every connected function.", "Sets health_changed to 75."],
+              "answer": 2,
+              "explanation": "In Godot 4, signals are objects. Calling .emit() fires the signal and passes the arguments to all connected handlers."
             }
           ]
         },
         {
-          "id": "l-gd-scene-fix",
-          "title": "Diagnostic: Broken Scene Tree",
+          "id": "l-gd-node-types",
+          "title": "Node Categories",
+          "type": "document",
+          "content": "Godot has hundreds of built-in node types, but they fall into a few broad categories that are worth understanding before you need them.\n\n2D Nodes extend Node2D. They live in 2D world space and have position, rotation, and scale relative to their parent. Everything in a 2D game — sprites, bodies, areas, cameras — extends Node2D.\n\n3D Nodes extend Node3D. Same concept but in three dimensions. They use Vector3 for position instead of Vector2.\n\nControl Nodes extend Control. These are UI elements. They live in screen space rather than world space, which means they do not move when the camera does. Label, Button, ProgressBar, TextureRect, and all containers extend Control.\n\nBase Nodes extend Node directly. These have no transform — no position or rotation in the world. They are used as pure logic containers: GameManager, AudioManager, an abstract state machine. If a node does not need to exist anywhere in 2D or 3D space, it should extend Node.\n\nUnderstanding which base class a node extends tells you immediately what it can and cannot do.",
+          "questions": [
+            {
+              "q": "You are building a 2D game and need a node that holds shared game logic but has no visual representation. Which base class should it extend?",
+              "options": ["Node2D", "Control", "Node3D", "Node"],
+              "answer": 3,
+              "explanation": "A pure logic node with no position in the world should extend Node. Node2D, Node3D, and Control all carry transform data that would be meaningless here."
+            },
+            {
+              "q": "Why do UI elements extend Control instead of Node2D?",
+              "options": ["Control nodes load faster.", "Control nodes live in screen space and do not move with the camera.", "Node2D cannot display text.", "Control nodes are automatically visible."],
+              "answer": 1,
+              "explanation": "Control nodes use screen-space coordinates. They stay fixed on screen regardless of where the camera is, which is exactly what UI needs."
+            },
+            {
+              "q": "A CharacterBody2D extends Node2D. What does this tell you about it?",
+              "options": ["It has no position in the world.", "It exists in 2D space and has position, rotation, and scale.", "It can only be used in 3D scenes.", "It cannot have child nodes."],
+              "answer": 1,
+              "explanation": "Anything extending Node2D exists in 2D world space. It inherits transform properties: position, rotation, scale — all relative to its parent."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-scene-build-1",
+          "title": "Diagnostic: Build a Player Scene",
           "type": "godot_scene",
-          "prompt": "This Player scene is missing its CollisionShape2D. A CharacterBody2D without a collision shape will pass through everything. Add a CollisionShape2D as a child of the CharacterBody2D. The Sprite2D should stay as a sibling.",
+          "prompt": "Build a proper Player scene. The root should be a CharacterBody2D named 'Player'. It needs a Sprite2D and a CollisionShape2D as children. Order doesn't matter — both just need to be there. The script should extend CharacterBody2D and have a _physics_process function that calls move_and_slide().",
           "initialTree": [
             {
               "node": "CharacterBody2D",
               "name": "Player",
-              "children": [
-                { "node": "Sprite2D", "name": "Sprite2D", "children": [] }
-              ]
+              "children": []
             }
           ],
           "targetTree": [
@@ -107,8 +155,21 @@
               ]
             }
           ],
-          "initialScript": "extends CharacterBody2D\n\nfunc _physics_process(delta):\n    move_and_slide()",
-          "validation": []
+          "initialScript": "extends CharacterBody2D\n\nfunc _physics_process(delta):\n    pass",
+          "validation": [
+            {
+              "rule": "extends CharacterBody2D",
+              "message": "Script must extend CharacterBody2D."
+            },
+            {
+              "rule": "func _physics_process\\(delta\\)",
+              "message": "Must define _physics_process(delta)."
+            },
+            {
+              "rule": "move_and_slide\\(\\)",
+              "message": "Must call move_and_slide() inside _physics_process."
+            }
+          ]
         }
       ]
     },
@@ -119,11 +180,11 @@
           "id": "l-gd-variables",
           "title": "Variables and Types",
           "type": "document",
-          "content": "GDScript is Godot's built-in scripting language. It is Python-like in syntax: indentation defines blocks, no semicolons, readable by design.\n\nYou declare variables with the var keyword. GDScript is dynamically typed by default — the type is inferred from the value. You can also explicitly type variables using a colon followed by the type name, which is recommended for larger projects.\n\nConst declares a constant. Its value cannot change after it is set.\n\nCommon types include: int, float, bool, String, Vector2, Vector3, Color, Array, and Dictionary.\n\nVector2 is used constantly in 2D games. It holds an x and y value. velocity, position, and direction are all Vector2 in 2D.",
+          "content": "GDScript is Godot's built-in scripting language. It is Python-like: indentation defines blocks, no semicolons, readable by design. It is also deeply integrated with the engine — Godot-specific types like Vector2, Color, and NodePath are first-class citizens.\n\nYou declare variables with var. GDScript is dynamically typed by default — the type is inferred from the assigned value. You can add explicit type annotations with a colon, which is recommended for anything beyond a small script because it catches bugs early and improves editor autocomplete.\n\nConst declares a constant. Its value cannot change after declaration. Use it for things like speed limits, max health, and tile sizes that should never be reassigned.\n\nCommon types you will use constantly: int for whole numbers, float for decimals, bool for true/false, String for text, Vector2 for 2D positions and directions, Vector3 for 3D, Color for RGBA colors, Array for ordered lists, and Dictionary for key-value pairs.\n\nVector2.ZERO is shorthand for Vector2(0, 0). It is the most common starting value for velocity and direction variables.",
           "examples": [
             {
-              "label": "Variable declarations",
-              "code": "var score = 0\nvar player_name = \"Alex\"\nvar is_alive = true\nvar speed: float = 200.0\nconst MAX_HEALTH = 100\n\nvar direction = Vector2.ZERO\nvar spawn_point = Vector2(320, 180)"
+              "label": "Typed and untyped variable declarations",
+              "code": "var score = 0\nvar player_name = \"Alex\"\nvar is_alive = true\n\nvar speed: float = 200.0\nvar health: int = 100\nvar direction: Vector2 = Vector2.ZERO\n\nconst MAX_HEALTH = 100\nconst GRAVITY = 980.0\nconst TILE_SIZE = 32"
             }
           ],
           "questions": [
@@ -131,19 +192,25 @@
               "q": "Which keyword declares a value that cannot change in GDScript?",
               "options": ["var", "static", "const", "final"],
               "answer": 2,
-              "explanation": "const in GDScript works the same as in most languages. The value is fixed at declaration and cannot be reassigned."
+              "explanation": "const declares a constant. Attempting to reassign it later causes an error. Use it for values that should never change: speeds, limits, tile sizes."
             },
             {
-              "q": "What type would you use to store a position or velocity in a 2D game?",
+              "q": "What type would you use to store a 2D position or velocity?",
               "options": ["float", "int", "Vector2", "Array"],
               "answer": 2,
-              "explanation": "Vector2 holds x and y components. Position, velocity, direction, and size in 2D are all Vector2."
+              "explanation": "Vector2 holds x and y components. All 2D positions, velocities, and directions in Godot use Vector2."
             },
             {
-              "q": "What does `var speed: float = 200.0` do differently than `var speed = 200.0`?",
-              "options": ["Nothing, they are identical.", "The typed version prevents assigning a non-float value later.", "The typed version runs faster always.", "The typed version is only valid in exported games."],
+              "q": "What is `Vector2.ZERO`?",
+              "options": ["An error — you cannot set a Vector2 to zero.", "Shorthand for Vector2(0, 0).", "The position of the scene root.", "A constant that represents no movement."],
               "answer": 1,
-              "explanation": "Adding the type annotation enforces the type. Assigning a String to speed later would cause an error. It makes code more predictable and catches bugs early."
+              "explanation": "Vector2.ZERO is a built-in constant equal to Vector2(0, 0). It is the standard starting value for velocity and direction variables."
+            },
+            {
+              "q": "What is the advantage of writing `var speed: float = 200.0` over `var speed = 200.0`?",
+              "options": ["No difference — Godot ignores type annotations.", "The type annotation prevents accidentally assigning a non-float later.", "Typed variables are stored in a different memory location.", "Typed variables cannot be changed at runtime."],
+              "answer": 1,
+              "explanation": "Type annotations enforce the type at assignment. Assigning a String to speed later would raise an error, catching the bug immediately."
             }
           ]
         },
@@ -151,11 +218,11 @@
           "id": "l-gd-functions",
           "title": "Functions and Built-in Callbacks",
           "type": "document",
-          "content": "Functions in GDScript use the func keyword. Indentation defines the body — no curly braces.\n\nGodot calls certain functions automatically based on what is happening in the game. These are called virtual functions or callbacks. You override them in your script to hook into Godot's loop.\n\n_ready() runs once when the node enters the scene tree. Use it to initialize values, get references to child nodes, and connect signals in code.\n\n_process(delta) runs every frame. delta is the time in seconds since the last frame. Use it for logic that needs to update constantly but is not physics-sensitive.\n\n_physics_process(delta) runs every physics frame, which is fixed (default 60 per second). Use this for movement, velocity, and anything that interacts with the physics engine.\n\nThe underscore prefix is a convention meaning the function is meant to be overridden, not called directly.",
+          "content": "Functions in GDScript use the func keyword. Indentation defines the body — no curly braces. Return types can be annotated with an arrow: func get_speed() -> float.\n\nGodot calls certain functions on your scripts automatically based on game events. These are virtual functions — you override them to hook into Godot's loop.\n\n_ready() runs once when the node and all its children enter the scene tree. This is where you initialize state, get node references with $, and connect signals in code.\n\n_process(delta) runs every rendered frame. Delta is the time in seconds since the last frame — always use it to multiply movement so your game runs the same speed regardless of frame rate. Use _process for things that are not physics-sensitive: UI updates, input checks that do not involve collision, visual effects.\n\n_physics_process(delta) runs every physics tick, which is fixed at 60 times per second by default regardless of render frame rate. Anything involving movement, velocity, or collision must go here. If you move a physics body in _process instead of _physics_process, you will get jitter and incorrect collision detection.\n\n_input(event) runs when any input event occurs. It receives the full InputEvent object. Useful for discrete input handling like menu navigation.\n\n_unhandled_input(event) is like _input but only fires if no other node has already consumed the event.",
           "examples": [
             {
-              "label": "Common callbacks",
-              "code": "extends Node2D\n\nvar elapsed: float = 0.0\n\nfunc _ready():\n    print(\"Node is ready\")\n\nfunc _process(delta):\n    elapsed += delta\n\nfunc _physics_process(delta):\n    position.x += 100 * delta"
+              "label": "All four main callbacks",
+              "code": "extends CharacterBody2D\n\nvar elapsed: float = 0.0\n\nfunc _ready():\n    print(\"Node entered tree\")\n\nfunc _process(delta):\n    elapsed += delta\n\nfunc _physics_process(delta):\n    velocity.x = 200.0\n    move_and_slide()\n\nfunc _input(event):\n    if event is InputEventKey:\n        print(event.keycode)"
             }
           ],
           "questions": [
@@ -163,19 +230,133 @@
               "q": "Which callback runs once when a node first enters the scene tree?",
               "options": ["_start()", "_init()", "_ready()", "_begin()"],
               "answer": 2,
-              "explanation": "_ready() is called by Godot automatically once, when the node and all its children are fully added to the scene tree."
+              "explanation": "_ready() is called automatically once, when the node and all its children are fully in the scene tree. It is the right place for setup."
             },
             {
-              "q": "What is `delta` in `_process(delta)`?",
-              "options": ["The frame number.", "The time in seconds since the last frame.", "The current position of the node.", "The number of nodes in the tree."],
+              "q": "What is delta in `_process(delta)` and why must you use it for movement?",
+              "options": ["The frame number — use it to count frames.", "Time since the last frame in seconds — multiply movement by it for frame-rate independence.", "The physics tick rate — use it to sync with collision.", "The number of nodes in the tree."],
               "answer": 1,
-              "explanation": "delta is the elapsed time since the last frame in seconds. Multiplying movement by delta makes it frame-rate independent."
+              "explanation": "Without delta, a character moving 200 units per frame moves at 200 × 60 = 12000 units/second at 60fps but only 200 × 30 = 6000 units/second at 30fps. Multiplying by delta gives consistent real-world speed."
             },
             {
-              "q": "You are writing movement logic for a CharacterBody2D. Which callback should you use?",
+              "q": "You are writing movement for a CharacterBody2D. Which callback do you use?",
               "options": ["_process(delta)", "_ready()", "_physics_process(delta)", "_input(event)"],
               "answer": 2,
-              "explanation": "_physics_process runs on a fixed timestep and is synchronized with Godot's physics engine. Movement and collision should always go here."
+              "explanation": "_physics_process runs on a fixed physics timestep and syncs with Godot's collision engine. Moving physics bodies anywhere else causes jitter and missed collisions."
+            },
+            {
+              "q": "What is the difference between `_input(event)` and `_unhandled_input(event)`?",
+              "options": ["They are the same.", "_input fires before other nodes consume the event. _unhandled_input only fires if nothing else handled it.", "_unhandled_input fires first. _input fires after.", "_input is only for keyboard events. _unhandled_input handles mouse events."],
+              "answer": 1,
+              "explanation": "_unhandled_input is used when you want your node to only respond if no UI element or higher-priority node already consumed the event. Useful for player movement so clicking a menu button doesn't also fire a weapon."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-control-flow",
+          "title": "Control Flow in GDScript",
+          "type": "document",
+          "content": "GDScript control flow is close to Python. Conditions use if, elif, and else — no parentheses required around the condition, but they are allowed.\n\nFor loops iterate over arrays, ranges, or dictionaries. range(5) produces 0, 1, 2, 3, 4. range(1, 6) produces 1, 2, 3, 4, 5. range(0, 10, 2) produces 0, 2, 4, 6, 8 — the third argument is the step.\n\nWhile loops run as long as a condition is true. Be careful — it is easy to accidentally write an infinite loop.\n\nMatch is GDScript's switch statement. It compares a single expression against patterns. The _ case is a wildcard that matches anything not caught above. Match is cleaner than a long chain of elif when you have many specific values to check.\n\nBreak exits a loop immediately. Continue skips the current iteration and moves to the next.",
+          "examples": [
+            {
+              "label": "if, for, match",
+              "code": "var health = 45\n\nif health > 75:\n    print(\"Healthy\")\nelif health > 25:\n    print(\"Injured\")\nelse:\n    print(\"Critical\")\n\nfor i in range(5):\n    print(i)\n\nfor item in [\"sword\", \"shield\", \"potion\"]:\n    print(item)\n\nvar state = \"jumping\"\nmatch state:\n    \"idle\":\n        print(\"Standing still\")\n    \"jumping\":\n        print(\"In the air\")\n    \"attacking\":\n        print(\"Swinging\")\n    _:\n        print(\"Unknown state\")"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does `range(2, 8, 2)` produce?",
+              "options": ["2, 4, 6, 8", "2, 4, 6", "0, 2, 4, 6, 8", "2, 8"],
+              "answer": 1,
+              "explanation": "range(start, end, step) starts at 2, goes up to but not including 8, stepping by 2. Result: 2, 4, 6."
+            },
+            {
+              "q": "What does the `_` case do in a match statement?",
+              "options": ["It matches nothing and causes an error.", "It is a wildcard that matches anything not caught by earlier cases.", "It is required on every match statement.", "It restarts the match from the top."],
+              "answer": 1,
+              "explanation": "_ is the default case. If no other pattern matched, _ runs. It is the equivalent of default in C-style switch statements."
+            },
+            {
+              "q": "You want to loop through an array of enemies and skip any that are already dead. Which keyword do you use?",
+              "options": ["break", "return", "continue", "pass"],
+              "answer": 2,
+              "explanation": "continue skips the rest of the current iteration and moves to the next. break would exit the entire loop. return would exit the function."
+            },
+            {
+              "q": "What is the GDScript equivalent of a switch statement?",
+              "options": ["switch", "case", "match", "select"],
+              "answer": 2,
+              "explanation": "match is GDScript's pattern-matching control structure. It is cleaner than chained elif when checking one variable against many specific values."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-arrays-dicts",
+          "title": "Arrays and Dictionaries",
+          "type": "document",
+          "content": "Arrays hold ordered lists of values. You write them in square brackets separated by commas. Indexing starts at zero. The last item is always at index array.size() - 1.\n\nUseful array methods: append() adds to the end, pop_back() removes from the end, insert(index, value) adds at a position, erase(value) removes the first matching value, has(value) checks if something exists, size() returns the count.\n\nDictionaries hold key-value pairs. You write them in curly braces. Keys can be strings, integers, or any hashable value. You access values with dict[key] or dict.key when the key is a simple identifier string.\n\nDictionaries in GDScript are similar to objects in JavaScript or dicts in Python. They are useful for storing structured data: a weapon's stats, a character's inventory, configuration settings.\n\nFor typed arrays — arrays that only accept one type — you write Array[int] or Array[String]. This is optional but catches errors early.",
+          "examples": [
+            {
+              "label": "Arrays and dictionaries",
+              "code": "var inventory: Array = [\"sword\", \"potion\", \"key\"]\ninventory.append(\"shield\")\nprint(inventory[0])        # sword\nprint(inventory.size())    # 4\n\nif inventory.has(\"key\"):\n    print(\"Can open the door\")\n\nvar player = {\n    \"name\": \"Alex\",\n    \"health\": 100,\n    \"level\": 5\n}\n\nprint(player[\"name\"])  # Alex\nprint(player.level)    # 5\n\nplayer[\"gold\"] = 250   # add new key"
+            }
+          ],
+          "questions": [
+            {
+              "q": "You have an array with 6 items. What is the index of the last item?",
+              "options": ["6", "5", "0", "It depends on the values."],
+              "answer": 1,
+              "explanation": "Array indexing starts at 0. An array with 6 items has indexes 0 through 5. The last item is always at size() - 1."
+            },
+            {
+              "q": "Which array method checks if a value exists in the array?",
+              "options": ["contains()", "find()", "has()", "includes()"],
+              "answer": 2,
+              "explanation": "has() returns true if the value exists in the array, false otherwise. It is the standard Godot way to check array membership."
+            },
+            {
+              "q": "How do you add a new key 'mana' with value 50 to an existing dictionary called `player`?",
+              "options": ["`player.push(\"mana\", 50)`", "`player.add(\"mana\", 50)`", "`player[\"mana\"] = 50`", "`player.insert(\"mana\", 50)`"],
+              "answer": 2,
+              "explanation": "You add or update dictionary keys with bracket assignment. If the key exists, it updates. If not, it creates the entry."
+            },
+            {
+              "q": "What does `Array[int]` mean?",
+              "options": ["An array containing exactly one integer.", "An array that only accepts integer values.", "An integer stored as an array.", "An array of array indices."],
+              "answer": 1,
+              "explanation": "Array[int] is a typed array. Attempting to append a non-integer causes an error. It is optional but makes code safer and enables better editor autocomplete."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-static-lambda",
+          "title": "Static Functions, Lambdas, and @tool",
+          "type": "document",
+          "content": "Three GDScript features that come up often enough to know early.\n\nStatic functions belong to the class itself, not to any instance. You call them on the class name: MyClass.my_static_func(). You cannot use self or instance variables inside one. Useful for utility functions that do not need node state — math helpers, string formatters, factory methods.\n\nLambdas are inline anonymous functions. You declare them with func followed immediately by the body — no name. They are most useful when connecting signals with extra context: button.pressed.connect(func(): handle_press(item_id)). Lambdas capture the variables around them, so item_id is available inside even though it is defined outside.\n\n@tool makes a script run inside the editor as well as at runtime. Node properties update visually as you change @export variables. Useful for procedural geometry, tile editors, level tools. Use with care — bugs in @tool scripts can crash the editor.",
+          "examples": [
+            {
+              "label": "Static function and lambda",
+              "code": "# static utility function\nclass_name MathUtil\n\nstatic func clamp_angle(angle: float) -> float:\n    return fmod(angle + TAU, TAU)\n\n# calling it from anywhere:\nvar a = MathUtil.clamp_angle(some_angle)\n\n# lambda in signal connection\nfunc _ready() -> void:\n    for i in range(5):\n        var btn = buttons[i]\n        btn.pressed.connect(func(): _on_button_pressed(i))"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What makes a static function different from a regular function?",
+              "options": ["It runs faster.", "It belongs to the class itself, not an instance — you cannot use self inside it.", "It is called automatically by Godot.", "It can only return primitive types."],
+              "answer": 1,
+              "explanation": "Static functions have no instance context. They are called on the class name and cannot read or write instance variables. Good for pure utility logic."
+            },
+            {
+              "q": "What does a lambda capture from its surrounding scope?",
+              "options": ["Nothing — lambdas are isolated.", "Variables defined in the outer function at the time the lambda is created.", "Only @export variables.", "Only constants."],
+              "answer": 1,
+              "explanation": "Lambdas close over their surrounding scope. A variable defined before the lambda is accessible inside it, which is what makes them useful for signal connections that need context."
+            },
+            {
+              "q": "What does @tool do to a script?",
+              "options": ["It marks the script as deprecated.", "It makes the script run inside the editor as well as at runtime.", "It prevents the script from running in exported builds.", "It enables script hot-reloading."],
+              "answer": 1,
+              "explanation": "@tool scripts execute inside the Godot editor. @export variable changes immediately affect the node in the editor viewport — useful for building custom editor tools and procedural content."
             }
           ]
         },
@@ -183,7 +364,7 @@
           "id": "l-gd-fix-script",
           "title": "Diagnostic: Broken Callbacks",
           "type": "godot_scene",
-          "prompt": "This script has two bugs: the initialization code is in _process instead of _ready, and the movement uses _ready instead of _physics_process. Fix both callbacks so they contain the correct logic.",
+          "prompt": "This player script has two bugs: initialization code is in _process instead of _ready, and movement logic is in _ready instead of _physics_process. Fix the script so each callback contains the correct code. The scene tree is already correct — only the script needs fixing.",
           "initialTree": [
             {
               "node": "CharacterBody2D",
@@ -194,45 +375,15 @@
               ]
             }
           ],
-          "initialScript": "extends CharacterBody2D\n\nvar speed = 200.0\n\nfunc _process(delta):\n    print(\"Player ready\")\n\nfunc _ready():\n    velocity.x = speed\n    move_and_slide()",
+          "initialScript": "extends CharacterBody2D\n\nvar speed = 200.0\n\nfunc _process(delta):\n    print(\"Player is ready\")\n\nfunc _ready():\n    velocity.x = speed\n    move_and_slide()",
           "validation": [
             {
               "rule": "func _ready\\(\\):[\\s\\S]*?print",
-              "message": "print should be inside _ready(), not _process()."
+              "message": "print() should be inside _ready(), not _process()."
             },
             {
               "rule": "func _physics_process\\(delta\\):[\\s\\S]*?move_and_slide",
-              "message": "move_and_slide() should be inside _physics_process(delta)."
-            }
-          ]
-        },
-        {
-          "id": "l-gd-control-flow",
-          "title": "Control Flow in GDScript",
-          "type": "document",
-          "content": "GDScript control flow is close to Python. Conditions use if, elif, and else. No parentheses are required around the condition, though they are allowed.\n\nFor loops iterate over arrays, ranges, or dictionaries. The range() function generates a sequence of numbers. range(5) gives 0 through 4. range(1, 6) gives 1 through 5.\n\nWhile loops run as long as a condition is true.\n\nMatch is GDScript's version of a switch statement. It compares a value against patterns and runs the first matching block. It is cleaner than long elif chains when you have many specific cases.",
-          "examples": [
-            {
-              "label": "if / elif / else",
-              "code": "var health = 45\n\nif health > 75:\n    print(\"Healthy\")\nelif health > 25:\n    print(\"Injured\")\nelse:\n    print(\"Critical\")"
-            },
-            {
-              "label": "for loop and match",
-              "code": "for i in range(5):\n    print(i)\n\nvar state = \"jumping\"\nmatch state:\n    \"idle\":\n        print(\"Standing still\")\n    \"jumping\":\n        print(\"In the air\")\n    _:\n        print(\"Unknown state\")"
-            }
-          ],
-          "questions": [
-            {
-              "q": "What does `range(3, 7)` produce in a for loop?",
-              "options": ["3, 4, 5, 6, 7", "3, 4, 5, 6", "0, 1, 2, 3", "3, 7"],
-              "answer": 1,
-              "explanation": "range(start, end) generates numbers from start up to but not including end. range(3, 7) gives 3, 4, 5, 6."
-            },
-            {
-              "q": "What is the `_` case in a match statement?",
-              "options": ["It matches nothing.", "It is a wildcard that matches anything not caught above.", "It causes an error.", "It is required on every match."],
-              "answer": 1,
-              "explanation": "The underscore is the default case. It runs if no other pattern matched. Equivalent to default in other languages."
+              "message": "move_and_slide() must be inside _physics_process(delta), not _ready()."
             }
           ]
         }
@@ -245,25 +396,37 @@
           "id": "l-gd-node-refs",
           "title": "Getting Node References",
           "type": "document",
-          "content": "Scripts need to communicate with other nodes. To do that, you first need a reference to the node you want to talk to.\n\nThe $ shorthand is the most common way. $Sprite2D is equivalent to get_node(\"Sprite2D\"). It gets a direct child by name.\n\nFor nodes deeper in the tree you use a path: $HUD/HealthBar gets the HealthBar node inside HUD.\n\nThe @onready annotation is essential. It tells Godot to resolve the node reference at the moment _ready() runs, not at the moment the script is compiled. Without it, trying to access $Sprite2D at the top of the file would fail because the node doesn't exist yet.\n\nThe correct pattern is always: @onready var sprite = $Sprite2D. Then use sprite throughout the script.",
+          "content": "Scripts need to talk to other nodes. To do that, you need a reference to the node you want to interact with.\n\nThe $ shorthand is the standard way. $Sprite2D is equivalent to get_node(\"Sprite2D\") and returns the child node with that name. For nodes deeper in the tree, use a path: $HUD/HealthBar gets HealthBar which is a child of HUD.\n\nThe @onready annotation is essential and one of the most commonly misunderstood things when starting out. It defers the node reference resolution until _ready() runs. Without it, if you write var sprite = $Sprite2D at the top of the class, Godot tries to resolve it when the script is parsed — before the node is even in the tree — and crashes.\n\nThe correct pattern: always declare node references with @onready at the top of the class. Then use them freely inside any function.\n\nYou can also use get_node() with a full path from the scene root if you need to reach a node that is not a direct descendant. %NodeName with a percent sign accesses a node with Unique Name enabled in the editor — Godot 4's cleaner alternative to long paths.",
           "examples": [
             {
-              "label": "Getting node references",
-              "code": "extends CharacterBody2D\n\n@onready var sprite = $Sprite2D\n@onready var health_bar = $HUD/HealthBar\n@onready var timer = $AttackTimer\n\nfunc _ready():\n    timer.timeout.connect(_on_attack_timer_timeout)\n\nfunc _on_attack_timer_timeout():\n    print(\"Attack!\")"
+              "label": "Node references — correct pattern",
+              "code": "extends CharacterBody2D\n\n@onready var sprite = $Sprite2D\n@onready var collision = $CollisionShape2D\n@onready var health_bar = $HUD/HealthBar\n@onready var attack_timer = $AttackTimer\n\nfunc _ready():\n    attack_timer.timeout.connect(_on_attack_timer_timeout)\n    print(sprite.name)\n\nfunc _on_attack_timer_timeout():\n    print(\"Attack!\")"
             }
           ],
           "questions": [
             {
               "q": "What does `$Sprite2D` do in a script?",
-              "options": ["Creates a new Sprite2D node.", "Gets a reference to the child node named Sprite2D.", "Deletes the Sprite2D node.", "Changes the Sprite2D texture."],
+              "options": ["Creates a new Sprite2D node.", "Gets a reference to a child node named Sprite2D.", "Deletes the Sprite2D node.", "Searches the entire scene tree for any Sprite2D."],
               "answer": 1,
-              "explanation": "$ is shorthand for get_node(). It returns a reference to an existing node in the scene tree by its name or path."
+              "explanation": "$ is shorthand for get_node(). It returns a reference to an existing child node by its name or relative path."
             },
             {
-              "q": "Why is `@onready` needed when declaring node references?",
-              "options": ["It makes the variable read-only.", "It delays resolution until _ready() runs, when the node actually exists.", "It is required for all variables in Godot 4.", "It prevents the variable from being exported to the inspector."],
+              "q": "Why does `@onready` exist?",
+              "options": ["It makes variables read-only after the scene loads.", "It delays resolution until _ready() runs, when child nodes actually exist.", "It is required for all exported variables.", "It prevents the variable from being overwritten."],
               "answer": 1,
-              "explanation": "Node references resolved at class initialization will fail because child nodes don't exist yet. @onready defers resolution until _ready(), when the full tree is available."
+              "explanation": "Node references resolved at class initialization fail because child nodes do not exist yet. @onready defers resolution to _ready(), when the full tree is available."
+            },
+            {
+              "q": "You want a reference to a HealthBar node that is a child of a HUD node, which is a child of the current node. How do you write the path?",
+              "options": ["`$HealthBar`", "`$HUD.HealthBar`", "`$HUD/HealthBar`", "`get_node(HUD, HealthBar)`"],
+              "answer": 2,
+              "explanation": "Node paths in Godot use forward slashes. $HUD/HealthBar navigates: current node → HUD → HealthBar."
+            },
+            {
+              "q": "What does `%PlayerLabel` do compared to `$PlayerLabel`?",
+              "options": ["They are identical.", "% accesses a node by Unique Name, which works from anywhere in the scene without a full path.", "% only works for Control nodes.", "% searches parent nodes instead of children."],
+              "answer": 1,
+              "explanation": "Unique Name (%) lets you reference a node from anywhere in the scene tree without knowing its exact path. You enable it per-node in the editor's right-click menu."
             }
           ]
         },
@@ -271,112 +434,234 @@
           "id": "l-gd-signals-code",
           "title": "Connecting Signals in Code",
           "type": "document",
-          "content": "You can connect signals in the editor by clicking the Signals tab, but connecting them in code gives you more control and keeps logic centralized in the script.\n\nThe syntax is: source_node.signal_name.connect(callable)\n\nA callable is a reference to a function. In GDScript 4, you can pass a function directly: timer.timeout.connect(_on_timeout).\n\nYou can also define and emit your own signals. Declare them at the top of your script with the signal keyword. Emit them with emit_signal() or the shorthand signal_name.emit().\n\nCustom signals are how you communicate upward in the tree — from a child to its parent — without the child needing a direct reference to the parent.",
+          "content": "Connecting signals in the editor is convenient for simple cases. Connecting them in code keeps all your wiring in one place and allows dynamic connections at runtime.\n\nThe syntax is: source.signal_name.connect(callable)\n\nA callable is a function reference. In GDScript 4 you pass the function directly: timer.timeout.connect(_on_timeout). If you want to pass extra data, use a lambda or Callable with bind(): timer.timeout.connect(_on_timeout.bind(extra_data)).\n\nYou can disconnect a signal with .disconnect(). You can check if a signal is already connected with .is_connected() — useful to avoid double-connecting.\n\nCustom signals declared with the signal keyword are the correct way to send information upward from a child to a parent. A child node should never reach up to call functions on its parent directly — that creates coupling. Instead it emits, and the parent (or anyone else) listens.\n\nSignals can carry arguments: signal health_changed(new_health: int). When you emit with health_changed.emit(75), the connected function receives 75 as its parameter.",
           "examples": [
             {
-              "label": "Connecting and emitting signals",
-              "code": "extends CharacterBody2D\n\nsignal health_changed(new_health)\nsignal player_died\n\nvar health = 100\n\n@onready var timer = $InvincibilityTimer\n\nfunc _ready():\n    timer.timeout.connect(_on_invincibility_end)\n\nfunc take_damage(amount):\n    health -= amount\n    health_changed.emit(health)\n    if health <= 0:\n        player_died.emit()\n\nfunc _on_invincibility_end():\n    print(\"Invincibility over\")"
+              "label": "Connecting signals and custom signals",
+              "code": "extends CharacterBody2D\n\nsignal health_changed(new_health: int)\nsignal player_died\n\nvar health: int = 100\n\n@onready var timer = $InvincibilityTimer\n\nfunc _ready():\n    timer.timeout.connect(_on_invincibility_end)\n\nfunc take_damage(amount: int) -> void:\n    health -= amount\n    health_changed.emit(health)\n    if health <= 0:\n        player_died.emit()\n\nfunc _on_invincibility_end() -> void:\n    print(\"Invincibility over\")"
             }
           ],
           "questions": [
             {
-              "q": "How do you emit a custom signal called `player_died` in GDScript 4?",
-              "options": ["emit(player_died)", "player_died.emit()", "signal.send(player_died)", "fire(player_died)"],
+              "q": "How do you emit a custom signal called `player_died` in Godot 4?",
+              "options": ["`emit(player_died)`", "`player_died.emit()`", "`signal.send(player_died)`", "`fire(player_died)`"],
               "answer": 1,
-              "explanation": "In Godot 4, signals are objects. You call .emit() on them directly. player_died.emit() triggers all connected functions."
+              "explanation": "In Godot 4, signals are first-class objects. You call .emit() directly on the signal. player_died.emit() fires it to all connected functions."
             },
             {
-              "q": "Why would a child node emit a custom signal instead of calling a function on its parent directly?",
-              "options": ["It is faster.", "It removes the dependency on the parent, keeping the child reusable.", "Godot does not allow children to call parent functions.", "Signals work across scenes but function calls do not."],
+              "q": "Why should a child node emit a signal rather than calling a function on its parent directly?",
+              "options": ["Signals are faster than function calls.", "It removes the coupling — the child does not need to know anything about its parent.", "Godot prevents children from calling parent functions.", "Signals automatically retry if the function fails."],
               "answer": 1,
-              "explanation": "If the child calls get_parent().some_function(), it is tightly coupled to that specific parent. Emitting a signal lets any node listen — the child stays reusable."
+              "explanation": "If a child calls get_parent().some_function(), it is tightly coupled to that exact parent type. Emitting a signal means the child stays reusable in any scene."
+            },
+            {
+              "q": "You declare `signal health_changed(new_health: int)`. What does the connected function need to look like?",
+              "options": ["It takes no arguments.", "It takes one int argument.", "It takes the node as its first argument.", "It must return a bool."],
+              "answer": 1,
+              "explanation": "The connected function must accept the same parameters the signal carries. Since health_changed carries one int, the handler must accept one int parameter."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-groups",
+          "title": "Groups",
+          "type": "document",
+          "content": "Groups are a way to tag multiple nodes with a label and then act on all of them at once.\n\nYou add a node to a group in the editor via the Node tab > Groups, or in code with add_to_group(\"group_name\"). You can check membership with is_in_group(). You can remove a node from a group with remove_from_group().\n\nFrom anywhere in the scene tree, get_tree().get_nodes_in_group(\"enemies\") returns an Array of all nodes currently in that group. get_tree().call_group(\"enemies\", \"take_damage\", 10) calls the take_damage(10) function on every node in the group simultaneously.\n\nGroups are useful for: broadcasting events to many nodes at once (all enemies take damage), checking what category something belongs to (is this node an enemy?), and managing collections of objects without needing a dedicated manager node to track them.\n\nGroup names are just strings — keep them lowercase with underscores: \"enemies\", \"collectibles\", \"breakable_objects\".",
+          "examples": [
+            {
+              "label": "Using groups",
+              "code": "func _ready():\n    add_to_group(\"enemies\")\n\nfunc take_damage(amount: int) -> void:\n    health -= amount\n    if health <= 0:\n        queue_free()\n\nfunc on_explosion_nearby() -> void:\n    get_tree().call_group(\"enemies\", \"take_damage\", 50)\n\nfunc get_all_enemies() -> Array:\n    return get_tree().get_nodes_in_group(\"enemies\")"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does `get_tree().call_group(\"enemies\", \"take_damage\", 10)` do?",
+              "options": ["Creates a new group called enemies.", "Calls take_damage(10) on every node currently in the enemies group.", "Adds 10 nodes to the enemies group.", "Checks if take_damage exists in the enemies group."],
+              "answer": 1,
+              "explanation": "call_group broadcasts a function call to every node in the group. All enemies receive take_damage(10) simultaneously, in one line."
+            },
+            {
+              "q": "When would you use groups instead of direct node references?",
+              "options": ["When you only have one node to interact with.", "When you need to act on many nodes of the same category without tracking each one individually.", "When you need precise control over the exact order of operations.", "Groups are only for organizational purposes — they have no runtime function."],
+              "answer": 1,
+              "explanation": "Groups shine when you need to broadcast to many nodes. Instead of maintaining an array of enemy references, just call_group and every enemy gets the message."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-tree-traversal",
+          "title": "Traversing the Scene Tree",
+          "type": "document",
+          "content": "Sometimes you need to navigate the scene tree at runtime rather than relying on hardcoded @onready paths.\n\nget_parent() returns the node's direct parent. Useful inside a child script that needs to notify its parent without a signal, though signals are usually cleaner.\n\nget_children() returns an Array of all direct children. Combined with a for loop, this is how you iterate over dynamically spawned children whose count you do not know in advance.\n\nfind_child(\"name\") searches the entire subtree below the current node for a child with that name. It is recursive by default. Slower than a direct $ reference but useful when you do not know the exact path.\n\nget_node_or_null(\"path\") is the safe version of get_node(). Instead of crashing when the path does not exist, it returns null. Always use this when accessing nodes that might not exist yet.\n\nowner returns the node that owns this node — in a scene, this is the scene root. Useful in @tool scripts and custom editor plugins.",
+          "examples": [
+            {
+              "label": "Tree traversal patterns",
+              "code": "func _ready() -> void:\n    var parent = get_parent()\n    print(parent.name)\n\n    for child in get_children():\n        if child is CharacterBody2D:\n            child.freeze()\n\n    var label = find_child(\"ScoreLabel\")\n    if label:\n        label.text = \"0\"\n\n    var maybe_node = get_node_or_null(\"OptionalNode\")\n    if maybe_node:\n        maybe_node.activate()"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does `get_node_or_null(\"SomePath\")` do differently from `get_node(\"SomePath\")`?",
+              "options": ["It is faster.", "It returns null instead of crashing when the node does not exist.", "It searches the entire scene tree.", "It only works on direct children."],
+              "answer": 1,
+              "explanation": "get_node() crashes with an error if the path does not resolve. get_node_or_null() returns null safely, letting you handle missing nodes gracefully."
+            },
+            {
+              "q": "You spawn enemies dynamically as children of an Enemies node. At runtime you want to count how many are alive. Which approach works?",
+              "options": ["`get_tree().get_nodes_in_group()` or `get_children().size()`", "`count_children()`", "`find_child(\"Enemy\").size()`", "`get_node(\"Enemies\").length()`"],
+              "answer": 0,
+              "explanation": "get_children() returns an Array of all direct children — .size() gives the count. Alternatively, add all enemies to a group and use get_nodes_in_group().size()."
+            },
+            {
+              "q": "What does `find_child(\"HealthBar\")` do that `$HealthBar` cannot?",
+              "options": ["It is faster.", "It searches the full subtree recursively — the HealthBar can be anywhere below the current node.", "It creates the node if it does not exist.", "It works across scene boundaries."],
+              "answer": 1,
+              "explanation": "$ requires the exact relative path. find_child() searches the entire subtree below the calling node, so it works even if the node is several levels deep."
             }
           ]
         },
         {
           "id": "l-gd-fix-signals",
-          "title": "Diagnostic: Disconnected Signal",
+          "title": "Diagnostic: Disconnected Timer",
           "type": "godot_scene",
-          "prompt": "This scene has a Timer node that should call _on_timer_timeout when it finishes, but the signal is never connected in _ready(). The function exists but is never wired up. Fix the script so the signal is connected correctly.",
+          "prompt": "This GameManager has a SpawnTimer that should call _on_spawn_timer_timeout every 2 seconds, but the signal is never connected. The function exists but is never wired up. Fix the script by connecting the signal inside _ready(), and make sure the timer is also started.",
           "initialTree": [
             {
-              "node": "Node2D",
+              "node": "Node",
               "name": "GameManager",
               "children": [
                 { "node": "Timer", "name": "SpawnTimer", "children": [] }
               ]
             }
           ],
-          "initialScript": "extends Node2D\n\n@onready var timer = $SpawnTimer\n\nfunc _ready():\n    timer.wait_time = 2.0\n    timer.start()\n\nfunc _on_timer_timeout():\n    print(\"Spawn enemy\")",
+          "initialScript": "extends Node\n\n@onready var spawn_timer = $SpawnTimer\n\nfunc _ready():\n    spawn_timer.wait_time = 2.0\n\nfunc _on_spawn_timer_timeout():\n    print(\"Spawn enemy\")",
           "validation": [
             {
-              "rule": "timer\\.timeout\\.connect\\(_on_timer_timeout\\)",
-              "message": "Connect timer.timeout to _on_timer_timeout inside _ready()."
+              "rule": "spawn_timer\\.timeout\\.connect\\(_on_spawn_timer_timeout\\)",
+              "message": "Connect spawn_timer.timeout to _on_spawn_timer_timeout inside _ready()."
+            },
+            {
+              "rule": "spawn_timer\\.start\\(\\)",
+              "message": "Call spawn_timer.start() inside _ready() to actually start the timer."
             }
           ]
         }
       ]
     },
     {
-      "title": "Module 4: 2D Fundamentals",
+      "title": "Module 4: 2D Physics and Movement",
       "lessons": [
         {
-          "id": "l-gd-bodies",
-          "title": "Physics Bodies",
+          "id": "l-gd-collision-layers",
+          "title": "Collision Layers and Masks",
           "type": "document",
-          "content": "Godot has three 2D physics body types. Choosing the right one is critical.\n\nCharacterBody2D is for player-controlled or AI-controlled characters. It does not simulate physics automatically. You control it entirely through code using move_and_slide(). This gives you full control over how the character moves.\n\nRigidBody2D is a fully physics-simulated body. You apply forces and impulses and let Godot's physics engine handle the result. Good for objects like crates, balls, or debris. Not good for a player character — physics simulation feels unpredictable for direct control.\n\nStaticBody2D does not move. It is used for floors, walls, and platforms. The physics engine uses it as an immovable surface.\n\nFor most player characters and enemies: CharacterBody2D. For physics objects: RigidBody2D. For terrain: StaticBody2D.",
+          "content": "Godot's collision system uses layers and masks to control which objects collide with which. Understanding this saves enormous amounts of time debugging unexpected collisions.\n\nEvery physics body and Area2D has a Collision Layer — the layer it exists on — and a Collision Mask — the layers it detects and collides with.\n\nLayers are like teams. A body's layer says 'I am on team X'. Its mask says 'I care about team Y'. Two bodies collide only if body A's mask includes body B's layer, and vice versa.\n\nExample: set the Player to layer 1. Set Enemies to layer 2. Set Bullets to layer 3. Give Bullets a mask of 2 (enemies). Bullets only collide with Enemies — they pass through the Player and other Bullets. Give the Player a mask of 2 (enemies) so the Player takes damage from enemies but not from its own bullets.\n\nYou set layers and masks in the Inspector as a bitmask grid, or in code using set_collision_layer_value(layer_number, true/false) and set_collision_mask_value().\n\nRayCast2D fires a ray from the node's position in a direction and reports what it hits. It checks collision masks like any other body. Common uses: line-of-sight checks, ground detection, shooting.",
+          "examples": [
+            {
+              "label": "RayCast2D for ground detection and line of sight",
+              "code": "extends CharacterBody2D\n\n@onready var ground_ray = $GroundRay\n@onready var sight_ray = $SightRay\n\nfunc _physics_process(delta: float) -> void:\n    if ground_ray.is_colliding():\n        var surface = ground_ray.get_collision_point()\n        print(\"Ground at: \", surface)\n\nfunc can_see_player(player: Node2D) -> bool:\n    sight_ray.target_position = to_local(player.global_position)\n    sight_ray.force_raycast_update()\n    if sight_ray.is_colliding():\n        return sight_ray.get_collider() == player\n    return false"
+            }
+          ],
           "questions": [
             {
-              "q": "Which body type gives you the most direct control over a player character?",
+              "q": "What does a physics body's Collision Layer define?",
+              "options": ["Which layers it detects.", "Which layer it exists on — what 'team' it belongs to.", "Its rendering order.", "Its physics material."],
+              "answer": 1,
+              "explanation": "Layer is the body's own identity. Mask is what it listens for. A body only interacts with something if its mask includes that thing's layer."
+            },
+            {
+              "q": "Bullets should hit Enemies (layer 2) but pass through the Player (layer 1). What mask should Bullets have?",
+              "options": ["Layer 1 only.", "Layer 2 only.", "Both layer 1 and 2.", "No mask."],
+              "answer": 1,
+              "explanation": "Set Bullets' mask to layer 2 (Enemies). They will collide with anything on layer 2 and ignore everything else, including the Player on layer 1."
+            },
+            {
+              "q": "What does `RayCast2D.is_colliding()` return?",
+              "options": ["The node the ray hit.", "true if the ray is hitting something on its mask layers, false otherwise.", "The distance to the nearest collision.", "The collision normal."],
+              "answer": 1,
+              "explanation": "is_colliding() is the basic check. Use get_collider() to get the actual node hit, get_collision_point() for the world position, get_collision_normal() for the surface angle."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-bodies",
+          "title": "Physics Body Types",
+          "type": "document",
+          "content": "Godot has three 2D physics body types. Choosing the right one is one of the most important decisions you make per object.\n\nCharacterBody2D is for player-controlled or AI-controlled characters. It does not simulate physics automatically — you control it entirely through code. You set velocity yourself, then call move_and_slide(), which moves the body and slides it along surfaces rather than stopping dead on collision. This gives you complete control over how the character feels.\n\nRigidBody2D is fully physics-simulated. You apply forces and impulses and let the engine handle the result. Gravity, friction, bounce, mass — all of it is simulated. Good for crates, balls, ragdolls, debris. Bad for a player character — physics simulation makes direct control feel floaty and unpredictable.\n\nStaticBody2D does not move. It is used for floors, walls, platforms — anything that should be a solid immovable surface.\n\nArea2D is not technically a physics body but works alongside them. It detects when physics bodies enter or leave its collision shape and emits signals. Used for triggers, pickups, hurt zones, detection ranges. It does not physically block movement.\n\nRule of thumb: player and enemies use CharacterBody2D. Physics objects use RigidBody2D. Level geometry uses StaticBody2D. Triggers and detectors use Area2D.",
+          "questions": [
+            {
+              "q": "Which body type gives the most direct control over a player character?",
               "options": ["RigidBody2D", "StaticBody2D", "CharacterBody2D", "Area2D"],
               "answer": 2,
-              "explanation": "CharacterBody2D gives you full manual control. You set velocity yourself and call move_and_slide(). No unexpected physics simulation."
+              "explanation": "CharacterBody2D gives you full manual control. You set velocity and call move_and_slide(). No physics simulation means predictable, responsive movement."
             },
             {
-              "q": "You are creating a barrel that should roll and bounce when hit. Which body type do you use?",
+              "q": "You are creating a barrel that should roll and bounce when hit by an explosion. Which body type do you use?",
               "options": ["CharacterBody2D", "StaticBody2D", "RigidBody2D", "Area2D"],
               "answer": 2,
-              "explanation": "RigidBody2D is physics-simulated. Apply an impulse and Godot handles the rolling, bouncing, and friction automatically."
+              "explanation": "RigidBody2D is physics-simulated. Apply an impulse from the explosion and Godot handles the rolling, bouncing, and friction."
             },
             {
-              "q": "What does move_and_slide() do?",
-              "options": ["Moves the node along a spline.", "Applies velocity and slides the body along collision surfaces.", "Slides the node off screen.", "Animates the node's movement."],
+              "q": "You need a zone that detects when the player enters a doorway and loads the next level. Which node do you use?",
+              "options": ["CharacterBody2D", "StaticBody2D", "RigidBody2D", "Area2D"],
+              "answer": 3,
+              "explanation": "Area2D detects when physics bodies enter or leave its collision shape and emits body_entered and body_exited signals. Perfect for triggers."
+            },
+            {
+              "q": "What does `move_and_slide()` do that `move_and_collide()` does not?",
+              "options": ["move_and_slide applies gravity automatically.", "move_and_slide continues movement along surfaces instead of stopping on collision.", "move_and_slide works in 3D as well.", "move_and_slide does not require a velocity."],
               "answer": 1,
-              "explanation": "move_and_slide() moves the CharacterBody2D by its current velocity and slides it along walls and floors instead of stopping dead on collision."
+              "explanation": "move_and_collide stops the body when it hits something. move_and_slide redirects movement along the surface — essential for walking on floors and sliding along walls."
             }
           ]
         },
         {
           "id": "l-gd-movement",
-          "title": "Player Movement",
+          "title": "Player Movement Pattern",
           "type": "document",
-          "content": "Basic 2D player movement in Godot follows a consistent pattern. You read input, build a velocity vector, and call move_and_slide().\n\nInput.get_axis(negative_action, positive_action) returns a value between -1 and 1. It reads from your Input Map, which maps physical keys to named actions. You define actions in Project > Project Settings > Input Map.\n\nDefault actions include ui_left, ui_right, ui_up, and ui_down. For a real game you would define custom actions like move_left, move_right, jump.\n\nGravity is not automatic on CharacterBody2D. You must add it manually every physics frame. The built-in constant ProjectSettings.get_setting('physics/2d/default_gravity') gives you the project gravity value, or you can define your own.",
+          "content": "Every CharacterBody2D movement script in Godot follows the same pattern: read input, modify velocity, call move_and_slide().\n\nInput.get_axis(negative_action, positive_action) returns -1, 0, or 1 based on which input actions are held. It reads from your Input Map (Project > Project Settings > Input Map). Default actions include ui_left, ui_right, ui_up, ui_down, and ui_accept.\n\nFor a platformer, gravity must be added manually every physics frame. CharacterBody2D does not simulate gravity — you add it yourself: velocity.y += GRAVITY * delta. The is_on_floor() method returns true when the body is touching a floor surface, which is how you gate jumping.\n\nFor a top-down game, movement is simpler — no gravity, just x and y velocity from input.\n\nThe built-in velocity property on CharacterBody2D is a Vector2. You set x and y components, then call move_and_slide() which uses velocity internally and modifies it to account for collisions.",
           "examples": [
             {
-              "label": "Basic platformer movement",
-              "code": "extends CharacterBody2D\n\nconst SPEED = 200.0\nconst JUMP_VELOCITY = -400.0\nconst GRAVITY = 980.0\n\nfunc _physics_process(delta):\n    if not is_on_floor():\n        velocity.y += GRAVITY * delta\n\n    if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():\n        velocity.y = JUMP_VELOCITY\n\n    var direction = Input.get_axis(\"ui_left\", \"ui_right\")\n    velocity.x = direction * SPEED\n\n    move_and_slide()"
+              "label": "Platformer movement",
+              "code": "extends CharacterBody2D\n\nconst SPEED    = 200.0\nconst JUMP_VEL = -400.0\nconst GRAVITY  = 980.0\n\nfunc _physics_process(delta: float) -> void:\n    if not is_on_floor():\n        velocity.y += GRAVITY * delta\n\n    if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():\n        velocity.y = JUMP_VEL\n\n    var dir = Input.get_axis(\"ui_left\", \"ui_right\")\n    velocity.x = dir * SPEED\n\n    move_and_slide()"
+            },
+            {
+              "label": "Top-down movement",
+              "code": "extends CharacterBody2D\n\nconst SPEED = 150.0\n\nfunc _physics_process(delta: float) -> void:\n    var dir = Vector2(\n        Input.get_axis(\"ui_left\", \"ui_right\"),\n        Input.get_axis(\"ui_up\", \"ui_down\")\n    ).normalized()\n\n    velocity = dir * SPEED\n    move_and_slide()"
             }
           ],
           "questions": [
             {
               "q": "What does `Input.get_axis(\"ui_left\", \"ui_right\")` return when the right key is held?",
-              "options": ["-1", "0", "1", "2"],
+              "options": ["-1", "0", "1", "200"],
               "answer": 2,
-              "explanation": "get_axis returns 1 when the positive action is held, -1 when the negative action is held, and 0 when neither is held."
+              "explanation": "get_axis returns 1 for the positive action, -1 for negative, 0 for neither. You multiply by SPEED to get the actual velocity value."
             },
             {
-              "q": "Why must you add gravity manually in CharacterBody2D?",
-              "options": ["Godot's gravity only works on RigidBody2D.", "Gravity is disabled by default in all scenes.", "CharacterBody2D does not simulate physics automatically.", "You need a GravityNode child first."],
+              "q": "Why must you add gravity manually to a CharacterBody2D?",
+              "options": ["CharacterBody2D ignores all physics forces.", "Godot's gravity only works on RigidBody2D.", "CharacterBody2D is manually controlled — you are responsible for all movement.", "You need to add a GravityArea first."],
               "answer": 2,
-              "explanation": "CharacterBody2D is manually controlled. You are responsible for all movement including gravity. This is what gives you precise control."
+              "explanation": "CharacterBody2D is deliberately not physics-simulated. You write all movement logic yourself — including gravity — which gives you precise, predictable control."
+            },
+            {
+              "q": "Why do you call `.normalized()` on the movement vector in top-down movement?",
+              "options": ["It removes the decimal part.", "It makes the vector length 1, preventing diagonal movement being faster than cardinal movement.", "It converts the vector from world space to screen space.", "normalized() is required before move_and_slide()."],
+              "answer": 1,
+              "explanation": "A vector moving right (1, 0) has length 1. A vector moving diagonally (1, 1) has length 1.414. Without normalization, diagonal movement is 41% faster. normalized() scales the vector to length 1."
+            },
+            {
+              "q": "When can you call `velocity.y = JUMP_VEL` to make the player jump?",
+              "options": ["Any time during _physics_process.", "Only when is_on_floor() returns true.", "Only when is_on_ceiling() returns true.", "Only after calling move_and_slide()."],
+              "answer": 1,
+              "explanation": "Jumping only makes sense when grounded. is_on_floor() returns true when the body is touching a floor, which is updated by the previous move_and_slide() call."
             }
           ]
         },
         {
           "id": "l-gd-fix-movement",
-          "title": "Diagnostic: Broken Player Movement",
+          "title": "Diagnostic: Player Cannot Move",
           "type": "godot_scene",
-          "prompt": "This player script has two bugs: gravity is added once in _ready() instead of every frame in _physics_process(), and move_and_slide() is missing entirely so the player never actually moves. Fix both.",
+          "prompt": "This player script has three bugs: gravity is applied once in _ready() instead of every frame, move_and_slide() is missing from _physics_process(), and the jump check uses is_on_ceiling() instead of is_on_floor(). Fix all three.",
           "initialTree": [
             {
               "node": "CharacterBody2D",
@@ -387,35 +672,80 @@
               ]
             }
           ],
-          "initialScript": "extends CharacterBody2D\n\nconst SPEED = 200.0\nconst GRAVITY = 980.0\n\nfunc _ready():\n    velocity.y += GRAVITY\n\nfunc _physics_process(delta):\n    var direction = Input.get_axis(\"ui_left\", \"ui_right\")\n    velocity.x = direction * SPEED",
+          "initialScript": "extends CharacterBody2D\n\nconst SPEED = 200.0\nconst JUMP_VEL = -400.0\nconst GRAVITY = 980.0\n\nfunc _ready():\n    velocity.y += GRAVITY\n\nfunc _physics_process(delta):\n    var dir = Input.get_axis(\"ui_left\", \"ui_right\")\n    velocity.x = dir * SPEED\n\n    if Input.is_action_just_pressed(\"ui_accept\") and is_on_ceiling():\n        velocity.y = JUMP_VEL",
           "validation": [
             {
               "rule": "func _physics_process\\(delta\\):[\\s\\S]*?velocity\\.y \\+= GRAVITY \\* delta",
-              "message": "Gravity must be added inside _physics_process using: velocity.y += GRAVITY * delta"
+              "message": "Gravity must be added every frame: velocity.y += GRAVITY * delta inside _physics_process."
             },
             {
               "rule": "move_and_slide\\(\\)",
               "message": "move_and_slide() is missing from _physics_process."
+            },
+            {
+              "rule": "is_on_floor\\(\\)",
+              "message": "Jump should check is_on_floor(), not is_on_ceiling()."
             }
           ]
         },
         {
           "id": "l-gd-camera",
-          "title": "Camera2D and Following the Player",
+          "title": "Camera2D",
           "type": "document",
-          "content": "Camera2D controls what portion of the world is visible on screen. When added as a child of the player node, it follows the player automatically — no code needed.\n\nThe most important Camera2D properties:\n\nPosition Smoothing — when enabled, the camera glides toward the target position instead of snapping. Set the speed to control how quickly it catches up.\n\nLimits — you can set left, right, top, and bottom limits to prevent the camera from showing areas outside your level.\n\nZoom — a Vector2. (2, 2) zooms in to make everything appear twice as large. (0.5, 0.5) zooms out.\n\nMake it the current camera by enabling the Current property. Only one Camera2D can be current at a time.",
+          "content": "Camera2D controls what portion of the 2D world is visible on screen. The simplest setup: add Camera2D as a child of your player node. It follows the player automatically with no code needed.\n\nKey properties to know:\n\nPosition Smoothing — when enabled, the camera glides toward the target position rather than snapping instantly. The Speed property controls how quickly it catches up. Smoothing makes movement feel more cinematic.\n\nDrag — an alternative to smoothing. The camera only moves once the player reaches the edge of a horizontal or vertical dead zone, keeping the player more visible ahead of movement direction.\n\nLimits — Left, Right, Top, Bottom. Set these to match your level boundaries so the camera never scrolls beyond the level edges into empty space.\n\nZoom — a Vector2 that scales the view. Vector2(2, 2) zooms in, making everything appear larger. Vector2(0.5, 0.5) zooms out to show more of the world.\n\nOnly one Camera2D should have Current enabled at a time. When you switch scenes, set the new camera to current.",
           "questions": [
             {
-              "q": "What is the simplest way to make a Camera2D follow the player?",
-              "options": ["Write a script that updates position every frame.", "Add the Camera2D as a child of the player node.", "Use a Tween to animate it.", "Connect a signal from the player to the camera."],
+              "q": "What is the simplest way to make a Camera2D follow the player with no code?",
+              "options": ["Write a _process function that updates camera position.", "Add Camera2D as a child of the player node.", "Use a Tween to animate the camera position.", "Connect a signal from the player to the camera."],
               "answer": 1,
-              "explanation": "A Camera2D child automatically follows its parent. No code required."
+              "explanation": "A Camera2D child automatically follows its parent's position. No code required — Godot handles it."
             },
             {
-              "q": "What do Camera2D limits do?",
-              "options": ["They restrict how fast the camera moves.", "They prevent the camera from scrolling beyond the defined boundaries.", "They limit the camera's zoom level.", "They hide nodes outside the camera view."],
+              "q": "What do Camera2D Limits do?",
+              "options": ["They restrict how fast the camera accelerates.", "They prevent the camera from scrolling past defined world boundaries.", "They limit the camera's zoom range.", "They hide nodes outside the camera view."],
               "answer": 1,
-              "explanation": "Limits keep the camera inside your level. Set them to match your level size so the camera never shows empty space beyond the edges."
+              "explanation": "Limits prevent the camera from showing space outside your level. Set them to match your level's pixel dimensions."
+            },
+            {
+              "q": "You set Camera2D Zoom to Vector2(2, 2). What is the visual result?",
+              "options": ["The camera shows twice as much of the world.", "Everything appears twice as large — the camera is zoomed in.", "The camera moves twice as fast.", "The resolution doubles."],
+              "answer": 1,
+              "explanation": "Zoom > 1 zooms in, making objects appear larger. Zoom < 1 zooms out, showing more of the world. Vector2(1, 1) is default — no zoom."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-fix-camera",
+          "title": "Diagnostic: Camera Setup",
+          "type": "godot_scene",
+          "prompt": "This player scene is missing a Camera2D — add one as a child of the Player. Also add a Timer node as a child of the Player (you will use it later for invincibility frames). The script should declare an @onready reference to the Timer named 'inv_timer'.",
+          "initialTree": [
+            {
+              "node": "CharacterBody2D",
+              "name": "Player",
+              "children": [
+                { "node": "Sprite2D", "name": "Sprite2D", "children": [] },
+                { "node": "CollisionShape2D", "name": "CollisionShape2D", "children": [] }
+              ]
+            }
+          ],
+          "targetTree": [
+            {
+              "node": "CharacterBody2D",
+              "name": "Player",
+              "children": [
+                { "node": "Sprite2D", "name": "Sprite2D", "children": [] },
+                { "node": "CollisionShape2D", "name": "CollisionShape2D", "children": [] },
+                { "node": "Camera2D", "name": "Camera2D", "children": [] },
+                { "node": "Timer", "name": "InvTimer", "children": [] }
+              ]
+            }
+          ],
+          "initialScript": "extends CharacterBody2D\n\nconst SPEED = 200.0\nconst GRAVITY = 980.0\n\nfunc _physics_process(delta):\n    if not is_on_floor():\n        velocity.y += GRAVITY * delta\n    var dir = Input.get_axis(\"ui_left\", \"ui_right\")\n    velocity.x = dir * SPEED\n    move_and_slide()",
+          "validation": [
+            {
+              "rule": "@onready var inv_timer",
+              "message": "Declare @onready var inv_timer referencing the Timer node."
             }
           ]
         }
@@ -428,45 +758,75 @@
           "id": "l-gd-scene-management",
           "title": "Changing Scenes",
           "type": "document",
-          "content": "Godot's SceneTree manages the running scene. You access it from any node with get_tree().\n\nTo switch to a completely different scene, call get_tree().change_scene_to_file(\"res://scenes/Level2.tscn\"). This unloads the current scene entirely and loads the new one.\n\nTo load a scene without replacing the current one — for example, spawning an enemy — use load() to get the PackedScene resource, then call instantiate() to create an instance, then add it to the tree with add_child().\n\nThe @export annotation lets you assign the scene to load from the Inspector without hardcoding a file path. This is cleaner and lets designers swap scenes without touching code.",
+          "content": "Godot's SceneTree manages the running scene. You access it from any node with get_tree().\n\nTo switch completely to a different scene — moving from a menu to a game, or from Level 1 to Level 2 — use get_tree().change_scene_to_file(\"res://scenes/Level2.tscn\"). This unloads the entire current scene and loads the new one. Everything in the old scene is freed.\n\nTo spawn something without replacing the current scene — an enemy, a bullet, an explosion — load the PackedScene resource, call instantiate() to create a node tree from it, then add_child() to make it live in the scene.\n\nThe @export annotation on a PackedScene variable exposes it in the Inspector, letting you drag the scene file onto the slot without hardcoding a path in the script. This is the cleaner approach.\n\nqueue_free() removes a node from the scene tree and frees its memory. Call it on any node you want to destroy — an enemy that dies, a bullet that hit something, a pickup that was collected. Never delete nodes mid-physics-process; queue_free() is safe because it defers the removal to the end of the frame.",
           "examples": [
             {
-              "label": "Changing scenes and spawning",
-              "code": "extends Node\n\n@export var enemy_scene: PackedScene\n\nfunc go_to_next_level():\n    get_tree().change_scene_to_file(\"res://scenes/Level2.tscn\")\n\nfunc spawn_enemy(position: Vector2):\n    var enemy = enemy_scene.instantiate()\n    enemy.global_position = position\n    add_child(enemy)"
+              "label": "Changing scenes and spawning instances",
+              "code": "extends Node\n\n@export var enemy_scene: PackedScene\n@export var bullet_scene: PackedScene\n\nfunc go_to_next_level() -> void:\n    get_tree().change_scene_to_file(\"res://scenes/Level2.tscn\")\n\nfunc spawn_enemy(pos: Vector2) -> void:\n    if not enemy_scene:\n        return\n    var enemy = enemy_scene.instantiate()\n    enemy.global_position = pos\n    add_child(enemy)\n\nfunc on_player_died() -> void:\n    get_tree().reload_current_scene()"
             }
           ],
           "questions": [
             {
               "q": "Which function completely replaces the current scene with a new one?",
-              "options": ["load_scene()", "get_tree().change_scene_to_file()", "add_child()", "instantiate()"],
+              "options": ["`load_scene()`", "`get_tree().change_scene_to_file()`", "`add_child()`", "`instantiate()`"],
               "answer": 1,
-              "explanation": "change_scene_to_file() unloads the current scene and loads the specified one. It is the standard way to move between levels or screens."
+              "explanation": "change_scene_to_file() unloads the current scene and loads the specified one. Everything in the current scene is freed."
             },
             {
               "q": "What does `enemy_scene.instantiate()` return?",
-              "options": ["A file path.", "A new independent node tree based on the scene.", "The original scene file.", "A reference to an existing enemy."],
+              "options": ["A file path string.", "A new independent node tree based on the scene.", "The original PackedScene resource.", "A reference to an already-existing enemy."],
               "answer": 1,
-              "explanation": "instantiate() creates a new node tree from the PackedScene blueprint. It is not added to the scene yet — you must call add_child() to make it live."
+              "explanation": "instantiate() creates a new node tree from the PackedScene blueprint. It exists only in memory until you call add_child() to insert it into the scene."
+            },
+            {
+              "q": "Why use queue_free() instead of free() to remove a node?",
+              "options": ["queue_free() is faster.", "queue_free() defers removal to end of frame, preventing crashes from deleting nodes mid-process.", "free() does not remove child nodes.", "queue_free() saves the node's state before removing it."],
+              "answer": 1,
+              "explanation": "Deleting a node in the middle of _physics_process or while iterating can cause crashes. queue_free() marks the node for removal at the safe end-of-frame cleanup phase."
+            },
+            {
+              "q": "What is the advantage of `@export var enemy_scene: PackedScene` over `load(\"res://enemies/Enemy.tscn\")`?",
+              "options": ["It loads faster at runtime.", "It lets you assign the scene in the Inspector without touching code.", "PackedScene cannot be loaded with load().", "Exported variables work in the editor but not in exported builds."],
+              "answer": 1,
+              "explanation": "Exported variables decouple the script from specific paths. You drag the scene onto the Inspector slot — no hardcoded string to update when files move."
             }
           ]
         },
         {
           "id": "l-gd-autoloads",
-          "title": "Autoloads",
+          "title": "Autoloads and Global State",
           "type": "document",
-          "content": "An Autoload is a script or scene that Godot loads automatically at startup and keeps alive for the entire duration of the game. It persists across scene changes.\n\nYou add Autoloads in Project > Project Settings > Autoload. Give them a name and a script path. Godot then makes them globally accessible by that name from any script.\n\nAutoloads are the right place for data that needs to survive scene changes: the player's score, health, inventory, audio management, or save data.\n\nDo not put everything in Autoloads. If data only matters within one scene, keep it there. Autoloads are for genuinely global state. Overusing them creates the same problems as global variables in any language — hard to trace, easy to corrupt.",
+          "content": "An Autoload is a script or scene that Godot loads at startup and keeps alive for the entire duration of the game. It persists across scene changes and is accessible globally by name from any script.\n\nYou add Autoloads in Project > Project Settings > Globals > Autoload. Give each one a name — this becomes the global variable name — and point it to a script file.\n\nAutoloads are the right place for data that must survive scene transitions: the player's score, health, currency, save data, audio management. When you change from Level 1 to Level 2, your GameManager autoload keeps the score.\n\nAccess them from any script simply by their name: GameManager.add_score(100). No imports, no node references needed.\n\nDo not overuse Autoloads. If data only matters within one scene, keep it there. Autoloads are global state and share all the problems of global state in any programming context — hard to trace, easy to corrupt, difficult to test. Keep them focused on genuinely cross-scene concerns.",
+          "examples": [
+            {
+              "label": "A GameManager autoload",
+              "code": "# game_manager.gd — registered as autoload named GameManager\nextends Node\n\nvar score: int = 0\nvar lives: int = 3\nvar current_level: int = 1\n\nfunc add_score(amount: int) -> void:\n    score += amount\n\nfunc lose_life() -> void:\n    lives -= 1\n    if lives <= 0:\n        game_over()\n\nfunc game_over() -> void:\n    get_tree().change_scene_to_file(\"res://scenes/GameOver.tscn\")\n\nfunc reset() -> void:\n    score = 0\n    lives = 3\n    current_level = 1"
+            }
+          ],
           "questions": [
             {
-              "q": "What makes an Autoload different from a regular node?",
-              "options": ["It loads faster.", "It persists across scene changes and is globally accessible.", "It cannot have children.", "It runs before _ready() on all other nodes."],
+              "q": "Where do you register an Autoload in Godot 4?",
+              "options": ["In the scene's root node properties.", "Project > Project Settings > Globals > Autoload.", "By adding @autoload at the top of the script.", "In the FileSystem panel by right-clicking the script."],
               "answer": 1,
-              "explanation": "Autoloads survive when the scene changes. A regular node is destroyed with its scene. That persistence is their entire purpose."
+              "explanation": "Autoloads are registered in Project Settings under the Globals tab. You give them a name and point to the script file."
             },
             {
-              "q": "You are building a score system. The score needs to survive when the player moves from Level 1 to Level 2. Where should you store it?",
-              "options": ["In the Level1 scene.", "In the player's script.", "In an Autoload.", "In a local variable."],
+              "q": "You have a score that needs to survive when changing from Level 1 to Level 2. Where should you store it?",
+              "options": ["In the Level1 scene's root node.", "In the player script.", "In an Autoload.", "In a local variable in _ready()."],
               "answer": 2,
-              "explanation": "An Autoload persists across scene changes. The score survives loading Level 2 and is accessible from any script via its global name."
+              "explanation": "Autoloads persist across scene changes. A score stored in Level1's script is freed when Level2 loads. The Autoload keeps it alive."
+            },
+            {
+              "q": "How do you call a function on an Autoload named GameManager from any other script?",
+              "options": ["`get_autoload(\"GameManager\").add_score(10)`", "`autoload.GameManager.add_score(10)`", "`GameManager.add_score(10)`", "`import GameManager; GameManager.add_score(10)`"],
+              "answer": 2,
+              "explanation": "Autoloads are globally accessible by their registered name. GameManager.add_score(10) works from anywhere without any import or reference."
+            },
+            {
+              "q": "What is the main risk of putting too much into Autoloads?",
+              "options": ["Autoloads increase load time significantly.", "They become global state — hard to trace, easy to corrupt, difficult to test.", "Godot limits you to one Autoload per project.", "Autoloads cannot access scene nodes."],
+              "answer": 1,
+              "explanation": "Global state is a well-known source of bugs in any codebase. Keep Autoloads focused on genuinely cross-scene data. If it only matters in one scene, keep it there."
             }
           ]
         },
@@ -474,7 +834,7 @@
           "id": "l-gd-fix-autoload",
           "title": "Diagnostic: Score Not Persisting",
           "type": "godot_scene",
-          "prompt": "This GameManager script is meant to be an Autoload that stores the score. It has two bugs: the score is declared as a local variable inside _ready() instead of a class variable, and the add_score function tries to modify a variable named points that does not exist. Fix both so the score persists correctly.",
+          "prompt": "This GameManager script is meant to be an Autoload that persists the score across scenes. It has two bugs: score is declared as a local variable inside _ready() instead of a class-level variable, and add_score() modifies a variable called 'points' that does not exist. Fix both so the Autoload works correctly. Register it in Project > Project Settings > Globals > Autoload as 'GameManager'.",
           "initialTree": [
             {
               "node": "Node",
@@ -482,15 +842,82 @@
               "children": []
             }
           ],
-          "initialScript": "extends Node\n\nfunc _ready():\n    var score = 0\n\nfunc add_score(amount: int):\n    points += amount\n\nfunc get_score() -> int:\n    return score",
+          "initialAutoloads": [
+            { "name": "GameManager", "path": "res://scripts/game_manager.gd", "enabled": false }
+          ],
+          "initialScript": "extends Node\n\nfunc _ready():\n    var score = 0\n\nfunc add_score(amount: int) -> void:\n    points += amount\n\nfunc get_score() -> int:\n    return score",
           "validation": [
             {
               "rule": "^var score",
-              "message": "score must be declared as a class variable, not inside _ready()."
+              "message": "Declare score as a class variable, not inside _ready()."
             },
             {
               "rule": "func add_score[\\s\\S]*?score \\+=",
               "message": "add_score must modify 'score', not 'points'."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-input-actions",
+          "title": "Input Actions and Input Map",
+          "type": "document",
+          "content": "The Input Map is Godot's layer of abstraction over raw input. Instead of checking for the spacebar directly, you define an action called 'jump' and bind the spacebar to it. Later you can rebind it to a controller button without changing any code.\n\nYou manage the Input Map in Project > Project Settings > Input Map. Create an action, then add events to it — keyboard keys, mouse buttons, gamepad buttons, or any combination. One action can have multiple bindings.\n\nKey Input functions:\n\nInput.is_action_pressed(\"action\") returns true every frame the action is held.\nInput.is_action_just_pressed(\"action\") returns true only on the frame the action was first pressed — use this for jumps, shots, interactions.\nInput.is_action_just_released(\"action\") returns true only on the frame the action was released.\nInput.get_axis(\"negative\", \"positive\") returns -1, 0, or 1 — perfect for movement.\nInput.get_vector(\"left\", \"right\", \"up\", \"down\") returns a normalized Vector2 — perfect for top-down movement, automatically handles diagonal normalization.\n\nYou can also add and remove input events at runtime — useful for remappable controls: InputMap.action_add_event(\"jump\", new_event).",
+          "examples": [
+            {
+              "label": "Input methods comparison",
+              "code": "func _physics_process(delta: float) -> void:\n    # held: movement\n    var move = Input.get_vector(\"move_left\", \"move_right\", \"move_up\", \"move_down\")\n    velocity = move * SPEED\n\n    # just pressed: one-shot actions\n    if Input.is_action_just_pressed(\"jump\"):\n        velocity.y = JUMP_VEL\n\n    if Input.is_action_just_pressed(\"interact\"):\n        try_interact()\n\n    # held: while holding sprint\n    var sprint = 1.5 if Input.is_action_pressed(\"sprint\") else 1.0\n    velocity *= sprint\n\n    move_and_slide()"
+            }
+          ],
+          "questions": [
+            {
+              "q": "You want the player to fire one bullet per click, not continuously. Which Input function do you use?",
+              "options": ["`Input.is_action_pressed(\"fire\")`", "`Input.is_action_just_pressed(\"fire\")`", "`Input.get_axis(\"fire\", \"fire\")`", "`Input.is_action_just_released(\"fire\")`"],
+              "answer": 1,
+              "explanation": "is_action_just_pressed returns true only on the single frame the action was first pressed. is_action_pressed returns true every frame it is held, which would fire every frame."
+            },
+            {
+              "q": "What advantage does `Input.get_vector()` have over manually combining two `get_axis()` calls for top-down movement?",
+              "options": ["It is faster.", "It automatically normalizes the vector, preventing diagonal movement from being faster.", "It works on gamepads but get_axis() does not.", "get_vector() supports more than 4 directions."],
+              "answer": 1,
+              "explanation": "get_vector() returns a normalized Vector2. Diagonal input (both right and up held) gives a vector of length 1, not 1.414. This prevents the common diagonal-speed bug."
+            },
+            {
+              "q": "Why use Input Map actions instead of checking raw keycodes directly?",
+              "options": ["Raw keycodes are not supported in Godot 4.", "Actions let you rebind controls without changing any game code.", "Actions are processed faster than keycodes.", "Keycodes only work on keyboard, not gamepad."],
+              "answer": 1,
+              "explanation": "Checking Input.is_action_just_pressed(\"jump\") means 'jump' can be bound to Space, a gamepad button, or anything else — all without touching the script."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-pause",
+          "title": "Pausing and Timers",
+          "type": "document",
+          "content": "Godot's SceneTree has a built-in pause system. Setting get_tree().paused = true stops _process, _physics_process, and _input from running on any node that does not explicitly opt out.\n\nBy default all nodes are paused when the tree is paused. To make a node continue running while paused — a pause menu, for example — set its Process Mode to Always in the Inspector, or in code: node.process_mode = Node.PROCESS_MODE_ALWAYS.\n\nTimers are one of the most used nodes in Godot. The Timer node counts down and emits timeout when it reaches zero. Set wait_time for the interval, autostart to begin immediately, and one_shot to emit only once versus repeating.\n\nFor simple delays in code without a Timer node, use await: await get_tree().create_timer(2.0).timeout creates a temporary timer and pauses execution of the current function for 2 seconds without blocking anything else.",
+          "examples": [
+            {
+              "label": "Pausing and await",
+              "code": "func pause_game() -> void:\n    get_tree().paused = true\n\nfunc resume_game() -> void:\n    get_tree().paused = false\n\nfunc spawn_with_delay() -> void:\n    await get_tree().create_timer(1.5).timeout\n    spawn_enemy(Vector2(100, 100))\n\nfunc flash_effect() -> void:\n    visible = false\n    await get_tree().create_timer(0.1).timeout\n    visible = true"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does `get_tree().paused = true` do?",
+              "options": ["Closes the game.", "Stops _process and _physics_process on all nodes that do not opt out.", "Freezes only physics bodies.", "Pauses audio playback."],
+              "answer": 1,
+              "explanation": "Setting the tree to paused stops processing on all nodes with default process modes. Nodes set to PROCESS_MODE_ALWAYS continue running — useful for pause menus."
+            },
+            {
+              "q": "You want a pause menu to keep responding to input even when the game is paused. What do you set?",
+              "options": ["Nothing — UI always responds.", "Set Process Mode to Always on the pause menu node.", "Disconnect all signals before pausing.", "Use a separate game loop for UI."],
+              "answer": 1,
+              "explanation": "PROCESS_MODE_ALWAYS makes a node ignore the paused state. Set it on your pause menu so it keeps responding to input while the rest of the game is frozen."
+            },
+            {
+              "q": "What does `await get_tree().create_timer(2.0).timeout` do?",
+              "options": ["Creates a permanent Timer node that emits every 2 seconds.", "Pauses the current function for 2 seconds without blocking the rest of the game.", "Stops the scene tree for 2 seconds.", "Sets the game's time scale to 2.0."],
+              "answer": 1,
+              "explanation": "await suspends the current function until the signal fires. create_timer() makes a one-shot temporary timer. The rest of the game continues running normally."
             }
           ]
         }
@@ -501,29 +928,41 @@
       "lessons": [
         {
           "id": "l-gd-control-nodes",
-          "title": "Control Nodes and Anchors",
+          "title": "Control Nodes and Layout",
           "type": "document",
-          "content": "UI in Godot uses Control nodes, which are completely separate from Node2D. They live in screen space, not world space. A CanvasLayer node is typically used to hold UI so it does not move with the camera.\n\nControl nodes use an anchor system instead of a simple position. Anchors define where a corner of the node is attached relative to its parent container. An anchor at (0, 0) is the top-left. (1, 1) is the bottom-right.\n\nThe Layout menu in the toolbar gives you presets: Full Rect stretches to fill the parent, Center places it in the middle, and so on. Use these instead of manually setting anchors.\n\nCommon Control nodes: Label displays text. Button is a clickable button. ProgressBar shows a value as a bar. TextureRect displays an image. VBoxContainer and HBoxContainer arrange children vertically or horizontally.",
+          "content": "UI in Godot uses Control nodes, which are completely separate from Node2D. Control nodes use screen-space coordinates — they stay fixed on screen regardless of where the camera is.\n\nThe standard pattern for HUD: add a CanvasLayer node to your scene, then put all Control nodes inside it. CanvasLayer renders its children at a fixed screen position independent of the camera and scene transforms.\n\nControl nodes use an anchor system. Each corner of a Control node has an anchor — a normalized position (0 to 1) relative to its parent container. Anchor (0, 0) is top-left. (1, 1) is bottom-right. The Layout presets in the toolbar give you quick access to common configurations: Full Rect stretches to fill the parent, Center positions in the middle, Top Left pins to the corner.\n\nContainers are Control nodes that automatically arrange their children. HBoxContainer stacks children horizontally. VBoxContainer stacks vertically. MarginContainer adds padding. GridContainer creates a grid. Prefer containers over manually positioning every element.\n\nCommon HUD nodes: Label for text, TextureRect for images, ProgressBar for health and mana bars, Button for clickable buttons.",
           "questions": [
             {
-              "q": "Why do UI elements go in a CanvasLayer instead of directly in the scene?",
-              "options": ["CanvasLayer loads faster.", "CanvasLayer keeps UI in screen space so it does not move with the camera.", "Godot requires it.", "Control nodes only work inside CanvasLayer."],
+              "q": "Why put HUD elements inside a CanvasLayer?",
+              "options": ["CanvasLayer renders faster.", "CanvasLayer keeps UI at fixed screen positions that do not move with the camera.", "Godot requires CanvasLayer for all Control nodes.", "CanvasLayer provides automatic layout."],
               "answer": 1,
-              "explanation": "Without a CanvasLayer, UI elements are part of the world and scroll with the camera. CanvasLayer pins them to the screen."
+              "explanation": "Without CanvasLayer, Control nodes are affected by the camera. CanvasLayer pins UI to the screen so it stays in place as the world scrolls."
             },
             {
-              "q": "What do anchors control on a Control node?",
-              "options": ["The node's z-index.", "Where the node's edges are positioned relative to its parent.", "The node's visibility.", "The node's collision shape."],
+              "q": "What does an anchor of (1, 0) on the horizontal and vertical axes mean?",
+              "options": ["The node is centered.", "The node is pinned to the top-right corner of its parent.", "The node fills the full width.", "The node is invisible."],
               "answer": 1,
-              "explanation": "Anchors define how the node is positioned and sized relative to its parent container. They enable UI that adapts to different screen sizes."
+              "explanation": "Anchor x=1 means the right edge, y=0 means the top. Together: top-right corner. This is the anchor preset for a health bar in the top-right of the screen."
+            },
+            {
+              "q": "You want a row of inventory icons to automatically space themselves horizontally. Which container do you use?",
+              "options": ["VBoxContainer", "GridContainer", "HBoxContainer", "MarginContainer"],
+              "answer": 2,
+              "explanation": "HBoxContainer arranges children horizontally and handles spacing automatically. Add your icon nodes as children and they stack in a row."
+            },
+            {
+              "q": "Which Control node displays a value as a horizontal or vertical fill bar?",
+              "options": ["Label", "TextureRect", "ProgressBar", "Slider"],
+              "answer": 2,
+              "explanation": "ProgressBar displays a value between min_value and max_value as a filled bar. Set its value property to update health or mana displays."
             }
           ]
         },
         {
           "id": "l-gd-fix-ui",
-          "title": "Diagnostic: Broken HUD",
+          "title": "Diagnostic: HUD Missing CanvasLayer",
           "type": "godot_scene",
-          "prompt": "This HUD scene is missing a CanvasLayer — the UI elements are direct children of the root Node2D and will scroll with the camera. Add a CanvasLayer as a child of the root, then move the Label and ProgressBar to be children of the CanvasLayer.",
+          "prompt": "This HUD scene has a Label and ProgressBar directly under the root Node2D — they will scroll with the camera. Fix the tree by adding a CanvasLayer as a child of the root, then move the Label and ProgressBar inside it. The script needs @onready references to both using the correct paths.",
           "initialTree": [
             {
               "node": "Node2D",
@@ -543,15 +982,76 @@
                   "node": "CanvasLayer",
                   "name": "CanvasLayer",
                   "children": [
-                    { "node": "ProgressBar", "name": "HealthBar", "children": [] },
-                    { "node": "Label", "name": "ScoreLabel", "children": [] }
+                    { "node": "Label", "name": "ScoreLabel", "children": [] },
+                    { "node": "ProgressBar", "name": "HealthBar", "children": [] }
                   ]
                 }
               ]
             }
           ],
-          "initialScript": "extends Node2D\n\n@onready var score_label = $ScoreLabel\n@onready var health_bar = $HealthBar\n\nfunc update_score(score: int):\n    score_label.text = \"Score: \" + str(score)\n\nfunc update_health(health: int):\n    health_bar.value = health",
-          "validation": []
+          "initialScript": "extends Node2D\n\n@onready var score_label = $ScoreLabel\n@onready var health_bar = $HealthBar\n\nfunc update_score(val: int) -> void:\n    score_label.text = \"Score: \" + str(val)\n\nfunc update_health(val: int) -> void:\n    health_bar.value = val",
+          "validation": [
+            {
+              "rule": "@onready var score_label = \\$CanvasLayer/ScoreLabel",
+              "message": "Update the path to $CanvasLayer/ScoreLabel since ScoreLabel is now nested under CanvasLayer."
+            },
+            {
+              "rule": "@onready var health_bar = \\$CanvasLayer/HealthBar",
+              "message": "Update the path to $CanvasLayer/HealthBar since HealthBar is now nested under CanvasLayer."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-ui-signals",
+          "title": "Wiring UI to Game Logic",
+          "type": "document",
+          "content": "UI and game logic should be kept separate. The HUD should not know about the player. The player should not know about the HUD. They communicate through signals.\n\nThe standard pattern: the player emits a signal when something changes (health drops, score increases). The HUD connects to those signals and updates itself. The player has no reference to the HUD.\n\nIf you have an Autoload like GameManager, the HUD can read from it directly on _ready() to initialize values, then connect to signals on the autoload for updates.\n\nFor buttons — a restart button, a settings button — the button emits pressed (a built-in signal). Connect pressed to a function in whatever script should handle it. The button itself should contain no game logic.\n\nThis separation means you can redesign the entire HUD without touching the player script, and you can test the player's health system without needing a HUD at all.",
+          "questions": [
+            {
+              "q": "A player emits `health_changed(new_health)`. The HUD should update a ProgressBar when this fires. What is the correct approach?",
+              "options": ["Have the player get a reference to the HUD and call update_health() directly.", "Connect the player's health_changed signal to a function on the HUD that updates the ProgressBar.", "Have the HUD check the player's health every frame in _process.", "Store health in a global variable the HUD reads directly."],
+              "answer": 1,
+              "explanation": "Signals keep the player and HUD independent. The player emits, the HUD listens and updates itself. Neither needs a reference to the other."
+            },
+            {
+              "q": "A Restart button should reload the current scene when pressed. Where should that logic go?",
+              "options": ["Inside the Button node's script.", "In the scene root's script, connected to the button's pressed signal.", "In an @export function on the Button.", "In _process, checking if the button is visible."],
+              "answer": 1,
+              "explanation": "Buttons should contain no game logic. Connect pressed to a handler in the scene root or a manager, keeping the button purely a UI element."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-richtextlabel-theme",
+          "title": "RichTextLabel and Themes",
+          "type": "document",
+          "content": "Label displays plain text. RichTextLabel displays formatted text using BBCode tags — bold, italic, color, images, animations. Use it for dialogue boxes, item descriptions, damage numbers, and any UI that needs mixed styling.\n\nKey BBCode tags: [b]bold[/b], [i]italic[/i], [color=#ff4444]red text[/color], [wave]wavy text[/wave], [shake]shaking text[/shake]. Enable BBCode by checking the BBCode Enabled property. Set text via the text property in code.\n\nFor animated text (typewriter effect), use the visible_characters property. Start at 0 and increment it over time — each increment reveals one more character. Connect the finished signal to know when all text is shown.\n\nThemes control the visual style of all Control nodes. A Theme resource defines fonts, colors, sizes, and styleboxes for every Control type. Set a Theme on a root Control node and it propagates to all children automatically — you change one Theme and the entire UI updates.\n\nCreate a Theme in the Inspector by clicking the Theme property on any Control. Edit fonts, colors, and styles per control type. Distribute the .tres file across your project for consistent UI.",
+          "examples": [
+            {
+              "label": "RichTextLabel typewriter effect",
+              "code": "extends Control\n\n@onready var label = $RichTextLabel\n\nvar chars_per_second: float = 30.0\nvar elapsed: float = 0.0\n\nfunc show_text(text: String) -> void:\n    label.text = text\n    label.visible_characters = 0\n    set_process(true)\n\nfunc _process(delta: float) -> void:\n    elapsed += delta\n    label.visible_characters = int(elapsed * chars_per_second)\n    if label.visible_characters >= label.get_total_character_count():\n        set_process(false)\n        elapsed = 0.0"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which node should you use to display text with mixed colors, bold, and animated effects?",
+              "options": ["Label", "TextEdit", "RichTextLabel", "LineEdit"],
+              "answer": 2,
+              "explanation": "RichTextLabel supports BBCode formatting tags, inline colors, and built-in text effects like wave and shake. Label only supports plain uniform text."
+            },
+            {
+              "q": "How do you implement a typewriter effect with RichTextLabel?",
+              "options": ["Set text one character at a time using a Timer.", "Increment visible_characters over time from 0 to the total character count.", "Use AnimationPlayer to animate the text property.", "Enable the Typewriter property in the Inspector."],
+              "answer": 1,
+              "explanation": "visible_characters controls how many characters are rendered. Incrementing it gradually reveals text one character at a time — the typewriter effect."
+            },
+            {
+              "q": "If you set a Theme on a root Panel node, which of its descendants does the Theme apply to?",
+              "options": ["Only the Panel node itself.", "Only direct children.", "All Control node descendants recursively.", "Only nodes with the same type as Panel."],
+              "answer": 2,
+              "explanation": "A Theme set on a Control propagates down to all Control descendants. Change one Theme and all nested buttons, labels, and bars update automatically."
+            }
+          ]
         }
       ]
     },
@@ -562,25 +1062,31 @@
           "id": "l-gd-export",
           "title": "The @export Annotation",
           "type": "document",
-          "content": "@export exposes a variable to the Inspector panel. Instead of hardcoding values in your script, you set them in the editor per-instance.\n\nThis is powerful because the same script can produce different behavior depending on what is set in the Inspector. An Enemy script with @export var speed: float = 100.0 can have its speed set to 100 for a slow enemy and 300 for a fast one — same script, two different Inspector values.\n\nYou can export most types: int, float, bool, String, Vector2, Color, NodePath, and PackedScene are all supported.\n\nExporting a PackedScene is the cleanest way to set up spawning. Instead of hardcoding a file path with load(), you drag the scene file onto the exported slot in the Inspector.",
+          "content": "@export exposes a variable in the Inspector panel. Instead of hardcoding values in your script, you set them per-instance in the editor. Same script, different Inspector values — completely different behavior.\n\nThis is powerful because it separates data from logic. An Enemy script with @export var speed: float = 100.0 can produce a slow patrol enemy at 80 and a fast charging enemy at 350 — same script, different Inspector configurations.\n\nYou can export most types: int, float, bool, String, Vector2, Color, NodePath, PackedScene, and custom Resource types.\n\n@export_range(min, max) constrains a number to a slider in the Inspector. @export_enum(\"Idle\", \"Patrol\", \"Chase\") creates a dropdown. @export_group(\"Combat\") groups related exports under a collapsible header. These make your scripts much nicer to configure without touching code.",
           "examples": [
             {
-              "label": "Using @export",
-              "code": "extends CharacterBody2D\n\n@export var speed: float = 200.0\n@export var max_health: int = 100\n@export var bullet_scene: PackedScene\n@export var team_color: Color = Color.RED\n\nvar health: int\n\nfunc _ready():\n    health = max_health"
+              "label": "@export examples",
+              "code": "extends CharacterBody2D\n\n@export_group(\"Movement\")\n@export var speed: float = 200.0\n@export_range(0.0, 1000.0) var jump_force: float = 400.0\n\n@export_group(\"Combat\")\n@export var max_health: int = 100\n@export var attack_damage: int = 10\n\n@export_group(\"Scene References\")\n@export var bullet_scene: PackedScene\n@export var death_effect: PackedScene\n\n@export_enum(\"Patrol\", \"Guard\", \"Aggressive\") var ai_mode: int = 0\n\nvar health: int\n\nfunc _ready() -> void:\n    health = max_health"
             }
           ],
           "questions": [
             {
-              "q": "What does `@export` do to a variable?",
-              "options": ["It makes the variable accessible from other scripts.", "It exposes the variable in the Inspector so it can be set per-instance.", "It saves the variable to disk automatically.", "It prevents the variable from changing at runtime."],
+              "q": "What does @export do to a variable?",
+              "options": ["Makes it accessible from other scripts without a reference.", "Exposes it in the Inspector so it can be configured per-instance.", "Saves it to disk automatically.", "Prevents it from being changed at runtime."],
               "answer": 1,
-              "explanation": "@export shows the variable in the Inspector panel. You can set different values for each instance of the scene without changing the script."
+              "explanation": "@export shows the variable in the Inspector. You can set different values on different instances of the same scene without changing the script."
             },
             {
-              "q": "Why is exporting a PackedScene variable better than hardcoding `load(\"res://Enemy.tscn\")`?",
-              "options": ["It loads faster.", "It lets you assign the scene in the Inspector without modifying code.", "It works on all platforms.", "PackedScene cannot be loaded with load()."],
+              "q": "What does `@export_range(0, 100)` do?",
+              "options": ["Prevents the value from exceeding 100 at runtime.", "Displays the export as a slider in the Inspector constrained between 0 and 100.", "Creates an array of 100 values.", "Exports the variable to a config file."],
               "answer": 1,
-              "explanation": "Exported variables decouple the script from specific file paths. You can swap the scene in the Inspector without touching a line of code."
+              "explanation": "@export_range shows a slider in the Inspector between the min and max values. It does not enforce the range at runtime — it is an editor convenience."
+            },
+            {
+              "q": "Why export a PackedScene variable instead of loading it with `load(\"res://Enemy.tscn\")`?",
+              "options": ["load() is slower.", "The exported variable lets you assign the scene in the Inspector without changing code.", "PackedScene cannot be used with load().", "Exported variables load asynchronously."],
+              "answer": 1,
+              "explanation": "Exported variables decouple the script from specific file paths. Drag and drop in the Inspector. Move the file and update only the Inspector slot — no code changes."
             }
           ]
         },
@@ -588,33 +1094,65 @@
           "id": "l-gd-custom-resources",
           "title": "Custom Resources",
           "type": "document",
-          "content": "A Resource is a data container that can be saved as a file and reused across scenes. Built-in resources include Texture2D, AudioStream, and PackedScene.\n\nYou can create your own by extending Resource. A custom resource is useful for structured data: an item definition, a character stat block, a level configuration.\n\nDefine it with class_name so Godot registers it as a type. Add @export variables for each field. Save it as a .tres file. Then @export it on any node that needs that data.\n\nThe advantage over a Dictionary: the data is typed, validated, reusable across scenes, and editable in the Inspector with a proper UI.",
+          "content": "A Resource is a data container that can be saved to disk and reused across scenes. Built-in resources include Texture2D, AudioStream, Font, and PackedScene.\n\nYou create your own by extending Resource and adding class_name so Godot registers it as a type. Add @export variables for each field. Save an instance as a .tres file. Then @export it on any node that needs that data.\n\nA custom Resource is the right tool for structured, reusable data: an item definition, a character stat block, a weapon configuration, a dialogue entry. The advantages over a Dictionary: typed fields, Inspector editing with a proper UI, reusable as a file, shareable across multiple scenes.\n\nYou can also load resources at runtime: var data = load(\"res://data/sword.tres\") as WeaponData.",
           "examples": [
             {
-              "label": "Defining and using a custom resource",
-              "code": "# item_data.gd\nextends Resource\nclass_name ItemData\n\n@export var item_name: String = \"\"\n@export var damage: int = 0\n@export var icon: Texture2D\n\n# weapon.gd\nextends Node2D\n\n@export var item: ItemData\n\nfunc _ready():\n    print(item.item_name, \" deals \", item.damage)"
+              "label": "Custom Resource definition and use",
+              "code": "# weapon_data.gd\nextends Resource\nclass_name WeaponData\n\n@export var weapon_name: String = \"\"\n@export var damage: int = 10\n@export var attack_speed: float = 1.0\n@export var icon: Texture2D\n@export var hit_sound: AudioStream\n\n# player.gd\nextends CharacterBody2D\n\n@export var weapon: WeaponData\n\nfunc attack() -> void:\n    if not weapon:\n        return\n    print(\"Attacking with \", weapon.weapon_name)\n    deal_damage(weapon.damage)"
             }
           ],
           "questions": [
             {
-              "q": "What is the file extension for a saved Godot Resource?",
+              "q": "What file extension do saved Godot Resources use?",
               "options": [".res", ".tres", ".gd", ".data"],
               "answer": 1,
-              "explanation": ".tres is the text-based resource format. It is human-readable and works well with version control."
+              "explanation": ".tres is Godot's text-based resource format. Human-readable and version-control friendly."
+            },
+            {
+              "q": "What must you add to a custom Resource script so Godot registers it as a usable type?",
+              "options": ["@tool", "class_name", "@export", "extends Object"],
+              "answer": 1,
+              "explanation": "class_name registers the script as a named type in Godot's type system. Without it you cannot use the type in Inspector dropdowns or typed variables."
             },
             {
               "q": "Why use a custom Resource over a Dictionary for item data?",
-              "options": ["Resources are faster to access.", "Resources are typed, validated, Inspector-editable, and reusable as files.", "Dictionaries cannot store numbers.", "Resources automatically sync across the network."],
+              "options": ["Resources access data faster than Dictionaries.", "Resources are typed, Inspector-editable, saveable as files, and reusable across scenes.", "Dictionaries cannot store more than 10 values.", "Resources automatically sync across multiplayer."],
               "answer": 1,
-              "explanation": "A custom Resource gives you type safety, Inspector integration, and the ability to save and share the data as a .tres file. Dictionaries have none of these benefits."
+              "explanation": "A custom Resource gives you type safety, a clean Inspector UI, the ability to save instances as .tres files, and easy reuse. Dictionaries offer none of these."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-saving",
+          "title": "Saving and Loading Data",
+          "type": "document",
+          "content": "Games need to persist data between sessions: save files, settings, high scores. Godot provides several approaches.\n\nConfigFile is the simplest. It reads and writes .cfg files (INI-style key-value pairs). Good for settings and simple save data.\n\nFor more complex save data, serialize your data to JSON and write it with FileAccess. JSON is human-readable and easy to debug.\n\nFor high-integrity save data, write binary with FileAccess in WRITE_BINARY mode — smaller files and harder to cheat, but not human-readable.\n\nThe user:// path prefix writes to the user's application data folder — the correct place for save files. res:// is read-only in exported games. Always use user:// for anything you need to write at runtime.",
+          "examples": [
+            {
+              "label": "Saving and loading with ConfigFile",
+              "code": "const SAVE_PATH = \"user://settings.cfg\"\n\nfunc save_settings(volume: float, fullscreen: bool) -> void:\n    var config = ConfigFile.new()\n    config.set_value(\"audio\", \"volume\", volume)\n    config.set_value(\"display\", \"fullscreen\", fullscreen)\n    config.save(SAVE_PATH)\n\nfunc load_settings() -> Dictionary:\n    var config = ConfigFile.new()\n    if config.load(SAVE_PATH) != OK:\n        return { \"volume\": 1.0, \"fullscreen\": false }\n    return {\n        \"volume\": config.get_value(\"audio\", \"volume\", 1.0),\n        \"fullscreen\": config.get_value(\"display\", \"fullscreen\", false)\n    }"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Why must you use the `user://` path for save files instead of `res://`?",
+              "options": ["user:// is faster to write.", "res:// is read-only in exported games. user:// writes to the application data folder.", "res:// saves to the cloud. user:// saves locally.", "They are interchangeable."],
+              "answer": 1,
+              "explanation": "In an exported game, the res:// folder is inside the game's package and cannot be written to. user:// always points to a writable folder on the user's machine."
+            },
+            {
+              "q": "Which Godot class is the simplest for saving key-value settings data?",
+              "options": ["FileAccess", "JSON", "ConfigFile", "ResourceSaver"],
+              "answer": 2,
+              "explanation": "ConfigFile provides a simple API for INI-style key-value files. It handles reading, writing, and missing keys gracefully with default values."
             }
           ]
         },
         {
           "id": "l-gd-fix-resource",
-          "title": "Diagnostic: Untyped Export",
+          "title": "Diagnostic: Broken EnemyData Resource",
           "type": "godot_scene",
-          "prompt": "This EnemySpawner script exports an enemy scene but uses a plain var with no type annotation, and the spawn function tries to access enemy.speed before checking if it was set. Add the PackedScene type to the export, and add a null check before accessing speed.",
+          "prompt": "This EnemySpawner uses an EnemyData resource but has three bugs: the resource export is untyped, the spawn function never checks if enemy_data is null before accessing it, and the instance is added as a child before its position is set (so it flashes at origin first). Fix all three.",
           "initialTree": [
             {
               "node": "Node2D",
@@ -624,15 +1162,358 @@
               ]
             }
           ],
-          "initialScript": "extends Node2D\n\n@export var enemy_scene\n\nfunc spawn():\n    var enemy = enemy_scene.instantiate()\n    print(enemy.speed)\n    add_child(enemy)",
+          "initialScript": "extends Node2D\n\n@export var enemy_scene\n@export var enemy_data\n\nfunc spawn(pos: Vector2) -> void:\n    var enemy = enemy_scene.instantiate()\n    add_child(enemy)\n    enemy.global_position = pos\n    enemy.health = enemy_data.max_health",
           "validation": [
             {
               "rule": "@export var enemy_scene: PackedScene",
-              "message": "Declare enemy_scene as PackedScene: @export var enemy_scene: PackedScene"
+              "message": "Type enemy_scene as PackedScene: @export var enemy_scene: PackedScene"
             },
             {
-              "rule": "if enemy_scene",
-              "message": "Add a null check: if enemy_scene == null or if not enemy_scene before calling instantiate()."
+              "rule": "if not enemy_scene|if enemy_scene == null",
+              "message": "Add a null check for enemy_scene before calling instantiate()."
+            },
+            {
+              "rule": "enemy\\.global_position = pos[\\s\\S]*?add_child\\(enemy\\)",
+              "message": "Set global_position before add_child() to avoid the one-frame flash at origin."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 8: Animation and Polish",
+      "lessons": [
+        {
+          "id": "l-gd-audio",
+          "title": "Audio — AudioStreamPlayer",
+          "type": "document",
+          "content": "Sound in Godot uses AudioStreamPlayer for non-positional audio (music, UI sounds) and AudioStreamPlayer2D for positional audio that gets quieter with distance.\n\nAssign an AudioStream resource to the stream property — drag an .ogg, .mp3, or .wav file from the FileSystem. Call play() to start it. stop() stops it. playing tells you if it is currently active. The finished signal fires when a non-looping stream ends.\n\nFor looping music, enable Loop in the AudioStream's import settings or use an AudioStreamOggVorbis with loop enabled. One AudioStreamPlayer for background music is fine — it persists across scene changes if it is inside an Autoload.\n\nFor sound effects, keep a pool of AudioStreamPlayer nodes or use AudioStreamPlayer2D at the point of impact. You can programmatically change pitch_scale slightly per-play (randomize between 0.9 and 1.1) to give repeated sounds more life.\n\nAudioBuses let you group audio and apply effects. The Master bus handles all audio. Create sub-buses: Music, SFX, UI. Route players to the right bus. Add effects per-bus: reverb on SFX, compression on Music. Control volume per-bus to give players independent sliders.",
+          "examples": [
+            {
+              "label": "Sound effect with pitch variation",
+              "code": "extends Node\n\n@onready var sfx_player = $AudioStreamPlayer\n\nfunc play_hit_sound() -> void:\n    sfx_player.pitch_scale = randf_range(0.9, 1.1)\n    sfx_player.play()\n\nfunc play_music(stream: AudioStream) -> void:\n    sfx_player.stream = stream\n    sfx_player.play()"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What is the difference between AudioStreamPlayer and AudioStreamPlayer2D?",
+              "options": ["They are identical.", "AudioStreamPlayer2D attenuates with distance from the listener — AudioStreamPlayer plays at constant volume.", "AudioStreamPlayer2D only works in 3D.", "AudioStreamPlayer cannot loop."],
+              "answer": 1,
+              "explanation": "AudioStreamPlayer plays everywhere at the same volume. AudioStreamPlayer2D is positioned in the 2D world — the further the listener is, the quieter it gets."
+            },
+            {
+              "q": "You play the same footstep sound rapidly and it sounds mechanical and unnatural. What quick fix gives it more life?",
+              "options": ["Use a different audio format.", "Randomize pitch_scale slightly between plays.", "Increase the volume.", "Use AudioStreamPlayer2D instead."],
+              "answer": 1,
+              "explanation": "Slight pitch variation (0.9 to 1.1) makes repeated sounds feel less robotic. randf_range() gives a different value each time."
+            },
+            {
+              "q": "Where should a background music AudioStreamPlayer live so it persists across scene changes?",
+              "options": ["In the Level scene root.", "In the Player scene.", "In an Autoload.", "In the HUD CanvasLayer."],
+              "answer": 2,
+              "explanation": "Nodes in regular scenes are freed when the scene changes. An Autoload persists for the entire game — the right place for persistent background music."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-tilemap",
+          "title": "TileMap — Building Levels with Tiles",
+          "type": "document",
+          "content": "TileMap is Godot's built-in tile-based level editor. Instead of placing hundreds of individual StaticBody2D nodes for platforms, you paint tiles onto a grid. Each tile can have collision shapes, custom data, and animation built in.\n\nSetup: create a TileSet resource on your TileMap node. Add a TileSetAtlasSource and point it to your tileset image. In the TileSet editor at the bottom of the screen, select tiles and add collision shapes to them.\n\nIn the editor you paint tiles using the TileMap panel. Select a tile from the palette, paint onto the scene. Erase, fill, and pick work like a pixel editor.\n\nIn code, TileMap gives you full control. set_cell(layer, coords, source_id, atlas_coords) places a tile. get_cell_source_id(layer, coords) reads what is there. erase_cell(layer, coords) removes a tile. map_to_local(coords) converts tile grid coordinates to world position.\n\nLayers let you stack multiple tile grids — a background layer, a terrain layer, a decoration layer — all in one TileMap node.\n\nFor procedural generation, TileMap is your primary tool: loop over coordinates and call set_cell() to build dungeons, caves, and worlds at runtime.",
+          "examples": [
+            {
+              "label": "Reading and placing tiles at runtime",
+              "code": "extends TileMap\n\nconst LAYER = 0\nconst SOURCE_ID = 0\n\nfunc place_tile(grid_pos: Vector2i, atlas_pos: Vector2i) -> void:\n    set_cell(LAYER, grid_pos, SOURCE_ID, atlas_pos)\n\nfunc clear_tile(grid_pos: Vector2i) -> void:\n    erase_cell(LAYER, grid_pos)\n\nfunc get_world_pos(grid_pos: Vector2i) -> Vector2:\n    return map_to_local(grid_pos)"
+            }
+          ],
+          "questions": [
+            {
+              "q": "How does TileMap improve over placing hundreds of individual StaticBody2D nodes?",
+              "options": ["TileMap renders faster.", "Collision, visuals, and custom data are managed per-tile type in one resource — editing one tile type updates all placed instances.", "TileMap nodes support more collision shapes.", "Individual StaticBody2D nodes cannot tile textures."],
+              "answer": 1,
+              "explanation": "With TileMap, you define a tile's collision and appearance once in the TileSet. Painting that tile anywhere reuses that definition. Changing it updates everywhere."
+            },
+            {
+              "q": "What does `map_to_local(grid_pos)` do?",
+              "options": ["Converts a world position to a tile grid coordinate.", "Converts a tile grid coordinate to a world-space Vector2 position.", "Returns the tile at a grid position.", "Maps a tile to a local scene."],
+              "answer": 1,
+              "explanation": "TileMap works in grid coordinates (Vector2i). map_to_local() gives you the world position of the center of that grid cell — useful for spawning objects at tile locations."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-animated-sprite",
+          "title": "AnimatedSprite2D",
+          "type": "document",
+          "content": "AnimatedSprite2D plays frame-by-frame sprite animations. It holds a SpriteFrames resource that contains one or more named animations, each as a sequence of textures.\n\nYou create and configure SpriteFrames in the editor by clicking the SpriteFrames property. Add animations, import frames, set the FPS. Each animation gets a name — idle, walk, run, jump, attack, die.\n\nIn code, play(\"animation_name\") starts an animation. stop() pauses it. The animation property holds the current animation name. is_playing() tells you if it is currently running.\n\nThe animation_finished signal fires when a non-looping animation completes. Use it for one-shot animations like attacks or death sequences: connect animation_finished to a function that transitions back to idle.\n\nA common pattern for a player: check movement direction and velocity each frame, then call play() with the appropriate animation name. play() only restarts if you call it with a different name than what is already playing — calling play(\"walk\") every frame while already walking does not reset the animation.",
+          "examples": [
+            {
+              "label": "Animation state in _physics_process",
+              "code": "extends CharacterBody2D\n\n@onready var anim = $AnimatedSprite2D\n\nfunc _physics_process(delta: float) -> void:\n    # movement code here...\n    move_and_slide()\n\n    if not is_on_floor():\n        anim.play(\"jump\")\n    elif velocity.x != 0:\n        anim.play(\"walk\")\n        anim.flip_h = velocity.x < 0\n    else:\n        anim.play(\"idle\")\n\nfunc die() -> void:\n    anim.play(\"die\")\n    anim.animation_finished.connect(_on_death_animation_done)\n\nfunc _on_death_animation_done() -> void:\n    queue_free()"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What happens if you call `anim.play(\"walk\")` every frame when the walk animation is already playing?",
+              "options": ["The animation restarts from frame 0 every frame — it never progresses.", "Nothing — play() only restarts if called with a different animation name.", "The animation speeds up.", "It throws an error."],
+              "answer": 1,
+              "explanation": "play() checks if the requested animation is already playing. If it is, it does nothing. This makes it safe to call every frame in _physics_process."
+            },
+            {
+              "q": "Which signal fires when a non-looping animation completes?",
+              "options": ["animation_done", "finished", "animation_finished", "complete"],
+              "answer": 2,
+              "explanation": "animation_finished fires when a non-looping animation reaches its last frame. Connect it to transition back to idle or queue_free() the node after a death animation."
+            },
+            {
+              "q": "How do you flip a sprite to face left when moving left?",
+              "options": ["`anim.scale.x = -1`", "`anim.flip_h = velocity.x < 0`", "`anim.rotation = PI`", "`anim.play(\"walk_left\")`"],
+              "answer": 1,
+              "explanation": "flip_h mirrors the sprite horizontally. Setting it based on the sign of velocity.x gives you correct facing direction without needing separate left and right animations."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-animation-player",
+          "title": "AnimationPlayer",
+          "type": "document",
+          "content": "AnimationPlayer is Godot's keyframe animation system. Unlike AnimatedSprite2D which only animates sprite frames, AnimationPlayer can animate almost any property on any node in the scene: position, rotation, scale, color, visibility, shader parameters, even function calls.\n\nYou create animations in the Animation panel at the bottom of the editor. Each animation has a timeline with keyframes. Right-click a property in the Inspector and select 'Add key' to add a keyframe at the current time.\n\nIn code: play(\"animation_name\") starts it. play_backwards(\"name\") plays in reverse. stop() pauses. seek(time) jumps to a point. The current_animation property holds the active animation name. animation_finished fires when a non-looping animation ends.\n\nCommon uses: UI transitions (fading panels in and out), enemy attack patterns (rotating and scaling on impact), environmental animation (moving platforms, rotating gears), and cutscene sequences combining movement with camera changes.",
+          "questions": [
+            {
+              "q": "What makes AnimationPlayer more powerful than AnimatedSprite2D?",
+              "options": ["AnimationPlayer loads faster.", "AnimationPlayer can animate any property on any node, not just sprite frames.", "AnimatedSprite2D cannot loop.", "AnimationPlayer works in 3D but not 2D."],
+              "answer": 1,
+              "explanation": "AnimatedSprite2D only switches sprite frames. AnimationPlayer can animate position, rotation, color, visibility, call functions — essentially anything you can keyframe."
+            },
+            {
+              "q": "How do you add a keyframe for a node property using AnimationPlayer?",
+              "options": ["Drag the property into the Animation panel.", "Right-click the property in the Inspector and select Add key.", "Write the keyframe in GDScript.", "Import a .blend file."],
+              "answer": 1,
+              "explanation": "Right-clicking a property in the Inspector while the Animation panel is open and recording gives you the Add key option for the current time in the active animation."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-tweens",
+          "title": "Tweens",
+          "type": "document",
+          "content": "A Tween smoothly interpolates a value from one point to another over time. It is the fastest way to add polish — smooth UI transitions, bouncy feedback, screen shake, flashing effects.\n\nIn Godot 4 you create a Tween with create_tween(). Chain tween_property() to animate a specific property on a node. tween_callback() calls a function at a point in the sequence. tween_interval() adds a delay.\n\nEasing functions control the feel of the interpolation. Ease.OUT starts fast and slows down. Ease.IN starts slow and speeds up. Ease.IN_OUT does both — slow, fast, slow. Trans.BOUNCE, Trans.ELASTIC, Trans.SPRING add physical feel.\n\nTweens are fire-and-forget — you create one and it runs without needing a reference. If you need to stop one, store the reference: var tween = create_tween(). Multiple Tweens can run simultaneously.\n\nTweens replace most cases where you would manually lerp a value in _process. They are cleaner, easier to read, and have built-in easing.",
+          "examples": [
+            {
+              "label": "Common Tween patterns",
+              "code": "func fade_in(node: CanvasItem) -> void:\n    var tween = create_tween()\n    tween.tween_property(node, \"modulate:a\", 1.0, 0.3)\n\nfunc bounce_scale(node: Node2D) -> void:\n    var tween = create_tween()\n    tween.tween_property(node, \"scale\", Vector2(1.3, 1.3), 0.1)\n    tween.tween_property(node, \"scale\", Vector2(1.0, 1.0), 0.15)\\\n         .set_trans(Tween.TRANS_ELASTIC)\n\nfunc slide_in_menu(panel: Control) -> void:\n    panel.position.x = -panel.size.x\n    var tween = create_tween()\n    tween.tween_property(panel, \"position:x\", 0.0, 0.4)\\\n         .set_ease(Tween.EASE_OUT)\\\n         .set_trans(Tween.TRANS_QUART)"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which Godot 4 method creates a new Tween?",
+              "options": ["`Tween.new()`", "`create_tween()`", "`add_tween()`", "`Tween.create(self)`"],
+              "answer": 1,
+              "explanation": "create_tween() is called on any Node and returns a new Tween bound to that node's lifetime. The Tween starts immediately and cleans up automatically."
+            },
+            {
+              "q": "What does `tween_property(node, \"scale\", Vector2(1.3, 1.3), 0.1)` do?",
+              "options": ["Sets scale to 1.3 instantly.", "Smoothly animates node.scale to Vector2(1.3, 1.3) over 0.1 seconds.", "Scales the node by 1.3 times its current scale.", "Waits 1.3 seconds then sets scale to 0.1."],
+              "answer": 1,
+              "explanation": "tween_property takes a target node, a property path string, a target value, and duration in seconds. It interpolates from current to target over that time."
+            },
+            {
+              "q": "What does `Tween.EASE_OUT` do to an animation?",
+              "options": ["The animation starts fast and decelerates toward the end.", "The animation starts slow and accelerates.", "The animation runs at constant speed.", "The animation bounces at the end."],
+              "answer": 0,
+              "explanation": "EASE_OUT starts fast and slows down at the end — like something decelerating to a stop. Gives a smooth, natural feel for UI panels sliding in."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-fix-animation",
+          "title": "Diagnostic: Animation Not Playing",
+          "type": "godot_scene",
+          "prompt": "This enemy script should play a 'walk' animation while moving and an 'idle' animation when stopped. It has two bugs: the AnimatedSprite2D reference uses the wrong node name ($Sprite instead of $AnimatedSprite2D), and the play calls happen before move_and_slide() so velocity.x hasn't been updated by physics yet. Fix both.",
+          "initialTree": [
+            {
+              "node": "CharacterBody2D",
+              "name": "Enemy",
+              "children": [
+                { "node": "AnimatedSprite2D", "name": "AnimatedSprite2D", "children": [] },
+                { "node": "CollisionShape2D", "name": "CollisionShape2D", "children": [] }
+              ]
+            }
+          ],
+          "initialScript": "extends CharacterBody2D\n\n@onready var anim = $Sprite\n\nconst SPEED = 80.0\n\nfunc _physics_process(delta: float) -> void:\n    velocity.x = SPEED\n\n    if velocity.x != 0:\n        anim.play(\"walk\")\n    else:\n        anim.play(\"idle\")\n\n    move_and_slide()",
+          "validation": [
+            {
+              "rule": "@onready var anim = \\$AnimatedSprite2D",
+              "message": "Fix the node path: $Sprite should be $AnimatedSprite2D."
+            },
+            {
+              "rule": "move_and_slide\\(\\)[\\s\\S]*?anim\\.play",
+              "message": "Move the animation logic after move_and_slide() so velocity reflects physics results."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 9: Putting It Together",
+      "lessons": [
+        {
+          "id": "l-gd-enemy-ai",
+          "title": "Simple Enemy AI",
+          "type": "document",
+          "content": "A basic enemy AI follows a state machine pattern. The enemy is always in one of a fixed set of states — Idle, Patrol, Chase, Attack — and transitions between them based on conditions.\n\nA simple implementation uses a match statement on a state variable, running different logic per state. In Idle the enemy stands still. In Patrol it moves back and forth between two waypoints. In Chase it moves toward the player. In Attack it plays an attack animation and deals damage if the player is close enough.\n\nDetecting the player: an Area2D child with a circle CollisionShape2D defines the detection range. Connect its body_entered signal — when the player enters the area, transition to Chase. Connect body_exited to transition back.\n\nFor more complex AI, Godot provides NavigationAgent2D for pathfinding on a NavigationRegion2D. The agent calculates a path around obstacles and gives you the next target position to move toward each frame.\n\nKeep enemy scripts small and focused. A 100-line enemy script is too big — split it into a movement component, an AI component, and a health component as separate child nodes with their own scripts.",
+          "questions": [
+            {
+              "q": "Which node type is best for detecting when the player enters an enemy's awareness range?",
+              "options": ["CollisionShape2D", "RayCast2D", "Area2D with a CollisionShape2D child", "CharacterBody2D"],
+              "answer": 2,
+              "explanation": "Area2D detects when physics bodies enter or leave its shape and emits body_entered and body_exited signals — exactly what a detection range needs."
+            },
+            {
+              "q": "What is the advantage of a state machine pattern for enemy AI?",
+              "options": ["It runs faster than if/else chains.", "Each state is isolated — easy to understand, modify, and debug one state without affecting others.", "State machines automatically pathfind around obstacles.", "It prevents the enemy from getting stuck."],
+              "answer": 1,
+              "explanation": "State machines separate behavior cleanly. You read the Patrol state and understand exactly what happens there without tracing through a tangle of nested conditions."
+            },
+            {
+              "q": "What does NavigationAgent2D provide?",
+              "options": ["Automatic enemy spawning.", "Pathfinding around obstacles on a NavigationRegion2D.", "Random patrol waypoints.", "Enemy animation blending."],
+              "answer": 1,
+              "explanation": "NavigationAgent2D calculates paths around obstacles using a NavigationRegion2D as the walkable area. It gives you the next_path_position() to move toward each frame."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-scene-structure",
+          "title": "Structuring a Full Game Scene",
+          "type": "document",
+          "content": "A well-structured game scene is easy to navigate and maintain. Here is a pattern that works for most 2D games.\n\nThe Level scene root is a Node2D. Its children:\n\nWorld — a Node2D containing all physical game objects: the tilemap, static bodies, spawners, and level geometry. Everything that exists in 2D world space goes here.\n\nEntities — a Node2D containing dynamic objects: the player, enemies, pickups. Keeping these separate from world geometry makes iteration easier.\n\nHUD — a CanvasLayer containing all UI: health bar, score label, pause menu. Always a CanvasLayer so it stays fixed on screen.\n\nGameManager — a local Node (or reference to the Autoload) that coordinates scene-level logic: level completion, spawning waves, handling events between entities.\n\nThis is not a rigid rule — it is a starting point. As your project grows you will develop your own conventions. The key principle: group things by their relationship to the world (world space vs screen space) and by how frequently they change (static geometry vs dynamic entities).",
+          "questions": [
+            {
+              "q": "Why separate World geometry from Entities in a level scene?",
+              "options": ["It improves performance automatically.", "It makes the scene tree clearer to navigate and allows independent iteration on geometry and gameplay.", "World nodes cannot be siblings of Entity nodes.", "It is required by Godot's physics engine."],
+              "answer": 1,
+              "explanation": "Organization is about human readability. A clear scene tree hierarchy means you always know where to look for something and can change one group without accidentally touching another."
+            },
+            {
+              "q": "Why should HUD always be inside a CanvasLayer in a level scene?",
+              "options": ["CanvasLayer processes UI faster.", "CanvasLayer keeps UI at fixed screen positions independent of the camera and world transforms.", "Godot requires CanvasLayer for any Control node in a 2D scene.", "CanvasLayer provides automatic z-ordering for UI."],
+              "answer": 1,
+              "explanation": "Without CanvasLayer, Control nodes scroll with the camera. CanvasLayer pins them to the screen at all times — essential for HUD elements."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-final-scene",
+          "title": "Diagnostic: Assemble a Complete Level",
+          "type": "godot_scene",
+          "prompt": "Build a complete Level scene structure. Root should be a Node2D named 'Level'. Add a Node2D named 'World' and a Node2D named 'Entities' as children of Level. Add a CanvasLayer named 'HUD' as a child of Level. Add a Node named 'LevelManager' as a child of Level. The script should reference the LevelManager and connect a custom signal 'level_complete' to a function called _on_level_complete.",
+          "initialTree": [
+            {
+              "node": "Node2D",
+              "name": "Level",
+              "children": []
+            }
+          ],
+          "targetTree": [
+            {
+              "node": "Node2D",
+              "name": "Level",
+              "children": [
+                { "node": "Node2D", "name": "World", "children": [] },
+                { "node": "Node2D", "name": "Entities", "children": [] },
+                { "node": "CanvasLayer", "name": "HUD", "children": [] },
+                { "node": "Node", "name": "LevelManager", "children": [] }
+              ]
+            }
+          ],
+          "initialScript": "extends Node2D\n\nfunc _ready():\n    pass\n\nfunc _on_level_complete() -> void:\n    get_tree().change_scene_to_file(\"res://scenes/NextLevel.tscn\")",
+          "validation": [
+            {
+              "rule": "@onready var level_manager = \\$LevelManager",
+              "message": "Add @onready var level_manager = $LevelManager."
+            },
+            {
+              "rule": "level_manager\\.level_complete\\.connect\\(_on_level_complete\\)",
+              "message": "Connect level_manager.level_complete to _on_level_complete inside _ready()."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-shaders",
+          "title": "ShaderMaterial — Visual Effects",
+          "type": "document",
+          "content": "Shaders are programs that run on the GPU and control exactly how pixels are rendered. Godot uses a shader language called Godot Shading Language (GLSL-like). You apply a ShaderMaterial to any CanvasItem (Sprite2D, TextureRect, etc.) to override how it draws.\n\nA canvas_item shader has a fragment() function. It runs per-pixel and sets COLOR — the final RGBA output. TEXTURE is the node's original texture. TEXTURE_PIXEL_SIZE gives the size of one pixel in UV space.\n\nCommon effects: outline (sample neighboring pixels, color any transparent neighbor), dissolve (discard pixels based on a noise texture and a threshold), color replacement (swap one color for another), wave distortion (offset UV coordinates over time).\n\nYou pass data from GDScript into a shader using set_shader_parameter(): material.set_shader_parameter(\"dissolve_amount\", 0.5). Animate the parameter over time with a Tween for transitions.\n\nFor simple color effects, ColorRect with a ShaderMaterial is often faster and more flexible than trying to achieve the same result with nested Control nodes.",
+          "examples": [
+            {
+              "label": "Simple outline shader and GDScript control",
+              "code": "# In the shader file (sprite.gdshader):\n# shader_type canvas_item;\n# uniform float outline_width = 1.0;\n# uniform vec4 outline_color : source_color = vec4(0,0,0,1);\n# void fragment() {\n#     vec4 col = texture(TEXTURE, UV);\n#     if (col.a < 0.1) {\n#         float ox = outline_width * TEXTURE_PIXEL_SIZE.x;\n#         float oy = outline_width * TEXTURE_PIXEL_SIZE.y;\n#         float a = texture(TEXTURE, UV + vec2(ox,0)).a\n#                 + texture(TEXTURE, UV - vec2(ox,0)).a\n#                 + texture(TEXTURE, UV + vec2(0,oy)).a\n#                 + texture(TEXTURE, UV - vec2(0,oy)).a;\n#         if (a > 0.0) col = outline_color;\n#     }\n#     COLOR = col;\n# }\n\n# In GDScript:\nfunc set_outline(enabled: bool) -> void:\n    var mat = $Sprite2D.material as ShaderMaterial\n    mat.set_shader_parameter(\"outline_width\", 2.0 if enabled else 0.0)"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Where does the fragment() function in a canvas_item shader run?",
+              "options": ["Once per node per frame.", "Once per vertex.", "Once per pixel being rendered.", "On the CPU."],
+              "answer": 2,
+              "explanation": "The fragment() function runs on the GPU once for every pixel of the rendered output. This is what allows per-pixel effects like outlines, dissolves, and distortion."
+            },
+            {
+              "q": "How do you pass a value from GDScript into a shader at runtime?",
+              "options": ["`shader.set_value(\"param\", value)`", "`material.set_shader_parameter(\"param\", value)`", "`set_uniform(\"param\", value)`", "You cannot pass values at runtime."],
+              "answer": 1,
+              "explanation": "set_shader_parameter() on a ShaderMaterial sends a value to a uniform variable declared in the shader. Animate it with Tween for smooth transitions."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-export-builds",
+          "title": "Exporting Your Game",
+          "type": "document",
+          "content": "When your game is ready to share, you export it to a standalone file that runs without the Godot editor.\n\nFirst install export templates: Editor > Manage Export Templates > Download. Templates are version-specific — download the ones matching your Godot version.\n\nThen configure an export preset: Project > Export > Add a preset for your target platform (Windows, macOS, Linux, HTML5, Android, iOS). Set the executable name, icon, and any platform-specific options.\n\nFor HTML5/Web export the game runs in a browser. This is the easiest way to let others play without installing anything — upload the exported folder to itch.io or GitHub Pages. Note that some features behave differently on Web: threading requires specific server headers, and file access uses a virtual filesystem.\n\nFor desktop exports, Godot produces a .exe (Windows), a .app (macOS), or a binary (Linux) plus a .pck file containing your game data. You can embed the .pck into the executable for a single-file distribution.\n\nres:// paths remain valid in exports but the underlying files are packed — you cannot browse to them. user:// is always writable and is where save files should go.\n\nTest your export early. Bugs that only appear in exported builds — missing resources, platform-specific input differences, file path case sensitivity on Linux — are much easier to catch before you have built the whole game.",
+          "questions": [
+            {
+              "q": "Why must you install export templates before exporting?",
+              "options": ["They contain the export presets.", "They are the pre-compiled runtime for each platform that Godot packages your game into.", "They configure the game's display settings.", "They are required only for mobile platforms."],
+              "answer": 1,
+              "explanation": "Export templates are the platform-specific Godot runtimes. Your game data is packed alongside them. Without the template, Godot has nothing to package your game into."
+            },
+            {
+              "q": "Where should save files be written in an exported game?",
+              "options": ["`res://saves/`", "`C:/saves/`", "`user://`", "The Desktop."],
+              "answer": 2,
+              "explanation": "res:// is read-only in exported games — it is packed into the game archive. user:// always points to a writable application data folder on the user's machine."
+            },
+            {
+              "q": "What is the easiest way to let someone play your Godot game without installing anything?",
+              "options": ["Send them the .godot project folder.", "Export for HTML5 and host it on itch.io or GitHub Pages.", "Export for Windows and send the .exe.", "Use Godot's built-in network sharing."],
+              "answer": 1,
+              "explanation": "HTML5 export produces a folder you upload to any web host. Players open a URL in their browser — no download, no install."
+            }
+          ]
+        },
+        {
+          "id": "l-gd-performance",
+          "title": "Performance Basics",
+          "type": "document",
+          "content": "Godot is fast enough for most 2D games without any optimization. But knowing a few basic principles saves you from common mistakes.\n\nDo not use get_node() or $ in _process or _physics_process. Cache node references in @onready variables at _ready() time. Resolving paths every frame is unnecessary and slow.\n\nAvoid creating new objects in _process. Instantiating scenes and creating Arrays or Dictionaries every frame allocates memory that the garbage collector then has to clean up. Create things once and reuse them.\n\nObject pooling: instead of queue_free()-ing a bullet and instantiating a new one for every shot, maintain a pool of pre-created bullets. Grab one from the pool, use it, return it to the pool. This eliminates allocation overhead for frequently spawned objects.\n\nUse call_deferred() when you need to change something but cannot do it mid-physics-process — such as removing a node or changing a scene. It defers the call to the end of the frame.\n\nProfile before optimizing. Godot's built-in Profiler (Debugger > Profiler) shows exactly which functions are taking the most time. Optimize what the profiler says is slow, not what you think is slow.",
+          "questions": [
+            {
+              "q": "Why should you cache node references in @onready instead of calling $NodeName every frame?",
+              "options": ["$ only works in _ready().", "Resolving node paths every frame is slower than storing a reference once.", "Cached references use less memory.", "$ cannot be used inside _process in Godot 4."],
+              "answer": 1,
+              "explanation": "Path resolution traverses the scene tree every time. @onready resolves once at startup and stores a direct reference. Inside a loop that runs 60 times per second, this matters."
+            },
+            {
+              "q": "What is object pooling?",
+              "options": ["A way to share textures between multiple sprites.", "Reusing pre-created objects instead of instantiating and freeing them repeatedly.", "A system for managing Autoloads.", "A method for streaming large levels."],
+              "answer": 1,
+              "explanation": "Pooling eliminates repeated instantiation overhead. Keep a set of dormant objects, activate one when needed, deactivate it when done — much faster than create/destroy cycles."
+            },
+            {
+              "q": "When should you use `call_deferred()` instead of calling a function directly?",
+              "options": ["Whenever you want a function to run faster.", "When you need to modify the scene tree from within _physics_process or a signal handler.", "Only for functions that take longer than one frame.", "call_deferred() is deprecated in Godot 4."],
+              "answer": 1,
+              "explanation": "Modifying the scene tree mid-physics (removing nodes, changing scenes) can crash Godot. call_deferred() queues the call for safe execution at the end of the frame."
             }
           ]
         }

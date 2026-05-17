@@ -45,7 +45,7 @@
     "id": "godot-core",
     "title": "Godot 4: Game Development",
     "category": "gamedev",
-    "description": "Nodes, scenes, GDScript, signals, physics, UI, and game architecture. Build real games from the ground up in Godot 4.",
+    "description": "Nodes, scenes, GDScript, signals, physics, UI, and game architecture. Build real games *Generated*",
     "file": "data/godot-core.json"
   }
 ]
