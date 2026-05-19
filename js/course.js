@@ -4,36 +4,39 @@ import { renderQuestion, initQuestionState, getQuestionStats } from "./renderers
 import { renderChallenge } from "./renderers/challenge.js";
 import { renderCodeFix } from "./renderers/codeFix.js";
 import { renderGodotScene } from "./renderers/godotScene.js";
+import { renderFillBlank } from "./renderers/fillBlank.js";
+import { renderSpotBug } from "./renderers/spotBug.js";
+import { renderProject } from "./renderers/project.js";
 
 let currentUser = null;
-let ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {} };
+let ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {} };
 let catalogData = [];
 let activeCD = null;
 let activeLessonData = null;
 
 const $ = id => document.getElementById(id);
-const viewExplorer  = $("view-explorer");
-const viewSyllabus  = $("view-syllabus");
-const viewLesson    = $("view-lesson");
-const viewSettings  = $("view-settings");
-const viewPractice  = $("view-practice");
-const catalogGrid   = $("catalog-grid");
-const enrolledList  = $("enrolled-list");
+const viewExplorer    = $("view-explorer");
+const viewSyllabus    = $("view-syllabus");
+const viewLesson      = $("view-lesson");
+const viewSettings    = $("view-settings");
+const viewPractice    = $("view-practice");
+const catalogGrid     = $("catalog-grid");
+const enrolledList    = $("enrolled-list");
 const practiceContent = $("practice-content");
-const navExplorer   = $("nav-explorer");
-const navSettings   = $("nav-settings");
-const navPractice   = $("nav-practice");
-const authGoogleBtn = $("auth-google-btn");
-const authMagicBtn  = $("auth-magic-btn");
-const authEmailInput = $("auth-email-input");
-const authStatus    = $("auth-status");
-const searchBar     = $("search-bar");
-const reqWipeBtn    = $("request-wipe-btn");
-const wipeAuthBlock = $("wipe-auth-block");
+const navExplorer     = $("nav-explorer");
+const navSettings     = $("nav-settings");
+const navPractice     = $("nav-practice");
+const authGoogleBtn   = $("auth-google-btn");
+const authMagicBtn    = $("auth-magic-btn");
+const authEmailInput  = $("auth-email-input");
+const authStatus      = $("auth-status");
+const searchBar       = $("search-bar");
+const reqWipeBtn      = $("request-wipe-btn");
+const wipeAuthBlock   = $("wipe-auth-block");
 const wipeConfirmInput = $("wipe-confirm-input");
-const execWipeBtn   = $("execute-wipe-btn");
+const execWipeBtn     = $("execute-wipe-btn");
 
-const BINARY_TYPES = ["challenge", "code_fix", "godot_scene"];
+const BINARY_TYPES   = ["challenge", "code_fix", "godot_scene", "spot_bug", "project"];
 const PRACTICE_TYPES = ["practice_standard", "practice_survival", "master_test"];
 
 const isBinaryLesson = l =>
@@ -80,12 +83,13 @@ async function loadUserData() {
     const snap = await window.getDoc(ref);
     if (snap.exists()) {
         ud = snap.data();
-        ud.enrolled      = ud.enrolled      || [];
-        ud.scores        = ud.scores        || {};
-        ud.analytics     = ud.analytics     || {};
-        ud.survivalScores = ud.survivalScores || {};
+        ud.enrolled        = ud.enrolled        || [];
+        ud.scores          = ud.scores          || {};
+        ud.analytics       = ud.analytics       || {};
+        ud.survivalScores  = ud.survivalScores  || {};
+        ud.projectProgress = ud.projectProgress || {};
     } else {
-        ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {} };
+        ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {} };
         await window.setDoc(ref, ud);
     }
     console.log("user data loaded", currentUser.uid);
@@ -110,6 +114,7 @@ async function loadCatalog() {
     if (catalogData.length) return;
     const res = await fetch("data/catalog.json");
     catalogData = await res.json();
+    console.log("catalog loaded", catalogData.length, "courses");
 }
 
 navExplorer.addEventListener("click", async e => {
@@ -145,7 +150,7 @@ wipeConfirmInput.addEventListener("input", e => {
 });
 
 execWipeBtn.addEventListener("click", async () => {
-    const blank = { enrolled: [], scores: {}, analytics: {}, survivalScores: {} };
+    const blank = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {} };
     await window.setDoc(window.doc(window.db, "users", currentUser.uid), blank);
     ud = blank;
     wipeConfirmInput.value = "";
@@ -163,6 +168,7 @@ async function getCourseProgress(courseId) {
     const data = await fetchCourseData(meta);
     let earned = 0, total = 0;
     data.sections.forEach(sec => sec.lessons.forEach(l => {
+        if (l.type === "project") return;
         const id = l.id || l.title.replace(/\s+/g, "-").toLowerCase();
         const max = isBinaryLesson(l) ? 1 : 4;
         total += max;
@@ -264,10 +270,30 @@ async function fetchCourseData(meta) {
     return res.json();
 }
 
+function findProjectLesson(courseData) {
+    for (const sec of courseData.sections) {
+        for (const l of sec.lessons) {
+            if (l.type === "project") return l;
+        }
+    }
+    return null;
+}
+
 async function openSyllabus(meta) {
     switchView("view-syllabus");
-    $("syllabus-title").innerText = meta.title;
     activeCD = await fetchCourseData(meta);
+
+    const titleEl = $("syllabus-title");
+    titleEl.innerText = meta.title;
+
+    const projectLesson = findProjectLesson(activeCD);
+    if (projectLesson) {
+        const projBtn = document.createElement("button");
+        projBtn.innerText = "Projects";
+        projBtn.style.cssText = "float:right;margin-top:-3px;font-size:12px;padding:6px 14px;";
+        projBtn.onclick = () => openProject(projectLesson, meta);
+        titleEl.appendChild(projBtn);
+    }
 
     const contentDiv = $("syllabus-content");
     contentDiv.innerHTML = "";
@@ -292,6 +318,8 @@ async function openSyllabus(meta) {
         block.appendChild(sHeader);
 
         section.lessons.forEach(lesson => {
+            if (lesson.type === "project") return;
+
             const id = lesson.id || lesson.title.replace(/\s+/g, "-").toLowerCase();
             lesson.id = id;
             lesson.questions?.forEach((q, i) => q.globalId = `${id}-q${i}`);
@@ -323,6 +351,37 @@ async function openSyllabus(meta) {
     }, 50);
 }
 
+function openProject(projectLesson, meta) {
+    switchView("view-lesson");
+    document.body.classList.add("lesson-active");
+
+    $("lesson-back-btn")?.remove();
+    const backBtn = Object.assign(document.createElement("button"), {
+        id: "lesson-back-btn",
+        innerText: "← Return"
+    });
+    backBtn.style.cssText = "position:fixed;top:24px;left:24px;z-index:999;background:var(--surface);color:var(--text-main);border:2px solid var(--border);padding:10px 16px;font-size:12px;letter-spacing:2px;box-shadow:4px 4px 0px var(--border);cursor:pointer;";
+    document.body.appendChild(backBtn);
+
+    backBtn.onclick = () => {
+        backBtn.remove();
+        document.body.classList.remove("lesson-active");
+        openSyllabus(meta);
+    };
+
+    renderProject(
+        projectLesson,
+        meta.id,
+        ud,
+        saveField,
+        () => {
+            backBtn.remove();
+            document.body.classList.remove("lesson-active");
+            openSyllabus(meta);
+        }
+    );
+}
+
 function startLesson(lesson) {
     activeLessonData = JSON.parse(JSON.stringify(lesson));
 
@@ -350,23 +409,78 @@ function startLesson(lesson) {
     };
 
     const analytics = activeCD ? (ud.analytics[activeCD.id] || {}) : {};
-    const onUpdate  = async a => {
+    const onUpdate = async a => {
         if (!activeCD) return;
         ud.analytics[activeCD.id] = a;
         await saveField("analytics", ud.analytics);
     };
-    const onFinish = finishLesson;
 
     const t = activeLessonData.type;
+
     if (t === "document") {
         const next = activeLessonData.questions?.length
-            ? () => renderQuestion(activeLessonData, analytics, onUpdate, onFinish)
-            : onFinish;
+            ? () => renderQuestion(activeLessonData, analytics, onUpdate, () => finishLesson())
+            : () => finishLesson();
         renderDocument(activeLessonData, next);
-    } else if (t === "challenge")    renderChallenge(activeLessonData, onFinish);
-    else if (t === "code_fix")       renderCodeFix(activeLessonData, onFinish);
-    else if (t === "godot_scene")    renderGodotScene(activeLessonData, onFinish);
-    else renderQuestion(activeLessonData, analytics, onUpdate, onFinish);
+    } else if (t === "challenge")  renderChallenge(activeLessonData, () => finishLesson());
+    else if (t === "code_fix")     renderCodeFix(activeLessonData, () => finishLesson());
+    else if (t === "godot_scene")  renderGodotScene(activeLessonData, () => finishLesson());
+    else if (t === "fill_blank")   renderFillBlank(activeLessonData, (c, tot) => finishFillBlank(c, tot));
+    else if (t === "spot_bug")     renderSpotBug(activeLessonData, (c) => finishSpotBug(c));
+    else renderQuestion(activeLessonData, analytics, onUpdate, () => finishLesson());
+}
+
+async function finishFillBlank(correctCount, total) {
+    $("lesson-back-btn")?.remove();
+    const score = correctCount === total ? 4
+        : correctCount >= total * 0.75 ? 3
+        : correctCount >= total * 0.5  ? 2
+        : correctCount > 0             ? 1 : 0;
+
+    viewLesson.innerHTML = `
+        <div class="lesson-workspace" style="text-align:center;">
+            <h2>Complete</h2>
+            <p style="line-height:1.5;">accuracy: ${correctCount} / ${total}</p>
+            <p style="color:var(--accent);font-size:24px;margin-top:20px;">rating: ${score} / 4</p>
+            <button id="return-btn" style="margin-top:40px;">Return</button>
+        </div>
+    `;
+
+    const cur = ud.scores[activeLessonData.id] || 0;
+    if (score > cur) {
+        ud.scores[activeLessonData.id] = score;
+        await saveField("scores", ud.scores);
+    }
+
+    $("return-btn").onclick = () => {
+        const meta = catalogData.find(c => c.id === activeCD?.id);
+        meta ? openSyllabus(meta) : navExplorer.click();
+    };
+}
+
+async function finishSpotBug(correct) {
+    $("lesson-back-btn")?.remove();
+    const score = correct ? 1 : 0;
+
+    viewLesson.innerHTML = `
+        <div class="lesson-workspace" style="text-align:center;">
+            <h2>Complete</h2>
+            <p style="line-height:1.5;">${correct ? "Bug found." : "Missed it."}</p>
+            <p style="color:var(--accent);font-size:24px;margin-top:20px;">rating: ${score} / 1</p>
+            <button id="return-btn" style="margin-top:40px;">Return</button>
+        </div>
+    `;
+
+    const cur = ud.scores[activeLessonData.id] || 0;
+    if (score > cur) {
+        ud.scores[activeLessonData.id] = score;
+        await saveField("scores", ud.scores);
+    }
+
+    $("return-btn").onclick = () => {
+        const meta = catalogData.find(c => c.id === activeCD?.id);
+        meta ? openSyllabus(meta) : navExplorer.click();
+    };
 }
 
 async function finishLesson() {
@@ -490,6 +604,7 @@ async function openPracticeHub() {
 function collectQuestions(data) {
     const out = [];
     data.sections.forEach(sec => sec.lessons.forEach(l => {
+        if (l.type === "project") return;
         const id = l.id || l.title.replace(/\s+/g, "-").toLowerCase();
         l.questions?.forEach((q, i) => out.push({ ...q, globalId: `${id}-q${i}`, parentLessonId: id }));
     }));
