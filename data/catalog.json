@@ -54,5 +54,12 @@
     "category": "other",
     "description": "Supply and demand, market structures, fiscal policy *Generated*",
     "file": "data/economics-core.json"
+  },
+  {
+    "id": "biology-core",
+    "title": "Biology",
+    "category": "other",
+    "description": "Cell structure, genetics, evolution, and ecology. *Generated*",
+    "file": "data/biology-core.json"
   }
 ]
