@@ -1,20 +1,44 @@
-NOVARA — INFO
-===========================
+NOVARA
+======
 
-TYPES:
-  document
-  challenge
-  code_fix
-  godot_scene
+LESSON TYPES
+------------
 
-PRACTICE MODES (compiled from enrolled courses):
+document
+challenge
+code_fix
+fill_blank
+spot_bug
+godot_scene
+project
 
-  practice_standard
-  practice_survival
-  master_test
+PRACTICE MODES
+--------------
 
-ADDING A NEW COURSE:
-  1. Create data/your-course.json following the schema above
-  2. Add an entry to data/catalog.json with id, title, category, description, file
-  3. Add the category to the filter buttons in index.html if it is new
-  4. Done — no changes to course.js required
+practice_standard
+practice_survival
+master_test
+
+
+SCORE SYSTEM
+------------
+
+document (no questions)    1 point max
+document (with questions)  4 points max
+challenge                  1 point max
+code_fix                   1 point max
+fill_blank                 4 points max
+spot_bug                   1 point max
+godot_scene                1 point max
+project                    not scored
+
+progress %  =  sum(earned) / sum(max) * 100
+
+
+ADDING A NEW COURSE
+-------------------
+
+1. Create data/your-course.json following the schema above.
+2. Add an entry to data/catalog.json:
+   { "id", "title", "category", "description", "file" }
+3. Add the category to the filter buttons in index.html if new.
