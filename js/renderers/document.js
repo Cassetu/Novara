@@ -2,7 +2,7 @@ import { parseCode } from "../utils/parse.js";
 import { playCorrect } from "../utils/sound.js";
 
 function renderDocument(lessonData, onFinish) {
-    const lessonView = document.getElementById("view-lesson");
+    const view = document.getElementById("view-lesson");
     const formatted = parseCode(lessonData.content).replace(/\n/g, "<br>");
 
     let examplesHtml = "";
@@ -15,10 +15,9 @@ function renderDocument(lessonData, onFinish) {
         `).join("");
     }
 
-    const hasQuestions = lessonData.questions?.length > 0;
-    const btnText = hasQuestions ? "continue to quiz" : "mark as read";
+    const hasQ = lessonData.questions?.length > 0;
 
-    lessonView.innerHTML = `
+    view.innerHTML = `
         <div class="lesson-workspace" style="max-width:800px;">
             <h2>${lessonData.title}</h2>
             <div id="module-content">
@@ -27,7 +26,7 @@ function renderDocument(lessonData, onFinish) {
             </div>
             <div class="lesson-footer">
                 <div class="progress-dots"><div class="p-dot active"></div></div>
-                <button id="lesson-read-btn">${btnText}</button>
+                <button id="lesson-read-btn">${hasQ ? "continue to quiz" : "mark as read"}</button>
             </div>
         </div>
     `;
