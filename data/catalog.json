@@ -61,5 +61,12 @@
     "category": "other",
     "description": "Cell structure, genetics, evolution, and ecology. *Generated*",
     "file": "data/biology-core.json"
+  },
+  {
+    "id": "scroll-animation",
+    "title": "Scroll Animation",
+    "category": "programming",
+    "description": "Animate elements based on scroll position using JavaScript and CSS. *Generated*",
+    "file": "data/scroll-animation.json"
   }
 ]

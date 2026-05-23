@@ -1,0 +1,629 @@
+{
+  "id": "scroll-animation",
+  "title": "Scroll Animation",
+  "category": "programming",
+  "description": "Build animated webpages that come alive as you scroll. Pure HTML, CSS, and JavaScript, no frameworks needed.",
+  "sections": [
+    {
+      "title": "Unit 1 — CSS Animation Foundations",
+      "lessons": [
+        {
+          "id": "transitions-basics",
+          "title": "Transitions and Transforms",
+          "type": "document",
+          "content": "Before we can make things animate on scroll, we need to understand how CSS actually moves things around. There are two main tools: `transition` and `transform`.\n\n`transform` changes how an element looks and where it sits without affecting the document flow. It does not push other elements around. The key functions are `translateX()` and `translateY()` for moving, `scale()` for sizing, and `rotate()` for spinning.\n\n`transition` tells the browser to animate between two states smoothly instead of snapping. You tell it which property to animate, how long it takes, and what easing curve to use.\n\nThe most important thing to understand is: always animate `transform` and `opacity`, never `width`, `height`, `top`, or `left`. The browser can animate transform and opacity on the GPU at 60fps. Animating layout properties like width or margin forces the browser to recalculate the entire page layout on every frame, which causes jank.\n\nEasing controls how the animation accelerates. `ease-in` starts slow and speeds up. `ease-out` starts fast and decelerates into place. `ease-in-out` does both. For things animating onto the screen, `ease-out` almost always feels the most natural because it mimics how physical objects slow down when they stop.",
+          "examples": [
+            {
+              "label": "A box that slides and fades in when hovered",
+              "code": ".box {\n  opacity: 0.3;\n  transform: translateY(20px);\n  transition: opacity 0.4s ease-out, transform 0.4s ease-out;\n}\n\n.box:hover {\n  opacity: 1;\n  transform: translateY(0);\n}"
+            },
+            {
+              "label": "What NOT to do (causes layout thrashing)",
+              "code": "/* BAD - animating layout properties */\n.box {\n  top: 20px;\n  transition: top 0.4s;\n}\n\n/* GOOD - same visual result, GPU accelerated */\n.box {\n  transform: translateY(20px);\n  transition: transform 0.4s;\n}"
+            }
+          ],
+          "questions": [
+            {
+              "q": "You want a card to slide up 30 pixels and become fully visible. Which CSS is the correct approach?",
+              "options": [
+                "transition: top 0.5s; top: -30px;",
+                "transition: transform 0.5s ease-out; transform: translateY(-30px);",
+                "transition: margin-top 0.5s; margin-top: -30px;",
+                "transition: position 0.5s; position: relative;"
+              ],
+              "answer": 1,
+              "explanation": "translateY is the correct tool. It moves the element visually without touching layout, so the browser can animate it on the GPU. Animating top or margin-top triggers layout recalculation on every frame."
+            },
+            {
+              "q": "A button appears on screen by flying in from the left. Which easing makes it feel most natural?",
+              "options": [
+                "ease-in, so it accelerates as it arrives",
+                "linear, so the speed is consistent",
+                "ease-out, so it decelerates as it lands",
+                "ease-in-out, so it speeds up and then slows equally"
+              ],
+              "answer": 2,
+              "explanation": "ease-out mimics physical objects decelerating as they come to rest. For elements entering the screen, this feels grounded and satisfying. ease-in would make it arrive too fast and feel abrupt."
+            },
+            {
+              "q": "Which property lets you change an element's visual size without pushing surrounding elements out of the way?",
+              "options": [
+                "width and height",
+                "scale() inside transform",
+                "padding",
+                "font-size"
+              ],
+              "answer": 1,
+              "explanation": "scale() is a transform function. Transforms do not affect document flow, so other elements stay put. Changing width or height does affect layout and will push or pull neighboring elements."
+            }
+          ]
+        },
+        {
+          "id": "keyframe-animations",
+          "title": "Keyframe Animations",
+          "type": "document",
+          "content": "`transition` works great for two-state changes (normal vs hovered). But sometimes you need more control, like a sequence of steps, a looping animation, or something that plays automatically without user interaction. That is what `@keyframes` is for.\n\nYou define a named animation with `@keyframes`, then attach it to an element with the `animation` property. The element runs through your defined steps from start to finish.\n\nThe `animation` shorthand takes: name, duration, easing, delay, iteration count, and direction. Setting `iteration-count: infinite` makes it loop. Setting `fill-mode: forwards` makes the element stay at the final keyframe state after the animation ends, instead of snapping back to its original style.\n\n`animation-delay` is particularly useful for scroll animations. If you add a class to several elements at once, staggering their delays makes them appear one after another instead of all at the same time, which looks much more polished.\n\nOne gotcha: by default, before an animation plays, the element shows its pre-animation styles. This can cause a flash where you see the element at 100% opacity before the fade-in starts. You fix this by setting the initial styles on the element itself to match the start keyframe.",
+          "examples": [
+            {
+              "label": "A fade-up animation with staggered delay on multiple cards",
+              "code": "@keyframes fadeUp {\n  from {\n    opacity: 0;\n    transform: translateY(40px);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0);\n  }\n}\n\n.card {\n  opacity: 0; /* match the 'from' state to prevent flash */\n}\n\n.card.visible {\n  animation: fadeUp 0.6s ease-out forwards;\n}\n\n.card:nth-child(2) { animation-delay: 0.1s; }\n.card:nth-child(3) { animation-delay: 0.2s; }"
+            }
+          ],
+          "questions": [
+            {
+              "q": "You want a card to stay in its final animated position after the animation finishes. Which value do you set?",
+              "options": [
+                "animation-iteration-count: infinite",
+                "animation-fill-mode: forwards",
+                "animation-direction: reverse",
+                "animation-play-state: paused"
+              ],
+              "answer": 1,
+              "explanation": "fill-mode: forwards tells the browser to keep the element at the final keyframe state after the animation ends. Without it, the element snaps back to its original styles."
+            },
+            {
+              "q": "Three cards animate in at the same time and it looks cluttered. What is the simplest fix?",
+              "options": [
+                "Give each card a different animation-duration",
+                "Use animation-delay to stagger when each card starts",
+                "Change the easing on each card to a different curve",
+                "Wrap each card in its own @keyframes block"
+              ],
+              "answer": 1,
+              "explanation": "Staggered animation-delay (e.g., 0s, 0.1s, 0.2s) makes elements appear sequentially, which creates a clean cascade effect. Same animation, just offset start times."
+            },
+            {
+              "q": "Before an animation plays, a card flashes at full opacity for a split second. What causes this?",
+              "options": [
+                "The animation-delay is set too long",
+                "The element's default styles don't match the 'from' keyframe, so it snaps to the start state when the animation begins",
+                "forwards fill-mode is overriding the keyframe",
+                "Keyframes can only run once per page load"
+              ],
+              "answer": 1,
+              "explanation": "The browser shows the element's normal CSS styles during the delay period, then jumps to the 'from' keyframe. Setting the initial styles on the element (e.g., opacity: 0) prevents the flash."
+            }
+          ]
+        },
+        {
+          "id": "fill-css-animation",
+          "title": "Animation Syntax Practice",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete this keyframe animation definition:",
+              "code": "@___ slideIn {\n  from { transform: ___(-60px); opacity: 0; }\n  to   { transform: translateX(0); opacity: ___; }\n}",
+              "blanks": ["keyframes", "translateX", "1"],
+              "explanation": "@keyframes defines the animation. translateX(-60px) starts the element 60px to the left. opacity 1 is fully visible at the end."
+            },
+            {
+              "prompt": "Attach the animation to an element:",
+              "code": ".card.visible {\n  animation: slideIn 0.5s ___ ___;\n}",
+              "blanks": ["ease-out", "forwards"],
+              "explanation": "ease-out feels natural for elements entering the screen. forwards keeps the element at its final state after the animation ends."
+            },
+            {
+              "prompt": "Add a stagger to three list items:",
+              "code": "li:nth-child(1) { animation-delay: 0s; }\nli:nth-child(2) { animation-delay: ___s; }\nli:nth-child(3) { animation-delay: ___s; }",
+              "blanks": ["0.1", "0.2"],
+              "explanation": "Incrementing by 0.1 seconds per item creates a clean cascade. Small delays (0.05s to 0.15s) usually work best, larger gaps can make the page feel slow."
+            }
+          ]
+        },
+        {
+          "id": "fix-transition-bug",
+          "title": "Fix: Broken Card Animation",
+          "type": "code_fix",
+          "prompt": "This card is supposed to fade up when hovered, but it snaps instantly and causes layout jank. Find and fix the problems.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<head>\n<style>\n  body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #f5f5f5; }\n  .card {\n    width: 200px;\n    padding: 30px;\n    background: white;\n    border-radius: 8px;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n    top: 0px;\n  }\n  .card:hover {\n    top: -10px;\n    opacity: 0.5;\n  }\n</style>\n</head>\n<body>\n  <div class=\"card\">Hover me</div>\n</body>\n</html>",
+          "targetFix": "translateY",
+          "solution": "<!DOCTYPE html>\n<html>\n<head>\n<style>\n  body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #f5f5f5; }\n  .card {\n    width: 200px;\n    padding: 30px;\n    background: white;\n    border-radius: 8px;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n    transform: translateY(0);\n    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;\n  }\n  .card:hover {\n    transform: translateY(-10px);\n    box-shadow: 0 8px 24px rgba(0,0,0,0.15);\n  }\n</style>\n</head>\n<body>\n  <div class=\"card\">Hover me</div>\n</body>\n</html>"
+        }
+      ]
+    },
+    {
+      "title": "Unit 2 — Scroll Detection",
+      "lessons": [
+        {
+          "id": "intersection-observer",
+          "title": "The Intersection Observer API",
+          "type": "document",
+          "content": "The old way to detect scroll position was to listen to the `scroll` event and check `element.getBoundingClientRect()` on every single scroll tick. That fires dozens of times per second and reads layout information from the DOM, which forces the browser to do expensive recalculations. On a page with many elements, this tanks performance.\n\n`IntersectionObserver` is the modern replacement. Instead of you constantly asking the browser \"is this element visible yet?\", you register an observer and the browser tells you when something changes. It is asynchronous and does not block the main thread.\n\nYou create an observer by passing it a callback function. The callback receives a list of `entries`, one per observed element. Each entry has an `isIntersecting` property that is `true` when the element has entered the viewport.\n\nThe `threshold` option controls how much of the element needs to be visible before the callback fires. `0` fires the instant any pixel is visible. `0.5` fires when 50% is visible. `1.0` fires only when the entire element is in view.\n\nThe `rootMargin` option shifts the effective boundary. `rootMargin: '0px 0px -100px 0px'` makes the bottom of the viewport act as if it is 100px higher, so elements only trigger when they are a bit above the fold rather than at the very bottom edge. This is very useful for making animations feel snappier.\n\nOnce an element has animated in, you usually want to `unobserve` it so the observer is not doing unnecessary work.",
+          "examples": [
+            {
+              "label": "Basic Intersection Observer setup",
+              "code": "const observer = new IntersectionObserver((entries) => {\n  entries.forEach(entry => {\n    if (entry.isIntersecting) {\n      entry.target.classList.add('visible');\n      observer.unobserve(entry.target); // stop watching once done\n    }\n  });\n}, {\n  threshold: 0.2,        // fire when 20% is visible\n  rootMargin: '0px 0px -50px 0px'  // trigger 50px above bottom edge\n});\n\n// Observe every element with class 'animate-on-scroll'\ndocument.querySelectorAll('.animate-on-scroll').forEach(el => {\n  observer.observe(el);\n});"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Why is IntersectionObserver preferred over listening to the scroll event for triggering animations?",
+              "options": [
+                "It uses more memory, which makes animations smoother",
+                "It is asynchronous and does not force layout recalculations on every scroll tick",
+                "The scroll event does not work on mobile browsers",
+                "IntersectionObserver only works with CSS animations, not JavaScript"
+              ],
+              "answer": 1,
+              "explanation": "scroll events fire many times per second. Calling getBoundingClientRect inside them forces synchronous layout, blocking the main thread. IntersectionObserver runs asynchronously and reports changes efficiently without blocking rendering."
+            },
+            {
+              "q": "You set threshold: 0.5. When does the callback fire?",
+              "options": [
+                "When the element is 50px from the top of the page",
+                "When 50% of the element is visible within the viewport",
+                "After a 0.5 second delay once the element appears",
+                "When the element is halfway through its animation"
+              ],
+              "answer": 1,
+              "explanation": "threshold refers to the fraction of the observed element that must be visible. 0.5 means 50% of the element's area must be inside the viewport for the callback to fire."
+            },
+            {
+              "q": "You call observer.unobserve(entry.target) after adding the 'visible' class. Why?",
+              "options": [
+                "To reset the animation so it can play again on the next scroll",
+                "Because unobserve is required to make classList.add work",
+                "To stop watching the element once it has animated in, reducing ongoing overhead",
+                "Because IntersectionObserver can only watch one element at a time"
+              ],
+              "answer": 2,
+              "explanation": "Once an element has appeared and you have no more use for scroll events on it, unobserving it frees up resources. The observer no longer needs to track it."
+            }
+          ]
+        },
+        {
+          "id": "challenge-observer",
+          "title": "Write Your First Observer",
+          "type": "challenge",
+          "prompt": "Write the JavaScript to make all elements with the class 'reveal' animate in when they enter the viewport. Requirements:\n- Create an IntersectionObserver\n- Add the class 'visible' when an element is at least 15% visible\n- Use rootMargin to trigger 60px before the bottom of the viewport\n- Stop observing each element after it animates in\n- Observe all .reveal elements on the page",
+          "validation": [
+            {
+              "rule": "new IntersectionObserver",
+              "message": "Must create a new IntersectionObserver."
+            },
+            {
+              "rule": "isIntersecting",
+              "message": "Must check entry.isIntersecting."
+            },
+            {
+              "rule": "classList\\.add\\(['\"]visible['\"]\\)",
+              "message": "Must add the 'visible' class."
+            },
+            {
+              "rule": "unobserve",
+              "message": "Must call unobserve after the element animates in."
+            },
+            {
+              "rule": "querySelectorAll\\(['\"].reveal['\"]\\)",
+              "message": "Must select all .reveal elements with querySelectorAll."
+            },
+            {
+              "rule": "threshold",
+              "message": "Must set a threshold option."
+            },
+            {
+              "rule": "rootMargin",
+              "message": "Must set rootMargin."
+            }
+          ],
+          "solution": "const observer = new IntersectionObserver((entries) => {\n  entries.forEach(entry => {\n    if (entry.isIntersecting) {\n      entry.target.classList.add('visible');\n      observer.unobserve(entry.target);\n    }\n  });\n}, {\n  threshold: 0.15,\n  rootMargin: '0px 0px -60px 0px'\n});\n\ndocument.querySelectorAll('.reveal').forEach(el => {\n  observer.observe(el);\n});"
+        },
+        {
+          "id": "spot-observer",
+          "title": "Spot the Bug: Observer Setup",
+          "type": "spot_bug",
+          "prompt": "This observer code has one bug that causes it to silently do nothing. Find the incorrect line.",
+          "code": "const observer = new IntersectionObserver((entries) => {\n  entries.forEach(entry => {\n    if (entry.isIntersecting) {\n      entry.target.classList.add('visible');\n      observer.unobserve(entry.target);\n    }\n  });\n}, { threshold: 0.2 });\n\ndocument.querySelector('.reveal').forEach(el => {\n  observer.observe(el);\n});",
+          "bugLine": 10,
+          "explanation": "querySelector returns a single element or null, not a NodeList. Calling .forEach on it throws a TypeError and nothing gets observed. The fix is querySelectorAll('.reveal'), which returns a NodeList you can iterate."
+        },
+        {
+          "id": "scroll-progress",
+          "title": "Scroll Progress and scrollY",
+          "type": "document",
+          "content": "IntersectionObserver handles appear-when-visible animations well, but some effects need to track the exact scroll position continuously: parallax, progress bars, sticky counters, and elements that move relative to how far you have scrolled.\n\nFor these, you use `window.scrollY` (how many pixels from the top the page is scrolled) and listen to the `scroll` event. But there is a performance catch.\n\nThe scroll event fires extremely frequently during scrolling. If you do heavy DOM work inside it, the page will jank. The fix is `requestAnimationFrame`. Instead of doing DOM updates directly inside the scroll handler, you set a flag and schedule the actual work with requestAnimationFrame, which runs at most once per screen refresh (60fps). This keeps scroll handling on the main thread without overloading it.\n\nA `scroll progress percentage` is calculated as: `scrollY / (document.body.scrollHeight - window.innerHeight) * 100`. When scrollY is 0 you are at the top. When scrollY equals the maximum scrollable distance you are at the bottom.\n\nFor parallax, you multiply scrollY by a small decimal (the parallax factor) and apply it as a translateY offset to a background element. An element with a factor of 0.3 moves 30px for every 100px you scroll, making it appear to be further away than the content in front of it.",
+          "examples": [
+            {
+              "label": "Scroll progress bar and parallax background",
+              "code": "let ticking = false;\n\nwindow.addEventListener('scroll', () => {\n  if (!ticking) {\n    requestAnimationFrame(() => {\n      const progress = window.scrollY / \n        (document.body.scrollHeight - window.innerHeight) * 100;\n      progressBar.style.width = progress + '%';\n\n      // parallax: bg moves at 30% of scroll speed\n      const offset = window.scrollY * 0.3;\n      heroBg.style.transform = `translateY(${offset}px)`;\n\n      ticking = false;\n    });\n    ticking = true;\n  }\n});"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What is the purpose of the 'ticking' flag in the scroll handler?",
+              "options": [
+                "It counts how many times the scroll event has fired",
+                "It prevents multiple requestAnimationFrame calls from stacking up before the previous frame renders",
+                "It pauses the scroll event listener after 60 frames",
+                "It tracks whether the user has reached the bottom of the page"
+              ],
+              "answer": 1,
+              "explanation": "Without the flag, scroll fires so rapidly that requestAnimationFrame would be called dozens of times before one frame renders. The ticking flag ensures at most one rAF is scheduled per frame, preventing wasted work."
+            },
+            {
+              "q": "A parallax background has a factor of 0.5. The user scrolls 200px down. How far does the background move?",
+              "options": [
+                "200px",
+                "50px",
+                "100px",
+                "400px"
+              ],
+              "answer": 2,
+              "explanation": "scrollY * factor = 200 * 0.5 = 100px. A lower factor makes the element appear further away (moves less). A factor above 1 would make it appear closer (moves more than the content)."
+            },
+            {
+              "q": "A page is 3000px tall and the viewport is 800px. What is the maximum value of window.scrollY?",
+              "options": [
+                "3000",
+                "800",
+                "2200",
+                "3800"
+              ],
+              "answer": 2,
+              "explanation": "The maximum scroll is the total page height minus the viewport height: 3000 - 800 = 2200px. At that point the bottom of the viewport aligns with the bottom of the page."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Unit 3 — Animating CSS Shapes",
+      "lessons": [
+        {
+          "id": "css-shapes",
+          "title": "Building Shapes with CSS",
+          "type": "document",
+          "content": "The visual vocabulary of scroll animation pages is often built from pure CSS shapes, not images. This keeps the page fast, infinitely scalable, and easy to animate.\n\nA `circle` is just a div with equal width and height, and `border-radius: 50%`. A `pill` shape uses border-radius: 999px on a wider element. A `square rotated 45 degrees` becomes a diamond via `transform: rotate(45deg)`.\n\n`clip-path` is the most powerful shape tool. It masks an element to any polygon, circle, or ellipse by specifying coordinates as percentages. `clip-path: polygon(50% 0%, 0% 100%, 100% 100%)` creates a triangle. `clip-path: circle(50%)` does the same as border-radius: 50% but can be animated to morph between shapes.\n\nYou can transition between two clip-path values if they have the same number of points. This lets you morph a diamond into a circle, or a triangle into a rectangle, smoothly.\n\n`border` tricks create more shapes: a div with zero width and height and large transparent borders except one colored side becomes an arrow or triangle without any background at all.\n\nWhen shapes animate in on scroll, common effects are: scale from 0 to 1 (pops in), rotate from a tilted angle to 0 (settles), clip-path expanding from a small circle outward (reveals the element dramatically).",
+          "examples": [
+            {
+              "label": "Common CSS shapes and a morphing clip-path",
+              "code": "/* Circle */\n.circle {\n  width: 100px; height: 100px;\n  border-radius: 50%;\n  background: coral;\n}\n\n/* Triangle using clip-path */\n.triangle {\n  width: 100px; height: 100px;\n  background: steelblue;\n  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);\n}\n\n/* Morph triangle to circle on hover */\n.morph {\n  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);\n  transition: clip-path 0.5s ease-in-out;\n}\n.morph:hover {\n  clip-path: circle(50% at 50% 50%);\n}"
+            }
+          ],
+          "questions": [
+            {
+              "q": "You want to animate a shape's clip-path from a triangle to a circle. What is required for this to work?",
+              "options": [
+                "The element must have a fixed width and height in pixels",
+                "Both clip-path values must use the same type (polygon or circle) and same number of points",
+                "You must use JavaScript to interpolate the clip-path values manually",
+                "clip-path transitions are not supported in modern browsers"
+              ],
+              "answer": 1,
+              "explanation": "The browser interpolates between clip-path values by moving each point. Both values need the same number of points for the browser to know which points correspond. Mismatched counts cause a snap instead of a smooth morph."
+            },
+            {
+              "q": "Which CSS creates a circle shape?",
+              "options": [
+                "border: 50px solid; border-radius: round;",
+                "width: 100px; height: 100px; border-radius: 50%;",
+                "width: 100px; height: 100px; shape: circle;",
+                "clip-path: square(50%);"
+              ],
+              "answer": 1,
+              "explanation": "Equal width and height gives a square aspect ratio. border-radius: 50% rounds all four corners by half the element's size, turning it into a circle."
+            },
+            {
+              "q": "A decorative circle on your page should spin continuously. Which approach is correct?",
+              "options": [
+                "transition: rotate 2s linear infinite;",
+                "@keyframes spin { to { transform: rotate(360deg); } } then animation: spin 2s linear infinite;",
+                "transform: rotate(360deg); transition: transform 2s;",
+                "animation-name: spin; (without a @keyframes block)"
+              ],
+              "answer": 1,
+              "explanation": "Continuous looping requires @keyframes with animation-iteration-count: infinite (or the shorthand 'infinite'). A transition only fires once when a state changes, and rotate is not a standalone CSS property."
+            }
+          ]
+        },
+        {
+          "id": "fill-shapes",
+          "title": "Shape and Animation Syntax",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete the clip-path triangle:",
+              "code": ".triangle {\n  clip-path: ___(\n    50% 0%,   /* top center */\n    0% 100%,  /* bottom left */\n    100% 100% /* bottom right */\n  );\n}",
+              "blanks": ["polygon"],
+              "explanation": "polygon() defines a shape using a list of x y coordinate pairs as percentages. Three pairs create a triangle."
+            },
+            {
+              "prompt": "Write the CSS to scale a shape in from nothing:",
+              "code": ".shape {\n  transform: ___(0);\n  transition: transform 0.5s ___;\n}\n.shape.visible {\n  transform: ___(1);\n}",
+              "blanks": ["scale", "ease-out", "scale"],
+              "explanation": "scale(0) starts the element invisible (zero size). When the 'visible' class is added (by JavaScript), scale(1) takes it to full size. ease-out makes the pop-in feel natural."
+            },
+            {
+              "prompt": "Complete the clip-path reveal animation:",
+              "code": "@keyframes revealCircle {\n  from { clip-path: circle(___% at 50% 50%); }\n  to   { clip-path: circle(___% at 50% 50%); }\n}",
+              "blanks": ["0", "75"],
+              "explanation": "Starting at 0% creates a dot. Animating to 75% (or higher depending on element shape) expands the visible area outward from the center, creating a dramatic reveal effect."
+            }
+          ]
+        },
+        {
+          "id": "fix-shape-animation",
+          "title": "Fix: Shape Won't Animate",
+          "type": "code_fix",
+          "prompt": "This page has three colored shapes that should scale in when the page loads, but they all snap to their final state instantly. Find and fix the bug.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<head>\n<style>\n  body { display: flex; gap: 30px; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #111; }\n  .shape {\n    width: 80px;\n    height: 80px;\n    border-radius: 50%;\n  }\n  .shape.visible {\n    transform: scale(1);\n    animation: popIn 0.5s ease-out forwards;\n  }\n  @keyframes popIn {\n    from { transform: scale(0); opacity: 0; }\n    to   { transform: scale(1); opacity: 1; }\n  }\n  .a { background: coral; }\n  .b { background: steelblue; animation-delay: 0.15s; }\n  .c { background: mediumseagreen; animation-delay: 0.3s; }\n</style>\n</head>\n<body>\n  <div class=\"shape a visible\"></div>\n  <div class=\"shape b visible\"></div>\n  <div class=\"shape c visible\"></div>\n</body>\n</html>",
+          "targetFix": "opacity: 0",
+          "solution": "<!DOCTYPE html>\n<html>\n<head>\n<style>\n  body { display: flex; gap: 30px; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #111; }\n  .shape {\n    width: 80px;\n    height: 80px;\n    border-radius: 50%;\n    opacity: 0;\n    transform: scale(0);\n  }\n  .shape.visible {\n    animation: popIn 0.5s ease-out forwards;\n  }\n  @keyframes popIn {\n    from { transform: scale(0); opacity: 0; }\n    to   { transform: scale(1); opacity: 1; }\n  }\n  .a { background: coral; }\n  .b { background: steelblue; animation-delay: 0.15s; }\n  .c { background: mediumseagreen; animation-delay: 0.3s; }\n</style>\n</head>\n<body>\n  <div class=\"shape a visible\"></div>\n  <div class=\"shape b visible\"></div>\n  <div class=\"shape c visible\"></div>\n</body>\n</html>"
+        }
+      ]
+    },
+    {
+      "title": "Unit 4 — Putting It Together",
+      "lessons": [
+        {
+          "id": "combining-io-css",
+          "title": "Connecting IntersectionObserver to CSS",
+          "type": "document",
+          "content": "The full pattern for scroll animation is simple once you see it laid out: CSS defines two states (hidden and visible), and JavaScript adds the class that switches between them when the element enters the viewport.\n\nYour default CSS sets the element to its hidden state. A second rule with a `.visible` class (or whatever you name it) defines the final state. The transition or animation on the element handles the movement between them. JavaScript's only job is to add that class at the right moment.\n\nThis separation of concerns is what makes the pattern clean. CSS handles how things look and how they move. JavaScript only decides when.\n\nOne thing to think about: not every element needs to animate. If there is too much happening, nothing stands out. A good rule is to animate elements that benefit from having attention drawn to them: headings, feature cards, images, call-to-action sections. Decorative background shapes can animate more subtly or not at all.\n\nAlso consider users who have requested reduced motion. `@media (prefers-reduced-motion: reduce)` lets you disable or simplify animations for users with vestibular disorders or motion sensitivity. It is one line of CSS and good practice to always include.",
+          "examples": [
+            {
+              "label": "Complete scroll animation pattern",
+              "code": "/* CSS: hidden by default, visible state defined */\n.card {\n  opacity: 0;\n  transform: translateY(40px);\n  transition: opacity 0.6s ease-out, transform 0.6s ease-out;\n}\n\n.card.visible {\n  opacity: 1;\n  transform: translateY(0);\n}\n\n/* Respect user preference */\n@media (prefers-reduced-motion: reduce) {\n  .card { transition: none; }\n}\n\n/* JS: add visible class on scroll */\nconst observer = new IntersectionObserver((entries) => {\n  entries.forEach(entry => {\n    if (entry.isIntersecting) {\n      entry.target.classList.add('visible');\n      observer.unobserve(entry.target);\n    }\n  });\n}, { threshold: 0.15 });\n\ndocument.querySelectorAll('.card').forEach(el => observer.observe(el));"
+            }
+          ],
+          "questions": [
+            {
+              "q": "In the scroll animation pattern, what is the JavaScript's only responsibility?",
+              "options": [
+                "Calculating the animation duration and easing",
+                "Adding the class that switches the element from its hidden to visible state",
+                "Setting the initial transform and opacity values",
+                "Requesting animation frames for smooth transitions"
+              ],
+              "answer": 1,
+              "explanation": "The CSS already knows what hidden and visible look like, and how to transition between them. JavaScript just triggers the switch by adding a class at the right time. Clear separation of concerns."
+            },
+            {
+              "q": "Why should you include a prefers-reduced-motion media query?",
+              "options": [
+                "It speeds up animations on low-end devices",
+                "Some users experience dizziness or discomfort from motion, and browsers expose their preference through this media query",
+                "It is required for animations to work in Safari",
+                "It prevents animations from playing before the page fully loads"
+              ],
+              "answer": 1,
+              "explanation": "Some users with vestibular disorders, epilepsy, or motion sensitivity set their OS to reduce motion. Respecting this preference is an accessibility concern. The fix is usually just a couple of lines of CSS."
+            },
+            {
+              "q": "You have 20 different elements on a page all animating on scroll. The page feels overwhelming. What is the best design fix?",
+              "options": [
+                "Increase animation duration so each animation takes longer",
+                "Remove animations from decorative and secondary elements, keeping them only for key content that benefits from emphasis",
+                "Add more animations to balance the visual weight",
+                "Use a single @keyframes block for all elements to make it consistent"
+              ],
+              "answer": 1,
+              "explanation": "Animation draws attention. When everything moves, nothing stands out and the experience feels chaotic. Animate strategically: headings, feature cards, CTAs. Let background and decorative elements be static."
+            }
+          ]
+        },
+        {
+          "id": "spot-scroll-bug",
+          "title": "Spot the Bug: Observer Pattern",
+          "type": "spot_bug",
+          "prompt": "A developer set up scroll animations but elements are not animating. The CSS looks fine. One line in the JavaScript is wrong. Find it.",
+          "code": "const observer = new IntersectionObserver((entries) => {\n  entries.forEach(entry => {\n    if (entry.isIntersecting) {\n      entry.target.classList.add('visible');\n      observer.unobserve(entry.target);\n    }\n  });\n}, { threshold: 0.2 });\n\nconst cards = document.querySelectorAll('.card');\nobserver.observe(cards);",
+          "bugLine": 11,
+          "explanation": "observer.observe() accepts a single element, not a NodeList. Passing the entire cards NodeList causes a TypeError. The fix is cards.forEach(card => observer.observe(card)) to observe each element individually."
+        },
+        {
+          "id": "challenge-full-pattern",
+          "title": "Build the Full Scroll Pattern",
+          "type": "challenge",
+          "prompt": "Write a complete HTML page (HTML, CSS, and JS in one file) with at least 3 section elements that animate in on scroll. Requirements:\n- Elements must be hidden initially (opacity 0 and translated)\n- Use IntersectionObserver to add a 'visible' class\n- Include a transition or animation on each element\n- Include the prefers-reduced-motion media query\n- Include at least one staggered animation\n- Use unobserve after each element animates in",
+          "validation": [
+            {
+              "rule": "opacity:\\s*0",
+              "message": "Elements must start with opacity: 0."
+            },
+            {
+              "rule": "translateY",
+              "message": "Use translateY to offset elements initially."
+            },
+            {
+              "rule": "new IntersectionObserver",
+              "message": "Must use IntersectionObserver."
+            },
+            {
+              "rule": "classList\\.add",
+              "message": "Must add a class when the element is visible."
+            },
+            {
+              "rule": "prefers-reduced-motion",
+              "message": "Must include the prefers-reduced-motion media query."
+            },
+            {
+              "rule": "unobserve",
+              "message": "Must unobserve each element after it animates."
+            },
+            {
+              "rule": "animation-delay",
+              "message": "Must include at least one staggered animation-delay."
+            }
+          ],
+          "solution": "<!DOCTYPE html>\n<html>\n<head>\n<style>\n  * { margin: 0; padding: 0; box-sizing: border-box; }\n  body { font-family: sans-serif; background: #0f0f0f; color: white; }\n  section {\n    min-height: 100vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    gap: 20px;\n    padding: 40px;\n  }\n  .reveal {\n    opacity: 0;\n    transform: translateY(40px);\n    transition: opacity 0.6s ease-out, transform 0.6s ease-out;\n  }\n  .reveal.visible {\n    opacity: 1;\n    transform: translateY(0);\n  }\n  .card {\n    background: #1e1e1e;\n    padding: 30px;\n    border-radius: 8px;\n    width: 300px;\n  }\n  .card:nth-child(2) { animation-delay: 0.1s; }\n  .card:nth-child(3) { animation-delay: 0.2s; }\n  @media (prefers-reduced-motion: reduce) {\n    .reveal { transition: none; }\n  }\n</style>\n</head>\n<body>\n  <section>\n    <h1 class=\"reveal\">Section One</h1>\n    <p class=\"reveal\">Scroll down to see more sections animate in.</p>\n  </section>\n  <section>\n    <div class=\"card reveal\">Card A</div>\n    <div class=\"card reveal\">Card B</div>\n    <div class=\"card reveal\">Card C</div>\n  </section>\n  <section>\n    <h2 class=\"reveal\">You made it</h2>\n  </section>\n  <script>\n    const observer = new IntersectionObserver((entries) => {\n      entries.forEach(entry => {\n        if (entry.isIntersecting) {\n          entry.target.classList.add('visible');\n          observer.unobserve(entry.target);\n        }\n      });\n    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });\n    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));\n  </script>\n</body>\n</html>"
+        }
+      ]
+    },
+    {
+      "title": "Unit 5 — Advanced Techniques",
+      "lessons": [
+        {
+          "id": "scroll-timeline-css",
+          "title": "Native CSS Scroll Animations",
+          "type": "document",
+          "content": "Modern browsers now support animating elements based on scroll position entirely in CSS, without any JavaScript. This uses `animation-timeline` and `scroll-timeline`, which are part of the CSS Scroll-Driven Animations specification.\n\nThe simplest use is `animation-timeline: scroll()`. This ties an animation's progress directly to the page scroll position. At the top of the page the animation is at 0%. At the bottom it is at 100%. You write a normal @keyframes animation and instead of a duration, the scroll position drives it.\n\nYou can also use `view()` as the timeline, which ties the animation to when a specific element is in the viewport. Combined with `animation-range`, you can define exactly when the animation starts and ends relative to the element entering and exiting the viewport.\n\nThis approach is great for progress indicators, parallax, and simple reveal effects that don't need complex logic. It runs entirely off the main thread for supported properties, making it extremely performant.\n\nThe catch is browser support. As of 2024 this works in Chrome and Edge but not yet Firefox or Safari. For production sites you still need the IntersectionObserver JavaScript fallback. Check caniuse.com before relying on it.",
+          "examples": [
+            {
+              "label": "Progress bar driven entirely by CSS scroll",
+              "code": "@keyframes growBar {\n  from { width: 0%; }\n  to   { width: 100%; }\n}\n\n.progress-bar {\n  height: 4px;\n  background: coral;\n  position: fixed;\n  top: 0;\n  left: 0;\n  animation: growBar linear;\n  animation-timeline: scroll();\n}\n\n/* No JavaScript needed */\n/* The scroll position drives the animation progress */"
+            },
+            {
+              "label": "Element that animates as it enters the viewport",
+              "code": "@keyframes fadeUp {\n  from { opacity: 0; transform: translateY(40px); }\n  to   { opacity: 1; transform: translateY(0); }\n}\n\n.card {\n  animation: fadeUp ease-out;\n  animation-timeline: view();\n  animation-range: entry 0% entry 40%;\n  /* plays from when element starts entering\n     to when 40% of it is in view */\n}"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does animation-timeline: scroll() do?",
+              "options": [
+                "It makes the animation loop continuously while the user is scrolling",
+                "It ties the animation's progress to the page scroll position instead of a time duration",
+                "It delays the animation until the user has scrolled 50% down the page",
+                "It links the animation to a JavaScript scroll event handler"
+              ],
+              "answer": 1,
+              "explanation": "With scroll() as the timeline, the animation progresses based on how far down the page you have scrolled, not time. At the top the animation is at 0%, at the bottom it is at 100%."
+            },
+            {
+              "q": "animation-range: entry 0% entry 40% means the animation plays:",
+              "options": [
+                "When the page scroll is between 0% and 40%",
+                "From when the element starts entering the viewport until 40% of it is visible",
+                "For the first 40% of the animation-duration",
+                "Only on elements within the first 40% of the page"
+              ],
+              "answer": 1,
+              "explanation": "The view() timeline uses 'entry' and 'exit' phases relative to the element's intersection with the viewport. entry 0% is when it first appears, entry 40% is when 40% is visible. The animation plays between those two points."
+            },
+            {
+              "q": "When should you still use IntersectionObserver JavaScript instead of CSS scroll animations?",
+              "options": [
+                "Whenever you want the animation to trigger more than once",
+                "When you need to support Firefox and Safari, since CSS scroll-driven animations have incomplete support",
+                "When the animation involves more than two keyframes",
+                "IntersectionObserver is always the better choice"
+              ],
+              "answer": 1,
+              "explanation": "CSS scroll-driven animations have partial browser support as of 2024 (Chrome/Edge yes, Firefox/Safari no). For production sites that need broad support, IntersectionObserver with JavaScript is still the reliable fallback."
+            }
+          ]
+        },
+        {
+          "id": "fill-advanced",
+          "title": "Advanced Technique Syntax",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete the CSS-only scroll progress bar:",
+              "code": ".progress-bar {\n  animation: growWidth linear;\n  animation-timeline: ___();\n}\n\n@keyframes growWidth {\n  from { width: ___%; }\n  to   { width: ___%; }\n}",
+              "blanks": ["scroll", "0", "100"],
+              "explanation": "scroll() ties animation progress to page scroll position. The keyframe goes from 0% at the top of the page to 100% at the bottom."
+            },
+            {
+              "prompt": "Set an element to animate as it enters the viewport:",
+              "code": ".box {\n  animation: fadeIn ease-out;\n  animation-timeline: ___();\n  animation-range: ___ 0% entry 50%;\n}",
+              "blanks": ["view", "entry"],
+              "explanation": "view() ties the animation to the element's intersection with the viewport. animation-range: entry 0% entry 50% plays the full animation as the element goes from 0% visible to 50% visible."
+            },
+            {
+              "prompt": "Write the requestAnimationFrame scroll pattern:",
+              "code": "let ___ = false;\n\nwindow.addEventListener('scroll', () => {\n  if (!ticking) {\n    ___(updateLayout);\n    ticking = ___;\n  }\n});",
+              "blanks": ["ticking", "requestAnimationFrame", "true"],
+              "explanation": "The ticking flag prevents stacking rAF calls. requestAnimationFrame schedules the actual DOM work to run once per screen refresh. ticking is reset to false inside updateLayout after the work is done."
+            }
+          ]
+        },
+        {
+          "id": "spot-rAF",
+          "title": "Spot the Bug: Scroll Handler",
+          "type": "spot_bug",
+          "prompt": "This scroll handler is supposed to update a progress bar smoothly, but it is causing page jank. Find the line that is the problem.",
+          "code": "window.addEventListener('scroll', () => {\n  const scrolled = window.scrollY;\n  const maxScroll = document.body.scrollHeight - window.innerHeight;\n  const progress = (scrolled / maxScroll) * 100;\n  progressBar.style.width = progress + '%';\n  progressBar.style.backgroundColor = 'hsl(' + progress + ', 70%, 50%)';\n});",
+          "bugLine": 1,
+          "explanation": "All DOM updates are happening directly inside the scroll event handler with no requestAnimationFrame throttle. The scroll event fires dozens of times per second and each call forces a style update, overloading the main thread. Wrapping the body in requestAnimationFrame with a ticking flag fixes the jank."
+        },
+        {
+          "id": "project",
+          "type": "project",
+          "title": "Scroll Story Page",
+          "fileLabel": "index.html",
+          "initialCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Scroll Story</title>\n  <style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n    body {\n      background: #0a0a0a;\n      color: #ffffff;\n      font-family: sans-serif;\n      overflow-x: hidden;\n    }\n\n    /* ---- Add your styles below ---- */\n\n  </style>\n</head>\n<body>\n\n  <!-- Build your scroll story here -->\n  <!-- Suggested sections:\n    1. Hero with large heading and a decorative shape\n    2. Feature section with 3 cards that stagger in\n    3. A parallax background section\n    4. A closing section\n  -->\n\n  <script>\n    /* Add your IntersectionObserver and any scroll logic here */\n  </script>\n</body>\n</html>",
+          "steps": [
+            {
+              "id": "step-hero",
+              "title": "Hero Section",
+              "instructions": "Add a hero section with a large heading and at least one decorative CSS shape. Set both to opacity 0 and translateY offset initially.",
+              "validation": [
+                {
+                  "rule": "opacity:\\s*0",
+                  "message": "Hero elements must start with opacity: 0."
+                },
+                {
+                  "rule": "translateY",
+                  "message": "Use translateY to offset hero elements."
+                }
+              ]
+            },
+            {
+              "id": "step-observer",
+              "title": "IntersectionObserver",
+              "instructions": "Add JavaScript that creates an IntersectionObserver and observes all elements with a 'reveal' class. It should add 'visible' and unobserve each element.",
+              "validation": [
+                {
+                  "rule": "new IntersectionObserver",
+                  "message": "Must create an IntersectionObserver."
+                },
+                {
+                  "rule": "unobserve",
+                  "message": "Must call unobserve after animating."
+                }
+              ]
+            },
+            {
+              "id": "step-cards",
+              "title": "Staggered Cards",
+              "instructions": "Add a section with at least 3 cards that animate in with staggered animation-delay values so they appear one after another.",
+              "validation": [
+                {
+                  "rule": "animation-delay",
+                  "message": "Must use animation-delay for staggering."
+                },
+                {
+                  "rule": "nth-child|nth-of-type",
+                  "message": "Use nth-child or nth-of-type selectors to set different delays."
+                }
+              ]
+            },
+            {
+              "id": "step-reduced-motion",
+              "title": "Accessibility",
+              "instructions": "Add a prefers-reduced-motion media query that removes transitions and animations for users who have requested reduced motion.",
+              "validation": [
+                {
+                  "rule": "prefers-reduced-motion",
+                  "message": "Must include the prefers-reduced-motion media query."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
