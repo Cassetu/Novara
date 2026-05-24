@@ -8,9 +8,23 @@
     <link rel="stylesheet" href="css/course.css">
     <link rel="stylesheet" href="css/landing.css">
     <link rel="stylesheet" href="css/godot.css">
+    <link rel="stylesheet" href="css/themes.css">
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <script>
+        (function() {
+            const t = localStorage.getItem("novara-theme");
+            if (t) document.documentElement.className = t;
+        })();
+    </script>
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="app.js" defer></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("/sw.js").catch(e => console.warn("sw failed", e));
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -24,7 +38,6 @@
             <a href="#" id="btn-landing-signin" style="margin-left: 40px;">SIGN IN</a>
         </nav>
     </header>
-
     <main class="landing-hero">
         <div class="hero-content">
             <h1 class="hero-title">NOVARA</h1>
@@ -54,20 +67,21 @@
 
 <div id="view-public-courses" class="view-layer" style="display: none; padding: 40px; max-width: 1200px; margin: 0 auto;">
     <button id="btn-back-landing" style="background: transparent; border: none; font-weight: bold; cursor: pointer; margin-bottom: 40px; font-size: 14px; letter-spacing: 2px;">← RETURN</button>
-    <h1 style="font-size: 48px; font-weight: 900; letter-spacing: -2px; margin-bottom: 10px; text-transform: uppercase;">System Matrix</h1>
-    <p style="color: var(--text-dim); margin-bottom: 40px;">Sign in to access secure curriculums.</p>
-    <div class="catalog-grid">
-        <div class="course-card">
-            <h3>HTML Architecture</h3>
-            <p>Master the structural skeleton of the web. DOM node manipulation, semantic wrappers, and accessibility protocols.</p>
-            <button class="public-signin-trigger" style="margin-top: 15px;">Sign in to unlock</button>
-        </div>
-        <div class="course-card">
-            <h3>CSS Styling Engine</h3>
-            <p>Control the visual rendering matrix. Flexbox, CSS Grid, and dynamic animation states.</p>
-            <button class="public-signin-trigger" style="margin-top: 15px;">Sign in to unlock</button>
-        </div>
+    <h1 style="font-size: 48px; font-weight: 900; letter-spacing: -2px; margin-bottom: 10px; text-transform: uppercase;">Courses</h1>
+    <p style="color: var(--text-dim); margin-bottom: 24px; font-family: monospace;">Sign in to enroll and track progress.</p>
+    <div style="display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;" id="public-filters">
+        <button class="filter-btn active" data-pfilter="all">All</button>
+        <button class="filter-btn" data-pfilter="engineering">Engineering</button>
+        <button class="filter-btn" data-pfilter="gamedev">Game Dev</button>
+        <button class="filter-btn" data-pfilter="data">Data</button>
+        <button class="filter-btn" data-pfilter="design">Design</button>
+        <span style="margin-left:auto;display:flex;gap:8px;">
+            <button class="filter-btn" data-pdifficulty="beginner">Beginner</button>
+            <button class="filter-btn" data-pdifficulty="intermediate">Intermediate</button>
+            <button class="filter-btn" data-pdifficulty="advanced">Advanced</button>
+        </span>
     </div>
+    <div id="public-catalog-grid" class="catalog-grid"></div>
 </div>
 
 <div id="view-auth" class="view-layer" style="display: none; max-width: 420px; margin: 100px auto; text-align: center; font-family: 'Space Grotesk', system-ui, sans-serif; color: #0a0a0a; background: #ffffff; padding: 40px; border: 4px solid #0a0a0a; box-shadow: 12px 12px 0px #77BBA2; box-sizing: border-box;">
@@ -101,7 +115,7 @@
         <nav>
             <ul id="enrolled-list"></ul>
             <ul style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px;">
-                <li><a href="#" id="nav-practice" style="color: var(--text-dim);">Practice</a></li>
+                <li><a href="#" id="nav-hub" style="color: var(--text-dim);">Hub</a></li>
             </ul>
         </nav>
         <h2 style="margin-top: 40px;">System</h2>
@@ -124,12 +138,20 @@
 
         <div id="view-explorer" class="view-layer">
             <div class="explorer-header">
-                <div class="category-filters">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="programming">Programming</button>
-                    <button class="filter-btn" data-filter="ela">ELA</button>
-                    <button class="filter-btn" data-filter="math">Math</button>
-                    <button class="filter-btn" data-filter="gamedev">Game Dev</button>
+                <div>
+                    <div class="category-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="engineering">Engineering</button>
+                        <button class="filter-btn" data-filter="data">Data</button>
+                        <button class="filter-btn" data-filter="design">Design</button>
+                        <button class="filter-btn" data-filter="gamedev">Game Dev</button>
+                    </div>
+                    <div class="difficulty-filters" style="display:flex;gap:6px;margin-top:8px;">
+                        <button class="diff-btn active" data-diff="all">All levels</button>
+                        <button class="diff-btn" data-diff="beginner">Beginner</button>
+                        <button class="diff-btn" data-diff="intermediate">Intermediate</button>
+                        <button class="diff-btn" data-diff="advanced">Advanced</button>
+                    </div>
                 </div>
                 <input type="text" id="search-bar" placeholder="search">
             </div>
@@ -147,9 +169,21 @@
             <h2>System Settings</h2>
             <div class="settings-section" style="margin-top: 30px; margin-bottom: 50px;">
                 <p style="color: var(--text-main); margin-bottom: 20px; font-size: 14px; font-weight: bold;">If you're reading this... Have a nice day! :)</p>
+
+                <div style="margin-bottom: 30px;">
+                    <p style="font-size: 12px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; color: var(--text-dim);">Theme</p>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <button class="theme-swatch" data-theme="theme-light" style="background:#ffffff;color:#0a0a0a;border:3px solid #0a0a0a;">Light</button>
+                        <button class="theme-swatch" data-theme="theme-dark" style="background:#1a1a1a;color:#e8e8e8;border:3px solid #333333;">Dark</button>
+                        <button class="theme-swatch" data-theme="theme-sepia" style="background:#fdf6e3;color:#3d2b1f;border:3px solid #3d2b1f;">Sepia</button>
+                        <button class="theme-swatch" data-theme="theme-hacker" style="background:#000000;color:#00ff41;border:3px solid #00ff41;">Hacker</button>
+                    </div>
+                </div>
+
                 <div style="display: flex; gap: 15px;">
                     <button id="sign-out-btn" style="background-color: var(--surface); color: var(--text-main);">SIGN OUT ↗</button>
                 </div>
+
                 <div class="danger-zone">
                     <h3>Danger Zone</h3>
                     <p>Execute a complete purge. This will permanently erase all enrollments, scores, and progress. Cannot be undone.</p>
@@ -164,10 +198,20 @@
             </div>
         </div>
 
-        <div id="view-practice" class="view-layer" style="display: none;">
-            <h2>Practice Hub</h2>
-            <p style="color: var(--text-dim); margin-bottom: 30px;">Adaptive</p>
-            <div id="practice-content" class="catalog-grid"></div>
+        <div id="view-hub" class="view-layer" style="display: none;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;border-bottom:4px solid var(--border);padding-bottom:16px;">
+                <h2 style="margin:0;">Hub</h2>
+                <div style="display:flex;gap:0;">
+                    <button class="hub-tab active" data-hubtab="practice">Practice</button>
+                    <button class="hub-tab" data-hubtab="docs">Documentation</button>
+                </div>
+            </div>
+            <div id="hub-practice-panel">
+                <div id="practice-content" class="catalog-grid"></div>
+            </div>
+            <div id="hub-docs-panel" style="display:none;">
+                <div id="docs-content"></div>
+            </div>
         </div>
 
     </main>

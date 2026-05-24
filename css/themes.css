@@ -1,0 +1,96 @@
+body.theme-dark {
+    --void:       #0d0d0d;
+    --surface:    #1a1a1a;
+    --text-main:  #e8e8e8;
+    --text-dim:   #777777;
+    --accent:     #77BBA2;
+    --border:     #333333;
+    --bg:         #111111;
+}
+
+body.theme-dark .workspace {
+    background-color: #111111;
+    background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
+}
+
+body.theme-dark .sidebar {
+    background-color: #1a1a1a;
+    border-right-color: #333333;
+}
+
+body.theme-dark .view-layer {
+    background: #1a1a1a;
+    border-color: #333333;
+    box-shadow: 12px 12px 0px rgba(0,0,0,0.4);
+}
+
+body.theme-dark .lesson-row:hover { background-color: #252525; }
+body.theme-dark .section-header   { background-color: #333333; }
+body.theme-dark .section-block    { border-color: #333333; box-shadow: 4px 4px 0px #333333; }
+body.theme-dark .course-card      { background: #1a1a1a; border-color: #333333; box-shadow: 8px 8px 0px #333333; }
+body.theme-dark .course-card:hover { box-shadow: 12px 12px 0px var(--accent); }
+body.theme-dark .mcq-option       { background-color: #111111; border-color: #333333; }
+body.theme-dark button            { background-color: #1a1a1a; border-color: #333333; color: #e8e8e8; }
+body.theme-dark #search-bar       { background-color: #1a1a1a; border-color: #333333; color: #e8e8e8; }
+body.theme-dark .filter-btn       { background-color: #111111; }
+body.theme-dark .filter-btn.active { background-color: #e8e8e8; color: #111111; }
+body.theme-dark .master-test-row  { background: #1a1a1a; border-color: #333333; }
+
+body.theme-sepia {
+    --void:       #2c2416;
+    --surface:    #fdf6e3;
+    --text-main:  #3d2b1f;
+    --text-dim:   #8a7060;
+    --accent:     #c0853c;
+    --border:     #3d2b1f;
+    --bg:         #f5ead0;
+}
+
+body.theme-sepia .workspace {
+    background-color: #f5ead0;
+    background-image: radial-gradient(#c8b89a 1px, transparent 1px);
+}
+
+body.theme-sepia .sidebar     { background-color: #fdf6e3; border-right-color: #3d2b1f; }
+body.theme-sepia .view-layer  { background: #fdf6e3; }
+body.theme-sepia .section-header { background-color: #3d2b1f; }
+body.theme-sepia .fb-code-block  { box-shadow: 6px 6px 0px #c0853c; }
+body.theme-sepia #module-content pre { box-shadow: 6px 6px 0px #c0853c; }
+
+body.theme-hacker {
+    --void:       #000000;
+    --surface:    #0a0a0a;
+    --text-main:  #00ff41;
+    --text-dim:   #006b1b;
+    --accent:     #00ff41;
+    --border:     #00ff41;
+    --bg:         #000000;
+}
+
+body.theme-hacker .workspace {
+    background-color: #000000;
+    background-image: radial-gradient(#001a00 1px, transparent 1px);
+}
+
+body.theme-hacker .sidebar        { background-color: #0a0a0a; border-right-color: #00ff41; }
+body.theme-hacker .view-layer     { background: #0a0a0a; border-color: #00ff41; box-shadow: 12px 12px 0px rgba(0,255,65,0.15); }
+body.theme-hacker .section-header { background-color: #00ff41; color: #000000; }
+body.theme-hacker button          { background-color: #000000; color: #00ff41; border-color: #00ff41; }
+body.theme-hacker .course-card    { background: #0a0a0a; border-color: #00ff41; box-shadow: 8px 8px 0px rgba(0,255,65,0.2); }
+body.theme-hacker .sidebar a      { color: #00ff41; }
+body.theme-hacker h1, body.theme-hacker h2, body.theme-hacker h3 { color: #00ff41; }
+body.theme-hacker .mcq-option     { background-color: #000000; border-color: #006b1b; color: #00ff41; }
+body.theme-hacker .rating-dot.filled { background-color: #00ff41; border-color: #00ff41; }
+body.theme-hacker .course-progress-fill { background-color: #00ff41; }
+body.theme-hacker #search-bar     { background-color: #000000; color: #00ff41; border-color: #00ff41; }
+body.theme-hacker .filter-btn.active { background-color: #00ff41; color: #000000; }
+
+body.theme-light {
+    --void:       #0a0a0a;
+    --surface:    #ffffff;
+    --text-main:  #0a0a0a;
+    --text-dim:   #666666;
+    --accent:     #77BBA2;
+    --border:     #0a0a0a;
+    --bg:         #ffffff;
+}
