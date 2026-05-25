@@ -21,6 +21,17 @@ function getQuestionStats() {
 
 function renderQuestion(lessonData, analytics, onAnalyticsUpdate, onFinish) {
     const qData = lessonData.questions[currentQuestionIndex];
+
+    if (!qData || !Array.isArray(qData.options)) {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < lessonData.questions.length) {
+            renderQuestion(lessonData, analytics, onAnalyticsUpdate, onFinish);
+        } else {
+            onFinish();
+        }
+        return;
+    }
+
     const lessonView = document.getElementById("view-lesson");
     isQuestionSubmitted = false;
 
@@ -77,6 +88,8 @@ async function handleActionClick(lessonData, analytics, onAnalyticsUpdate, onFin
 
     if (!isQuestionSubmitted) {
         const selected = document.querySelector('input[name="answer"]:checked');
+        if (!selected) return;
+
         const selectedVal = parseInt(selected.value);
         const isCorrect = selectedVal === qData.answer;
 
@@ -101,17 +114,23 @@ async function handleActionClick(lessonData, analytics, onAnalyticsUpdate, onFin
         document.querySelectorAll(".mcq-option").forEach(l => l.classList.add("locked"));
 
         const selectedLabel = document.getElementById(`opt-label-${selectedVal}`);
-        if (isCorrect) {
-            selectedLabel.classList.add("reveal-correct");
-        } else {
-            selectedLabel.classList.add("reveal-incorrect");
-            document.getElementById(`opt-label-${qData.answer}`).classList.add("reveal-correct");
+        const correctLabel = document.getElementById(`opt-label-${qData.answer}`);
+
+        if (selectedLabel) {
+            if (isCorrect) {
+                selectedLabel.classList.add("reveal-correct");
+            } else {
+                selectedLabel.classList.add("reveal-incorrect");
+                if (correctLabel) correctLabel.classList.add("reveal-correct");
+            }
         }
 
         if (qData.explanation) {
             const expBox = document.getElementById("explanation-box");
-            expBox.innerHTML = `<strong>analysis:</strong> ${parseCode(qData.explanation)}`;
-            expBox.style.display = "block";
+            if (expBox) {
+                expBox.innerHTML = `<strong>analysis:</strong> ${parseCode(qData.explanation)}`;
+                expBox.style.display = "block";
+            }
         }
 
         if (lessonData.type === "practice_survival") {
