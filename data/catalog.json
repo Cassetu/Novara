@@ -32,7 +32,7 @@
       { "id": "html-text-media",    "title": "Text and Media",  "file": "data/html-mastery/text-and-media.json" },
       { "id": "html-forms",         "title": "Forms",           "file": "data/html-mastery/forms.json" },
       { "id": "html-semantic",      "title": "Semantic HTML",   "file": "data/html-mastery/semantic.json" },
-      { "id": "html-accessibility", "title": "Accessibility",   "file": "data/html-mastery/accessibility.json" },
+      { "id": "html-accessibility", "title": "Accessibility",   "file": "data/html-mastery/accessibility.json" }
     ]
   },
   {
