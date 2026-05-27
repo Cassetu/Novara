@@ -1,0 +1,185 @@
+{
+  "id": "html-accessibility",
+  "title": "HTML: Accessibility",
+  "sections": [
+    {
+      "title": "Module 1: What Accessibility Is",
+      "lessons": [
+        {
+          "id": "a11y-intro",
+          "title": "Understanding Accessibility",
+          "type": "document",
+          "content": "Accessibility means building things that people can use regardless of ability. On the web, that includes people who are blind or have low vision, people who are deaf, people with motor impairments who cannot use a mouse, people with cognitive disabilities, and people using older devices or slow connections.\n\nThe shorthand for accessibility is a11y — 'a', eleven letters, 'y'.\n\nThe Web Content Accessibility Guidelines (WCAG) are the international standard for web accessibility. They organise requirements under four principles: Perceivable, Operable, Understandable, and Robust — often remembered as POUR. WCAG has three conformance levels: A, AA, and AAA. AA is the level most organisations aim to meet and the level required by law in many countries.\n\nMost accessibility problems on the web are caused by bad HTML — missing labels, wrong element choices, absent alt text, or broken keyboard navigation. You do not need special tools to fix most of these. You need to write good HTML.",
+          "questions": [
+            {
+              "q": "What does the shorthand a11y stand for?",
+              "options": ["The 11 rules of accessible design", "Accessibility — 'a', 11 letters, 'y'", "A version 11 of the WCAG standard", "The 11 most common accessibility errors"],
+              "answer": 1,
+              "explanation": "a11y is a numeronym: the first letter 'a', eleven letters in the middle, then 'y'. The same pattern gives us i18n for internationalisation and l10n for localisation."
+            },
+            {
+              "q": "What do the four WCAG principles stand for?",
+              "options": ["Practical, Observable, Understandable, Responsive", "Perceivable, Operable, Understandable, Robust", "Predictable, Observable, Usable, Readable", "Perceivable, Ordered, Unique, Responsive"],
+              "answer": 1,
+              "explanation": "POUR: Perceivable — users can perceive content. Operable — users can operate the interface. Understandable — content is clear. Robust — content works across assistive technologies."
+            },
+            {
+              "q": "What is the most common cause of web accessibility failures?",
+              "options": ["Missing JavaScript for screen reader support", "Incorrect use of CSS causing visual contrast issues", "Bad HTML — wrong elements, missing labels, absent alt text", "Lack of support for legacy browsers"],
+              "answer": 2,
+              "explanation": "The vast majority of accessibility failures trace back to HTML problems. Missing form labels, wrong heading hierarchy, absent alt text — all fixable without JavaScript or special libraries."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Keyboard and Focus",
+      "lessons": [
+        {
+          "id": "a11y-keyboard",
+          "title": "Keyboard Navigation",
+          "type": "document",
+          "content": "Many users navigate entirely without a mouse. Screen reader users, people with motor impairments, and power users all rely on the keyboard. A page must be fully operable with the Tab, Enter, Space, Escape, and arrow keys.\n\nInteractive elements — links, buttons, inputs, selects — are natively keyboard-focusable. They receive focus when the user presses Tab and can be activated with Enter or Space. Do not replace them with non-interactive elements like divs and spans styled to look like buttons, because those are not keyboard-accessible by default.\n\nThe tabindex attribute controls whether and in what order elements receive keyboard focus. tabindex='0' adds an element to the natural tab order. tabindex='-1' removes an element from the tab order but allows it to be focused programmatically with JavaScript. Positive tabindex values (tabindex='1', tabindex='2') set an explicit order, but this is almost always a mistake — it is fragile and overrides the document order that users expect.\n\nEvery focused element should have a visible focus indicator — the outline that appears around it. Never write outline: 0 or outline: none in CSS without providing an alternative. Removing focus outlines makes the page unusable for keyboard users.",
+          "examples": [
+            {
+              "label": "Keyboard-accessible interactive elements",
+              "code": "<button type='button'>Native button — keyboard accessible</button>\n\n<a href='/about'>Native link — keyboard accessible</a>\n\n<div role='button' tabindex='0'>Div pretending to be a button — avoid this</div>\n\n<button type='button' class='skip-link'>\n  <a href='#main-content'>Skip to main content</a>\n</button>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does tabindex='0' do?",
+              "options": ["Removes the element from the tab order entirely", "Resets the element's tab order to the browser default", "Adds the element to the tab order in document flow position", "Puts the element first in the tab order"],
+              "answer": 2,
+              "explanation": "tabindex='0' makes a normally non-focusable element keyboard-focusable, placing it in the tab order at its position in the document. Use it when you need to make a custom element focusable."
+            },
+            {
+              "q": "Why should you avoid using positive tabindex values like tabindex='2'?",
+              "options": ["Positive values only work in Internet Explorer", "They override the natural document order and create confusing, fragile navigation", "They cause the element to be skipped on the first Tab press", "They make the element focusable by mouse but not keyboard"],
+              "answer": 1,
+              "explanation": "Positive tabindex values create a separate tab sequence that fires before the document order. This is confusing for users and breaks when the page layout changes. The document source order should always define the tab order."
+            },
+            {
+              "q": "Why should you never use CSS to remove focus outlines without a replacement?",
+              "options": ["Because focus outlines are required by HTML and cannot be removed", "Because keyboard users rely on focus outlines to see where they are on the page", "Because removing outlines causes the browser to fall back to alert dialogs", "Because search engines use focus outlines to index interactive elements"],
+              "answer": 1,
+              "explanation": "The focus outline is the only visual cue a keyboard user has to know which element is currently active. Removing it without a styled replacement leaves keyboard users navigating blind."
+            }
+          ]
+        },
+        {
+          "id": "a11y-skip-links",
+          "title": "Skip Links",
+          "type": "document",
+          "content": "A skip link is a hidden link that appears at the top of the page when focused. It lets keyboard users jump directly to the main content, bypassing the navigation menu that appears on every page.\n\nWithout a skip link, a keyboard user must Tab through every navigation item on every page to reach the content. On a site with a 20-item navigation, that means 20 Tab presses before they reach anything useful.\n\nA skip link is usually visually hidden until it receives focus. This is done with CSS: the link is positioned off-screen by default and moves back into view when focused. The href points to the id of the main content element.\n\nThe WCAG 2.1 Success Criterion 2.4.1 (Bypass Blocks) requires skip links or an equivalent mechanism at Level A — the minimum level.",
+          "examples": [
+            {
+              "label": "Skip link pattern",
+              "code": "<style>\n  .skip-link {\n    position: absolute;\n    top: -100%;\n  }\n  .skip-link:focus {\n    top: 0;\n  }\n</style>\n\n<a class='skip-link' href='#main'>Skip to main content</a>\n\n<header>...</header>\n\n<main id='main'>\n  <h1>Page Title</h1>\n</main>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What is the purpose of a skip link?",
+              "options": ["To skip over broken or missing content on the page", "To let keyboard users jump past repeated navigation to reach the main content", "To bypass login walls or paywalls for screen reader users", "To provide a faster way to navigate between pages on the same site"],
+              "answer": 1,
+              "explanation": "Skip links give keyboard users a shortcut past repeated navigation. Without one, Tab-only users must navigate through every nav item on every page load before reaching unique content."
+            },
+            {
+              "q": "How is a skip link typically hidden until focused?",
+              "options": ["Using display: none, which hides it from everyone including screen readers", "Using visibility: hidden, which hides it but preserves its space", "Using absolute positioning to place it off-screen, then moving it to visible position on focus", "Using the hidden attribute, then removing it with JavaScript on focus"],
+              "answer": 2,
+              "explanation": "display: none and visibility: hidden remove the element from the accessibility tree entirely. Off-screen positioning keeps the element in the DOM and focusable while hiding it visually until needed."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: ARIA",
+      "lessons": [
+        {
+          "id": "a11y-aria",
+          "title": "ARIA Roles and Attributes",
+          "type": "document",
+          "content": "ARIA stands for Accessible Rich Internet Applications. It is a set of HTML attributes that can add or modify accessibility information communicated to assistive technology. The most important rule about ARIA is to use it as a last resort — only when the right HTML element does not exist or cannot be used.\n\nrole adds or changes the semantic role of an element. role='button' tells screen readers to announce a div as a button. But using a real button element communicates the same thing and comes with keyboard behaviour for free. So prefer the element.\n\naria-label provides an accessible name when no visible label is available. A search button that contains only a magnifying glass icon has no text. aria-label='Search' provides the label screen readers will announce.\n\naria-hidden='true' removes an element from the accessibility tree entirely. Use it for decorative icons, repeated elements, or anything a screen reader should not announce. Never use it on interactive content.\n\naria-expanded indicates whether a collapsible element is open or closed. It goes on the button that controls the toggle, not on the region being toggled.",
+          "examples": [
+            {
+              "label": "ARIA attributes in practice",
+              "code": "<button type='button' aria-label='Search'>\n  <svg aria-hidden='true'><!-- magnifier icon --></svg>\n</button>\n\n<button type='button' aria-expanded='false' aria-controls='menu'>\n  Menu\n</button>\n<ul id='menu' hidden>\n  <li><a href='/'>Home</a></li>\n</ul>\n\n<nav aria-label='Breadcrumb'>\n  <ol>\n    <li><a href='/'>Home</a></li>\n    <li><a href='/blog'>Blog</a></li>\n    <li aria-current='page'>Post Title</li>\n  </ol>\n</nav>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "When should you use ARIA instead of a native HTML element?",
+              "options": ["Always — ARIA gives you more control over accessibility", "When the design requires custom styling that semantic elements cannot support", "Only when no native HTML element exists or can be used for the purpose", "When you need to support older browsers that do not understand semantic elements"],
+              "answer": 2,
+              "explanation": "The first rule of ARIA is: do not use ARIA if a native HTML element can do the job. Native elements have built-in semantics, keyboard behaviour, and browser support that ARIA alone does not provide."
+            },
+            {
+              "q": "What does aria-hidden='true' do?",
+              "options": ["Makes the element invisible visually on the page", "Prevents the element from receiving keyboard focus", "Removes the element from the accessibility tree so screen readers skip it", "Hides the element from search engine crawlers"],
+              "answer": 2,
+              "explanation": "aria-hidden='true' removes the element from the accessibility tree. Screen readers will not announce it. Use it on decorative icons or content that duplicates information already available elsewhere."
+            },
+            {
+              "q": "Where does aria-expanded go when a button toggles a menu?",
+              "options": ["On the menu element that is being shown or hidden", "On the button that controls the toggle", "On the parent container holding both the button and the menu", "On each item inside the menu"],
+              "answer": 1,
+              "explanation": "aria-expanded goes on the controlling button, not the panel. It tells screen readers the current state of the toggle — open or closed — when they encounter the button."
+            }
+          ]
+        },
+        {
+          "id": "a11y-color-contrast",
+          "title": "Colour and Contrast",
+          "type": "document",
+          "content": "Colour contrast refers to the difference in luminance between foreground text and its background. Insufficient contrast makes text hard to read for users with low vision, colour blindness, or when viewed in bright sunlight.\n\nWCAG 2.1 requires a contrast ratio of at least 4.5:1 for normal text at Level AA, and 3:1 for large text (18pt or 14pt bold). These ratios compare the relative luminance of two colours on a scale from 1:1 (identical) to 21:1 (black on white).\n\nContrast can be checked with browser DevTools, online tools like the WebAIM Contrast Checker, or design tools like Figma with accessibility plugins.\n\nNever convey information using colour alone. If a form field turns red to indicate an error, add an icon or error text as well. Around 8% of men have some form of colour blindness and would not be able to distinguish the colour change reliably.",
+          "examples": [
+            {
+              "label": "Communicating error without colour alone",
+              "code": "<label for='email'>Email</label>\n<input type='email' id='email' name='email' aria-describedby='email-error'>\n<p id='email-error' role='alert'>\n  <span aria-hidden='true'>&#9888;</span> Please enter a valid email address.\n</p>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What is the minimum contrast ratio required for normal body text under WCAG 2.1 AA?",
+              "options": ["3:1 between foreground and background", "4.5:1 between foreground and background", "7:1 between foreground and background", "21:1 between foreground and background"],
+              "answer": 1,
+              "explanation": "WCAG 2.1 AA requires 4.5:1 for normal text and 3:1 for large text. 7:1 is the AAA standard for normal text. 21:1 is the maximum possible — black on white."
+            },
+            {
+              "q": "Why should you never use colour alone to communicate information?",
+              "options": ["Because colour is too culturally specific to use reliably", "Because around 8% of men are colour blind and may not perceive the colour difference", "Because WCAG bans colour-only communication entirely", "Because CSS colour values are not consistent across operating systems"],
+              "answer": 1,
+              "explanation": "Colour blindness affects roughly 8% of men and 0.5% of women. A red error state or a green success indicator is invisible to users who cannot distinguish those colours. Always pair colour with text, icons, or patterns."
+            }
+          ]
+        },
+        {
+          "id": "a11y-fb-aria",
+          "title": "Fill in the Blanks: ARIA",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete this icon button and expandable menu with correct ARIA.",
+              "code": "<button type='button' aria-___='Close navigation'>\n  <svg aria-___='true'><!-- X icon --></svg>\n</button>\n\n<button type='button' aria-___='false' aria-controls='dropdown'>\n  Options\n</button>\n<ul id='dropdown' ___>\n  <li><a href='/settings'>Settings</a></li>\n</ul>",
+              "blanks": ["label", "hidden", "expanded", "hidden"],
+              "explanation": "aria-label names the button for screen readers when there is no visible text. aria-hidden removes the decorative icon from the accessibility tree. aria-expanded communicates the toggle state. The hidden attribute hides the menu until opened."
+            }
+          ]
+        },
+        {
+          "id": "a11y-sb-contrast",
+          "title": "Spot the Bug: Inaccessible Error State",
+          "type": "spot_bug",
+          "prompt": "This error state relies on colour alone to communicate the problem. Click the line that needs to be improved.",
+          "code": "<!DOCTYPE html>\n<html lang='en'>\n<head><title>Form</title></head>\n<body>\n  <form>\n    <label for='username'>Username</label>\n    <input type='text' id='username' name='username' style='border-color: red;'>\n    <button type='submit'>Submit</button>\n  </form>\n</body>\n</html>",
+          "bugLine": 7,
+          "explanation": "The input uses a red border as the only indicator of an error. Colour-blind users will not perceive this. Add an error message with text and an aria-describedby attribute linking the input to the error description."
+        }
+      ]
+    }
+  ]
+}

@@ -21,11 +21,19 @@
     "file": "data/css-arch.json"
   },
   {
-    "id": "html-core",
-    "title": "HTML Architecture",
-    "category": "programming",
-    "description": "Nodes, semantic integrity, and data ingestion.",
-    "file": "data/html-core.json"
+    "id": "html-mastery",
+    "type": "bundle",
+    "title": "HTML: Beginner to Master",
+    "category": "engineering",
+    "difficulty": "beginner",
+    "description": "Everything about HTML from the ground up. Document structure, text and media, forms, semantic markup, and accessibility across five focused courses.",
+    "courses": [
+      { "id": "html-fundamentals",  "title": "Fundamentals",   "file": "data/html-mastery/fundamentals.json" },
+      { "id": "html-text-media",    "title": "Text and Media",  "file": "data/html-mastery/text-and-media.json" },
+      { "id": "html-forms",         "title": "Forms",           "file": "data/html-mastery/forms.json" },
+      { "id": "html-semantic",      "title": "Semantic HTML",   "file": "data/html-mastery/semantic.json" },
+      { "id": "html-accessibility", "title": "Accessibility",   "file": "data/html-mastery/accessibility.json" },
+    ]
   },
   {
     "id": "cpp-core",

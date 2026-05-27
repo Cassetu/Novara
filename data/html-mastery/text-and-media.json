@@ -1,0 +1,255 @@
+{
+  "id": "html-text-media",
+  "title": "HTML: Text and Media",
+  "sections": [
+    {
+      "title": "Module 1: Headings and Paragraphs",
+      "lessons": [
+        {
+          "id": "tm-headings",
+          "title": "Headings",
+          "type": "document",
+          "content": "HTML gives you six heading levels: h1 through h6. h1 is the most important. h6 is the least. Each level visually decreases in size by default, but that is just the browser's stylesheet. The real meaning is hierarchy, not size.\n\nEvery page should have exactly one h1. It describes the overall topic of the page. Think of it like the title of a book. h2 elements are the chapter titles. h3 elements are section headings within those chapters. You keep nesting from there.\n\nDo not choose heading levels based on how big you want the text to look. That is what CSS is for. Choose heading levels based on the document outline. A screen reader user navigating by headings will be confused if you skip from h1 to h4 for visual reasons.\n\nHeadings also matter for SEO. Search engines use your heading structure to understand what a page is about.",
+          "examples": [
+            {
+              "label": "Correct heading hierarchy",
+              "code": "<h1>Web Development Guide</h1>\n\n<h2>HTML</h2>\n<h3>Document Structure</h3>\n<h3>Text Elements</h3>\n\n<h2>CSS</h2>\n<h3>Selectors</h3>\n<h3>Layout</h3>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "How many h1 elements should a page have?",
+              "options": ["As many as you need for the content", "One, representing the overall topic of the page", "One per major section of content", "It does not matter as long as they are styled correctly"],
+              "answer": 1,
+              "explanation": "One h1 per page. It is the top of the document outline. Multiple h1s confuse screen readers and weaken your SEO signal."
+            },
+            {
+              "q": "You want a subheading inside an h2 section. Which element do you use?",
+              "options": ["h1, because it is the most prominent", "h4, to leave room for more levels later", "h3, the next level down in the hierarchy", "h2 again, since it is the same kind of content"],
+              "answer": 2,
+              "explanation": "h3 is the correct next level inside an h2 section. You go down the hierarchy in order rather than skipping levels or repeating them."
+            },
+            {
+              "q": "Why should you not pick heading levels based on desired text size?",
+              "options": ["Because headings cannot be restyled with CSS", "Because heading levels communicate document structure, not visual size", "Because browsers ignore heading size differences", "Because only h1 and h2 are widely supported"],
+              "answer": 1,
+              "explanation": "Heading levels define the outline of your document. Screen readers, search engines, and browser reading modes all depend on that outline being meaningful. Use CSS to change visual size."
+            }
+          ]
+        },
+        {
+          "id": "tm-paragraphs-inline",
+          "title": "Paragraphs and Inline Text",
+          "type": "document",
+          "content": "The p element is the default container for a block of text. Every paragraph gets its own p element. Browsers add a margin above and below paragraphs automatically.\n\nInside a paragraph, you can use inline elements to add meaning to specific words or phrases. strong marks text as strongly important and renders bold by default. em marks text as emphasised and renders italic by default. These carry semantic meaning — do not use them just to make text bold or italic. Use CSS for that.\n\nOther useful inline elements: small marks fine print or secondary information. mark highlights text like a highlighter pen. code marks inline code snippets. abbr marks abbreviations and accepts a title attribute with the expanded form.\n\nThe br element inserts a line break. It is a void element with no closing tag. Use it sparingly — for addresses or poems where line breaks are part of the content, not as a spacing hack. Use CSS margins for spacing.",
+          "examples": [
+            {
+              "label": "Paragraphs and inline elements",
+              "code": "<p>HTML is <strong>not</strong> a programming language. It is a <em>description</em> language.</p>\n\n<p>The <code>alt</code> attribute is <strong>required</strong> on every image.</p>\n\n<p><abbr title='HyperText Markup Language'>HTML</abbr> was created in 1991.</p>\n\n<p>Line one.<br>Line two.</p>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What is the semantic difference between strong and b?",
+              "options": ["There is no difference, they both make text bold", "strong means the text is important, b is purely visual bold with no added meaning", "b is for headings, strong is for paragraphs", "strong is deprecated and b should be used instead"],
+              "answer": 1,
+              "explanation": "strong communicates importance. b is a visual style with no semantic weight. Screen readers may announce strong content differently. Use strong when the content matters, b when you just want bold styling."
+            },
+            {
+              "q": "When should you use the br element?",
+              "options": ["To add spacing between any two elements on the page", "When content requires a line break as part of its meaning, like an address or poem", "As an alternative to the p element for short text", "Whenever you want text on a new line inside a div"],
+              "answer": 1,
+              "explanation": "br is for meaningful line breaks — where the line break is part of the content itself. For spacing between elements, use CSS margin or padding."
+            },
+            {
+              "q": "Which element would you use to mark up an inline piece of code in a sentence?",
+              "options": ["pre, because code needs a fixed-width font", "em, because code needs to stand out", "code, the inline element for code snippets", "kbd, the keyboard input element"],
+              "answer": 2,
+              "explanation": "code is the correct inline element for a code snippet in a sentence. pre is for multi-line preformatted code blocks. kbd is specifically for keyboard input."
+            }
+          ]
+        },
+        {
+          "id": "tm-sb-heading-skip",
+          "title": "Spot the Bug: Heading Hierarchy",
+          "type": "spot_bug",
+          "prompt": "One line breaks the heading hierarchy in a way that harms accessibility. Click it.",
+          "code": "<!DOCTYPE html>\n<html lang='en'>\n<head>\n  <title>Blog Post</title>\n</head>\n<body>\n  <h1>My Cooking Blog</h1>\n  <h4>This Week's Recipes</h4>\n  <p>Here are the recipes I made this week.</p>\n  <h2>Monday: Pasta</h2>\n</body>\n</html>",
+          "bugLine": 8,
+          "explanation": "Jumping from h1 directly to h4 skips two levels. The correct element here is h2. Screen readers and search engines expect a logical outline — h1 then h2, not h1 then h4."
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Lists",
+      "lessons": [
+        {
+          "id": "tm-lists",
+          "title": "Ordered, Unordered, and Description Lists",
+          "type": "document",
+          "content": "HTML has three list types. Each one communicates something different about the relationship between items.\n\nul is an unordered list. Use it when the items have no meaningful sequence — a list of ingredients, a navigation menu, a set of features. Items render with bullet points by default.\n\nol is an ordered list. Use it when the sequence matters — steps in a recipe, instructions, rankings. Items render with numbers by default. The start attribute lets you begin at a number other than 1. The reversed attribute counts down instead of up.\n\ndl is a description list. Use it for term-definition pairs — a glossary, metadata, key-value information. It uses dt for the term and dd for the description. One dt can have multiple dd elements and vice versa.\n\nIn all three types, li is the list item element. Lists can be nested inside each other by placing a full ul or ol inside an li element.",
+          "examples": [
+            {
+              "label": "All three list types",
+              "code": "<ul>\n  <li>Flour</li>\n  <li>Eggs</li>\n  <li>Butter</li>\n</ul>\n\n<ol>\n  <li>Preheat the oven to 180°C</li>\n  <li>Mix the dry ingredients</li>\n  <li>Add the eggs</li>\n</ol>\n\n<dl>\n  <dt>HTML</dt>\n  <dd>The structure layer of the web</dd>\n  <dt>CSS</dt>\n  <dd>The presentation layer of the web</dd>\n</dl>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "You are writing a numbered step-by-step guide. Which list element do you use?",
+              "options": ["ul, because lists always use bullet points", "ol, because the order of steps matters", "dl, because each step has a label and a description", "li on its own, without a parent list element"],
+              "answer": 1,
+              "explanation": "ol is for ordered lists where sequence is meaningful. Recipe steps, instructions, and ranked items all belong in an ol."
+            },
+            {
+              "q": "Which elements make up a description list?",
+              "options": ["dl, li, and dd", "dl, dt, and dd", "ol, dt, and dd", "ul, dt, and li"],
+              "answer": 1,
+              "explanation": "A description list uses dl as the wrapper, dt for the term, and dd for the description. li is used only in ul and ol."
+            },
+            {
+              "q": "How do you create a nested list?",
+              "options": ["Place a new ul or ol directly inside the parent ul or ol", "Place a new ul or ol inside an li element", "Use the nested attribute on the parent list", "Create a second list after the first and indent it with CSS"],
+              "answer": 1,
+              "explanation": "The nested list goes inside an li element, not directly inside the parent ul or ol. That is valid HTML — placing it directly in ul or ol is not."
+            }
+          ]
+        },
+        {
+          "id": "tm-fb-lists",
+          "title": "Fill in the Blanks: Lists",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete this ordered list of steps.",
+              "code": "<___>\n  <___>Boil the water</___>\n  <___>Add the pasta</___>\n  <___>Cook for 10 minutes</___>\n</___>",
+              "blanks": ["ol", "li", "li", "li", "li", "li", "li", "ol"],
+              "explanation": "ol wraps an ordered list. Each item is wrapped in li. The closing tags match their opening tags."
+            },
+            {
+              "prompt": "Complete this description list.",
+              "code": "<___>\n  <___>viewport</___>\n  <___>The visible area of a web page in the browser window</___>\n</___>",
+              "blanks": ["dl", "dt", "dt", "dd", "dd", "dl"],
+              "explanation": "dl wraps the description list. dt holds the term. dd holds the definition."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Links",
+      "lessons": [
+        {
+          "id": "tm-links",
+          "title": "Links and the Anchor Element",
+          "type": "document",
+          "content": "Links are the foundation of the web. The a element, short for anchor, creates a hyperlink. The href attribute holds the destination URL.\n\nURLs can be absolute or relative. An absolute URL includes the full address including the protocol: https://example.com/page. A relative URL is a path relative to the current file: /about or ../images/photo.jpg.\n\nThe target attribute controls where the link opens. target='_blank' opens the link in a new tab. When you use target='_blank', you should also add rel='noopener noreferrer' for security reasons — without it, the opened page can access and manipulate the page that opened it.\n\nLinks can wrap more than just text. You can wrap an image in an a element to make the image itself a clickable link.\n\nFragment links scroll to a specific part of the same page. Set href to a hash followed by an id: href='#section-two'. The target element must have that id attribute set.",
+          "examples": [
+            {
+              "label": "Link variations",
+              "code": "<a href='https://example.com'>External link</a>\n\n<a href='/about'>Relative link</a>\n\n<a href='https://example.com' target='_blank' rel='noopener noreferrer'>Opens in new tab</a>\n\n<a href='#contact'>Jump to contact section</a>\n\n<a href='https://example.com'>\n  <img src='logo.png' alt='Example site'>\n</a>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What attribute on an anchor element defines where the link goes?",
+              "options": ["src, the same as an image", "href, which holds the destination URL", "url, which is the link attribute", "link, which is the standard attribute name"],
+              "answer": 1,
+              "explanation": "href stands for hypertext reference. It holds the URL the link points to. src is used on media elements like img and script, not on anchors."
+            },
+            {
+              "q": "Why should rel='noopener noreferrer' be added alongside target='_blank'?",
+              "options": ["It makes the link open faster in the new tab", "It prevents the new tab from accessing the original page, closing a security vulnerability", "It is required for the link to open in a new tab at all", "It hides the referrer information from analytics tools"],
+              "answer": 1,
+              "explanation": "Without noopener, a page opened with target='_blank' can use window.opener to access and manipulate the original tab. noopener closes that vector. noreferrer also suppresses referrer header information."
+            },
+            {
+              "q": "You want a link that jumps to a section with id='pricing' on the same page. What is the correct href value?",
+              "options": ["href='pricing'", "href='id:pricing'", "href='#pricing'", "href='@pricing'"],
+              "answer": 2,
+              "explanation": "Fragment links use a hash followed by the target element's id value. The browser scrolls that element into view without loading a new page."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 4: Images and Media",
+      "lessons": [
+        {
+          "id": "tm-images",
+          "title": "Images",
+          "type": "document",
+          "content": "The img element embeds an image. It is a void element — no closing tag. The two required attributes are src, which is the path or URL of the image file, and alt, which is a text description.\n\nThe alt attribute is not optional. If the image fails to load, the alt text is shown instead. Screen readers read it aloud to users who cannot see the image. Search engines use it to understand image content. If an image is purely decorative and adds no information, use an empty alt attribute: alt=''. This tells screen readers to skip it. But never leave alt out entirely.\n\nwidth and height attributes should be set on images. They tell the browser the image dimensions before it loads so it can reserve the correct space in the layout. This prevents layout shifts as the page loads.\n\nThe figure and figcaption elements wrap an image and its caption. figure is a semantic container for self-contained content. figcaption is the visible caption text below the image.",
+          "examples": [
+            {
+              "label": "Images with attributes and figure",
+              "code": "<img src='photo.jpg' alt='A red barn in a snow-covered field' width='800' height='600'>\n\n<img src='divider.png' alt='' width='400' height='2'>\n\n<figure>\n  <img src='chart.png' alt='Bar chart showing sales growth from 2020 to 2024' width='600' height='400'>\n  <figcaption>Sales growth over four years</figcaption>\n</figure>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "A purely decorative image that adds no information should have which alt value?",
+              "options": ["No alt attribute at all", "alt='decorative'", "alt='image'", "alt='' — an empty string"],
+              "answer": 3,
+              "explanation": "An empty alt tells screen readers to skip the image entirely. Omitting alt is different — it signals that the author forgot it, not that the image is decorative. alt='decorative' or alt='image' is meaningless filler."
+            },
+            {
+              "q": "Why should you set width and height attributes on images?",
+              "options": ["To prevent the image from being downloaded at full resolution", "So the browser can reserve space before the image loads and avoid layout shifts", "To enable zoom and pan gestures on the image", "Because browsers cannot display images without explicit dimensions"],
+              "answer": 1,
+              "explanation": "When the browser knows dimensions upfront, it allocates the right amount of space in the layout before the file arrives. Without them, the page jumps as images load in, which is a poor user experience."
+            },
+            {
+              "q": "What is the purpose of the figure element?",
+              "options": ["It applies a border and shadow to images automatically", "It is a semantic container for self-contained content like images with captions", "It replaces the img element in modern HTML", "It makes images responsive across screen sizes"],
+              "answer": 1,
+              "explanation": "figure wraps content that is referenced from the main flow but could stand on its own, like an image with a caption. figcaption goes inside it as the visible description."
+            }
+          ]
+        },
+        {
+          "id": "tm-audio-video",
+          "title": "Audio and Video",
+          "type": "document",
+          "content": "HTML5 introduced native audio and video elements. You no longer need Flash or plugins to embed media.\n\nThe video element embeds a video. The src attribute points to the video file. The controls attribute adds the browser's built-in playback controls. Without controls, the video has no play button and the user cannot interact with it. autoplay starts the video automatically when the page loads — use this carefully and combine it with muted, because browsers block autoplay with sound by default. loop repeats the video when it ends.\n\nThe audio element works the same way. It also uses src and controls.\n\nBoth elements support multiple source files using the source element inside them. This lets you provide the same media in different formats so the browser picks one it supports. The type attribute on source tells the browser the file format.\n\nThe poster attribute on video specifies an image to display before the video plays, like a thumbnail.",
+          "examples": [
+            {
+              "label": "Video and audio with fallback sources",
+              "code": "<video controls width='640' height='360' poster='thumbnail.jpg'>\n  <source src='video.mp4' type='video/mp4'>\n  <source src='video.webm' type='video/webm'>\n  Your browser does not support video.\n</video>\n\n<audio controls>\n  <source src='audio.mp3' type='audio/mpeg'>\n  <source src='audio.ogg' type='audio/ogg'>\n  Your browser does not support audio.\n</audio>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does the controls attribute do on a video element?",
+              "options": ["It enables keyboard shortcuts for the video", "It adds the browser's built-in play, pause, and seek interface", "It prevents the user from pausing the video", "It enables fullscreen mode only"],
+              "answer": 1,
+              "explanation": "Without controls, there is no visible interface on the video at all. The controls attribute adds the browser's native playback UI — play, pause, volume, seek, and fullscreen."
+            },
+            {
+              "q": "Why provide multiple source elements inside a video element?",
+              "options": ["So the video plays from multiple servers simultaneously for speed", "Because HTML5 video requires at least two formats to function", "Because different browsers support different video formats, so you offer options", "To increase video quality on high-resolution screens"],
+              "answer": 2,
+              "explanation": "Browser support for video formats varies. By providing mp4 and webm, you cover the major browsers. The browser picks the first format it can play and ignores the rest."
+            },
+            {
+              "q": "What does the poster attribute on a video element do?",
+              "options": ["Adds a caption below the video player", "Sets an image to display as the video thumbnail before playback starts", "Loads a preview clip of the first few seconds", "Overlays a watermark on the video during playback"],
+              "answer": 1,
+              "explanation": "poster lets you specify an image that shows in the video area before the user hits play. It gives the player a polished look instead of showing a blank frame."
+            }
+          ]
+        },
+        {
+          "id": "tm-sb-missing-controls",
+          "title": "Spot the Bug: Inaccessible Video",
+          "type": "spot_bug",
+          "prompt": "The video on this page will load but the user cannot interact with it. Click the line causing the problem.",
+          "code": "<!DOCTYPE html>\n<html lang='en'>\n<head>\n  <title>Tutorial</title>\n</head>\n<body>\n  <h1>Watch the Tutorial</h1>\n  <video src='tutorial.mp4' autoplay>\n  </video>\n  <p>Follow along with the steps below.</p>\n</body>\n</html>",
+          "bugLine": 8,
+          "explanation": "The video element is missing the controls attribute. Without it, there is no play button, no seek bar, and no way for the user to interact with the video. Add controls to give users a playback interface."
+        }
+      ]
+    }
+  ]
+}

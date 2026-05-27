@@ -1,0 +1,191 @@
+{
+  "id": "html-semantic",
+  "title": "HTML: Semantic HTML",
+  "sections": [
+    {
+      "title": "Module 1: What Semantics Means",
+      "lessons": [
+        {
+          "id": "sem-intro",
+          "title": "Why Semantics Matter",
+          "type": "document",
+          "content": "Semantic HTML means using the right element for the right job — choosing an element based on what the content is, not what you want it to look like.\n\nThe web has two all-purpose container elements: div and span. div is a block-level container. span is an inline container. Neither of them means anything. They are blank wrappers. A web page built entirely of divs and spans has no meaningful structure — a browser, a screen reader, and a search engine all see the same featureless wall of text.\n\nSemantic elements are the alternative. nav means navigation. article means an independent piece of content. main means the primary content of the page. These elements carry meaning. A screen reader knows that nav contains links to move around the site. A search engine knows that article contains the main body of a piece of content.\n\nSemantic HTML is one part of writing accessible, maintainable, and well-indexed pages. The elements are there — using them is mostly a matter of habit.",
+          "questions": [
+            {
+              "q": "What is the defining characteristic of a semantic HTML element?",
+              "options": ["It has built-in visual styling that matches its purpose", "It carries meaning about what the content is, not just how it looks", "It is only understood by search engines, not browsers", "It replaces CSS for layout and visual design"],
+              "answer": 1,
+              "explanation": "Semantic elements communicate purpose. nav, article, and main tell browsers, screen readers, and search engines what the content represents. div and span communicate nothing about content meaning."
+            },
+            {
+              "q": "What is the difference between div and a semantic element like article?",
+              "options": ["div is block-level and article is inline", "div is a blank container with no meaning, article tells readers the content is independent and self-contained", "article is deprecated in modern HTML", "div can contain any element, article can only contain text"],
+              "answer": 1,
+              "explanation": "div is a generic block container that means nothing by itself. article means the content could stand alone — a blog post, a comment, a news article. That distinction matters to assistive technology and search engines."
+            },
+            {
+              "q": "Which elements are the two generic all-purpose containers in HTML?",
+              "options": ["section and article", "div and span", "main and aside", "header and footer"],
+              "answer": 1,
+              "explanation": "div is the generic block-level container. span is the generic inline container. Both carry no inherent meaning and should be used when no semantic element fits."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Page Structure Elements",
+      "lessons": [
+        {
+          "id": "sem-landmark",
+          "title": "Landmark Elements",
+          "type": "document",
+          "content": "Landmark elements define the major regions of a page. Screen reader users can jump between these regions directly, which makes navigation fast and efficient.\n\nheader is a container for introductory content or navigation. It typically holds the site logo, site name, and primary nav. As a top-level element it represents the page header, but it can also be used inside article or section to head that specific content block.\n\nfooter is the counterpart to header. At the page level it holds copyright, links, contact info. It can also appear inside article.\n\nnav wraps the primary navigation links. You can have multiple nav elements — one for the main menu, one for breadcrumbs — but keep them to meaningful navigation groups, not every set of links.\n\nmain is the unique container for the primary content of the page. There should be exactly one main per page. It excludes headers, footers, and navigation. Think of it as the answer to: what is this page about?\n\naside holds content tangentially related to the surrounding content. Pull quotes, related articles, and advertisement slots are typical uses.",
+          "examples": [
+            {
+              "label": "A page using landmark elements",
+              "code": "<header>\n  <a href='/'><img src='logo.svg' alt='Site name'></a>\n  <nav>\n    <ul>\n      <li><a href='/'>Home</a></li>\n      <li><a href='/blog'>Blog</a></li>\n    </ul>\n  </nav>\n</header>\n\n<main>\n  <h1>Welcome</h1>\n  <p>Main content here.</p>\n\n  <aside>\n    <h2>Related</h2>\n    <p>Tangential content here.</p>\n  </aside>\n</main>\n\n<footer>\n  <p>&copy; 2025 Site Name</p>\n</footer>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "How many main elements should a page have?",
+              "options": ["One per major section of content", "Exactly one, representing the page's primary content", "One per article or section element", "As many as needed for multi-column layouts"],
+              "answer": 1,
+              "explanation": "main is unique per page. It represents the primary content that is not repeated across pages. Multiple mains on one page is invalid HTML."
+            },
+            {
+              "q": "What kind of content belongs in an aside element?",
+              "options": ["The main body text of a blog post", "Content that is tangentially related to the surrounding content, like pull quotes or related links", "Navigation menus and site-wide links", "Page headings and introductory text"],
+              "answer": 1,
+              "explanation": "aside is for content related to but not essential to the main flow. If the aside were removed, the main content would still make complete sense."
+            },
+            {
+              "q": "Can a header element appear inside an article element?",
+              "options": ["No, header can only be used once as the page-level header", "Yes, header can be used inside article or section to head that specific block", "Only if the article is inside main", "Only if the page-level header uses a different element"],
+              "answer": 1,
+              "explanation": "header is not limited to the top of the page. It is valid inside article and section as a header for that specific content block. Context determines its role."
+            }
+          ]
+        },
+        {
+          "id": "sem-article-section",
+          "title": "Article and Section",
+          "type": "document",
+          "content": "article and section are both semantic containers. They are easy to confuse, but they have different meanings.\n\narticle is for content that is self-contained and independently distributable. Ask yourself: would this make sense if I pasted it somewhere else — in an RSS feed, in an email, on a different site? If yes, it is an article. Blog posts, news articles, forum posts, and product cards are all articles.\n\nsection is for grouping related content that is part of a larger whole. A single blog post might have a section for the introduction, a section for the body, and a section for comments. None of those stand alone — they belong to the article.\n\nBoth article and section should have a heading as their first significant child. If you cannot think of a heading for the block, ask whether div would be more appropriate.\n\nArticles can contain sections, and sections can contain articles. A news page might have a section for 'Top Stories', and that section contains multiple article elements.",
+          "examples": [
+            {
+              "label": "Article containing sections",
+              "code": "<article>\n  <header>\n    <h2>How to Make Pasta</h2>\n    <p>Published 12 May 2025</p>\n  </header>\n\n  <section>\n    <h3>Ingredients</h3>\n    <p>...</p>\n  </section>\n\n  <section>\n    <h3>Method</h3>\n    <p>...</p>\n  </section>\n\n  <footer>\n    <p>Tagged: cooking, Italian</p>\n  </footer>\n</article>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which element would you use for a blog post that could be shared independently?",
+              "options": ["section, because it groups related content", "div, because it is the safest container", "article, because the post is self-contained and independently distributable", "main, because the post is the primary content"],
+              "answer": 2,
+              "explanation": "article is for self-contained content that makes sense on its own. A blog post fits perfectly — it could appear in an RSS feed or be shared elsewhere and still be complete."
+            },
+            {
+              "q": "What is the key test for whether to use article vs section?",
+              "options": ["Whether the content has a heading or not", "Whether the content would make sense on its own if extracted from the page", "Whether the content contains images or media", "Whether the content is above or below the fold"],
+              "answer": 1,
+              "explanation": "If the content is self-contained and distributable, it is article. If it is a grouping of related content that belongs to a larger whole, it is section."
+            },
+            {
+              "q": "A page has a region titled 'Top Stories' that contains several news items. How should these be marked up?",
+              "options": ["A section containing multiple article elements", "An article containing multiple section elements", "A div containing multiple article elements", "A main containing multiple nav elements"],
+              "answer": 0,
+              "explanation": "section groups the 'Top Stories' region. Each news item inside is independently distributable, so each is an article. section for the container, article for each item."
+            }
+          ]
+        },
+        {
+          "id": "sem-fb-structure",
+          "title": "Fill in the Blanks: Page Structure",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Fill in the correct semantic elements for this page layout.",
+              "code": "<___>\n  <a href='/'>Logo</a>\n  <___>\n    <a href='/about'>About</a>\n  </___>\n</___>\n\n<___>\n  <___>\n    <h1>Article Title</h1>\n    <p>Article content.</p>\n  </___>\n</___>\n\n<___>\n  <p>&copy; 2025</p>\n</___>",
+              "blanks": ["header", "nav", "nav", "header", "main", "article", "article", "main", "footer"],
+              "explanation": "header wraps the top of the page including nav. main wraps the primary content. article wraps the self-contained content piece. footer wraps the bottom of the page."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Text-Level Semantics",
+      "lessons": [
+        {
+          "id": "sem-text-elements",
+          "title": "Semantic Inline Elements",
+          "type": "document",
+          "content": "Beyond headings and paragraphs, HTML has several inline elements that add semantic meaning to specific words or phrases within text.\n\ntime wraps dates and times. The datetime attribute holds a machine-readable version: <time datetime='2025-05-12'>May 12</time>. This lets browsers, search engines, and calendar apps understand the date even if the visible text is informal.\n\naddress wraps contact information for the nearest article or body. It is not just for physical addresses — it can hold an email, a phone number, or a link to a contact page.\n\ncite wraps the title of a creative work — a book, film, song, or website. It renders italic by default but carries semantic meaning about what the content is.\n\nbdo overrides text direction. The dir attribute controls whether text renders left-to-right or right-to-left. sub and sup are subscript and superscript, used for chemical formulas, footnotes, and mathematical notation.",
+          "examples": [
+            {
+              "label": "Semantic inline elements in use",
+              "code": "<p>Published on <time datetime='2025-05-12'>May 12, 2025</time>.</p>\n\n<address>\n  Contact us at <a href='mailto:hello@example.com'>hello@example.com</a>\n</address>\n\n<p>The ideas in <cite>A Brief History of Time</cite> changed how I think.</p>\n\n<p>Water is H<sub>2</sub>O.</p>\n<p>Area = r<sup>2</sup></p>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What is the purpose of the datetime attribute on the time element?",
+              "options": ["It sets the timezone for the displayed date", "It provides a machine-readable version of the date for browsers and search engines", "It formats the date automatically for the user's locale", "It links the date to a calendar application"],
+              "answer": 1,
+              "explanation": "The visible text in a time element can be informal, like 'last Tuesday'. The datetime attribute provides a standardised format that machines can parse reliably."
+            },
+            {
+              "q": "What does the cite element represent?",
+              "options": ["A reference to a source in a bibliography", "The title of a creative work, such as a book, film, or song", "A block quotation from another source", "A footnote or end note in a document"],
+              "answer": 1,
+              "explanation": "cite wraps the title of a creative work. It is for titles, not author names or citations. Do not confuse it with blockquote's cite attribute, which holds a URL source."
+            },
+            {
+              "q": "Which elements would you use to mark up 'H2O' correctly?",
+              "options": ["The number 2 in a small element", "The number 2 in a sub element, since it is subscript", "The number 2 in a sup element, since it is superscript", "The number 2 in a code element, since it is a formula"],
+              "answer": 1,
+              "explanation": "Chemical subscripts like the 2 in H2O use the sub element. sup is for superscript, like exponents (r²). Both have semantic and presentational meaning."
+            }
+          ]
+        },
+        {
+          "id": "sem-quotations",
+          "title": "Quotations",
+          "type": "document",
+          "content": "HTML has two elements for quoting content from other sources.\n\nblockquote is for long quotations that stand on their own, set apart from the surrounding text. The cite attribute on blockquote can hold the URL of the source. Inside a blockquote you can include a footer with a cite element for the attribution — name and source together.\n\nq is for short inline quotations within a paragraph. The browser adds quotation marks automatically. Like blockquote, it accepts a cite attribute for the source URL.\n\nDo not use blockquote to visually indent text. Its purpose is to indicate quoted content, not to create layout. If you want indentation, use CSS.",
+          "examples": [
+            {
+              "label": "Block and inline quotations",
+              "code": "<blockquote cite='https://www.w3.org/'>\n  <p>The Web is designed to work for all people, whatever their hardware, software, language, location, or ability.</p>\n  <footer>\n    <cite>W3C Mission Statement</cite>\n  </footer>\n</blockquote>\n\n<p>Tim Berners-Lee said the web was <q>for everyone</q>.</p>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "When should you use blockquote instead of q?",
+              "options": ["When the quote is from an external website", "When the quote is long enough to stand alone as a block, separate from the surrounding text", "When you want quotation marks to appear around the text", "When the author of the quote is known"],
+              "answer": 1,
+              "explanation": "blockquote is for quotations displayed as a block, set apart from the prose. q is for short inline quotes within a sentence. Length and presentation context are the deciding factors."
+            },
+            {
+              "q": "What does the cite attribute on a blockquote element hold?",
+              "options": ["The name of the person being quoted", "The title of the work being quoted", "The URL of the source being quoted", "The date the quote was published"],
+              "answer": 2,
+              "explanation": "The cite attribute on blockquote and q holds a URL pointing to the source. The author name and work title go in the attribution text, typically inside a footer with a cite element."
+            }
+          ]
+        },
+        {
+          "id": "sem-sb-div-soup",
+          "title": "Spot the Bug: Div Soup",
+          "type": "spot_bug",
+          "prompt": "This page uses a generic div where a meaningful semantic element belongs. Click the line that should be changed.",
+          "code": "<!DOCTYPE html>\n<html lang='en'>\n<head><title>News</title></head>\n<body>\n  <header>\n    <h1>Daily News</h1>\n  </header>\n  <div>\n    <h2>Big Story Today</h2>\n    <p>A major event happened this morning.</p>\n  </div>\n  <footer>\n    <p>&copy; 2025 Daily News</p>\n  </footer>\n</body>\n</html>",
+          "bugLine": 8,
+          "explanation": "The div on line 8 wraps an independent news story. It should be an article element. The content is self-contained and distributable, which is exactly what article is for."
+        }
+      ]
+    }
+  ]
+}

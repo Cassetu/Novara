@@ -1,0 +1,166 @@
+{
+  "id": "html-fundamentals",
+  "title": "HTML: Fundamentals",
+  "sections": [
+    {
+      "title": "Module 1: What HTML Is",
+      "lessons": [
+        {
+          "id": "html-what-is",
+          "title": "What HTML Actually Is",
+          "type": "document",
+          "content": "HTML stands for HyperText Markup Language. It is not a programming language. It does not have variables, loops, or logic. It is a description language. You use it to describe the structure and content of a page.\n\nA browser reads your HTML file from top to bottom and builds a visual representation of what you described. Every piece of content on a webpage, every heading, paragraph, image, link, and button, exists because an HTML element told the browser to put it there.\n\nHTML was created in 1991 by Tim Berners-Lee. The version used today is HTML5, standardised in 2014. It is the foundational layer of every website on the internet. CSS controls how things look. JavaScript controls how things behave. HTML controls what things are.\n\nYou write HTML in plain text files with a .html extension. No special software required. A text editor and a browser is everything you need.",
+          "questions": [
+            {
+              "q": "What does HTML stand for?",
+              "options": ["HyperText Markup Language", "High Transfer Markup Language", "HyperText Machine Logic", "Hyperlink and Text Markup Language"],
+              "answer": 0,
+              "explanation": "HyperText Markup Language. Hyper refers to hyperlinks. Markup means you are annotating content with tags that describe its meaning."
+            },
+            {
+              "q": "What is HTML's role compared to CSS and JavaScript?",
+              "options": ["HTML controls style, CSS controls structure, JS controls logic.", "HTML describes structure and content, CSS controls appearance, JavaScript controls behaviour.", "All three do the same thing in different ways.", "HTML and CSS are the same thing."],
+              "answer": 1,
+              "explanation": "Each layer has a single responsibility. HTML is the content layer. CSS is the presentation layer. JavaScript is the behaviour layer. Keeping them separate makes code maintainable."
+            },
+            {
+              "q": "What file extension do HTML files use?",
+              "options": [".htm only", ".html only", ".html or .htm", ".hyper"],
+              "answer": 2,
+              "explanation": "Both .html and .htm are valid. .html is standard today. .htm was common on older Windows systems that limited extensions to three characters."
+            }
+          ]
+        },
+        {
+          "id": "html-elements",
+          "title": "Elements, Tags, and Attributes",
+          "type": "document",
+          "content": "An HTML element is made of an opening tag, content, and a closing tag. The opening tag is the element name in angle brackets. The closing tag is the same but with a forward slash before the name.\n\nTags tell the browser what kind of content follows. A p tag means paragraph. An h1 tag means the most important heading. An a tag means a link.\n\nSome elements are void elements. They have no content and no closing tag because they represent something that does not wrap text. img, br, hr, input, and meta are all void elements.\n\nAttributes go inside the opening tag and provide extra information about the element. They are written as name='value' pairs. The href attribute on an anchor tag tells the browser where to link to. The src attribute on an img tag tells the browser where the image file is. The class and id attributes give elements names that CSS and JavaScript can target.",
+          "examples": [
+            {
+              "label": "Basic element anatomy",
+              "code": "<p>This is a paragraph.</p>\n<h1>This is a heading</h1>\n\n<a href='https://example.com'>Click here</a>\n\n<img src='photo.jpg' alt='A description'>\n<input type='text' placeholder='Enter name'>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which of these is a void element?",
+              "options": ["p", "div", "img", "span"],
+              "answer": 2,
+              "explanation": "img is a void element because it represents an image resource rather than wrapping text content. It has no closing tag."
+            },
+            {
+              "q": "Where do attributes go in an HTML element?",
+              "options": ["After the closing tag.", "Inside the opening tag.", "Between the opening and closing tags.", "In a separate style block."],
+              "answer": 1,
+              "explanation": "Attributes live inside the opening tag: <a href='url'>. They are name=value pairs that modify or configure the element."
+            },
+            {
+              "q": "What does the `alt` attribute on an `img` element do?",
+              "options": ["Sets the image size.", "Provides alternative text if the image cannot display.", "Links the image to another page.", "Changes the image format."],
+              "answer": 1,
+              "explanation": "alt text displays when the image fails to load and is read by screen readers. It is essential for accessibility and is required for valid HTML."
+            }
+          ]
+        },
+        {
+          "id": "html-sb-missing-alt",
+          "title": "Spot the Bug: Missing Attribute",
+          "type": "spot_bug",
+          "prompt": "This snippet has one line that will break accessibility and fail HTML validation. Click it.",
+          "code": "<!DOCTYPE html>\n<html lang='en'>\n<head>\n  <title>My Page</title>\n</head>\n<body>\n  <h1>Welcome</h1>\n  <img src='hero.jpg'>\n  <p>Thanks for visiting.</p>\n</body>\n</html>",
+          "bugLine": 8,
+          "explanation": "The img element is missing the required alt attribute. Without it the image has no accessible description and the page fails validation. Add alt='description of image'."
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Document Structure",
+      "lessons": [
+        {
+          "id": "html-document-structure",
+          "title": "The HTML Document Structure",
+          "type": "document",
+          "content": "Every valid HTML page follows the same basic skeleton. Understanding it means you never have to guess what goes where.\n\nThe DOCTYPE declaration goes first. It is not an element. It is an instruction to the browser telling it which version of HTML to use. DOCTYPE html tells it to use HTML5.\n\nThe html element wraps the entire document. The lang attribute on it declares the page language. This matters for screen readers and search engines.\n\nInside html there are exactly two children: head and body.\n\nhead contains information about the document that is not displayed on the page. The title element sets the text shown in the browser tab. meta elements provide metadata: the charset declaration, the viewport setting for responsive design, descriptions for search engines.\n\nbody contains everything that is actually visible on the page. Every heading, paragraph, image, and link lives here.",
+          "examples": [
+            {
+              "label": "Complete minimal HTML document",
+              "code": "<!DOCTYPE html>\n<html lang='en'>\n<head>\n  <meta charset='UTF-8'>\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n  <title>Page Title</title>\n</head>\n<body>\n  <h1>Hello World</h1>\n  <p>Content goes here.</p>\n</body>\n</html>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What is the purpose of `<!DOCTYPE html>`?",
+              "options": ["It is the root element of the page.", "It tells the browser to render the page in HTML5 mode.", "It sets the page language.", "It imports the HTML standard library."],
+              "answer": 1,
+              "explanation": "DOCTYPE html is a declaration, not an element. It triggers standards mode rendering in the browser, which means HTML5."
+            },
+            {
+              "q": "Which element contains everything visible on the page?",
+              "options": ["html", "head", "body", "main"],
+              "answer": 2,
+              "explanation": "body contains all visible content. head contains metadata that is not rendered on the page itself."
+            },
+            {
+              "q": "What does `<meta charset='UTF-8'>` do?",
+              "options": ["Sets the page language.", "Declares the character encoding so the browser can display text correctly.", "Sets the viewport width.", "Links to an external stylesheet."],
+              "answer": 1,
+              "explanation": "UTF-8 is a character encoding that supports virtually every character in every language. Without this declaration, special characters may render incorrectly."
+            },
+            {
+              "q": "What does the `lang` attribute on the html element do?",
+              "options": ["Translates the page automatically.", "Declares the page's language for screen readers and search engines.", "Loads a language pack.", "Restricts access by region."],
+              "answer": 1,
+              "explanation": "lang='en' tells assistive technology what language the content is in, enabling correct pronunciation. Search engines also use it to serve the right results to the right users."
+            }
+          ]
+        },
+        {
+          "id": "html-fb-structure",
+          "title": "Fill in the Blanks: Document Structure",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete the HTML document skeleton.",
+              "code": "<!___ html>\n<html lang='___'>\n<___>\n  <meta charset='UTF-8'>\n  <title>My Page</title>\n</___>\n<___>\n  <h1>Hello</h1>\n</___>\n</html>",
+              "blanks": ["DOCTYPE", "en", "head", "head", "body", "body"],
+              "explanation": "DOCTYPE comes first. lang on html declares the language. head holds metadata. body holds visible content."
+            },
+            {
+              "prompt": "Which attributes belong on these elements?",
+              "code": "<html ___='en'>\n<meta ___='UTF-8'>\n<meta name='viewport' ___='width=device-width, initial-scale=1.0'>\n<img src='photo.jpg' ___='A landscape photo'>",
+              "blanks": ["lang", "charset", "content", "alt"],
+              "explanation": "lang goes on html. charset goes on the meta charset tag. content holds the viewport value. alt describes the image."
+            }
+          ]
+        },
+        {
+          "id": "html-comments-whitespace",
+          "title": "Comments and Whitespace",
+          "type": "document",
+          "content": "HTML comments are written with <!-- at the start and --> at the end. The browser ignores everything inside. They are useful for leaving notes, temporarily hiding content, or marking sections of a long file.\n\nWhitespace in HTML is collapsed. Multiple spaces become one space. Line breaks between inline elements are treated as a single space. This means you can indent your HTML for readability without affecting the rendered output.\n\nIndentation is not enforced by HTML but is an important habit. Properly indented HTML is much easier to read and debug. Standard convention is two or four spaces per level of nesting.",
+          "examples": [
+            {
+              "label": "Comments and indentation",
+              "code": "<!-- This is a comment -->\n\n<!-- Navigation section -->\n<nav>\n  <ul>\n    <li><a href='/'>Home</a></li>\n    <li><a href='/about'>About</a></li>\n  </ul>\n</nav>\n\n<!-- TODO: add footer -->"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What happens to multiple consecutive spaces in HTML?",
+              "options": ["They all render as spaces.", "They collapse to a single space.", "They cause a layout error.", "They are converted to tabs."],
+              "answer": 1,
+              "explanation": "The browser collapses whitespace. If you need multiple spaces, use the &nbsp; entity or CSS. This is why indenting HTML for readability does not break the layout."
+            },
+            {
+              "q": "What is the correct HTML comment syntax?",
+              "options": ["// comment", "/* comment */", "<!-- comment -->", "# comment"],
+              "answer": 2,
+              "explanation": "HTML comments use <!-- to open and --> to close. Everything between is ignored by the browser but visible in the page source."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

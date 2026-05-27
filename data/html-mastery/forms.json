@@ -1,0 +1,235 @@
+{
+  "id": "html-forms",
+  "title": "HTML: Forms",
+  "sections": [
+    {
+      "title": "Module 1: Form Basics",
+      "lessons": [
+        {
+          "id": "forms-intro",
+          "title": "What Forms Are and How They Work",
+          "type": "document",
+          "content": "A form is how a web page collects input from a user and sends it somewhere. Login screens, search boxes, checkout flows, contact pages — all of these are HTML forms.\n\nThe form element is the container. Everything inside it is part of that form. The action attribute tells the browser where to send the data when the form is submitted — usually a URL on your server. The method attribute tells it how to send it.\n\nmethod='get' appends the form data to the URL as a query string. This is suitable for search forms where the result should be bookmarkable. method='post' sends data in the request body, hidden from the URL. Use post for anything sensitive or data-modifying: logins, signups, purchases.\n\nA form does nothing until it is submitted. Submission happens when the user clicks a button with type='submit', or presses Enter in a single-line text field.",
+          "examples": [
+            {
+              "label": "Basic form structure",
+              "code": "<form action='/search' method='get'>\n  <input type='text' name='q' placeholder='Search...'>\n  <button type='submit'>Search</button>\n</form>\n\n<form action='/login' method='post'>\n  <input type='email' name='email'>\n  <input type='password' name='password'>\n  <button type='submit'>Log in</button>\n</form>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "When should you use method='post' instead of method='get'?",
+              "options": ["When the form has more than three fields", "When submitting data that is sensitive or causes a change on the server", "When you want the form to submit faster", "When the form uses a textarea instead of text inputs"],
+              "answer": 1,
+              "explanation": "post sends data in the request body rather than the URL. Use it for logins, signups, and any form that modifies server data. get is fine for search or filter forms where the result should be shareable via URL."
+            },
+            {
+              "q": "What does the action attribute on a form element specify?",
+              "options": ["The type of data the form accepts", "The URL where form data is sent when submitted", "The HTTP method used for submission", "The label displayed on the submit button"],
+              "answer": 1,
+              "explanation": "action holds the destination URL for the submitted data. The server at that URL receives the form fields and processes them."
+            },
+            {
+              "q": "How does a user submit a form?",
+              "options": ["By clicking any button inside the form", "By clicking a button with type='submit' or pressing Enter in a text field", "By moving focus away from the last field", "By double-clicking any input element"],
+              "answer": 1,
+              "explanation": "A submit button or the Enter key in a single-line input triggers submission. A plain button inside a form (type='button') does not submit — it needs JavaScript to do anything."
+            }
+          ]
+        },
+        {
+          "id": "forms-labels",
+          "title": "Labels and Accessibility",
+          "type": "document",
+          "content": "Every input needs a label. Not a paragraph nearby, not placeholder text, not a visual hint — a proper label element connected to the input.\n\nThe for attribute on a label connects it to the id of an input. When they are linked, clicking the label focuses the input. Screen readers announce the label when the input receives focus. This is not optional — unlabelled inputs are inaccessible.\n\nPlaceholder text is not a substitute for a label. Placeholder disappears the moment the user starts typing. If they forget what the field is for, there is no label to glance at. It is fine as a hint, but a label must also be present.\n\nThe second way to associate a label is to nest the input directly inside the label element. When you do this, no for or id attributes are needed — the nesting creates the association implicitly.",
+          "examples": [
+            {
+              "label": "Two ways to associate labels",
+              "code": "<label for='email'>Email address</label>\n<input type='email' id='email' name='email'>\n\n<label>\n  Full name\n  <input type='text' name='name'>\n</label>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which attribute on a label element connects it to an input?",
+              "options": ["id, matching the input's name attribute", "for, matching the input's id attribute", "name, matching the input's label attribute", "target, matching the input's id attribute"],
+              "answer": 1,
+              "explanation": "The for attribute on a label must match the id attribute on the input. That connection is what allows screen readers to announce the label and lets the user click the label to focus the input."
+            },
+            {
+              "q": "Why is placeholder text not a replacement for a label?",
+              "options": ["Placeholder text is not supported in modern browsers", "Placeholder text disappears when the user starts typing, removing the field description", "Placeholder text does not support non-English characters", "Placeholder text is only visible on mobile devices"],
+              "answer": 1,
+              "explanation": "Once the user types a single character, the placeholder is gone. They may not remember what the field asked for. A label persists and is always visible."
+            },
+            {
+              "q": "What is the alternative to using for and id to associate a label with an input?",
+              "options": ["Using aria-label instead of a label element", "Placing the input directly inside the label element", "Setting both elements to the same class name", "Using the name attribute to match them"],
+              "answer": 1,
+              "explanation": "Nesting an input inside a label element creates an implicit association. No for or id attributes are required. Both approaches are valid."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Input Types",
+      "lessons": [
+        {
+          "id": "forms-input-types",
+          "title": "Input Types",
+          "type": "document",
+          "content": "The input element is a single void element that handles many different kinds of data. The type attribute controls what it does.\n\ntype='text' is the default — a plain single-line text field. type='email' validates that the value looks like an email address before submission. type='password' hides the characters as the user types. type='number' accepts only numeric input and adds increment/decrement arrows. type='tel' is for phone numbers — it triggers a numeric keyboard on mobile but does not validate format.\n\ntype='checkbox' is a true/false toggle. type='radio' is part of a group where only one option can be selected at a time. Radio buttons in the same group must share the same name attribute — that is how the browser knows they are related.\n\ntype='date' gives a date picker. type='range' gives a slider. type='color' gives a colour picker. type='file' opens a file chooser dialog. type='hidden' is invisible to the user but submits a value — useful for sending data the user should not see or change.",
+          "examples": [
+            {
+              "label": "Various input types",
+              "code": "<input type='text' name='username' placeholder='Enter username'>\n<input type='email' name='email'>\n<input type='password' name='password'>\n<input type='number' name='age' min='0' max='120'>\n\n<input type='checkbox' id='terms' name='terms'>\n<label for='terms'>I agree to the terms</label>\n\n<input type='radio' id='yes' name='subscribe' value='yes'>\n<label for='yes'>Yes</label>\n<input type='radio' id='no' name='subscribe' value='no'>\n<label for='no'>No</label>\n\n<input type='date' name='birthday'>\n<input type='file' name='avatar'>\n<input type='hidden' name='token' value='abc123'>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What makes radio buttons part of the same group?",
+              "options": ["They must all be inside the same fieldset element", "They must share the same name attribute", "They must have sequential id values", "They must all appear directly inside the form element"],
+              "answer": 1,
+              "explanation": "Radio buttons with the same name attribute form a group. The browser enforces that only one can be selected at a time within a group. Without matching names, each radio button acts independently."
+            },
+            {
+              "q": "What is the difference between type='email' and type='tel'?",
+              "options": ["Email is for desktop, tel is for mobile", "Email validates the format before submission, tel does not — it only changes the mobile keyboard", "Tel validates phone format, email does not", "Both validate their respective formats equally"],
+              "answer": 1,
+              "explanation": "type='email' tells the browser to validate that the input looks like an email address. type='tel' only triggers a numeric keypad on mobile — it performs no validation because phone number formats vary too widely."
+            },
+            {
+              "q": "What is type='hidden' used for?",
+              "options": ["To disable an input so the user cannot edit it", "To send a value with the form that is not visible to the user", "To create an input that only appears on mobile devices", "To mark optional fields that do not need to be filled in"],
+              "answer": 1,
+              "explanation": "Hidden inputs are not rendered on screen but their values are submitted with the form. Common uses include CSRF tokens, IDs, or any value the server needs that the user should not interact with."
+            }
+          ]
+        },
+        {
+          "id": "forms-textarea-select",
+          "title": "Textarea and Select",
+          "type": "document",
+          "content": "For multi-line text, use textarea instead of input. Unlike input, textarea is not a void element — it has an opening and closing tag. Any text between those tags is the default value. The rows and cols attributes set the visible size, though CSS is better for this.\n\nThe select element creates a dropdown menu. Inside it, option elements define the choices. The value attribute on each option is what gets submitted. The text between the option tags is what the user sees. These can be different — the displayed label can be longer and friendlier while the submitted value is concise.\n\nAdding a selected attribute to an option makes it the default selection. You can group related options using optgroup, which takes a label attribute for the group heading.\n\nThe multiple attribute on a select element allows more than one option to be selected at once. The size attribute shows multiple rows of the list without needing a dropdown.",
+          "examples": [
+            {
+              "label": "Textarea and select",
+              "code": "<label for='bio'>About you</label>\n<textarea id='bio' name='bio' rows='4'>Default text here.</textarea>\n\n<label for='country'>Country</label>\n<select id='country' name='country'>\n  <optgroup label='Europe'>\n    <option value='gb'>United Kingdom</option>\n    <option value='de'>Germany</option>\n  </optgroup>\n  <optgroup label='Americas'>\n    <option value='us' selected>United States</option>\n    <option value='ca'>Canada</option>\n  </optgroup>\n</select>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What is the difference between the value attribute and the visible text of an option element?",
+              "options": ["They must always be identical for the form to submit correctly", "The value is what gets submitted with the form, the visible text is what the user sees", "The visible text is what gets submitted, the value attribute is just for styling", "value sets the default selection, visible text sets the label"],
+              "answer": 1,
+              "explanation": "The value attribute is what lands in the submitted form data. The text inside the option tags is only for display. They can differ — for example, value='us' with visible text 'United States'."
+            },
+            {
+              "q": "How do you set a default selected option in a select element?",
+              "options": ["Set the default attribute on the select element", "Add the selected attribute to the desired option element", "Put the desired option first in the list", "Set value on the select element itself"],
+              "answer": 1,
+              "explanation": "The selected attribute on an option element marks it as the default. Without it, the browser selects the first option by default."
+            },
+            {
+              "q": "textarea is different from input because it:",
+              "options": ["Is styled differently and only accepts text", "Has an opening and closing tag, and its default value is text between those tags", "Uses a content attribute instead of a value attribute to set its default", "Is a void element with no closing tag"],
+              "answer": 1,
+              "explanation": "Unlike input, textarea has opening and closing tags. The default text goes between them. input is a void element. textarea is not."
+            }
+          ]
+        },
+        {
+          "id": "forms-fb-inputs",
+          "title": "Fill in the Blanks: Form Inputs",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete this login form with correct input types and labels.",
+              "code": "<form action='/login' method='___'>\n  <label ___='email-field'>Email</label>\n  <input type='___' id='email-field' name='email'>\n\n  <label for='pw'>Password</label>\n  <input type='___' id='pw' name='password'>\n\n  <button type='___'>Log in</button>\n</form>",
+              "blanks": ["post", "for", "email", "password", "submit"],
+              "explanation": "Login forms use post to keep credentials out of the URL. for connects the label to the input by id. type='email' validates format. type='password' hides characters. type='submit' triggers form submission."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Validation and Structure",
+      "lessons": [
+        {
+          "id": "forms-validation",
+          "title": "Built-in Validation",
+          "type": "document",
+          "content": "HTML5 added built-in form validation that runs in the browser before the form is submitted. This does not replace server-side validation, but it gives users faster feedback.\n\nThe required attribute marks a field as mandatory. The form will not submit if a required field is empty.\n\nThe minlength and maxlength attributes set character count limits on text inputs and textareas. min and max set numeric limits on number and date inputs. The pattern attribute accepts a regular expression — only input matching that pattern will be accepted.\n\nThe browser shows an error message automatically when validation fails. You cannot fully control the style of these native error messages with CSS, but they work without any JavaScript.\n\nThe novalidate attribute on the form element turns off all built-in validation. This is useful when you are handling validation entirely with JavaScript and do not want the browser interfering.",
+          "examples": [
+            {
+              "label": "Validation attributes",
+              "code": "<input type='text' name='username' required minlength='3' maxlength='20'>\n\n<input type='number' name='age' min='18' max='99' required>\n\n<input type='text' name='postcode' pattern='[A-Z]{1,2}[0-9][0-9A-Z]?\\s?[0-9][A-Z]{2}' required>\n\n<input type='email' name='email' required>\n\n<form novalidate>\n  ...\n</form>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does the required attribute do?",
+              "options": ["Marks the field as important with a visual asterisk", "Prevents the form from submitting if that field is empty", "Sends an error to the server if the field is skipped", "Automatically focuses the field when the page loads"],
+              "answer": 1,
+              "explanation": "required blocks form submission and shows a native browser error if the field is empty. It is the simplest form of HTML validation."
+            },
+            {
+              "q": "You want users to enter a password of at least 8 characters. Which attribute do you use?",
+              "options": ["min='8', since it controls the minimum value", "minlength='8', since it controls the minimum character count", "length='8', which is the standard minimum attribute", "validate='8', since it enables validation on the field"],
+              "answer": 1,
+              "explanation": "minlength sets the minimum number of characters required for text inputs. min is for numeric or date values, not character counts."
+            },
+            {
+              "q": "What does adding novalidate to a form element do?",
+              "options": ["Makes all fields in the form optional", "Disables browser-native validation for that form", "Hides native error messages but still blocks submission", "Moves validation to run on the server instead"],
+              "answer": 1,
+              "explanation": "novalidate turns off the browser's built-in validation entirely for that form. Useful when you are handling validation yourself with JavaScript and do not want conflicting behaviour."
+            }
+          ]
+        },
+        {
+          "id": "forms-fieldset",
+          "title": "Fieldset and Legend",
+          "type": "document",
+          "content": "When a form has logical groups of related fields, you can group them visually and semantically using fieldset and legend.\n\nfieldset wraps a group of related inputs. By default it draws a border around the group. legend is the first child inside fieldset and acts as the label for the entire group.\n\nThis is particularly important for radio buttons and checkboxes. Each individual radio button has its own label, but the group also needs a label. The legend element provides that group label. Without it, a screen reader announces each option without any context about what the group is asking.\n\nThe disabled attribute on a fieldset disables every input inside it at once. This is useful for showing inactive sections of a form without disabling each field individually.",
+          "examples": [
+            {
+              "label": "Fieldset grouping radio buttons",
+              "code": "<fieldset>\n  <legend>Preferred contact method</legend>\n\n  <input type='radio' id='contact-email' name='contact' value='email'>\n  <label for='contact-email'>Email</label>\n\n  <input type='radio' id='contact-phone' name='contact' value='phone'>\n  <label for='contact-phone'>Phone</label>\n\n  <input type='radio' id='contact-post' name='contact' value='post'>\n  <label for='contact-post'>Post</label>\n</fieldset>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What is the purpose of the legend element inside a fieldset?",
+              "options": ["It adds a decorative title bar above the fieldset border", "It provides a label for the entire group of inputs in the fieldset", "It lists the valid values for the inputs in the group", "It replaces individual labels for inputs inside the fieldset"],
+              "answer": 1,
+              "explanation": "legend labels the fieldset as a whole. Screen readers announce it when focus enters the group, providing context. Each input still needs its own label."
+            },
+            {
+              "q": "What happens when you add the disabled attribute to a fieldset?",
+              "options": ["The fieldset's border is hidden", "Every input inside the fieldset is disabled at once", "Only the legend is disabled and the inputs remain active", "The fieldset is removed from the form's submitted data"],
+              "answer": 1,
+              "explanation": "disabled on a fieldset propagates to all its descendant form controls. It is a convenient way to disable a section of a form without touching each input individually."
+            },
+            {
+              "q": "Why is fieldset especially important for groups of radio buttons?",
+              "options": ["Because radio buttons cannot share the same name attribute without a fieldset", "Because radio buttons need a group label to provide context that individual labels do not", "Because browsers do not apply the same-name grouping logic without fieldset", "Because fieldset is required for radio buttons to submit their value"],
+              "answer": 1,
+              "explanation": "Each radio button has an individual label, but the group needs a question too. The legend provides that question. Without it, a screen reader user hears 'Email, radio button' without knowing the question being asked."
+            }
+          ]
+        },
+        {
+          "id": "forms-sb-unlabelled",
+          "title": "Spot the Bug: Missing Label",
+          "type": "spot_bug",
+          "prompt": "This form has an input with no accessible label. Click the line that should be fixed.",
+          "code": "<!DOCTYPE html>\n<html lang='en'>\n<head><title>Sign Up</title></head>\n<body>\n  <form action='/signup' method='post'>\n    <label for='email'>Email</label>\n    <input type='email' id='email' name='email'>\n    <input type='password' id='password' name='password'>\n    <button type='submit'>Sign Up</button>\n  </form>\n</body>\n</html>",
+          "bugLine": 8,
+          "explanation": "The password input has no associated label. Screen readers will announce it without any description. Add <label for='password'>Password</label> before the input."
+        }
+      ]
+    }
+  ]
+}
