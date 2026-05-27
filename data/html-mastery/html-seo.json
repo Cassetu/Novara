@@ -1,0 +1,179 @@
+{
+  "id": "html-seo",
+  "title": "HTML: SEO",
+  "sections": [
+    {
+      "title": "Module 1: How Search Engines Work",
+      "lessons": [
+        {
+          "id": "seo-intro",
+          "title": "Crawling, Indexing, and Ranking",
+          "type": "document",
+          "content": "Search engine optimisation is about making your content easy to find, understand, and rank. The HTML you write directly influences all three stages of how a search engine processes your page.\n\nCrawling is when a search engine bot visits your page by following links. It downloads the HTML and discovers new links to follow. If a page has no links pointing to it, it may never be crawled.\n\nIndexing is when the crawler processes the page and adds it to the search engine's database. Not every crawled page is indexed — the search engine decides whether the content is useful, unique, and trustworthy enough. Duplicate content, thin content, and pages blocked by robots meta tags are not indexed.\n\nRanking is when the search engine decides which indexed pages to show for a given query, and in what order. Hundreds of signals influence ranking. HTML signals include: heading structure, page title, meta description, structured data, canonical URLs, internal links, and page load performance.",
+          "questions": [
+            {
+              "q": "What is the difference between crawling and indexing?",
+              "options": ["They are the same process described from different perspectives", "Crawling is visiting and downloading the page, indexing is processing and storing it in the search engine's database", "Crawling is indexing the page, indexing is ranking it", "Crawling is done by users, indexing is done by search engines"],
+              "answer": 1,
+              "explanation": "Crawling is discovery and download. Indexing is analysis and storage. A page can be crawled but not indexed if the search engine judges it low quality, duplicate, or explicitly blocked."
+            },
+            {
+              "q": "Which of these HTML elements directly influences search engine ranking?",
+              "options": ["div, because it is the most commonly used structural element", "span, because it wraps important inline text", "title, because search engines use it to understand and display the page", "br, because it controls content spacing"],
+              "answer": 2,
+              "explanation": "The title element is one of the most important on-page SEO signals. Search engines use it to understand the page topic and display it as the clickable link in search results."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: On-Page HTML Signals",
+      "lessons": [
+        {
+          "id": "seo-heading-structure",
+          "title": "Heading Structure and Content Hierarchy",
+          "type": "document",
+          "content": "Search engines use your heading hierarchy to understand the structure and topics of your page. A clear, logical outline with one h1 and well-nested h2 and h3 elements communicates what the page covers and how the content is organised.\n\nThe h1 should contain the primary keyword for the page — the term you most want the page to rank for. It should match or closely relate to the page title. Having the h1 and title say completely different things confuses both users and search engines.\n\nEach h2 introduces a major subtopic. Each h3 introduces a detail within that subtopic. Think of the headings as a table of contents. If you pulled all the headings out and read them in order, you should get a clear picture of what the page is about.\n\nDo not keyword-stuff headings. Writing 'Learn HTML HTML Tables HTML Course' in your h1 is penalised. Write headings for humans first. Search engines reward content that serves readers.",
+          "examples": [
+            {
+              "label": "Heading structure as a content outline",
+              "code": "<h1>A Complete Guide to HTML Tables</h1>\n\n<h2>When to Use Tables</h2>\n<h3>Tabular Data vs Layout</h3>\n<h3>Accessibility Considerations</h3>\n\n<h2>Building Your First Table</h2>\n<h3>Core Elements: tr, td, th</h3>\n<h3>Adding thead, tbody, and tfoot</h3>\n\n<h2>Advanced Table Features</h2>\n<h3>Spanning Columns and Rows</h3>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What should the h1 of a page contain from an SEO perspective?",
+              "options": ["The site name, so search engines associate the content with the brand", "The primary keyword for the page — the term you most want it to rank for", "A question, because question-format headings rank higher", "The same text as the navigation link that points to this page"],
+              "answer": 1,
+              "explanation": "The h1 is the strongest on-page keyword signal. It should clearly state the page's primary topic using the term users are most likely to search. It should align with the page title."
+            },
+            {
+              "q": "What does it mean to 'keyword-stuff' a heading?",
+              "options": ["Using the same keyword in both the title and the h1", "Repeating a keyword unnaturally multiple times to try to manipulate ranking", "Including more than one topic keyword in an h2", "Writing headings that are longer than 60 characters"],
+              "answer": 1,
+              "explanation": "Keyword stuffing is cramming a keyword in repeatedly and unnaturally. Search engines detect and penalise it. Write headings that are clear and useful to readers — search engines reward content written for humans."
+            }
+          ]
+        },
+        {
+          "id": "seo-links",
+          "title": "Links and Anchor Text",
+          "type": "document",
+          "content": "Links matter for SEO in two ways: the links pointing to your page from other sites (backlinks), and the links on your page pointing to other pages (internal and outbound links).\n\nHTML gives you control over what search engines do with your links. The rel attribute on anchor tags communicates the relationship.\n\nrel='nofollow' tells search engines not to pass ranking authority through that link. Use it on user-generated content like comments, paid or sponsored links, and links you cannot vouch for.\n\nrel='sponsored' is the specific attribute for paid or advertised links. rel='ugc' is for user-generated content links. These help search engines understand the nature of the link.\n\nAnchor text — the visible, clickable text of a link — is a significant signal. A link that says 'click here' tells search engines nothing. A link that says 'HTML table accessibility guide' tells search engines exactly what the destination page is about. Write descriptive anchor text for every meaningful link.",
+          "examples": [
+            {
+              "label": "Link rel attributes and anchor text",
+              "code": "<a href='/html-tables-guide'>HTML table accessibility guide</a>\n\n<a href='https://sponsor.com' rel='sponsored'>Our hosting partner</a>\n\n<a href='https://forum.example.com/comment/42' rel='ugc nofollow'>User comment source</a>\n\n<a href='https://example.com/article'>Read the full study</a>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Why is 'click here' poor anchor text from an SEO perspective?",
+              "options": ["Because it is too short and search engines ignore short anchor text", "Because it communicates nothing about the destination page to search engines or users", "Because it conflicts with WCAG accessibility guidelines on link text", "Because search engines penalise the word 'click' specifically"],
+              "answer": 1,
+              "explanation": "Anchor text is a strong signal about the content of the linked page. 'Click here' is meaningless. Descriptive anchor text like 'HTML accessibility guide' helps search engines understand both pages."
+            },
+            {
+              "q": "When should you use rel='sponsored' on a link?",
+              "options": ["When linking to a page you own but is hosted on a subdomain", "When the link is part of a paid placement, advertisement, or affiliate arrangement", "When the link points to a page with a lower domain authority than yours", "When the link opens in a new tab with target='_blank'"],
+              "answer": 1,
+              "explanation": "rel='sponsored' is required by Google for paid or affiliate links. Using it is a transparency signal. Failing to mark paid links and letting them pass ranking authority is a violation of search engine guidelines."
+            },
+            {
+              "q": "What does rel='nofollow' tell a search engine?",
+              "options": ["Do not crawl any pages linked from this page", "Do not pass ranking authority through this specific link", "Do not index the page this link points to", "Do not display this link in cached versions of the page"],
+              "answer": 1,
+              "explanation": "nofollow tells search engines not to follow the link for ranking purposes — it does not pass 'link juice'. Use it for links you cannot vouch for, like user-submitted comments or sponsored content."
+            }
+          ]
+        },
+        {
+          "id": "seo-structured-data",
+          "title": "Structured Data and Schema.org",
+          "type": "document",
+          "content": "Structured data is machine-readable information added to your HTML that tells search engines exactly what type of content is on the page — not just the words, but the meaning. Schema.org is the vocabulary search engines use.\n\nStructured data enables rich results in search — star ratings on recipes, event dates, FAQ dropdowns, product prices, and breadcrumbs that appear directly in the search result.\n\nThe most common format is JSON-LD: a script element in the head with type='application/ld+json' containing a JSON object that describes the page content. Google recommends JSON-LD over other formats because it is easy to add and maintain separately from the page content.\n\nCommon schema types: Article, Product, Recipe, Event, FAQPage, BreadcrumbList, Organization, and Person. Each type has its own set of properties. Not all properties are required — the more you provide, the more rich result features you may qualify for.",
+          "examples": [
+            {
+              "label": "JSON-LD structured data for an article",
+              "code": "<script type='application/ld+json'>\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Article\",\n  \"headline\": \"A Complete Guide to HTML Tables\",\n  \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Cassetu\"\n  },\n  \"datePublished\": \"2025-05-01\",\n  \"description\": \"Learn to build accessible, well-structured HTML tables for real data.\"\n}\n</script>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does structured data enable in search results?",
+              "options": ["Faster crawling and indexing of the page", "Rich results like star ratings, event dates, and FAQ dropdowns appearing directly in search", "Automatic translation of the page for international audiences", "Priority placement above paid advertisements"],
+              "answer": 1,
+              "explanation": "Structured data makes a page eligible for rich results — enhanced search listings with additional information like ratings, prices, dates, and steps displayed directly on the results page."
+            },
+            {
+              "q": "What format does Google recommend for structured data?",
+              "options": ["Microdata, embedded directly in HTML element attributes", "RDFa, using HTML attributes like typeof and property", "JSON-LD, in a script tag in the head", "Open Graph, using meta property tags in the head"],
+              "answer": 2,
+              "explanation": "Google recommends JSON-LD. It is placed in a script tag and is entirely separate from your HTML markup — easier to write, maintain, and update without touching visible content."
+            },
+            {
+              "q": "What is Schema.org?",
+              "options": ["A search engine ranking tool that scores your structured data", "The shared vocabulary of types and properties that search engines use to understand structured data", "An HTML standard for semantic elements maintained by the W3C", "A validation service for checking structured data errors"],
+              "answer": 1,
+              "explanation": "Schema.org is a collaborative vocabulary created by Google, Bing, Yahoo, and Yandex. It defines types like Article, Product, and Recipe with standard properties that all major search engines understand."
+            }
+          ]
+        },
+        {
+          "id": "seo-fb-structured-data",
+          "title": "Fill in the Blanks: Structured Data",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete this JSON-LD structured data block for a recipe page.",
+              "code": "<script type='application/___'>\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"___\",\n  \"name\": \"Chocolate Chip Cookies\",\n  \"author\": {\n    \"@type\": \"___\",\n    \"name\": \"Alex\"\n  },\n  \"___\": \"2025-04-10\",\n  \"description\": \"A classic cookie recipe.\"\n}\n</script>",
+              "blanks": ["ld+json", "Recipe", "Person", "datePublished"],
+              "explanation": "The script type must be 'application/ld+json'. @type is 'Recipe' for recipe pages. The author's @type is 'Person'. datePublished uses ISO 8601 date format."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Technical SEO Signals",
+      "lessons": [
+        {
+          "id": "seo-canonical",
+          "title": "Canonical URLs and Duplicate Content",
+          "type": "document",
+          "content": "Duplicate content occurs when the same or very similar content is accessible at multiple URLs. Search engines struggle to decide which version to rank, often splitting authority between them, or choosing a version you did not intend.\n\nCommon causes: HTTP and HTTPS versions of the same page, www and non-www, URLs with and without trailing slashes, pages with query parameters like ?utm_source=newsletter, and paginated content.\n\nThe canonical link element tells search engines which version is the definitive one. Place a self-referencing canonical on every page — including the canonical version itself. This signals intentionality and prevents the search engine from guessing.\n\nCanonical is a hint, not a directive. Search engines may ignore it if the URL you point to is very different from the current page, if the canonical URL returns an error, or if other strong signals contradict it.",
+          "examples": [
+            {
+              "label": "Canonical link element",
+              "code": "<head>\n  <link rel='canonical' href='https://example.com/courses/html-tables'>\n</head>\n\n<!-- This canonical covers all of these URL variants: -->\n<!-- https://example.com/courses/html-tables -->\n<!-- http://example.com/courses/html-tables -->\n<!-- https://www.example.com/courses/html-tables -->\n<!-- https://example.com/courses/html-tables?utm_source=email -->"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What is duplicate content in the context of SEO?",
+              "options": ["Copying text from another website and publishing it on your own", "The same content being accessible at multiple different URLs", "Using the same meta description on multiple pages of your site", "Repeating keywords multiple times within a single page"],
+              "answer": 1,
+              "explanation": "Duplicate content is when identical or near-identical content appears at multiple URLs — including different protocol, www, or query string variations. It dilutes ranking authority and confuses search engines."
+            },
+            {
+              "q": "Is the canonical link element a definitive instruction or a hint to search engines?",
+              "options": ["A definitive instruction — search engines must use the URL you specify", "A hint — search engines consider it but may ignore it based on other signals", "A directive that only applies to Google, not other search engines", "An instruction that is enforced for indexing but ignored for ranking"],
+              "answer": 1,
+              "explanation": "Canonical is a hint. Search engines respect it in most cases but may override it if the canonical URL returns an error, has very different content, or other strong signals contradict it."
+            }
+          ]
+        },
+        {
+          "id": "seo-sb-title",
+          "title": "Spot the Bug: Missing SEO Signals",
+          "type": "spot_bug",
+          "prompt": "This page is missing an important SEO signal in the head. Click the line that needs to be fixed or is causing the problem.",
+          "code": "<!DOCTYPE html>\n<html lang='en'>\n<head>\n  <meta charset='UTF-8'>\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n  <title>Page</title>\n</head>\n<body>\n  <h1>How to Build HTML Tables</h1>\n  <p>A complete guide to table structure and accessibility.</p>\n</body>\n</html>",
+          "bugLine": 6,
+          "explanation": "The title element says 'Page' — a generic, meaningless title. Search engines use it as the clickable headline in results. It should clearly describe the page, like 'How to Build HTML Tables | Web Dev Course'. The h1 is good; the title needs to match it."
+        }
+      ]
+    }
+  ]
+}

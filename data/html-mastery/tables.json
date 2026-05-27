@@ -1,0 +1,154 @@
+{
+  "id": "html-tables",
+  "title": "HTML: Tables",
+  "sections": [
+    {
+      "title": "Module 1: Table Basics",
+      "lessons": [
+        {
+          "id": "tables-intro",
+          "title": "What Tables Are For",
+          "type": "document",
+          "content": "A table is for displaying data that has a meaningful relationship between rows and columns. Think spreadsheets: a schedule, a comparison of features, a price list, a set of statistics. If you can describe the content as 'rows and columns of related data', a table is probably right.\n\nTables are not for page layout. Before CSS was reliable, developers used tables to build multi-column layouts. That is an old hack. It produces inaccessible, inflexible pages that are painful to maintain. Use CSS Grid or Flexbox for layout. Use tables only for tabular data.\n\nThe core elements are: table wraps the whole thing. tr is a table row. td is a table data cell. th is a table header cell. A th communicates that the cell is a heading for a row or column, not just data. Screen readers use this to give users context when navigating individual cells.",
+          "examples": [
+            {
+              "label": "Minimal table",
+              "code": "<table>\n  <tr>\n    <th>Name</th>\n    <th>Role</th>\n    <th>Join Date</th>\n  </tr>\n  <tr>\n    <td>Alice</td>\n    <td>Engineer</td>\n    <td>2022-03-01</td>\n  </tr>\n  <tr>\n    <td>Bob</td>\n    <td>Designer</td>\n    <td>2023-07-15</td>\n  </tr>\n</table>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What kind of content is a table appropriate for?",
+              "options": ["Any content that needs to be displayed in columns", "Data where rows and columns have a meaningful relationship", "Multi-column page layouts and sidebars", "Navigation menus with multiple levels"],
+              "answer": 1,
+              "explanation": "Tables are for tabular data — where the relationship between a row and a column is meaningful. Layout belongs in CSS. Using tables for layout creates accessibility and maintenance problems."
+            },
+            {
+              "q": "What is the difference between td and th?",
+              "options": ["td is for the first column, th is for all other columns", "th is a header cell that describes a row or column, td is a data cell", "td renders bold text, th renders normal weight text", "th is only valid in the first row of a table"],
+              "answer": 1,
+              "explanation": "th communicates that the cell is a heading. Screen readers announce it as context when a user navigates to a data cell in that row or column. td is a plain data cell with no heading meaning."
+            },
+            {
+              "q": "Which element wraps an entire table?",
+              "options": ["tr, which is the root table element", "tbody, which is always required as the outer wrapper", "table, which contains all rows and cells", "grid, which is the modern table container"],
+              "answer": 2,
+              "explanation": "table is the root element. Inside it you have rows (tr), which contain cells (td or th). Everything else is optional structure on top of this foundation."
+            }
+          ]
+        },
+        {
+          "id": "tables-structure",
+          "title": "thead, tbody, tfoot, and caption",
+          "type": "document",
+          "content": "A well-structured table is divided into sections that communicate what each part of the table represents.\n\nthead wraps the header row or rows — the column labels. tbody wraps the main data rows. tfoot wraps summary or totals rows at the bottom. These sections are optional in terms of the HTML parser, but they add meaningful structure and help screen readers announce the table correctly. They also allow each section to scroll independently in CSS if needed.\n\ncaption is the title of the table. It goes immediately after the opening table tag. It is like a heading for the table — it tells the reader what the data represents. Screen readers announce it first when a user enters the table. Do not skip it for data tables.\n\nIf you need to associate a longer description with the table, use aria-describedby pointing to a paragraph with the description.",
+          "examples": [
+            {
+              "label": "Fully structured table",
+              "code": "<table>\n  <caption>Q1 Sales by Region</caption>\n  <thead>\n    <tr>\n      <th>Region</th>\n      <th>January</th>\n      <th>February</th>\n      <th>March</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>North</td>\n      <td>12,400</td>\n      <td>13,100</td>\n      <td>14,200</td>\n    </tr>\n    <tr>\n      <td>South</td>\n      <td>9,800</td>\n      <td>10,500</td>\n      <td>11,000</td>\n    </tr>\n  </tbody>\n  <tfoot>\n    <tr>\n      <td>Total</td>\n      <td>22,200</td>\n      <td>23,600</td>\n      <td>25,200</td>\n    </tr>\n  </tfoot>\n</table>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Where does the caption element go?",
+              "options": ["After the closing table tag as a sibling element", "Inside thead as the first row", "Immediately after the opening table tag", "Inside tfoot as a summary row"],
+              "answer": 2,
+              "explanation": "caption is the first child of table, right after the opening tag. It acts as the table's title and is announced first by screen readers when a user enters the table."
+            },
+            {
+              "q": "What does tfoot represent?",
+              "options": ["The last row of body data in the table", "A footer row for summary or totals information", "A section that is hidden until the user scrolls to the bottom", "An alternative to tbody for shorter tables"],
+              "answer": 1,
+              "explanation": "tfoot holds summary, totals, or footer rows. It communicates that those rows are conclusions drawn from the data above, not just more data rows."
+            },
+            {
+              "q": "Which of these is a reason to use thead, tbody, and tfoot instead of plain tr elements?",
+              "options": ["They are required for the table to render in modern browsers", "They add semantic structure that screen readers and CSS can use", "They automatically sort and total the data they contain", "They prevent the table from being used for layout purposes"],
+              "answer": 1,
+              "explanation": "thead, tbody, and tfoot divide the table into meaningful sections. Screen readers use them for context. CSS can target them independently. They do not change rendering on their own — they add structure."
+            }
+          ]
+        },
+        {
+          "id": "tables-sb-no-caption",
+          "title": "Spot the Bug: Missing Caption",
+          "type": "spot_bug",
+          "prompt": "This table will be confusing to screen reader users. Click the line that is the root of the problem.",
+          "code": "<table>\n  <thead>\n    <tr>\n      <th>Course</th>\n      <th>Students</th>\n      <th>Pass Rate</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>HTML</td>\n      <td>142</td>\n      <td>94%</td>\n    </tr>\n  </tbody>\n</table>",
+          "bugLine": 1,
+          "explanation": "The table has no caption. Screen readers announce nothing when a user enters it, leaving them with no context about what the data represents. Add <caption>Course Enrollment and Pass Rates</caption> as the first child of table."
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Accessibility and Spanning",
+      "lessons": [
+        {
+          "id": "tables-scope",
+          "title": "The scope Attribute",
+          "type": "document",
+          "content": "The scope attribute on a th element tells screen readers which cells the header applies to. This is what makes a table genuinely accessible rather than just visually structured.\n\nscope='col' means the header applies to all cells below it in its column. scope='row' means the header applies to all cells to the right of it in its row. These are the two you will use most.\n\nscope='colgroup' and scope='rowgroup' apply a header to a group of columns or rows created with colgroup or rowgroup elements.\n\nWithout scope, a screen reader may still be able to infer headers for simple tables, but for anything beyond two or three columns it is safer to be explicit. For complex tables with headers spanning multiple rows or columns, scope is essential.",
+          "examples": [
+            {
+              "label": "scope on column and row headers",
+              "code": "<table>\n  <caption>Weekly Schedule</caption>\n  <thead>\n    <tr>\n      <th scope='col'>Day</th>\n      <th scope='col'>Morning</th>\n      <th scope='col'>Afternoon</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th scope='row'>Monday</th>\n      <td>HTML</td>\n      <td>CSS</td>\n    </tr>\n    <tr>\n      <th scope='row'>Tuesday</th>\n      <td>JavaScript</td>\n      <td>Review</td>\n    </tr>\n  </tbody>\n</table>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does scope='row' on a th element tell a screen reader?",
+              "options": ["The header applies to all cells above and below it in its column", "The header applies to all cells to the right of it in its row", "The header spans multiple rows below it", "The header is part of a row group created by tbody"],
+              "answer": 1,
+              "explanation": "scope='row' means that th is the label for the rest of the cells in that row. When a screen reader reads a cell in that row, it announces the row header as context."
+            },
+            {
+              "q": "When is it essential to use the scope attribute?",
+              "options": ["Only on tables with more than ten rows", "On all th elements, but especially on complex tables where headers span multiple rows or columns", "Only on th elements inside thead, not on row headers inside tbody", "Only when the table has no caption element"],
+              "answer": 1,
+              "explanation": "scope should be used on all th elements. It is absolutely essential on complex tables where inferring header relationships is ambiguous. Simple tables may work without it but explicit scope is better practice."
+            }
+          ]
+        },
+        {
+          "id": "tables-spanning",
+          "title": "Spanning Rows and Columns",
+          "type": "document",
+          "content": "Sometimes a single cell needs to span multiple columns or rows — a header that covers two related columns, or a label that runs across several rows of data.\n\ncolspan='2' makes a cell stretch across two columns. colspan='3' stretches across three. The number is how many columns the cell occupies. When you add a cell with colspan='2', you must remove one cell from that row — otherwise you have too many cells.\n\nrowspan works the same way in the other direction. rowspan='2' makes a cell stretch down across two rows. The cell with rowspan goes in the first row. The second row then has one fewer cell to account for the span.\n\nSpanning increases complexity quickly. Every span means you need to mentally account for missing cells in adjacent rows or columns. Keep spanning to what the data genuinely requires.",
+          "examples": [
+            {
+              "label": "colspan and rowspan",
+              "code": "<table>\n  <caption>Tournament Results</caption>\n  <thead>\n    <tr>\n      <th scope='col' rowspan='2'>Player</th>\n      <th scope='colgroup' colspan='2'>Round 1</th>\n      <th scope='colgroup' colspan='2'>Round 2</th>\n    </tr>\n    <tr>\n      <th scope='col'>Score</th>\n      <th scope='col'>Result</th>\n      <th scope='col'>Score</th>\n      <th scope='col'>Result</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Alice</td>\n      <td>42</td>\n      <td>Win</td>\n      <td>38</td>\n      <td>Loss</td>\n    </tr>\n  </tbody>\n</table>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "A cell has colspan='3'. What does this mean for the rest of that row?",
+              "options": ["You add three extra cells to balance the row", "You remove two cells from that row to keep the total column count correct", "Nothing changes — colspan does not affect other cells", "The next two rows each lose one cell"],
+              "answer": 1,
+              "explanation": "colspan='3' means the cell occupies three column slots. To keep the row balanced, remove the two cells that would have filled those other two slots. Every row must account for the same total number of columns."
+            },
+            {
+              "q": "You use rowspan='2' on a cell in the first row. What happens in the second row?",
+              "options": ["The second row gains an extra cell to fill the gap", "The second row has one fewer cell, since the spanning cell occupies that slot", "The spanning cell is duplicated visually in the second row", "The second row is deleted entirely"],
+              "answer": 1,
+              "explanation": "The spanning cell occupies one slot in the second row. You omit one td from that row to account for it. If you include the normal number of cells, the table will overflow past its column boundaries."
+            }
+          ]
+        },
+        {
+          "id": "tables-fb-structure",
+          "title": "Fill in the Blanks: Table Structure",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete this accessible table with correct elements and attributes.",
+              "code": "<___>\n  <___>Monthly Revenue</___>\n  <___>\n    <tr>\n      <___ scope='___'>Month</___ >\n      <___ scope='___'>Revenue</___ >\n    </tr>\n  </___>\n  <___>\n    <tr>\n      <___ scope='___'>January</___ >\n      <td>$14,200</td>\n    </tr>\n  </___>\n</___>",
+              "blanks": ["table", "caption", "caption", "thead", "th", "col", "th", "th", "col", "th", "thead", "tbody", "th", "row", "th", "tbody", "table"],
+              "explanation": "table wraps everything. caption is the title. thead holds header rows. th with scope='col' labels columns. th with scope='row' labels rows. tbody holds data rows. td holds plain data."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "id": "html-email",
+  "title": "HTML: Email",
+  "sections": [
+    {
+      "title": "Module 1: The Email Environment",
+      "lessons": [
+        {
+          "id": "email-intro",
+          "title": "Why HTML Email Is Different",
+          "type": "document",
+          "content": "HTML email operates in a completely different environment from web pages. The skills transfer, but the rules are not the same.\n\nOn the web, you target a handful of modern browsers with consistent, up-to-date rendering engines. In email, you are targeting dozens of email clients — Gmail, Outlook, Apple Mail, Yahoo Mail, Samsung Mail — each with its own rendering engine, each with different levels of HTML and CSS support. Outlook on Windows uses Microsoft Word's rendering engine, not a browser engine at all.\n\nBecause of this fragmented environment, modern HTML and CSS techniques that work perfectly in browsers may be ignored, broken, or stripped entirely in email clients. Flexbox, CSS Grid, and many CSS properties do not work reliably in email. External stylesheets are often stripped. JavaScript does not run in email at all.\n\nThe result is that HTML email uses techniques that look old-fashioned from a web perspective: table-based layouts, inline styles, and defensive fallbacks. This is not laziness — it is a practical response to a genuinely difficult environment.",
+          "questions": [
+            {
+              "q": "Why can't HTML email use modern CSS layout techniques like Flexbox?",
+              "options": ["Because email files are too small to support complex CSS", "Because email clients have inconsistent rendering engines and many do not support modern CSS", "Because email HTML is a completely different language from web HTML", "Because Flexbox requires JavaScript, which does not run in email"],
+              "answer": 1,
+              "explanation": "Email clients range from modern browser-based clients to Outlook on Windows, which uses Word's rendering engine. Support for CSS properties is inconsistent and unreliable. Table-based layouts work across all of them."
+            },
+            {
+              "q": "What happens to JavaScript in an HTML email?",
+              "options": ["It runs normally in modern email clients like Gmail", "It is executed only once, when the email is first opened", "It does not run — email clients strip or ignore it for security reasons", "It runs but only for animations and transitions"],
+              "answer": 2,
+              "explanation": "Email clients block JavaScript entirely. It is a security requirement — running arbitrary scripts in an email would be a serious attack vector. Any interactivity must be achieved with HTML and CSS alone."
+            },
+            {
+              "q": "Which email client is notorious for having the worst HTML/CSS support?",
+              "options": ["Gmail, because it strips all head styles", "Apple Mail, because it uses a non-standard rendering engine", "Outlook on Windows, because it uses Microsoft Word's rendering engine", "Yahoo Mail, because it blocks external resources"],
+              "answer": 2,
+              "explanation": "Outlook on Windows (2007–2019) uses the Microsoft Word rendering engine instead of a browser engine. It has very limited CSS support and is the primary reason table-based email layouts are still necessary."
+            }
+          ]
+        },
+        {
+          "id": "email-inline-styles",
+          "title": "Inline Styles",
+          "type": "document",
+          "content": "Many email clients strip the head element entirely when displaying an email — which means any styles you put in a style tag in the head are removed. Gmail on Android is a well-known offender.\n\nThe reliable solution is inline styles. Instead of writing CSS in a stylesheet or style block and targeting elements with selectors, you write styles directly on each element using the style attribute. This means styles cannot be stripped — they travel with the element.\n\nInline styles are repetitive and hard to maintain for complex layouts. Most professional email workflows use a build tool that writes styles in a regular stylesheet during development and then inlines them automatically before sending. You get maintainable source code and reliable rendering.\n\nNot all CSS properties work inline in every client. Stick to properties with broad support: font-family, font-size, color, background-color, padding, margin, border, width, text-align. Avoid properties like float and position in email.",
+          "examples": [
+            {
+              "label": "Inline styles in email",
+              "code": "<p style='font-family: Arial, sans-serif; font-size: 16px; color: #333333; line-height: 1.5; margin: 0 0 16px 0;'>\n  Thank you for signing up.\n</p>\n\n<a href='https://example.com/confirm'\n   style='display: inline-block; background-color: #0066cc; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-family: Arial, sans-serif; font-size: 14px;'>\n  Confirm your email\n</a>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Why are inline styles more reliable than head styles in HTML email?",
+              "options": ["Inline styles override head styles with higher specificity", "Many email clients strip the head element, removing any styles in it", "Inline styles load faster because they do not require a separate download", "Email protocols only transmit the body element, not the head"],
+              "answer": 1,
+              "explanation": "Email clients frequently remove or ignore the head element when rendering. Gmail on Android is a well-known example. Inline styles are attached to the element itself and survive this stripping."
+            },
+            {
+              "q": "Which CSS property should you avoid using in HTML email?",
+              "options": ["color, because it is inconsistently supported", "font-size, because email clients override it with user preferences", "float, because it has poor and inconsistent support in email clients", "padding, because it only works on block elements in email"],
+              "answer": 2,
+              "explanation": "float is unreliable in email — especially in Outlook. Stick to table-based layout instead. Properties like color, font-size, padding, and background-color have broad support."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Table-Based Layout",
+      "lessons": [
+        {
+          "id": "email-tables",
+          "title": "Building Layouts with Tables",
+          "type": "document",
+          "content": "Since CSS layout is unreliable in email, tables are used for structure. A table-based email layout is not the same as using tables for web page layout — in email, this is the correct and expected approach.\n\nThe outer wrapper is a table set to 100% width that centers the content. Inside it is a td that constrains the content to a maximum width — typically 600px. This is because many email clients display emails in a narrow panel, and 600px is a safe maximum that works across desktop and mobile.\n\nFor a two-column layout, you use a nested table with two td elements side by side. Keep each column wide enough to be readable. For mobile, a media query or a single-column layout is safer, since two-column layouts break on small screens.\n\nSet cellpadding='0', cellspacing='0', and border='0' on all tables. These HTML attributes control spacing in older clients that ignore CSS. Without them, unwanted gaps appear between cells.",
+          "examples": [
+            {
+              "label": "Basic email wrapper structure",
+              "code": "<table width='100%' cellpadding='0' cellspacing='0' border='0' style='background-color: #f4f4f4;'>\n  <tr>\n    <td align='center' style='padding: 20px 0;'>\n\n      <table width='600' cellpadding='0' cellspacing='0' border='0' style='background-color: #ffffff;'>\n        <tr>\n          <td style='padding: 32px 40px;'>\n\n            <h1 style='font-family: Arial, sans-serif; font-size: 24px; color: #111111; margin: 0 0 16px 0;'>Hello from us</h1>\n            <p style='font-family: Arial, sans-serif; font-size: 16px; color: #444444; line-height: 1.6; margin: 0;'>Your message content goes here.</p>\n\n          </td>\n        </tr>\n      </table>\n\n    </td>\n  </tr>\n</table>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Why is 600px a common maximum width for email layouts?",
+              "options": ["Because email protocols cannot transmit files wider than 600px", "Because 600px fits safely within the narrow preview panels of most desktop email clients", "Because images wider than 600px are automatically resized by email providers", "Because 600px is the width required by the CAN-SPAM Act for commercial emails"],
+              "answer": 1,
+              "explanation": "Desktop email clients often display email in a reading panel that is narrower than the screen. 600px is a widely accepted safe maximum that displays without horizontal scrolling in most clients."
+            },
+            {
+              "q": "Why do email tables use cellpadding='0' and cellspacing='0' as HTML attributes?",
+              "options": ["Because CSS padding and margin do not work on table cells in any email client", "Because older email clients ignore CSS but respect these HTML attributes, and omitting them causes unwanted gaps", "Because cellpadding and cellspacing are required for valid HTML5 tables", "Because these attributes improve download speed for email images"],
+              "answer": 1,
+              "explanation": "Older email clients respect HTML table attributes even when they ignore CSS. Without cellpadding='0' cellspacing='0' border='0', gaps appear between table cells in Outlook and other legacy clients."
+            },
+            {
+              "q": "What is the correct way to center an email layout horizontally?",
+              "options": ["Using CSS margin: 0 auto on the inner table", "Using a full-width outer table with a centered inner table", "Using CSS text-align: center on the body element", "Using a div with position: absolute and left: 50%"],
+              "answer": 1,
+              "explanation": "margin: 0 auto does not work in all email clients. The reliable approach is an outer table at 100% width with align='center' on its td, which centers the inner fixed-width table inside it."
+            }
+          ]
+        },
+        {
+          "id": "email-images",
+          "title": "Images in Email",
+          "type": "document",
+          "content": "Images in email behave differently from images on the web. Many email clients block images by default — they do not load until the user clicks 'show images'. This means your email must make sense without images.\n\nAlways set meaningful alt text on images. If images are blocked, the alt text is all the user sees. A button image with no alt text shows as a broken image icon — the user has no way to know what it links to. A button image with alt='Confirm your account' still communicates the action.\n\nSet width and height attributes on all images. Without them, blocking images collapses the layout — the space the image occupied disappears and the surrounding content jumps. Explicit dimensions preserve the layout even when images are not loaded.\n\nhost images at a stable, publicly accessible URL. Email is received and opened days or weeks later — the image URL needs to keep working. Do not use localhost or temporary URLs. Most professional email tools host images for you.",
+          "examples": [
+            {
+              "label": "Email image best practices",
+              "code": "<img src='https://example.com/emails/header-banner.jpg'\n     alt='Welcome to the course platform'\n     width='600'\n     height='200'\n     style='display: block; max-width: 100%;'>\n\n<img src='https://example.com/emails/cta-button.png'\n     alt='Start your first lesson'\n     width='200'\n     height='50'\n     style='display: block;'>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Why must an email make sense without images?",
+              "options": ["Because email HTML does not support the img element in all clients", "Because many email clients block images by default until the user enables them", "Because images increase file size and email providers reject large emails", "Because images take too long to load on mobile connections"],
+              "answer": 1,
+              "explanation": "Many clients — including Outlook, Gmail, and corporate mail systems — block images until the user opts in. If your email relies on images to communicate, users who have not enabled them see nothing useful."
+            },
+            {
+              "q": "Why should you always set width and height attributes on email images?",
+              "options": ["To prevent the image from being resized by the email client", "To preserve the layout structure when images are blocked and not displayed", "To enable the image to load progressively from top to bottom", "To allow the email client to compress the image before displaying it"],
+              "answer": 1,
+              "explanation": "Without explicit dimensions, a blocked image takes up zero space. The surrounding content collapses into the empty space and the layout breaks. Width and height preserve the intended structure."
+            }
+          ]
+        },
+        {
+          "id": "email-fb-structure",
+          "title": "Fill in the Blanks: Email Layout",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete this safe email layout wrapper.",
+              "code": "<table width='___' cellpadding='___' cellspacing='___' border='___'>\n  <tr>\n    <td align='___'>\n      <table width='___' cellpadding='0' cellspacing='0' border='0'>\n        <tr>\n          <td style='padding: 32px;'>\n            <p style='font-family: Arial, sans-serif;'>Email content here.</p>\n          </td>\n        </tr>\n      </table>\n    </td>\n  </tr>\n</table>",
+              "blanks": ["100%", "0", "0", "0", "center", "600"],
+              "explanation": "The outer table is 100% wide. cellpadding, cellspacing, and border are all 0 to prevent gaps in older clients. The td is centered to align the inner table. The inner table is 600px — the standard safe email width."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Deliverability and Standards",
+      "lessons": [
+        {
+          "id": "email-dark-mode",
+          "title": "Dark Mode and Media Queries",
+          "type": "document",
+          "content": "More than half of email opens now happen in dark mode. If your email does not account for dark mode, white backgrounds and dark text may be inverted — black backgrounds with white text — in ways you did not design.\n\nEmail clients that support media queries — Apple Mail, Outlook on Mac, Samsung Mail — allow you to use @media (prefers-color-scheme: dark) to target dark mode specifically. Some clients apply automatic color inversion; others do not transform colors at all.\n\nThe safest approach: avoid pure white (#ffffff) for large background areas if possible, and test in dark mode explicitly. Using meta color-scheme in the head tells supporting clients your email handles dark mode intentionally.\n\nMedia queries also handle responsive layout. @media only screen and (max-width: 600px) lets you switch from a two-column layout to single-column on small screens, hide certain elements, or increase font sizes for readability on mobile.",
+          "examples": [
+            {
+              "label": "Dark mode and responsive media queries in email",
+              "code": "<style>\n  @media (prefers-color-scheme: dark) {\n    .email-body { background-color: #1a1a1a !important; }\n    .email-text { color: #e0e0e0 !important; }\n  }\n\n  @media only screen and (max-width: 600px) {\n    .content-table { width: 100% !important; }\n    .column { display: block !important; width: 100% !important; }\n    .mobile-hide { display: none !important; }\n  }\n</style>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Why do email dark mode styles use !important?",
+              "options": ["Because !important is required for all email CSS to work", "Because email client auto-transformation rules have high specificity and must be overridden", "Because inline styles in email do not apply without !important", "Because media queries in email only apply styles marked !important"],
+              "answer": 1,
+              "explanation": "Email clients that automatically transform colors for dark mode do so with high-specificity rules. !important is needed to ensure your intentional dark mode styles override the client's automatic transformations."
+            },
+            {
+              "q": "What is a safe approach for email backgrounds to reduce dark mode problems?",
+              "options": ["Always use pure black backgrounds so dark mode has nothing to invert", "Avoid pure white for large background areas and test explicitly in dark mode", "Use transparent backgrounds on all elements so dark mode cannot affect them", "Set a fixed background image so the color cannot be changed by dark mode"],
+              "answer": 1,
+              "explanation": "Pure white large backgrounds are the most jarring when automatically inverted to pure black in dark mode. Using off-white or light gray reduces the visual impact and gives you more control over the result."
+            }
+          ]
+        },
+        {
+          "id": "email-sb-missing-alt",
+          "title": "Spot the Bug: Image-Only Button",
+          "type": "spot_bug",
+          "prompt": "This call-to-action button will be invisible to users with images blocked. Click the problematic line.",
+          "code": "<table cellpadding='0' cellspacing='0' border='0'>\n  <tr>\n    <td align='center' style='padding: 24px 0;'>\n      <a href='https://example.com/activate'>\n        <img src='https://example.com/emails/activate-button.png'\n             width='200' height='50'\n             style='display: block;'>\n      </a>\n    </td>\n  </tr>\n</table>",
+          "bugLine": 5,
+          "explanation": "The img element has no alt attribute. When images are blocked, users see a broken image icon with no text. They have no idea what clicking it does. Add alt='Activate your account' so the button's purpose is clear even without the image."
+        }
+      ]
+    }
+  ]
+}

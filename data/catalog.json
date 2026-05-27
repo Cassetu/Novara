@@ -32,7 +32,11 @@
       { "id": "html-text-media",    "title": "Text and Media",  "file": "data/html-mastery/text-and-media.json" },
       { "id": "html-forms",         "title": "Forms",           "file": "data/html-mastery/forms.json" },
       { "id": "html-semantic",      "title": "Semantic HTML",   "file": "data/html-mastery/semantic.json" },
-      { "id": "html-accessibility", "title": "Accessibility",   "file": "data/html-mastery/accessibility.json" }
+      { "id": "html-accessibility", "title": "Accessibility",   "file": "data/html-mastery/accessibility.json" },
+      { "id": "html-email", "title": "Emails",   "file": "data/html-mastery/html-email.json" },
+      { "id": "html-seo", "title": "HTML SEO",   "file": "data/html-mastery/html-seo.json" },
+      { "id": "html-tables", "title": "Tables",   "file": "data/html-mastery/tables.json" },
+      { "id": "html-metadata", "title": "Metadata and Heads",   "file": "data/html-mastery/metadata.json" }
     ]
   },
   {

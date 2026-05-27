@@ -1,0 +1,223 @@
+{
+  "id": "html-metadata",
+  "title": "HTML: Metadata and the Head",
+  "sections": [
+    {
+      "title": "Module 1: The Head Element",
+      "lessons": [
+        {
+          "id": "meta-head-intro",
+          "title": "What the Head Is For",
+          "type": "document",
+          "content": "The head element contains information about the document — not content that appears on the page, but instructions and data that browsers, search engines, and social platforms use to understand and present it.\n\nNone of the elements inside head render visually. They describe the page: what language it is in, what its title is, how wide the viewport should be, which stylesheet to load, how it should appear when shared on Twitter or Facebook.\n\nGetting the head right matters for several things at once: search engine ranking, social media previews, browser tab labels, correct text rendering, and page load performance. It is invisible to users but has visible consequences everywhere.\n\nThe elements you will find in a real head: title, meta, link, script, style, and base. Each has a distinct purpose.",
+          "questions": [
+            {
+              "q": "What is the purpose of the head element?",
+              "options": ["To hold the visible header content at the top of the page", "To contain metadata and instructions for browsers, search engines, and social platforms", "To define the page layout before body content is loaded", "To store JavaScript variables used throughout the page"],
+              "answer": 1,
+              "explanation": "head is for metadata — data about the page, not content on it. None of it renders directly. It affects how the page is found, displayed, and shared."
+            },
+            {
+              "q": "Which of these elements belongs in the head?",
+              "options": ["h1, because it is the page title", "nav, because navigation loads before body content", "meta, because it provides document metadata", "header, because it contains introductory content"],
+              "answer": 2,
+              "explanation": "meta provides metadata about the document. h1, nav, and header are all body content — visible content the user sees. They do not belong in head."
+            }
+          ]
+        },
+        {
+          "id": "meta-title-charset",
+          "title": "title, charset, and viewport",
+          "type": "document",
+          "content": "The title element sets the text shown in the browser tab and in search engine results. It should describe the specific page clearly. A title like 'Home | Site Name' is better than just 'Home', and much better than 'Untitled Document'. Keep it under 60 characters — search engines truncate longer titles in results.\n\nThe charset meta tag declares the character encoding of the document. UTF-8 supports virtually every character in every language. This tag must appear in the first 1024 bytes of the document — put it first in the head or text before it may render incorrectly.\n\nThe viewport meta tag controls how the page scales on mobile devices. Without it, mobile browsers render the page at desktop width and zoom out — the page looks tiny and unreadable. content='width=device-width, initial-scale=1.0' tells the browser to use the device's actual width and start at a 1:1 zoom level.",
+          "examples": [
+            {
+              "label": "Essential head elements",
+              "code": "<head>\n  <meta charset='UTF-8'>\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n  <title>Getting Started with HTML | Web Dev Course</title>\n</head>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Why must the charset meta tag appear early in the head?",
+              "options": ["Because browsers process meta tags before any other elements", "Because it must appear in the first 1024 bytes or earlier text may render incorrectly", "Because it is required before the title element to set encoding for it", "Because placing it later causes the browser to reload the page"],
+              "answer": 1,
+              "explanation": "The browser begins parsing and rendering characters before it finishes loading the document. If the charset declaration comes too late, characters before it may already have been decoded incorrectly."
+            },
+            {
+              "q": "What happens on mobile if the viewport meta tag is missing?",
+              "options": ["The page refuses to load on mobile browsers", "The browser renders the page at desktop width and zooms out, making it tiny and unreadable", "The page renders correctly but touch events stop working", "Text becomes too large because mobile browsers default to large font sizes"],
+              "answer": 1,
+              "explanation": "Without the viewport tag, mobile browsers assume the page is designed for a ~980px desktop viewport and scale it down to fit. Everything becomes tiny. The viewport meta tag tells the browser to use the real device width."
+            },
+            {
+              "q": "What is the recommended maximum character length for a page title?",
+              "options": ["30 characters, to fit on mobile browser tabs", "60 characters, beyond which search engines typically truncate it", "100 characters, which is the WCAG recommended limit", "There is no recommended limit — longer titles always rank better"],
+              "answer": 1,
+              "explanation": "Search engines display roughly 50–60 characters of a title in results pages. Longer titles are cut off with an ellipsis. Concise, descriptive titles within this limit perform better."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Meta Tags",
+      "lessons": [
+        {
+          "id": "meta-description-robots",
+          "title": "Description, Robots, and Author",
+          "type": "document",
+          "content": "The description meta tag provides a short summary of the page. Search engines often use it as the snippet of text shown under the title in search results. Keep it between 150 and 160 characters. Make it accurate, specific, and readable — it is your pitch to someone deciding whether to click.\n\nSearch engines do not guarantee they will use your description. If they find a passage in the page that better matches the search query, they may use that instead.\n\nThe robots meta tag controls whether search engine crawlers should index the page or follow its links. content='noindex' tells crawlers not to include this page in search results. content='nofollow' tells them not to follow links on this page. content='noindex, nofollow' does both. Most pages should not have a robots tag at all — the default is to index and follow.\n\nThe author meta tag names the page's author. Rarely required but useful for documentation sites and articles.",
+          "examples": [
+            {
+              "label": "Description and robots meta tags",
+              "code": "<meta name='description' content='Learn HTML from scratch. This course covers document structure, elements, attributes, and best practices for beginners.'>\n\n<meta name='robots' content='noindex, nofollow'>\n\n<meta name='author' content='Cassetu'>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What is the recommended character length for a meta description?",
+              "options": ["Under 60 characters, matching the title limit", "Between 150 and 160 characters", "Between 300 and 400 characters for thorough coverage", "No limit — more detail is always better for SEO"],
+              "answer": 1,
+              "explanation": "Search engines truncate descriptions around 155–160 characters. Stay within that range to avoid your description being cut off. Under 150 and you may be leaving useful context out."
+            },
+            {
+              "q": "What does content='noindex' on a robots meta tag do?",
+              "options": ["Hides the page from all users regardless of how they access it", "Tells search engine crawlers not to include this page in search results", "Prevents the page from being cached by the browser", "Disables all outbound links on the page"],
+              "answer": 1,
+              "explanation": "noindex is an instruction to search engine crawlers to exclude this page from their indexes. Useful for admin pages, login pages, or duplicate content you do not want appearing in search results."
+            },
+            {
+              "q": "Is a meta description guaranteed to appear as the snippet in search results?",
+              "options": ["Yes, search engines always use the exact meta description you provide", "No, search engines may use a different passage from the page if it better matches the query", "Only if the description is under 100 characters", "Only if the page also has a valid title and robots tag"],
+              "answer": 1,
+              "explanation": "Search engines treat the meta description as a suggestion. If they find a passage in your page content that better answers the user's query, they may use that instead."
+            }
+          ]
+        },
+        {
+          "id": "meta-og",
+          "title": "Open Graph and Social Meta Tags",
+          "type": "document",
+          "content": "When someone shares a link on social media, the platform fetches the page and reads special meta tags to generate a preview card — the title, image, and description that appear in the post.\n\nOpen Graph (OG) tags were created by Facebook and are now used by most platforms. They use the property attribute instead of name. The four essential Open Graph tags are: og:title, og:description, og:image, and og:url.\n\nTwitter (now X) has its own card system using name instead of property. twitter:card sets the card type. summary_large_image is the most common — it shows a large image above the title and description. Twitter falls back to Open Graph tags if its own are missing, so you often only need to set the card type and rely on OG for the rest.\n\nog:image should be at least 1200x630 pixels for best results across platforms. Use an absolute URL — relative URLs will not work because the social platform fetches the image from its own servers.",
+          "examples": [
+            {
+              "label": "Open Graph and Twitter Card tags",
+              "code": "<meta property='og:title' content='HTML Tables — Web Dev Course'>\n<meta property='og:description' content='Learn to build accessible, well-structured HTML tables for real data.'>\n<meta property='og:image' content='https://example.com/images/og-tables.jpg'>\n<meta property='og:url' content='https://example.com/courses/html-tables'>\n<meta property='og:type' content='website'>\n\n<meta name='twitter:card' content='summary_large_image'>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What attribute do Open Graph meta tags use instead of name?",
+              "options": ["type, to distinguish them from standard meta tags", "property, which is the Open Graph attribute", "og, which prefixes all Open Graph values", "content, which holds the Open Graph data"],
+              "answer": 1,
+              "explanation": "Open Graph tags use property='og:...' instead of name='...'. Both use the content attribute for the value. Mixing them up means the tag is silently ignored by social platforms."
+            },
+            {
+              "q": "Why must og:image use an absolute URL?",
+              "options": ["Because relative URLs are deprecated in HTML5 meta tags", "Because social platforms fetch the image from their own servers and need a full URL to find it", "Because image files cannot be referenced with relative paths in any meta tag", "Because absolute URLs load faster when shared on social media"],
+              "answer": 1,
+              "explanation": "When a social platform generates a preview, it fetches the image separately from an external server. A relative URL like /images/og.jpg has no meaning without context — the platform needs a full absolute URL."
+            },
+            {
+              "q": "What does twitter:card set?",
+              "options": ["The Twitter account associated with the page", "The type of preview card to display when the link is shared on Twitter", "Whether the link can be embedded in Twitter posts", "The image crop style used for the Twitter preview"],
+              "answer": 1,
+              "explanation": "twitter:card defines the card format — summary shows a small thumbnail, summary_large_image shows a full-width image. It is the minimum Twitter-specific tag needed; the rest can fall back to Open Graph."
+            }
+          ]
+        },
+        {
+          "id": "meta-fb-head",
+          "title": "Fill in the Blanks: Head Elements",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete this full page head section.",
+              "code": "<head>\n  <meta ___='UTF-8'>\n  <meta name='___' content='width=device-width, initial-scale=1.0'>\n  <meta name='___' content='Learn HTML tables from scratch with examples and exercises.'>\n  <___ property='og:title' content='HTML Tables Course'>\n  <___ property='og:___' content='https://example.com/og-image.jpg'>\n  <title>HTML Tables | Web Dev Course</title>\n</head>",
+              "blanks": ["charset", "viewport", "description", "meta", "meta", "image"],
+              "explanation": "charset declares encoding. viewport controls mobile rendering. description provides the search snippet. og:title and og:image are the core Open Graph tags. title sets the browser tab and search result label."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Link and Script",
+      "lessons": [
+        {
+          "id": "meta-link",
+          "title": "The link Element",
+          "type": "document",
+          "content": "The link element in the head creates relationships between the current document and external resources. It is a void element — no closing tag.\n\nThe most common use is loading a stylesheet: rel='stylesheet' and href pointing to the CSS file. The browser blocks page rendering until linked stylesheets are downloaded and parsed, so link tags for stylesheets should go in the head, as early as possible.\n\nrel='icon' links a favicon — the small icon shown in browser tabs and bookmarks. href points to the image file. Modern favicons are typically SVG or a 32x32 PNG. You can provide multiple icon links for different sizes.\n\nrel='canonical' tells search engines which URL is the definitive version of the page when the same content is accessible at multiple URLs. This prevents duplicate content penalties.\n\nrel='preload' tells the browser to fetch a resource early, before it is discovered in the page. Use it for critical fonts, hero images, or scripts that are needed immediately.",
+          "examples": [
+            {
+              "label": "link element uses",
+              "code": "<link rel='stylesheet' href='/css/main.css'>\n\n<link rel='icon' href='/favicon.svg' type='image/svg+xml'>\n<link rel='icon' href='/favicon.png' sizes='32x32' type='image/png'>\n\n<link rel='canonical' href='https://example.com/articles/html-basics'>\n\n<link rel='preload' href='/fonts/inter.woff2' as='font' type='font/woff2' crossorigin>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Why should stylesheet link elements be placed in the head rather than at the end of the body?",
+              "options": ["Stylesheets in the body are invalid HTML and will be ignored", "Stylesheets linked in the head are downloaded before rendering begins, preventing a flash of unstyled content", "Browsers download stylesheets faster when they are in the head", "Placing them in the body causes JavaScript errors"],
+              "answer": 1,
+              "explanation": "The browser needs the stylesheet before it can render the page correctly. If it is in the body, users may briefly see unstyled content before the CSS loads. Linking in the head ensures styles are ready at render time."
+            },
+            {
+              "q": "What is the purpose of rel='canonical'?",
+              "options": ["To mark the page as the homepage of the site", "To tell search engines which URL is the definitive version when the same content is accessible at multiple URLs", "To link to the sitemap file for the website", "To prevent the page from appearing in search results"],
+              "answer": 1,
+              "explanation": "Canonical links resolve duplicate content. If your page is reachable at multiple URLs — with and without www, with query strings, via HTTP and HTTPS — canonical tells search engines which version to index."
+            },
+            {
+              "q": "What does rel='preload' do?",
+              "options": ["Loads the resource after all other page content has finished", "Tells the browser to fetch a resource early, before it is discovered during normal parsing", "Caches the resource permanently in the browser", "Loads the resource only on fast connections"],
+              "answer": 1,
+              "explanation": "preload is a performance hint. It tells the browser to start downloading a resource immediately — before the parser would normally find it — so it is ready when needed. Useful for critical fonts and images."
+            }
+          ]
+        },
+        {
+          "id": "meta-script-placement",
+          "title": "Script Loading: defer and async",
+          "type": "document",
+          "content": "The script element loads JavaScript. Where you put it and which attributes you use have significant effects on page load performance.\n\nA script tag without any loading attribute blocks HTML parsing. The browser stops, downloads the script, executes it, then resumes. Historically this meant putting scripts at the end of the body so they did not block page rendering.\n\ndefer tells the browser to download the script in the background while HTML parsing continues. Execution is deferred until parsing is complete. Scripts with defer execute in order. This is the right choice for most scripts — it does not block the page and scripts run after the DOM is ready.\n\nasync also downloads in the background, but executes as soon as it is downloaded — interrupting HTML parsing if necessary. Scripts with async do not execute in order. Use async only for scripts that are independent of each other and the DOM, like analytics.\n\nBoth attributes only work on scripts with a src attribute — inline scripts execute immediately regardless.",
+          "examples": [
+            {
+              "label": "Script loading strategies",
+              "code": "<head>\n  <script src='main.js' defer></script>\n\n  <script src='analytics.js' async></script>\n\n  <script src='legacy.js'></script>\n</head>"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does the defer attribute on a script tag do?",
+              "options": ["Delays script download until the user interacts with the page", "Downloads the script in the background and executes it after HTML parsing is complete", "Downloads and executes the script immediately, interrupting parsing", "Loads the script only on fast network connections"],
+              "answer": 1,
+              "explanation": "defer downloads the script without blocking parsing. Execution is deferred until the DOM is fully parsed. Scripts with defer run in the order they appear in the document."
+            },
+            {
+              "q": "When should you use async instead of defer?",
+              "options": ["For all scripts, since async is always faster than defer", "For scripts that depend on the DOM being ready before they run", "For independent scripts like analytics that do not depend on the DOM or other scripts", "For scripts that must run before the body content is parsed"],
+              "answer": 2,
+              "explanation": "async executes as soon as the download finishes, with no guaranteed order. It is right for analytics, ads, or other third-party scripts that are self-contained. For your own scripts that interact with the DOM, use defer."
+            },
+            {
+              "q": "Do defer and async work on inline script tags?",
+              "options": ["Yes, they work on both inline scripts and scripts with a src attribute", "No, they only work on scripts that load an external file via src", "Only async works on inline scripts, defer does not", "They work on inline scripts only in modern browsers"],
+              "answer": 1,
+              "explanation": "defer and async are meaningless on inline scripts. Inline scripts always execute immediately when the parser reaches them. Both attributes only affect scripts loading an external file."
+            }
+          ]
+        },
+        {
+          "id": "meta-sb-script-blocking",
+          "title": "Spot the Bug: Render-Blocking Script",
+          "type": "spot_bug",
+          "prompt": "This page has a script that blocks HTML parsing unnecessarily. Click the line causing the problem.",
+          "code": "<!DOCTYPE html>\n<html lang='en'>\n<head>\n  <meta charset='UTF-8'>\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n  <title>My App</title>\n  <script src='app.js'></script>\n  <link rel='stylesheet' href='main.css'>\n</head>\n<body>\n  <h1>Welcome</h1>\n</body>\n</html>",
+          "bugLine": 7,
+          "explanation": "The script on line 7 has no defer or async attribute. It will block HTML parsing until app.js downloads and executes. Add defer — the script will download in the background and execute after the DOM is ready."
+        }
+      ]
+    }
+  ]
+}
