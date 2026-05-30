@@ -1,6 +1,15 @@
 import { parseCode } from "../utils/parse.js";
 import { playCorrect, playIncorrect } from "../utils/sound.js";
 
+function escapeHtml(str) {
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
 function renderFillBlank(lessonData, onFinish) {
     const view = document.getElementById("view-lesson");
     let idx = 0;
@@ -13,7 +22,7 @@ function renderFillBlank(lessonData, onFinish) {
 
         let codeHtml = "";
         for (let i = 0; i < parts.length; i++) {
-            codeHtml += `<span class="fb-code-text">${parts[i].replace(/\n/g, "<br>")}</span>`;
+            codeHtml += `<span class="fb-code-text">${escapeHtml(parts[i]).replace(/\n/g, "<br>")}</span>`;
             if (i < parts.length - 1)
                 codeHtml += `<input class="fb-input" data-index="${i}" type="text" autocomplete="off" spellcheck="false">`;
         }
@@ -47,14 +56,20 @@ function renderFillBlank(lessonData, onFinish) {
         document.getElementById("fb-btn").addEventListener("click", () => {
             const given = Array.from(inputs).map(i => i.value.trim());
             const expected = Array.isArray(q.blanks) ? q.blanks : [q.blanks];
-            const allCorrect = given.every((v, i) => v === expected[i]);
+
+            const perBlank = given.map((v, i) => {
+                const exp = expected[i] || "";
+                return v.toLowerCase() === exp.toLowerCase();
+            });
+
+            const allCorrect = perBlank.every(Boolean);
 
             results[idx] = allCorrect;
 
             inputs.forEach((inp, i) => {
                 inp.disabled = true;
-                inp.classList.add(given[i] === expected[i] ? "fb-correct" : "fb-wrong");
-                if (given[i] !== expected[i]) inp.value = expected[i];
+                inp.classList.add(perBlank[i] ? "fb-correct" : "fb-wrong");
+                if (!perBlank[i]) inp.value = expected[i];
             });
 
             allCorrect ? (correct++, playCorrect()) : playIncorrect();
