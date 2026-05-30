@@ -14,27 +14,38 @@ let catalogData = [];
 let activeCD = null;
 let activeLessonData = null;
 let activeBundleCourseId = null;
+let activeCurriculumEntry = null;
+let activeCourseRef = null;
 
 const $ = id => document.getElementById(id);
+
 const viewExplorer  = $("view-explorer");
 const viewSyllabus  = $("view-syllabus");
 const viewLesson    = $("view-lesson");
 const viewSettings  = $("view-settings");
 const viewHub       = $("view-hub");
 const catalogGrid   = $("catalog-grid");
-const enrolledList  = $("enrolled-list");
-const navExplorer   = $("nav-explorer");
-const navSettings   = $("nav-settings");
-const navHub        = $("nav-hub");
-const authGoogleBtn = $("auth-google-btn");
-const authMagicBtn  = $("auth-magic-btn");
-const authEmailInput = $("auth-email-input");
-const authStatus    = $("auth-status");
-const searchBar     = $("search-bar");
-const reqWipeBtn    = $("request-wipe-btn");
-const wipeAuthBlock = $("wipe-auth-block");
+
+const navExplorer      = $("nav-explorer");
+const navActiveBtn     = $("nav-active-btn");
+const activeDropdown   = $("active-dropdown");
+const activeDropItems  = $("active-dropdown-items");
+const activeCountBadge = $("active-count-badge");
+const userAvatarBtn    = $("user-avatar-btn");
+const userDropdown     = $("user-dropdown");
+const navHub           = $("nav-hub");
+const navSettings      = $("nav-settings");
+const navSignout       = $("nav-signout");
+
+const authGoogleBtn    = $("auth-google-btn");
+const authMagicBtn     = $("auth-magic-btn");
+const authEmailInput   = $("auth-email-input");
+const authStatus       = $("auth-status");
+const searchBar        = $("search-bar");
+const reqWipeBtn       = $("request-wipe-btn");
+const wipeAuthBlock    = $("wipe-auth-block");
 const wipeConfirmInput = $("wipe-confirm-input");
-const execWipeBtn   = $("execute-wipe-btn");
+const execWipeBtn      = $("execute-wipe-btn");
 
 const BINARY_TYPES   = ["challenge", "code_fix", "godot_scene", "spot_bug", "project"];
 const PRACTICE_TYPES = ["practice_standard", "practice_survival", "master_test"];
@@ -44,13 +55,12 @@ const isBinaryLesson = l =>
     BINARY_TYPES.includes(l.type) || (!l.questions?.length && l.type === "document");
 
 function applyTheme(t) {
-    document.body.className = document.body.className
-        .replace(/theme-\w+/g, "").trim();
+    document.body.className = document.body.className.replace(/theme-\w+/g, "").trim();
     if (t) document.body.classList.add(t);
     localStorage.setItem("novara-theme", t || "");
-    document.querySelectorAll(".theme-swatch").forEach(s => {
-        s.classList.toggle("active-theme", s.dataset.theme === t);
-    });
+    document.querySelectorAll(".theme-swatch").forEach(s =>
+        s.classList.toggle("active-theme", s.dataset.theme === t)
+    );
 }
 
 (function initTheme() {
@@ -58,14 +68,16 @@ function applyTheme(t) {
     if (saved) applyTheme(saved);
 })();
 
-document.querySelectorAll(".theme-swatch").forEach(s => {
-    s.addEventListener("click", () => applyTheme(s.dataset.theme));
-});
+document.querySelectorAll(".theme-swatch").forEach(s =>
+    s.addEventListener("click", () => applyTheme(s.dataset.theme))
+);
 
 window.firebaseAuth.onAuthStateChanged(async user => {
     if (!user) return;
     currentUser = user;
     await loadUserData();
+    const initial = (user.displayName || user.email || "N")[0].toUpperCase();
+    if (userAvatarBtn) userAvatarBtn.textContent = initial;
     navExplorer.click();
 });
 
@@ -103,12 +115,12 @@ async function loadUserData() {
     const snap = await window.getDoc(ref);
     if (snap.exists()) {
         ud = snap.data();
-        ud.enrolled        = ud.enrolled        || [];
-        ud.scores          = ud.scores          || {};
-        ud.analytics       = ud.analytics       || {};
-        ud.survivalScores  = ud.survivalScores  || {};
-        ud.projectProgress = ud.projectProgress || {};
-        ud.mastery         = ud.mastery         || {};
+        ud.enrolled         = ud.enrolled         || [];
+        ud.scores           = ud.scores           || {};
+        ud.analytics        = ud.analytics        || {};
+        ud.survivalScores   = ud.survivalScores   || {};
+        ud.projectProgress  = ud.projectProgress  || {};
+        ud.mastery          = ud.mastery          || {};
         ud.practiceSettings = ud.practiceSettings || {};
     } else {
         ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {} };
@@ -125,6 +137,145 @@ async function saveField(field, value) {
     );
 }
 
+function closeAllDropdowns() {
+    activeDropdown?.classList.remove("open");
+    userDropdown?.classList.remove("open");
+}
+
+navActiveBtn?.addEventListener("click", e => {
+    e.stopPropagation();
+    const isOpen = activeDropdown.classList.contains("open");
+    closeAllDropdowns();
+    if (!isOpen) {
+        populateActiveDropdown();
+        activeDropdown.classList.add("open");
+    }
+});
+
+userAvatarBtn?.addEventListener("click", e => {
+    e.stopPropagation();
+    const isOpen = userDropdown.classList.contains("open");
+    closeAllDropdowns();
+    if (!isOpen) userDropdown.classList.add("open");
+});
+
+document.addEventListener("click", closeAllDropdowns);
+activeDropdown?.addEventListener("click", e => e.stopPropagation());
+userDropdown?.addEventListener("click", e => e.stopPropagation());
+
+async function populateActiveDropdown() {
+    if (!activeDropItems) return;
+    activeDropItems.innerHTML = "";
+
+    if (!ud.enrolled.length) {
+        activeDropItems.innerHTML = `<div class="tb-dd-empty">No active curriculums.<br>Explore to enroll.</div>`;
+        return;
+    }
+
+    for (const entryId of ud.enrolled) {
+        const entry = catalogData.find(c => c.id === entryId);
+        if (!entry) continue;
+
+        const pct = await getCourseProgress(entry.id);
+
+        const item = document.createElement("div");
+        item.className = "tb-dd-item";
+        item.style.flexDirection = "column";
+        item.style.alignItems = "flex-start";
+        item.style.gap = "6px";
+        item.innerHTML = `
+            <div class="tb-dd-inner">
+                <div class="tb-dd-title">${entry.title}</div>
+                <div class="tb-dd-pct">${pct}% complete</div>
+                <div class="dd-progress-bar">
+                    <div class="dd-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
+                </div>
+            </div>
+        `;
+
+        item.addEventListener("click", () => {
+            closeAllDropdowns();
+            openCurriculumHome(entry);
+        });
+
+        activeDropItems.appendChild(item);
+    }
+
+    setTimeout(() => {
+        activeDropItems.querySelectorAll(".progress-animator")
+            .forEach(b => b.style.width = b.dataset.target);
+    }, 30);
+}
+
+function updateActiveCountBadge() {
+    if (!activeCountBadge) return;
+    const n = ud.enrolled.length;
+    activeCountBadge.textContent = n ? `(${n})` : "";
+}
+
+navExplorer?.addEventListener("click", async e => {
+    e.preventDefault();
+    closeAllDropdowns();
+    await loadCatalog();
+    await renderExplorer();
+    switchView("view-explorer");
+    setActiveNavBtn(navExplorer);
+});
+
+navHub?.addEventListener("click", async e => {
+    e.stopPropagation();
+    closeAllDropdowns();
+    await loadCatalog();
+    switchView("view-hub");
+    setActiveNavBtn(null);
+    openHub("practice");
+});
+
+navSettings?.addEventListener("click", e => {
+    e.stopPropagation();
+    closeAllDropdowns();
+    switchView("view-settings");
+    setActiveNavBtn(null);
+});
+
+navSignout?.addEventListener("click", e => {
+    e.stopPropagation();
+    closeAllDropdowns();
+    if (!confirm("Sign out of Novara?")) return;
+    window.firebaseAuth.signOut();
+});
+
+function setActiveNavBtn(el) {
+    document.querySelectorAll(".tb-btn").forEach(b => b.classList.remove("tb-active"));
+    el?.classList.add("tb-active");
+}
+
+reqWipeBtn?.addEventListener("click", () => {
+    reqWipeBtn.style.display = "none";
+    wipeAuthBlock.style.display = "block";
+});
+
+wipeConfirmInput?.addEventListener("input", e => {
+    const ok = e.target.value === "PURGE";
+    execWipeBtn.disabled = !ok;
+    execWipeBtn.style.backgroundColor = ok ? "#ff4444" : "transparent";
+    execWipeBtn.style.color = ok ? "var(--void)" : "#ff4444";
+});
+
+execWipeBtn?.addEventListener("click", async () => {
+    const blank = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {} };
+    await window.setDoc(window.doc(window.db, "users", currentUser.uid), blank);
+    ud = blank;
+    wipeConfirmInput.value = "";
+    execWipeBtn.disabled = true;
+    execWipeBtn.style.cssText = "background-color:transparent;color:#ff4444;";
+    wipeAuthBlock.style.display = "none";
+    reqWipeBtn.style.display = "inline-block";
+    updateActiveCountBadge();
+    await renderExplorer();
+    navExplorer.click();
+});
+
 function switchView(id) {
     [viewExplorer, viewSyllabus, viewLesson, viewSettings, viewHub]
         .forEach(v => v.style.display = "none");
@@ -136,60 +287,9 @@ async function loadCatalog() {
     if (catalogData.length) return;
     const res = await fetch("data/catalog.json");
     catalogData = await res.json();
-    console.log("catalog loaded", catalogData.length, "entries");
 }
-
-navExplorer.addEventListener("click", async e => {
-    e.preventDefault();
-    await loadCatalog();
-    await renderExplorer();
-    switchView("view-explorer");
-});
-
-navSettings.addEventListener("click", e => {
-    e.preventDefault();
-    switchView("view-settings");
-});
-
-navHub.addEventListener("click", async e => {
-    e.preventDefault();
-    await loadCatalog();
-    switchView("view-hub");
-    openHub("practice");
-});
-
-$("sign-out-btn").addEventListener("click", () => window.firebaseAuth.signOut());
-
-reqWipeBtn.addEventListener("click", () => {
-    reqWipeBtn.style.display = "none";
-    wipeAuthBlock.style.display = "block";
-});
-
-wipeConfirmInput.addEventListener("input", e => {
-    const ok = e.target.value === "PURGE";
-    execWipeBtn.disabled = !ok;
-    execWipeBtn.style.backgroundColor = ok ? "#ff4444" : "transparent";
-    execWipeBtn.style.color = ok ? "var(--void)" : "#ff4444";
-});
-
-execWipeBtn.addEventListener("click", async () => {
-    const blank = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {} };
-    await window.setDoc(window.doc(window.db, "users", currentUser.uid), blank);
-    ud = blank;
-    wipeConfirmInput.value = "";
-    execWipeBtn.disabled = true;
-    execWipeBtn.style.cssText = "background-color:transparent;color:#ff4444;";
-    wipeAuthBlock.style.display = "none";
-    reqWipeBtn.style.display = "inline-block";
-    await renderExplorer();
-    navExplorer.click();
-});
 
 function isBundle(entry) { return entry.type === "bundle"; }
-
-function getBundleCourseIds(entry) {
-    return isBundle(entry) ? entry.courses.map(c => c.id) : [entry.id];
-}
 
 async function fetchCourseData(meta) {
     const res = await fetch(meta.file);
@@ -205,35 +305,33 @@ async function fetchBundleData(entry) {
     return results;
 }
 
-function allLessonsFromData(data) {
-    const out = [];
-    data.sections.forEach(sec => sec.lessons.forEach(l => out.push(l)));
-    return out;
-}
-
 async function getCourseProgress(entryId) {
     const entry = catalogData.find(c => c.id === entryId);
     if (!entry) return 0;
     let earned = 0, total = 0;
 
-    const collect = (data, courseId) => {
+    const collect = (data) => {
         data.sections.forEach(sec => sec.lessons.forEach(l => {
             if (l.type === "project") return;
-            const id = l.id || l.title.replace(/\s+/g, "-").toLowerCase();
+            const id = l.id || (l.title || "").replace(/\s+/g, "-").toLowerCase();
             const max = isBinaryLesson(l) ? 1 : 4;
             total += max;
-            earned += Math.min(ud.scores[id] || 0, max);
+            if (ud.mastery[id]) {
+                earned += max;
+            } else {
+                earned += Math.min(ud.scores[id] || 0, max);
+            }
         }));
     };
 
     if (isBundle(entry)) {
         for (const c of entry.courses) {
             const data = await fetchCourseData(c);
-            collect(data, c.id);
+            collect(data);
         }
     } else {
         const data = await fetchCourseData(entry);
-        collect(data, entry.id);
+        collect(data);
     }
 
     return total === 0 ? 0 : Math.round((earned / total) * 100);
@@ -265,7 +363,7 @@ async function renderExplorer() {
                 <div class="course-progress-wrapper">
                     <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
                 </div>
-                <p style="font-size:12px;color:var(--accent);margin-top:-10px;margin-bottom:15px;text-align:right;">${pct}% complete</p>
+                <p style="font-size:12px;color:var(--accent);margin-top:-6px;margin-bottom:15px;text-align:right;">${pct}% complete</p>
             `;
         }
 
@@ -283,7 +381,7 @@ async function renderExplorer() {
             const cont = document.createElement("button");
             cont.innerText = "Continue";
             cont.style.cssText = "flex:2;border-color:var(--text-dim);color:var(--text-dim);";
-            cont.onclick = () => openSyllabus(entry);
+            cont.onclick = () => openCurriculumHome(entry);
 
             const drop = document.createElement("button");
             drop.innerText = "drop";
@@ -304,28 +402,12 @@ async function renderExplorer() {
         catalogGrid.appendChild(card);
     }
 
-    renderSidebar();
+    updateActiveCountBadge();
+
     setTimeout(() => {
         document.querySelectorAll(".progress-animator")
             .forEach(b => b.style.width = b.dataset.target);
     }, 50);
-}
-
-function renderSidebar() {
-    enrolledList.innerHTML = "";
-    if (!ud.enrolled.length) {
-        enrolledList.innerHTML = `<li><span style="color:var(--text-dim)">no active data</span></li>`;
-        return;
-    }
-    ud.enrolled.forEach(id => {
-        const entry = catalogData.find(c => c.id === id);
-        if (!entry) return;
-        const li = document.createElement("li");
-        const a = Object.assign(document.createElement("a"), { href: "#", innerText: entry.title });
-        a.addEventListener("click", e => { e.preventDefault(); openSyllabus(entry); });
-        li.appendChild(a);
-        enrolledList.appendChild(li);
-    });
 }
 
 async function enrollInCourse(entry) {
@@ -334,14 +416,13 @@ async function enrollInCourse(entry) {
     await saveField("enrolled", ud.enrolled);
 
     if (navigator.serviceWorker?.controller) {
-        const files = isBundle(entry)
-            ? entry.courses.map(c => c.file)
-            : [entry.file];
+        const files = isBundle(entry) ? entry.courses.map(c => c.file) : [entry.file];
         files.forEach(f => {
             navigator.serviceWorker.controller.postMessage({ type: "CACHE_COURSE", url: f });
         });
     }
 
+    updateActiveCountBadge();
     await renderExplorer();
 }
 
@@ -349,6 +430,7 @@ async function unenrollFromCourse(entry) {
     if (!confirm(`Remove '${entry.title}'? Scores are preserved.`)) return;
     ud.enrolled = ud.enrolled.filter(id => id !== entry.id);
     await saveField("enrolled", ud.enrolled);
+    updateActiveCountBadge();
     await renderExplorer();
 }
 
@@ -361,145 +443,247 @@ function findProjectLesson(data) {
     return null;
 }
 
-async function openSyllabus(entry) {
+async function openCurriculumHome(entry) {
+    activeCurriculumEntry = entry;
     switchView("view-syllabus");
-    const titleEl = $("syllabus-title");
-    const contentDiv = $("syllabus-content");
-    contentDiv.innerHTML = "";
+    setActiveNavBtn(null);
+    viewSyllabus.innerHTML = `<div style="text-align:center;padding:60px;color:var(--text-dim);font-family:monospace;">loading...</div>`;
+
+    const pct = await getCourseProgress(entry.id);
+
+    viewSyllabus.innerHTML = "";
+
+    const meta = document.createElement("div");
+    meta.className = "syllabus-meta";
+    meta.innerHTML = `
+        <h1>${entry.title}${isBundle(entry) ? ` <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">Bundle</span>` : ""}</h1>
+        <div class="course-progress-wrapper" style="margin-top:16px;">
+            <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
+        </div>
+        <div style="font-size:12px;color:var(--accent);font-weight:700;text-align:right;margin-top:4px;">${pct}% complete</div>
+    `;
+    viewSyllabus.appendChild(meta);
 
     if (isBundle(entry)) {
-        titleEl.innerText = entry.title;
-
-        const pct = await getCourseProgress(entry.id);
-        contentDiv.innerHTML = `
-            <div class="course-progress-wrapper" style="margin-top:5px;margin-bottom:15px;">
-                <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
-            </div>
-            <p style="font-size:14px;color:var(--accent);margin-top:-5px;margin-bottom:24px;text-align:right;">${pct}% complete</p>
-        `;
+        const grid = document.createElement("div");
+        grid.className = "syllabus-sections-grid";
 
         for (const courseRef of entry.courses) {
             const data = await fetchCourseData(courseRef);
-            const cPct = await (async () => {
-                let e = 0, t = 0;
-                data.sections.forEach(sec => sec.lessons.forEach(l => {
-                    if (l.type === "project") return;
-                    const id = l.id || l.title.replace(/\s+/g, "-").toLowerCase();
-                    const max = isBinaryLesson(l) ? 1 : 4;
-                    t += max; e += Math.min(ud.scores[id] || 0, max);
-                }));
-                return t === 0 ? 0 : Math.round((e / t) * 100);
-            })();
+            let e2 = 0, t2 = 0;
+            data.sections.forEach(sec => sec.lessons.forEach(l => {
+                if (l.type === "project") return;
+                const id = l.id || l.title.replace(/\s+/g, "-").toLowerCase();
+                const max = isBinaryLesson(l) ? 1 : 4;
+                t2 += max;
+                e2 += Math.min(ud.scores[id] || 0, max);
+            }));
+            const cPct = t2 === 0 ? 0 : Math.round((e2 / t2) * 100);
 
-            const headerEl = document.createElement("div");
-            headerEl.className = "bundle-header";
-            headerEl.innerHTML = `
-                <span>${courseRef.title} <small style="font-weight:400;color:var(--text-dim);margin-left:8px;">${cPct}%</small></span>
-                <span class="bundle-arrow">▾</span>
+            const courseCard = document.createElement("div");
+            courseCard.className = "course-home-card";
+            courseCard.innerHTML = `
+                <div class="course-home-title">${courseRef.title}</div>
+                <div class="course-home-pct">${cPct}%</div>
+                <div class="course-progress-wrapper" style="margin-top:8px;">
+                    <div class="course-progress-fill progress-animator" data-target="${cPct}%" style="width:0%"></div>
+                </div>
+                <div class="course-home-meta">${data.sections.length} sections</div>
             `;
-
-            const lessonsEl = document.createElement("div");
-            lessonsEl.className = "bundle-lessons";
-            buildSyllabusLessons(data, lessonsEl, courseRef.id);
-
-            headerEl.addEventListener("click", () => {
-                const open = lessonsEl.style.display !== "none";
-                lessonsEl.style.display = open ? "none" : "block";
-                headerEl.querySelector(".bundle-arrow").textContent = open ? "▸" : "▾";
-            });
-
-            contentDiv.appendChild(headerEl);
-            contentDiv.appendChild(lessonsEl);
+            courseCard.addEventListener("click", () => openSyllabus(courseRef, data, entry));
+            grid.appendChild(courseCard);
         }
 
+        viewSyllabus.appendChild(grid);
     } else {
         const data = await fetchCourseData(entry);
-        activeCD = data;
-        activeCD.id = entry.id;
-        activeBundleCourseId = null;
+        const grid = document.createElement("div");
+        grid.className = "syllabus-sections-grid";
 
-        titleEl.innerText = entry.title;
+        const sectionCount = data.sections.length;
+        const lessonCount = data.sections.reduce((sum, s) => sum + s.lessons.filter(l => l.type !== "project").length, 0);
+
+        const onlyCard = document.createElement("div");
+        onlyCard.className = "course-home-card";
+        onlyCard.innerHTML = `
+            <div class="course-home-title">${entry.title}</div>
+            <div class="course-home-pct">${pct}%</div>
+            <div class="course-progress-wrapper" style="margin-top:8px;">
+                <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
+            </div>
+            <div class="course-home-meta">${sectionCount} sections &bull; ${lessonCount} lessons</div>
+        `;
+        onlyCard.addEventListener("click", () => openSyllabus(entry, data, entry));
+        grid.appendChild(onlyCard);
 
         const projectLesson = findProjectLesson(data);
         if (projectLesson) {
-            const projBtn = document.createElement("button");
-            projBtn.innerText = "Projects";
-            projBtn.style.cssText = "float:right;margin-top:-3px;font-size:12px;padding:6px 14px;";
-            projBtn.onclick = () => openProject(projectLesson, entry);
-            titleEl.appendChild(projBtn);
+            const projCard = document.createElement("div");
+            projCard.className = "course-home-card";
+            projCard.style.borderColor = "var(--accent)";
+            projCard.innerHTML = `
+                <div class="course-home-title">Projects</div>
+                <div class="course-home-meta" style="margin-top:8px;">Hands-on project workspace</div>
+            `;
+            projCard.addEventListener("click", () => openProject(projectLesson, entry));
+            grid.appendChild(projCard);
         }
 
-        const pct = await getCourseProgress(entry.id);
-        const hdr = document.createElement("div");
-        hdr.innerHTML = `
-            <div class="course-progress-wrapper" style="margin-top:5px;margin-bottom:15px;">
-                <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
-            </div>
-            <p style="font-size:14px;color:var(--accent);margin-top:-5px;margin-bottom:30px;text-align:right;">${pct}% complete</p>
+        const masterCard = document.createElement("div");
+        masterCard.className = "course-home-card";
+        masterCard.style.cssText = "border-color:var(--border);box-shadow:5px 5px 0px var(--accent);";
+        masterCard.innerHTML = `
+            <div class="course-home-title">Curriculum Test</div>
+            <div class="course-home-meta" style="margin-top:8px;">Full course exam</div>
         `;
-        contentDiv.appendChild(hdr);
-        buildSyllabusLessons(data, contentDiv, entry.id);
+        masterCard.addEventListener("click", async () => {
+            activeCD = data;
+            activeCD.id = entry.id;
+            compileMasterTest();
+        });
+        grid.appendChild(masterCard);
 
-        const masterRow = document.createElement("div");
-        masterRow.className = "master-test-row";
-        masterRow.innerHTML = `<div class="master-test-title">Curriculum Test</div><div class="master-subtitle">Full Course Exam</div>`;
-        masterRow.onclick = compileMasterTest;
-        contentDiv.appendChild(masterRow);
+        viewSyllabus.appendChild(grid);
     }
 
     setTimeout(() => {
-        document.querySelectorAll(".progress-animator")
+        viewSyllabus.querySelectorAll(".progress-animator")
             .forEach(b => b.style.width = b.dataset.target);
     }, 50);
 }
 
-function buildSyllabusLessons(data, container, courseId) {
+async function openSyllabus(courseRef, dataArg, parentEntry) {
+    activeCourseRef = courseRef;
+    switchView("view-syllabus");
+    setActiveNavBtn(null);
+    viewSyllabus.innerHTML = `<div style="text-align:center;padding:60px;color:var(--text-dim);font-family:monospace;">loading...</div>`;
+
+    const data = dataArg || await fetchCourseData(courseRef);
+    activeCD = data;
+    activeCD.id = courseRef.id;
+    activeBundleCourseId = courseRef.id;
+
+    const pct = await getCourseProgress(parentEntry?.id || courseRef.id);
+    const projectLesson = findProjectLesson(data);
+
+    viewSyllabus.innerHTML = "";
+
+    const returnBtn = document.createElement("button");
+    returnBtn.id = "syllabus-return-btn";
+    returnBtn.innerText = "Return to Curriculum Home";
+    returnBtn.addEventListener("click", () => openCurriculumHome(parentEntry || courseRef));
+    viewSyllabus.appendChild(returnBtn);
+
+    const meta = document.createElement("div");
+    meta.className = "syllabus-meta";
+    meta.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+            <h1>${courseRef.title || courseRef.name}</h1>
+            <div style="display:flex;gap:10px;">
+                ${projectLesson ? `<button id="projects-btn" style="font-size:12px;padding:8px 16px;">Projects</button>` : ""}
+                <button id="master-test-btn" style="font-size:12px;padding:8px 16px;background:var(--accent);color:#fff;border-color:var(--accent);">Curriculum Test</button>
+            </div>
+        </div>
+        <div class="course-progress-wrapper" style="margin-top:16px;">
+            <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
+        </div>
+        <div style="font-size:12px;color:var(--accent);font-weight:700;text-align:right;margin-top:4px;">${pct}% complete</div>
+    `;
+    viewSyllabus.appendChild(meta);
+
+    meta.querySelector("#master-test-btn")?.addEventListener("click", compileMasterTest);
+    if (projectLesson) {
+        meta.querySelector("#projects-btn")?.addEventListener("click", () => openProject(projectLesson, parentEntry || courseRef));
+    }
+
+    const grid = document.createElement("div");
+    grid.className = "syllabus-sections-grid";
+
     data.sections.forEach(section => {
-        const block = document.createElement("div");
-        block.className = "section-block";
-        const sHeader = Object.assign(document.createElement("div"), {
-            className: "section-header",
-            innerText: section.title
-        });
-        block.appendChild(sHeader);
-
-        section.lessons.forEach(lesson => {
-            if (lesson.type === "project") return;
-
-            const id = lesson.id || lesson.title.replace(/\s+/g, "-").toLowerCase();
-            lesson.id = id;
-            lesson.questions?.forEach((q, i) => q.globalId = `${id}-q${i}`);
-
-            const score   = ud.scores?.[id] || 0;
-            const mastered = ud.mastery?.[id];
-
-            let dotsHtml = "";
-            if (isBinaryLesson(lesson)) {
-                dotsHtml = mastered
-                    ? `<div class="rating-star" title="Mastered"></div>`
-                    : `<div class="rating-dot ${score >= 1 ? "filled" : ""}"></div>`;
-            } else {
-                dotsHtml = mastered
-                    ? `<div class="rating-star" title="Mastered"></div><div class="rating-star"></div><div class="rating-star"></div><div class="rating-star"></div>`
-                    : [1,2,3,4].map(n => `<div class="rating-dot ${score >= n ? "filled" : ""}"></div>`).join("");
-            }
-
-            const row = document.createElement("div");
-            row.className = "lesson-row";
-            row.innerHTML = `<div class="lesson-title">${lesson.title}${mastered ? '<span class="mastery-badge">mastered</span>' : ""}</div><div class="rating-display">${dotsHtml}</div>`;
-            row.onclick = () => {
-                if (!activeCD || activeCD.id !== courseId) {
-                    activeCD = data;
-                    activeCD.id = courseId;
-                    activeBundleCourseId = courseId;
-                }
-                startLesson(lesson);
-            };
-            block.appendChild(row);
-        });
-
-        container.appendChild(block);
+        grid.appendChild(buildSectionCard(section, data, courseRef.id));
     });
+
+    viewSyllabus.appendChild(grid);
+
+    setTimeout(() => {
+        viewSyllabus.querySelectorAll(".progress-animator")
+            .forEach(b => b.style.width = b.dataset.target);
+    }, 50);
+}
+
+function buildSectionCard(section, data, courseId) {
+    const lessons = section.lessons.filter(l => l.type !== "project");
+    const totalLessons = lessons.length;
+
+    let completed = 0;
+    lessons.forEach(l => {
+        const id = l.id || (l.title || "").replace(/\s+/g, "-").toLowerCase();
+        if ((ud.scores[id] || 0) > 0) completed++;
+    });
+
+    const card = document.createElement("div");
+    card.className = "sec-card open";
+
+    const header = document.createElement("div");
+    header.className = "sec-card-header";
+    header.innerHTML = `
+        <span class="sec-card-title">${section.title}</span>
+        <span class="sec-card-meta">${completed}/${totalLessons}</span>
+        <span class="sec-card-arrow">&#9660;</span>
+    `;
+
+    const body = document.createElement("div");
+    body.className = "sec-card-body";
+
+    lessons.forEach(lesson => {
+        const id = lesson.id || (lesson.title || "").replace(/\s+/g, "-").toLowerCase();
+        lesson.id = id;
+        lesson.questions?.forEach((q, i) => q.globalId = `${id}-q${i}`);
+
+        const score    = ud.scores?.[id] || 0;
+        const mastered = ud.mastery?.[id];
+
+        let dotsHtml = "";
+        if (isBinaryLesson(lesson)) {
+            dotsHtml = mastered
+                ? `<div class="rating-star" title="Mastered"></div>`
+                : `<div class="rating-dot ${score >= 1 ? "filled" : ""}"></div>`;
+        } else {
+            dotsHtml = mastered
+                ? `<div class="rating-star"></div><div class="rating-star"></div><div class="rating-star"></div><div class="rating-star"></div>`
+                : [1,2,3,4].map(n => `<div class="rating-dot ${score >= n ? "filled" : ""}"></div>`).join("");
+        }
+
+        const typeLabel = (lesson.type && lesson.type !== "document") ? lesson.type.replace(/_/g, " ") : "";
+
+        const row = document.createElement("div");
+        row.className = "lesson-row";
+        row.innerHTML = `
+            <div class="lesson-title">${lesson.title}</div>
+            ${typeLabel ? `<span class="lesson-type-tag">${typeLabel}</span>` : ""}
+            <div class="rating-display">${dotsHtml}</div>
+        `;
+
+        row.onclick = () => {
+            if (!activeCD || activeCD.id !== courseId) {
+                activeCD = data;
+                activeCD.id = courseId;
+                activeBundleCourseId = courseId;
+            }
+            startLesson(lesson);
+        };
+
+        body.appendChild(row);
+    });
+
+    header.addEventListener("click", () => {
+        const isOpen = card.classList.toggle("open");
+        header.querySelector(".sec-card-arrow").innerHTML = isOpen ? "&#9660;" : "&#9658;";
+    });
+
+    card.appendChild(header);
+    card.appendChild(body);
+    return card;
 }
 
 function openProject(projectLesson, entry) {
@@ -507,22 +691,56 @@ function openProject(projectLesson, entry) {
     document.body.classList.add("lesson-active");
 
     $("lesson-back-btn")?.remove();
-    const backBtn = Object.assign(document.createElement("button"), {
-        id: "lesson-back-btn", innerText: "← Return"
-    });
-    backBtn.style.cssText = "position:fixed;top:24px;left:24px;z-index:999;background:var(--surface);color:var(--text-main);border:2px solid var(--border);padding:10px 16px;font-size:12px;letter-spacing:2px;box-shadow:4px 4px 0px var(--border);cursor:pointer;";
+    const backBtn = document.createElement("button");
+    backBtn.id = "lesson-back-btn";
+    backBtn.innerText = "Return";
+    backBtn.style.cssText = "position:fixed;top:70px;left:24px;z-index:999;background:var(--surface);color:var(--text-main);border:2px solid var(--border);padding:10px 16px;font-size:12px;letter-spacing:2px;box-shadow:4px 4px 0px var(--border);cursor:pointer;";
     document.body.appendChild(backBtn);
     backBtn.onclick = () => {
         backBtn.remove();
         document.body.classList.remove("lesson-active");
-        openSyllabus(entry);
+        openSyllabus(entry, null, activeCurriculumEntry || entry);
     };
 
     renderProject(projectLesson, entry.id, ud, saveField, () => {
         backBtn.remove();
         document.body.classList.remove("lesson-active");
-        openSyllabus(entry);
+        openSyllabus(entry, null, activeCurriculumEntry || entry);
     });
+}
+
+function runMixedPractice(lessonData, analytics, onUpdate) {
+    const allQ = lessonData.questions;
+    const spotBugs = allQ.filter(q => q._lessonType === "spot_bug" && q._lessonRef);
+    const mcqQ     = allQ.filter(q => q._lessonType !== "spot_bug");
+
+    let sbIdx = 0;
+
+    function runNextSpotBug() {
+        if (sbIdx >= spotBugs.length) {
+            runMcq();
+            return;
+        }
+        const stub = spotBugs[sbIdx];
+        sbIdx++;
+        const lessonCopy = Object.assign({}, stub._lessonRef);
+        renderSpotBug(lessonCopy, () => runNextSpotBug());
+    }
+
+    function runMcq() {
+        if (!mcqQ.length) {
+            finishLesson();
+            return;
+        }
+        const mcqLesson = Object.assign({}, lessonData, { questions: mcqQ });
+        renderQuestion(mcqLesson, analytics, onUpdate, () => finishLesson());
+    }
+
+    if (spotBugs.length) {
+        runNextSpotBug();
+    } else {
+        runMcq();
+    }
 }
 
 function startLesson(lesson) {
@@ -536,17 +754,20 @@ function startLesson(lesson) {
     document.body.classList.add("lesson-active");
 
     $("lesson-back-btn")?.remove();
-    const backBtn = Object.assign(document.createElement("button"), {
-        id: "lesson-back-btn", innerText: "← Return"
-    });
-    backBtn.style.cssText = "position:fixed;top:24px;left:24px;z-index:999;background:var(--surface);color:var(--text-main);border:2px solid var(--border);padding:10px 16px;font-size:12px;letter-spacing:2px;box-shadow:4px 4px 0px var(--border);cursor:pointer;";
+    const backBtn = document.createElement("button");
+    backBtn.id = "lesson-back-btn";
+    backBtn.innerText = "Return";
+    backBtn.style.cssText = "position:fixed;top:70px;left:24px;z-index:999;background:var(--surface);color:var(--text-main);border:2px solid var(--border);padding:10px 16px;font-size:12px;letter-spacing:2px;box-shadow:4px 4px 0px var(--border);cursor:pointer;";
     document.body.appendChild(backBtn);
     backBtn.onclick = () => {
         if (!confirm("Return? Progress on this lesson will not be saved.")) return;
         backBtn.remove();
         document.body.classList.remove("lesson-active");
-        const entry = catalogData.find(c => c.id === activeCD?.id) || catalogData.find(c => isBundle(c) && c.courses?.some(cr => cr.id === activeCD?.id));
-        entry ? openSyllabus(entry) : navExplorer.click();
+        if (activeCourseRef) {
+            openSyllabus(activeCourseRef, null, activeCurriculumEntry || activeCourseRef);
+        } else {
+            navExplorer.click();
+        }
     };
 
     const analytics = activeCD ? (ud.analytics[activeCD.id] || {}) : {};
@@ -567,6 +788,9 @@ function startLesson(lesson) {
     else if (t === "godot_scene")  renderGodotScene(activeLessonData, () => finishLesson());
     else if (t === "fill_blank")   renderFillBlank(activeLessonData, (c, tot) => finishFillBlank(c, tot));
     else if (t === "spot_bug")     renderSpotBug(activeLessonData, (c) => finishSpotBug(c));
+    else if (t === "practice_standard" || t === "practice_survival") {
+        runMixedPractice(activeLessonData, analytics, onUpdate);
+    }
     else renderQuestion(activeLessonData, analytics, onUpdate, () => finishLesson());
 }
 
@@ -590,8 +814,11 @@ async function finishFillBlank(correctCount, total) {
     if (score > cur) { ud.scores[activeLessonData.id] = score; await saveField("scores", ud.scores); }
 
     $("return-btn").onclick = () => {
-        const entry = catalogData.find(c => c.id === activeCD?.id) || catalogData.find(c => isBundle(c) && c.courses?.some(cr => cr.id === activeCD?.id));
-        entry ? openSyllabus(entry) : navExplorer.click();
+        if (activeCourseRef) {
+            openSyllabus(activeCourseRef, null, activeCurriculumEntry || activeCourseRef);
+        } else {
+            navExplorer.click();
+        }
     };
 }
 
@@ -612,8 +839,11 @@ async function finishSpotBug(correct) {
     if (score > cur) { ud.scores[activeLessonData.id] = score; await saveField("scores", ud.scores); }
 
     $("return-btn").onclick = () => {
-        const entry = catalogData.find(c => c.id === activeCD?.id) || catalogData.find(c => isBundle(c) && c.courses?.some(cr => cr.id === activeCD?.id));
-        entry ? openSyllabus(entry) : navExplorer.click();
+        if (activeCourseRef) {
+            openSyllabus(activeCourseRef, null, activeCurriculumEntry || activeCourseRef);
+        } else {
+            navExplorer.click();
+        }
     };
 }
 
@@ -670,14 +900,15 @@ async function finishLesson() {
             for (const [lid, s] of Object.entries(grouped)) {
                 if ((s.c / s.t) >= MASTERY_THRESHOLD && !ud.mastery[lid]) {
                     ud.mastery[lid] = true;
+                    ud.scores[lid] = 4;
                     masteryChanged = true;
                 }
             }
-            if (masteryChanged) await saveField("mastery", ud.mastery);
-
             if (masteryChanged) {
-                ratingText = "complete. mastery earned on some lessons!";
+                await saveField("mastery", ud.mastery);
+                await saveField("scores", ud.scores);
             }
+            if (masteryChanged) ratingText = "complete. mastery earned!";
         }
 
     } else if (BINARY_TYPES.includes(t) || (!hasQ && t === "document")) {
@@ -713,9 +944,10 @@ async function finishLesson() {
     $("return-btn").onclick = () => {
         if (t === "practice_standard" || t === "practice_survival") {
             navHub.click();
+        } else if (activeCourseRef) {
+            openSyllabus(activeCourseRef, null, activeCurriculumEntry || activeCourseRef);
         } else {
-            const entry = catalogData.find(c => c.id === activeCD?.id) || catalogData.find(c => isBundle(c) && c.courses?.some(cr => cr.id === activeCD?.id));
-            entry ? openSyllabus(entry) : navExplorer.click();
+            navExplorer.click();
         }
     };
 }
@@ -725,19 +957,19 @@ function getDefaultPracticeSettings() {
 }
 
 async function openHub(tab) {
-    document.querySelectorAll(".hub-tab").forEach(t => {
-        t.classList.toggle("active", t.dataset.hubtab === tab);
-    });
+    document.querySelectorAll(".hub-tab").forEach(tb =>
+        tb.classList.toggle("active", tb.dataset.hubtab === tab)
+    );
     $("hub-practice-panel").style.display = tab === "practice" ? "block" : "none";
-    $("hub-docs-panel").style.display     = tab === "docs" ? "block" : "none";
+    $("hub-docs-panel").style.display     = tab === "docs"     ? "block" : "none";
 
     if (tab === "practice") await buildPracticePanel();
     if (tab === "docs")     await buildDocsPanel();
 }
 
-document.querySelectorAll(".hub-tab").forEach(btn => {
-    btn.addEventListener("click", () => openHub(btn.dataset.hubtab));
-});
+document.querySelectorAll(".hub-tab").forEach(btn =>
+    btn.addEventListener("click", () => openHub(btn.dataset.hubtab))
+);
 
 async function buildPracticePanel() {
     const content = $("practice-content");
@@ -779,10 +1011,12 @@ async function buildPracticePanel() {
         const grp = document.createElement("div");
         grp.className = "practice-btn-group";
 
-        const std = Object.assign(document.createElement("button"), { innerText: "standard" });
+        const std = document.createElement("button");
+        std.innerText = "standard";
         std.onclick = () => compileStandardPractice(entry);
 
-        const sur = Object.assign(document.createElement("button"), { innerText: "survival" });
+        const sur = document.createElement("button");
+        sur.innerText = "survival";
         sur.style.cssText = "color:#ff4444;border-color:#ff4444;";
         sur.onclick = () => compileSurvivalPractice(entry);
 
@@ -807,7 +1041,11 @@ async function buildDocsPanel() {
 
         const group = document.createElement("div");
         group.className = "docs-course-group";
-        group.innerHTML = `<div class="docs-course-title">${entry.title}</div>`;
+
+        const titleEl = document.createElement("div");
+        titleEl.className = "docs-course-title";
+        titleEl.textContent = entry.title;
+        group.appendChild(titleEl);
 
         const dataMap = await fetchBundleData(entry);
 
@@ -815,7 +1053,6 @@ async function buildDocsPanel() {
             data.sections.forEach(sec => {
                 sec.lessons.forEach(lesson => {
                     if (lesson.type !== "document" || !lesson.content) return;
-
                     const id = lesson.id || lesson.title.replace(/\s+/g, "-").toLowerCase();
                     lesson.id = id;
 
@@ -828,8 +1065,7 @@ async function buildDocsPanel() {
                     row.onclick = () => {
                         activeCD = data;
                         activeCD.id = courseId;
-                        const docLesson = Object.assign({}, lesson, { questions: [] });
-                        startLesson(docLesson);
+                        startLesson(Object.assign({}, lesson, { questions: [] }));
                     };
                     group.appendChild(row);
                 });
@@ -851,7 +1087,7 @@ function collectQuestions(data, settings) {
         if (l.type === "fill_blank" && s.fill_blank) {
             l.questions?.forEach((q, i) => out.push({ ...q, globalId: `${id}-q${i}`, parentLessonId: id, _lessonType: "fill_blank" }));
         } else if (l.type === "spot_bug" && s.spot_bug) {
-            out.push({ q: l.title, options: [], answer: 0, globalId: id, parentLessonId: id, _lessonType: "spot_bug" });
+            out.push({ q: l.title, options: [], answer: 0, globalId: id, parentLessonId: id, _lessonType: "spot_bug", _lessonRef: l });
         } else if (l.questions?.length && s.mcq) {
             l.questions.forEach((q, i) => out.push({ ...q, globalId: `${id}-q${i}`, parentLessonId: id }));
         }
@@ -964,16 +1200,16 @@ document.addEventListener("keydown", e => {
 });
 
 (function initPublicCatalog() {
-    const btnCourses   = $("btn-landing-courses");
-    const btnSignin    = $("btn-landing-signin");
-    const btnBack      = $("btn-back-landing");
-    const viewLanding  = $("view-landing");
-    const viewPublic   = $("view-public-courses");
-    const viewAuth     = $("view-auth");
-    const heroCta      = document.querySelector(".hero-cta");
-    const pubGrid      = $("public-catalog-grid");
+    const btnCourses  = $("btn-landing-courses");
+    const btnSignin   = $("btn-landing-signin");
+    const btnBack     = $("btn-back-landing");
+    const viewLanding = $("view-landing");
+    const viewPublic  = $("view-public-courses");
+    const viewAuth    = $("view-auth");
+    const heroCta     = document.querySelector(".hero-cta");
+    const pubGrid     = $("public-catalog-grid");
 
-    let pubCategory = "all";
+    let pubCategory   = "all";
     let pubDifficulty = "all";
 
     async function openPublic(e) {
@@ -993,10 +1229,7 @@ document.addEventListener("keydown", e => {
             const card = document.createElement("div");
             card.className = "public-course-card";
 
-            const lessonsNote = isBundle(entry)
-                ? `${entry.courses.length} courses`
-                : "Full curriculum";
-
+            const lessonsNote = isBundle(entry) ? `${entry.courses.length} courses` : "Full curriculum";
             const diffBadge = entry.difficulty
                 ? `<span class="diff-badge ${entry.difficulty}">${entry.difficulty}</span>` : "";
 

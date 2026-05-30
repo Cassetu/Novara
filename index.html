@@ -100,7 +100,8 @@
     </button>
     <div style="margin-top: 40px; border-top: 2px dashed #0a0a0a; padding-top: 30px;">
         <p style="font-size: 12px; font-family: monospace; font-weight: bold; letter-spacing: 1px; margin-bottom: 15px;">OR USE EMAIL</p>
-        <input type="email" id="auth-email-input" placeholder="ENTER EMAIL ADDRESS" spellcheck="false" style="width: 100%; padding: 12px; background: #ffffff; color: #0a0a0a; border: 2px solid #0a0a0a; outline: none; margin-bottom: 15px; font-family: monospace; font-size: 14px; box-sizing: border-box;">
+        <input type="email" id="auth-email-input" placeholder="ENTER EMAIL ADDRESS" spellcheck="false"
+               style="width: 100%; padding: 12px; background: #ffffff; color: #0a0a0a; border: 2px solid #0a0a0a; outline: none; margin-bottom: 15px; font-family: monospace; font-size: 14px; box-sizing: border-box;">
         <button id="auth-magic-btn" style="width: 100%; padding: 12px; font-weight: bold; background-color: #0a0a0a; color: #ffffff; border: 2px solid #0a0a0a; cursor: pointer; box-shadow: 4px 4px 0px #77BBA2;">
             SEND LINK ↗
         </button>
@@ -108,31 +109,48 @@
     <p id="auth-status" style="margin-top: 20px; font-size: 14px; font-weight: bold; font-family: monospace;"></p>
 </div>
 
-<div id="app-view" class="app" style="display: none;">
+<div id="app-view" style="display: none; flex-direction: column; height: 100vh; width: 100vw; overflow: hidden;">
 
-    <aside class="sidebar" id="main-sidebar">
-        <h2>Active</h2>
-        <nav>
-            <ul id="enrolled-list"></ul>
-            <ul style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px;">
-                <li><a href="#" id="nav-hub" style="color: var(--text-dim);">Hub</a></li>
-            </ul>
-        </nav>
-        <h2 style="margin-top: 40px;">System</h2>
-        <nav>
-            <ul>
-                <li><a href="#" id="nav-explorer">Curriculums</a></li>
-                <li><a href="#" id="nav-settings">Settings</a></li>
-            </ul>
-        </nav>
-        <div style="margin-top: auto; padding-top: 20px; font-size: 11px; color: var(--text-dim); border-top: 2px solid var(--border); line-height: 1.6; font-family: monospace;">
-            <b>> Notice <</b><br>
-            If a question or document is incorrect, please email:<br>
-            <a href="mailto:cassetunium@gmail.com" style="color: var(--text-main); text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--accent); text-transform: lowercase; font-size: 12px; margin-top: 5px; display: inline-block;">
-                cassetunium@gmail.com ↗
-            </a>
+    <nav id="app-topbar">
+
+        <div class="topbar-left">
+            <button class="tb-btn tb-active" id="nav-explorer">Explore</button>
+
+            <div class="tb-dropdown-wrap" id="active-wrap">
+                <button class="tb-btn" id="nav-active-btn">
+                    Active <span id="active-count-badge" style="font-size:10px;opacity:0.6;margin-left:4px;"></span> ▾
+                </button>
+                <div class="tb-dropdown" id="active-dropdown">
+                    <div id="active-dropdown-items"></div>
+                </div>
+            </div>
         </div>
-    </aside>
+
+        <div class="topbar-center">
+            <img src="assets/img/favicon.png" alt="Novara" class="topbar-logo">
+            <span class="topbar-wordmark">Novara</span>
+        </div>
+
+        <div class="topbar-right">
+            <div class="tb-dropdown-wrap right" id="user-menu-wrap">
+                <div class="tb-avatar" id="user-avatar-btn" title="Menu">N</div>
+                <div class="tb-dropdown" id="user-dropdown">
+                    <div class="tb-dd-item" id="nav-hub">
+                        <span>⬡</span><span>Hub</span>
+                    </div>
+                    <div class="tb-dd-separator"></div>
+                    <div class="tb-dd-item" id="nav-settings">
+                        <span>⚙</span><span>Settings</span>
+                    </div>
+                    <div class="tb-dd-separator"></div>
+                    <div class="tb-dd-item" id="nav-signout">
+                        <span>↗</span><span>Sign Out</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </nav>
 
     <main class="workspace" id="main-workspace">
 
@@ -158,10 +176,7 @@
             <div id="catalog-grid" class="catalog-grid"></div>
         </div>
 
-        <div id="view-syllabus" class="view-layer" style="display: none;">
-            <h1 id="syllabus-title"></h1>
-            <div id="syllabus-content"></div>
-        </div>
+        <div id="view-syllabus" class="view-layer" style="display: none;"></div>
 
         <div id="view-lesson" class="view-layer" style="display: none;"></div>
 
@@ -180,16 +195,13 @@
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 15px;">
-                    <button id="sign-out-btn" style="background-color: var(--surface); color: var(--text-main);">SIGN OUT ↗</button>
-                </div>
-
                 <div class="danger-zone">
                     <h3>Danger Zone</h3>
                     <p>Execute a complete purge. This will permanently erase all enrollments, scores, and progress. Cannot be undone.</p>
                     <div id="wipe-auth-block" style="display: none; margin-top: 25px;">
                         <p style="color: var(--text-dim); margin-bottom: 10px;">Type <strong>PURGE</strong> to confirm:</p>
-                        <input type="text" id="wipe-confirm-input" placeholder="..." spellcheck="false" autocomplete="off" style="padding: 10px; background: #ffffff; color: #ff4444; border: 1px solid var(--border); width: 100%; max-width: 300px; margin-bottom: 15px; outline: none; font-family: monospace;">
+                        <input type="text" id="wipe-confirm-input" placeholder="..." spellcheck="false" autocomplete="off"
+                               style="padding: 10px; background: #ffffff; color: #ff4444; border: 1px solid var(--border); width: 100%; max-width: 300px; margin-bottom: 15px; outline: none; font-family: monospace;">
                         <br>
                         <button id="execute-wipe-btn" class="danger-btn" disabled>Execute Purge</button>
                     </div>
