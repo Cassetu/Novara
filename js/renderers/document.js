@@ -26,12 +26,36 @@ function renderDocument(lessonData, onFinish) {
             </div>
             <div class="lesson-footer">
                 <div class="progress-dots"><div class="p-dot active"></div></div>
-                <button id="lesson-read-btn">${hasQ ? "continue to quiz" : "mark as read"}</button>
+                <button id="lesson-read-btn" ${hasQ ? "disabled" : ""}>${hasQ ? "read to continue" : "mark as read"}</button>
             </div>
         </div>
     `;
 
-    document.getElementById("lesson-read-btn").addEventListener("click", () => {
+    const btn = document.getElementById("lesson-read-btn");
+    const content = document.getElementById("module-content");
+
+    if (hasQ) {
+        const threshold = 75;
+
+        function checkScroll() {
+            const rect = content.getBoundingClientRect();
+            const workspace = view.closest(".workspace") || document.scrollingElement;
+            const scrolled = workspace.scrollTop + workspace.clientHeight;
+            const target = content.offsetTop + content.offsetHeight * threshold;
+
+            if (scrolled >= target) {
+                btn.disabled = false;
+                btn.innerText = "continue to quiz";
+                workspace.removeEventListener("scroll", checkScroll);
+            }
+        }
+
+        const workspace = view.closest(".workspace") || document.scrollingElement;
+        workspace.addEventListener("scroll", checkScroll);
+        checkScroll();
+    }
+
+    btn.addEventListener("click", () => {
         playCorrect();
         onFinish();
     });
