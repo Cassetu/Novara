@@ -35,7 +35,7 @@ function renderDocument(lessonData, onFinish) {
     const content = document.getElementById("module-content");
 
     if (hasQ) {
-        const threshold = 75;
+        const threshold = 0.75;
 
         function checkScroll() {
             const rect = content.getBoundingClientRect();
