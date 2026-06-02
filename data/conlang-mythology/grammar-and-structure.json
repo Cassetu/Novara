@@ -1,0 +1,372 @@
+{
+  "sections": [
+    {
+      "title": "Module 1: Word Order and Basic Sentence Structure",
+      "lessons": [
+        {
+          "id": "word-order-intro",
+          "title": "How Languages Order Subjects, Verbs, and Objects",
+          "type": "document",
+          "content": "Every sentence about an action involves three things: who is doing it, what they are doing, and what they are doing it to. In linguistics these are called the `Subject`, the `Verb`, and the `Object`. Linguists abbreviate them as S, V, and O.\n\nEvery language has a preferred order for these three elements. The order a language defaults to is called its `basic word order`.\n\nEnglish uses `SVO` order. The dog chased the cat. Subject first, then the verb, then the object.\n\nJapanese uses `SOV` order. Subject first, then the object, then the verb. A direct translation of `the dog chased the cat` in Japanese would be structured as `the dog the-cat chased`.\n\nArabic classically uses `VSO` order. The verb comes first. A direct translation would be `chased the-dog the-cat`.\n\nHere is what is fascinating. If you count all the world's languages, SOV and SVO together account for roughly 75 percent of them. VSO is much rarer. VOS, OVS, and OSV are rarer still. The reason most linguists think SOV is so common is that it puts the action at the end, which gives the listener time to build up context before the payoff.\n\nFor your conlang, word order is one of the first structural decisions to make. It shapes everything else. SVO languages tend to use prepositions (before the noun). SOV languages tend to use postpositions (after the noun). SVO languages tend to put adjectives before nouns. These are tendencies called `typological correlations`, and aligning your language with them makes it feel more naturally coherent.",
+          "questions": [
+            {
+              "q": "In a language with SOV word order, how would the sentence `the cat sees the bird` be structured?",
+              "options": [
+                "The cat sees the bird",
+                "Sees the cat the bird",
+                "The cat the bird sees",
+                "The bird the cat sees"
+              ],
+              "answer": 2,
+              "explanation": "SOV means Subject then Object then Verb. The cat is the subject, the bird is the object, and sees is the verb. So it becomes: the cat the bird sees."
+            },
+            {
+              "q": "According to the document, what is a typological correlation?",
+              "options": [
+                "A strict grammatical rule that all languages of the same type must follow",
+                "A tendency for certain grammatical features to appear together in languages of the same word order type",
+                "A historical connection between two languages that share common ancestry",
+                "A test linguists use to determine what word order a new language uses"
+              ],
+              "answer": 1,
+              "explanation": "The document describes typological correlations as tendencies. For example, SOV languages tend to use postpositions. These are not absolute rules but patterns that frequently appear together."
+            },
+            {
+              "q": "According to the document, which two word orders account for approximately 75 percent of the world's languages?",
+              "options": [
+                "VOS and OVS",
+                "SVO and SOV",
+                "VSO and SVO",
+                "SOV and VSO"
+              ],
+              "answer": 1,
+              "explanation": "The document explicitly states that SOV and SVO together account for roughly 75 percent of the world's languages."
+            }
+          ]
+        },
+        {
+          "id": "word-order-fillblank",
+          "title": "Fill in the Blank: Word Order",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Fill in the correct word order label. In English, `the cat sees the bird` follows ___ order, because the subject comes first, then the verb, then the object.",
+              "code": "English sentence: the cat sees the bird\nWord order type: ___\nSubject: the cat\nVerb: sees\nObject: the bird",
+              "blanks": ["SVO"],
+              "explanation": "English puts the subject first, then the verb, then the object. This is the definition of SVO order."
+            },
+            {
+              "prompt": "SOV languages tend to use ___ rather than prepositions, because the modifying element comes after the noun it relates to.",
+              "code": "Word order: SOV\nExpected particle type: ___\nExample: Japanese uses 'ni' after a noun to mean 'at' or 'to'",
+              "blanks": ["postpositions"],
+              "explanation": "The document explains that SOV languages tend to use postpositions, which come after the noun, while SVO languages tend to use prepositions, which come before."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Morphology — Building Words",
+      "lessons": [
+        {
+          "id": "morphology-intro",
+          "title": "Morphemes: The Building Blocks of Words",
+          "type": "document",
+          "content": "A `morpheme` is the smallest meaningful unit in a language. It is smaller than a word. Some words are a single morpheme. The word `cat` is one morpheme. You cannot break it into smaller meaningful pieces. But the word `cats` is two morphemes: `cat` and the plural marker `-s`. The word `unbreakable` is three morphemes: `un-`, `break`, and `-able`.\n\nMorphemes come in two types.\n\n`Free morphemes` can stand alone as words. `Cat`, `run`, `fast` are all free morphemes.\n\n`Bound morphemes` cannot stand alone. They must attach to something. The English plural `-s`, the past tense `-ed`, and the prefix `un-` are all bound morphemes. They only exist attached to a base.\n\nLanguages differ enormously in how they use morphemes. This difference is so significant that linguists use it to classify languages into broad types.\n\n`Analytic languages` use mostly free morphemes. Grammatical relationships are shown through word order and separate words rather than through attached morphemes. Mandarin Chinese is a classic example. You add a separate word to show past tense rather than changing the verb itself.\n\n`Synthetic languages` attach bound morphemes to words to show grammatical relationships. Latin is a famous example. A noun changes its ending to show whether it is the subject, the object, or the possessor. You can shuffle the words around dramatically because the endings tell you who is doing what.\n\n`Agglutinative languages` are a subtype of synthetic that stack morphemes very cleanly, one function per morpheme. Turkish and Finnish pile suffixes onto words in long chains. Each suffix does exactly one job. Turkish `evlerimde` means `in my houses` and is built from `ev` (house) + `ler` (plural) + `im` (my) + `de` (in).\n\n`Fusional languages` are another synthetic subtype where one morpheme bundles multiple grammatical functions at once. Latin verb endings pack in person, number, tense, and mood all in a single suffix.",
+          "questions": [
+            {
+              "q": "How many morphemes are in the word `unbreakable`?",
+              "options": [
+                "One, because it is a single word",
+                "Two, because it has a prefix and a root",
+                "Three, because it consists of `un-`, `break`, and `-able`",
+                "Four, because the vowels in `break` each carry separate meaning"
+              ],
+              "answer": 2,
+              "explanation": "The document explicitly identifies `un-`, `break`, and `-able` as three separate morphemes in `unbreakable`. Each carries distinct meaning."
+            },
+            {
+              "q": "What makes Turkish an agglutinative language according to the document?",
+              "options": [
+                "It uses word order to show grammatical relationships instead of word endings",
+                "It stacks morphemes in chains where each individual morpheme does exactly one job",
+                "It bundles multiple grammatical functions into a single morpheme",
+                "It has no bound morphemes and relies entirely on free morphemes"
+              ],
+              "answer": 1,
+              "explanation": "The document defines agglutinative languages as those that stack morphemes cleanly, with one function per morpheme. The Turkish example `evlerimde` shows four separate morphemes each doing one job."
+            },
+            {
+              "q": "What is the key difference between an agglutinative language and a fusional language?",
+              "options": [
+                "Agglutinative languages use prepositions while fusional languages use postpositions",
+                "Agglutinative languages have more vowels while fusional languages have more consonants",
+                "In agglutinative languages each morpheme has one function, while in fusional languages one morpheme can express multiple functions at once",
+                "Agglutinative languages are always SOV while fusional languages are always SVO"
+              ],
+              "answer": 2,
+              "explanation": "The document contrasts agglutinative languages where each suffix does exactly one job with fusional languages where a single ending packs in person, number, tense, and mood all at once."
+            }
+          ]
+        },
+        {
+          "id": "case-systems",
+          "title": "Grammatical Case: Letting Endings Do the Work",
+          "type": "document",
+          "content": "In many languages, nouns change their form to show what role they play in a sentence. This system of forms is called `grammatical case`. Each different form is called a case.\n\nYou already know one case system in English even if you have never called it that. English pronouns still show case. `He` is the subject form (nominative). `Him` is the object form (accusative). `His` is the possessive form (genitive). You say `he saw him`, not `him saw he`.\n\nIn a language with full noun case, every noun changes its ending this way, not just pronouns. This means you can move words around freely and the sentence still makes sense because the endings tell you who did what.\n\nLatin has six cases that are worth knowing:\n\n`Nominative` marks the subject. The person or thing doing the action.\n\n`Accusative` marks the direct object. The person or thing receiving the action.\n\n`Genitive` marks possession. Equivalent to English `of` or `'s`.\n\n`Dative` marks the indirect object. The person or thing to or for whom the action is done. English `give the book to him` uses `him` as the dative.\n\n`Ablative` marks separation, source, or instrument. Often translated with `from`, `by`, or `with`.\n\n`Vocative` marks the person being addressed directly. In English you use this when you say `John, come here`. The name `John` there is vocative.\n\nFor your conlang, you do not need six cases. Many successful conlangs use only two or three. Nominative and accusative alone, which just mark subject and direct object, give your language a lot of expressive power. You can add more cases to fill specific needs.",
+          "questions": [
+            {
+              "q": "What is the purpose of the accusative case in a language?",
+              "options": [
+                "It marks the subject, the entity that is performing the action",
+                "It marks the direct object, the entity receiving the action",
+                "It marks possession, equivalent to the English `of` or `'s`",
+                "It marks the entity being addressed directly in speech"
+              ],
+              "answer": 1,
+              "explanation": "The document defines the accusative case as the marker for the direct object, the person or thing receiving the action."
+            },
+            {
+              "q": "In the English sentence `give the book to him`, which case is the word `him` functioning in according to the document?",
+              "options": [
+                "Nominative, because it refers to a person",
+                "Accusative, because it comes after a verb",
+                "Dative, because it is the indirect object receiving the action",
+                "Genitive, because it indicates a relationship between two entities"
+              ],
+              "answer": 2,
+              "explanation": "The document explicitly uses `give the book to him` as the example of the dative case. The dative marks the indirect object, the person to or for whom the action is done."
+            },
+            {
+              "q": "Why does a language with a full case system allow more flexible word order than English?",
+              "options": [
+                "Languages with case systems have fewer words, so arrangement matters less",
+                "Case endings on nouns show each noun's role regardless of its position in the sentence",
+                "Languages with case systems use a stricter phonotactic structure that prevents ambiguity",
+                "Word order in case languages is determined by vowel harmony rules"
+              ],
+              "answer": 1,
+              "explanation": "The document explains that in a full case language, the noun's ending tells you who did what, so you can rearrange words freely without losing meaning."
+            }
+          ]
+        },
+        {
+          "id": "case-spot-bug",
+          "title": "Spot the Bug: Case Labels",
+          "type": "spot_bug",
+          "prompt": "A student wrote a case reference sheet for their conlang. They copied the definitions from the lesson but made one error. Click the line with the wrong definition.",
+          "code": "Nominative: marks the subject, the entity performing the action\nAccusative: marks the direct object, the entity receiving the action\nGenitive: marks possession, equivalent to 'of' or \"'s\"\nDative: marks separation or source, often translated with 'from' or 'by'\nVocative: marks the entity being addressed directly",
+          "bugLine": 4,
+          "explanation": "Line 4 gives the definition of the ablative case, not the dative. The dative marks the indirect object, the person to or for whom the action is done, as in `give the book to him`. The description `marks separation or source, translated with from or by` belongs to the ablative."
+        },
+        {
+          "id": "tense-aspect-mood",
+          "title": "Tense, Aspect, and Mood: The Verb's Three Dimensions",
+          "type": "document",
+          "content": "English speakers tend to think of verbs as just having a tense, a location in time. Past, present, future. But most languages divide verb information into three separate dimensions, and confusing them leads to real misunderstandings.\n\n`Tense` is about when. Is the action in the past, present, or future relative to the moment of speaking? Not all languages grammaticalize tense. Mandarin Chinese has no tense markers on verbs at all. Context tells you when.\n\n`Aspect` is about the internal structure of the action. Is it completed or ongoing? Bounded or unbounded? This is separate from tense. You can talk about a completed past action, a completed future action, or an ongoing past action. They are different things.\n\nThe two main aspects are `perfective` and `imperfective`. Perfective views an action as a complete and bounded whole. Imperfective views an action as ongoing, repeated, or habitual. Russian takes aspect so seriously that almost every verb comes in two forms: a perfective version and an imperfective version.\n\nEnglish shows aspect in a limited way. `I read the book` (perfective, done) versus `I was reading the book` (imperfective, ongoing) are aspectually distinct even though both are past tense.\n\n`Mood` indicates the speaker's attitude toward the reality of what they are saying. Is it a fact, a command, a wish, a hypothetical?\n\n`Indicative` mood states things as facts. `The door is open.`\n`Imperative` mood gives commands. `Open the door.`\n`Subjunctive` mood expresses wishes, hypotheticals, or doubts. `I wish the door were open.` (Notice `were` instead of `was`. That is the English subjunctive.)\n`Conditional` mood expresses what would happen under certain conditions. `The door would open if you pushed it.`\n\nFor your conlang you get to decide which of these distinctions your language makes and which it ignores. A language that marks aspect but not tense will feel very different to speak than one that marks tense but not aspect.",
+          "questions": [
+            {
+              "q": "What is the core difference between tense and aspect in a verb system?",
+              "options": [
+                "Tense describes the subject of the action while aspect describes the object",
+                "Tense locates the action in time while aspect describes the internal structure of the action",
+                "Tense marks formal speech while aspect marks informal speech",
+                "Tense applies to nouns while aspect applies to adjectives"
+              ],
+              "answer": 1,
+              "explanation": "The document defines tense as about when an action occurs and aspect as about its internal structure, specifically whether it is completed or ongoing."
+            },
+            {
+              "q": "Which of the following English sentences is in the imperfective aspect according to the document?",
+              "options": [
+                "`I read the book` (past, completed)",
+                "`I will read the book` (future, planned)",
+                "`I was reading the book` (past, ongoing)",
+                "`I have read the book` (past, finished)"
+              ],
+              "answer": 2,
+              "explanation": "The document uses `I was reading the book` as the specific imperfective example, contrasting it with the perfective `I read the book`. Ongoing or continuous actions are imperfective."
+            },
+            {
+              "q": "In the sentence `I wish the door were open`, the word `were` instead of `was` is an example of which grammatical mood?",
+              "options": [
+                "Imperative mood, because it expresses a desire",
+                "Conditional mood, because it depends on a condition being met",
+                "Indicative mood, because it describes a real situation",
+                "Subjunctive mood, because it expresses a wish or hypothetical"
+              ],
+              "answer": 3,
+              "explanation": "The document uses this exact sentence as its example of the subjunctive mood, which expresses wishes, hypotheticals, or doubts."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Agreement, Pronouns, and Number",
+      "lessons": [
+        {
+          "id": "grammatical-agreement",
+          "title": "Grammatical Agreement: When Words Match Each Other",
+          "type": "document",
+          "content": "Agreement is a rule that requires certain words to change their form to match the grammatical properties of another word they are connected to. It creates a kind of echo across a sentence where properties spread from one word to others.\n\nEnglish has a small amount of agreement. Third-person singular subjects in the present tense require the verb to take an `-s` ending. `She runs` but `they run`. The subject `she` has a singular number property, and the verb must agree by adding `-s`.\n\nSpanish has much richer agreement. Adjectives must agree with the nouns they modify in both gender and number. The noun `libro` (book) is masculine, so you say `libro rojo` (red book). The noun `mesa` (table) is feminine, so you say `mesa roja`. The adjective changes its ending to match.\n\n`Grammatical gender` is a noun classification system that has nothing to do with biological sex for most nouns. It is more accurate to think of it as noun class. German has three noun classes: masculine, feminine, and neuter. The word `Mädchen` (girl) is neuter in German, which seems odd from a biological perspective but makes perfect sense as an arbitrary noun class.\n\nMany languages use noun classes that are not based on biological gender at all. Swahili has fifteen noun classes based on categories like people, plants, animals, abstractions, and locations. Each class has its own agreement prefix that spreads to verbs and adjectives.\n\nFor your conlang, agreement is a powerful tool for making the language feel cohesive and interlinked. Even a simple system with just two noun classes creates a rich texture when all verbs, adjectives, and articles echo those classes.",
+          "questions": [
+            {
+              "q": "What is grammatical agreement?",
+              "options": [
+                "A rule requiring certain words to change their form to match the grammatical properties of another connected word",
+                "A rule requiring all sentences in a language to follow the same word order",
+                "A convention that speakers must use polite forms when addressing strangers",
+                "A pattern where borrowed words take on the phonology of the borrowing language"
+              ],
+              "answer": 0,
+              "explanation": "The document defines agreement as a rule requiring certain words to change their form to match the grammatical properties of another word they are connected to."
+            },
+            {
+              "q": "According to the document, why is the term `grammatical gender` somewhat misleading for most nouns?",
+              "options": [
+                "Because gender only applies to animate nouns in most languages",
+                "Because grammatical gender is actually an arbitrary noun class system with no required connection to biological sex",
+                "Because gender marking was historically only used in formal written registers",
+                "Because gender in grammar is always determined by the phonology of the word"
+              ],
+              "answer": 1,
+              "explanation": "The document uses the German example `Mädchen` (girl, but neuter gender) to show that grammatical gender is more accurately described as an arbitrary noun classification system."
+            }
+          ]
+        },
+        {
+          "id": "pronouns-and-deixis",
+          "title": "Pronouns, Honorifics, and Pointing Words",
+          "type": "document",
+          "content": "Pronouns are words that stand in for nouns. They point to participants in the conversation or things in the world without naming them directly. The system of pronouns in a language reveals a lot about what social distinctions that culture considers important enough to grammaticalize.\n\nEnglish has a relatively impoverished pronoun system for social distinction. We have `you` for both singular and plural and for both formal and informal contexts. But many languages do this differently.\n\nFrench distinguishes `tu` (informal singular you) from `vous` (formal or plural you). German distinguishes `du` (informal) from `Sie` (formal). Japanese has an entire system of speech levels where the words you use depend on the relative social status of the people in the conversation.\n\nThis distinction between a formal and an informal form of `you` is called a `T-V distinction`, named from the Latin `tu` (informal) and `vos` (formal).\n\nBeyond social register, pronoun systems vary in what other distinctions they track.\n\n`Inclusive vs exclusive we` is found in many languages. Inclusive `we` means the speaker plus the listener. Exclusive `we` means the speaker plus others, but not the listener. In English, `we` is ambiguous. Many languages are not.\n\n`Clusivity` is the technical term for this inclusive/exclusive distinction.\n\n`Evidentiality` appears in some pronoun and verb systems. It marks whether the speaker witnessed something directly, heard about it, or is inferring it. Turkish and many indigenous American languages mark this directly in their grammar.\n\nFor your conlang, the pronoun system is a chance to encode something about the culture of your language's speakers. Do they care deeply about social hierarchy? Do they distinguish whether they personally witnessed something? Do they draw a sharp line between the in-group and out-group in the inclusive/exclusive `we`?",
+          "questions": [
+            {
+              "q": "What is the T-V distinction in a language's pronoun system?",
+              "options": [
+                "The distinction between transitive and intransitive verbs in the grammar",
+                "The distinction between inclusive and exclusive first-person plural pronouns",
+                "The distinction between a formal and an informal second-person pronoun",
+                "The distinction between animate and inanimate referents in pronoun choice"
+              ],
+              "answer": 2,
+              "explanation": "The document defines the T-V distinction as the formal versus informal forms of `you`, named from the Latin `tu` (informal) and `vos` (formal). French `tu`/`vous` is the example given."
+            },
+            {
+              "q": "What does `clusivity` refer to in a pronoun system?",
+              "options": [
+                "Whether a pronoun refers to a person of high or low social status",
+                "Whether a first-person plural pronoun includes or excludes the listener",
+                "Whether a language uses separate pronouns for singular and plural you",
+                "Whether a pronoun system uses gender marking for third-person references"
+              ],
+              "answer": 1,
+              "explanation": "The document explains that clusivity is the inclusive versus exclusive distinction in `we`. Inclusive `we` includes the listener. Exclusive `we` excludes them."
+            }
+          ]
+        },
+        {
+          "id": "grammar-fillblank",
+          "title": "Fill in the Blank: Core Grammar Concepts",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "The distinction in some languages between a `we` that includes the listener and a `we` that excludes the listener is called ___.",
+              "code": "Inclusive we: speaker + listener + others\nExclusive we: speaker + others (NOT the listener)\nTechnical term for this distinction: ___",
+              "blanks": ["clusivity"],
+              "explanation": "The document explicitly names this distinction `clusivity`. English does not mark this distinction, but many languages do."
+            },
+            {
+              "prompt": "In Russian, almost every verb comes in two versions: one for a completed bounded action and one for an ongoing or habitual action. The completed form is called the ___ aspect.",
+              "code": "Russian verb aspect:\n___ aspect: action viewed as a complete whole\nImperfective aspect: action viewed as ongoing or habitual",
+              "blanks": ["perfective"],
+              "explanation": "The document defines the perfective aspect as viewing an action as a complete and bounded whole. Russian grammaticalizes this distinction on virtually every verb."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 4: Sound Change and Language Evolution",
+      "lessons": [
+        {
+          "id": "sound-change",
+          "title": "How Languages Change Over Time: Sound Laws",
+          "type": "document",
+          "content": "Languages change constantly. No spoken language stays the same from generation to generation. The changes are not random. They follow predictable patterns called `sound laws` or `regular correspondences`.\n\nThe most famous example is `Grimm's Law`, named after Jacob Grimm (yes, the fairy tale collector). Grimm noticed in the early 1800s that Germanic languages like English and German show a systematic shift in consonants compared to other Indo-European languages like Latin and Greek.\n\nSpecifically, the original Proto-Indo-European stops shifted in the Germanic branch. The voiceless stops /p/, /t/, /k/ became fricatives /f/, /θ/, /x/. The voiced stops /b/, /d/, /g/ became voiceless stops /p/, /t/, /k/.\n\nYou can see this in pairs of related words. Latin `pater` (father) becomes English `father`. The /p/ became /f/. Latin `tres` (three) becomes English `three`. The /t/ became /θ/ (the `th` sound). Latin `cornu` (horn) becomes English `horn`. The /k/ became /h/, which is the weaker modern reflex of the original /x/.\n\nThe key insight is that these changes apply `across the board`. Every /p/ in that position shifted to /f/. Not some of them. All of them. Sound change is not like vocabulary borrowing, where you pick and choose. It is a wholesale systematic shift.\n\nThis means that if you want your invented language to have a history, you can create related dialects or ancestor languages by applying consistent sound changes. If your conlang has an ancient ancestor language and a modern descendant, you should be able to write a rule like `original /k/ becomes /tʃ/ before front vowels` and apply it consistently to every word.",
+          "questions": [
+            {
+              "q": "What made Grimm's Law significant as a linguistic discovery?",
+              "options": [
+                "It proved that all European languages descended from a single common ancestor",
+                "It showed that consonant shifts in Germanic languages follow a predictable and systematic pattern",
+                "It demonstrated that fairy tales preserve ancient vocabulary unchanged",
+                "It revealed that written languages change faster than spoken languages"
+              ],
+              "answer": 1,
+              "explanation": "The document explains that Grimm's Law showed a systematic pattern of consonant shifts. The significance is in the regularity. Every /p/ in the relevant position became /f/. The change applies across the board."
+            },
+            {
+              "q": "According to the document, the Latin word `pater` (father) corresponds to English `father`. What sound change does this illustrate?",
+              "options": [
+                "The voiceless stop /p/ became the fricative /f/ as part of Grimm's Law",
+                "The voiced stop /b/ became the voiceless stop /p/ in Germanic languages",
+                "The vowel /a/ shifted to /e/ in Germanic languages under stress",
+                "The fricative /f/ in Latin became a stop /p/ in Germanic languages"
+              ],
+              "answer": 0,
+              "explanation": "The document uses `pater` to `father` as the direct example of the voiceless stop /p/ shifting to the fricative /f/ under Grimm's Law."
+            },
+            {
+              "q": "A linguist coins the rule `original /k/ becomes /tʃ/ before front vowels`. According to the document, what property must this rule have to be considered a true sound law?",
+              "options": [
+                "It must apply only to words borrowed from foreign languages",
+                "It must apply consistently to every word meeting that condition, not just selected ones",
+                "It must be approved by official language governing institutions",
+                "It must produce sounds that are easier to pronounce than the originals"
+              ],
+              "answer": 1,
+              "explanation": "The document stresses that sound change applies across the board. Every instance shifts, not just some. This wholesale regularity is what makes it a sound law rather than an arbitrary change."
+            }
+          ]
+        },
+        {
+          "id": "grammar-project",
+          "title": "Project: Write Your Language's Grammar Sketch",
+          "type": "project",
+          "fileLabel": "grammar-sketch.txt",
+          "initialCode": "LANGUAGE NAME: [Your Language]\n\n=== WORD ORDER ===\nBasic order (SVO / SOV / VSO / other): \nPrepositions or postpositions: \n\n=== MORPHOLOGICAL TYPE ===\nType (analytic / agglutinative / fusional): \nNotes: \n\n=== NOUN SYSTEM ===\nGrammatical cases used: \nNoun classes or gender: \n\n=== VERB SYSTEM ===\nTense distinctions: \nAspect distinctions: \nMood distinctions: \n\n=== PRONOUN SYSTEM ===\n1st person singular: \n2nd person singular (formal): \n2nd person singular (informal): \n3rd person singular: \nInclusive/exclusive we distinction: yes / no\n\n=== SAMPLE SENTENCES ===\n(Write 5 sentences with a word-by-word gloss below each one)\n",
+          "steps": [
+            {
+              "id": "gram-proj-1",
+              "title": "Define word order and morphological type",
+              "instructions": "Fill in the Word Order and Morphological Type sections. Choose a basic word order and decide whether your language is analytic, agglutinative, or fusional.",
+              "validation": [
+                { "rule": "Basic order.*:", "message": "Fill in your basic word order." },
+                { "rule": "Type.*:", "message": "Fill in your morphological type." }
+              ]
+            },
+            {
+              "id": "gram-proj-2",
+              "title": "Define noun and verb systems",
+              "instructions": "Fill in the Noun System and Verb System sections. You do not need to invent all words yet, just decide the grammatical distinctions your language makes.",
+              "validation": [
+                { "rule": "Tense distinctions:", "message": "Fill in the Tense distinctions line." },
+                { "rule": "cases used:", "message": "Fill in the grammatical cases line." }
+              ]
+            },
+            {
+              "id": "gram-proj-3",
+              "title": "Write your pronouns and sample sentences",
+              "instructions": "Fill in at least the basic pronouns and write 5 sample sentences with glosses beneath each one.",
+              "validation": [
+                { "rule": "1st person singular:", "message": "Fill in your first person singular pronoun." },
+                { "rule": "SAMPLE SENTENCES", "message": "Keep the Sample Sentences section." }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

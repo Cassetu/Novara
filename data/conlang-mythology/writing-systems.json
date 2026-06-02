@@ -1,0 +1,197 @@
+{
+  "sections": [
+    {
+      "title": "Module 1: How Writing Systems Work",
+      "lessons": [
+        {
+          "id": "writing-systems-intro",
+          "title": "The Three Main Types of Writing System",
+          "type": "document",
+          "content": "A writing system is a way of encoding language in a visual medium. Not all writing systems work the same way. They differ in what unit of language each symbol represents. This gives us three fundamentally different types.\n\n`Logographic` systems give each symbol a meaning, not a sound. One symbol might mean `sun` or `river` or `house`. Chinese characters work this way. You need to learn a large number of symbols because you need one for every meaningful unit. Modern Chinese uses around 3,500 characters for everyday literacy and over 50,000 exist in total.\n\n`Syllabic` systems give each symbol a syllable. One symbol equals one syllable of sound. Japanese hiragana and katakana are syllabic. The hiragana symbol for `ka` always means the syllable `ka`, regardless of meaning. Syllabic systems need fewer symbols than logographic ones, typically forty to a hundred, because a language only has so many distinct syllables.\n\n`Alphabetic` systems give each symbol a single phoneme or sound. One symbol equals one consonant or vowel. The Latin alphabet, the Greek alphabet, the Cyrillic alphabet, and Arabic script are all alphabetic. You need fewer symbols still, typically twenty to forty, but you have to string them together more to write anything.\n\nThere is a fourth type worth knowing. `Abjads` are alphabets that write only consonants and leave vowels unmarked or marked only optionally. Arabic and Hebrew are the classic examples. Readers infer vowels from context. This works because the consonantal root carries most of the meaning in Semitic languages.\n\nA `syllabary` is the complete set of syllabic symbols in a syllabic writing system. The term is just the noun form of syllabic.\n\nFor your conlang, the writing system you invent should ideally match your language's phonological structure. A CV language with simple, regular syllables is a natural fit for a syllabary. A language with complex consonant clusters and a small phoneme inventory is a natural fit for an alphabet.",
+          "questions": [
+            {
+              "q": "What distinguishes a logographic writing system from a syllabic one?",
+              "options": [
+                "Logographic symbols represent meanings while syllabic symbols represent units of sound",
+                "Logographic systems use more symbols because they represent longer words",
+                "Logographic systems are older while syllabic systems are more modern",
+                "Logographic systems can only be read in one direction while syllabic systems are bidirectional"
+              ],
+              "answer": 0,
+              "explanation": "The document defines logographic symbols as representing meanings and syllabic symbols as representing syllables of sound. The difference is what unit each symbol encodes."
+            },
+            {
+              "q": "What is an abjad?",
+              "options": [
+                "A syllabic writing system used primarily in East Asia",
+                "An alphabet where each symbol represents a single vowel sound",
+                "A writing system that records only consonants, leaving vowels unwritten or optional",
+                "A logographic system where symbols are organized by semantic category"
+              ],
+              "answer": 2,
+              "explanation": "The document defines an abjad as a writing system that writes only consonants, with vowels unmarked or marked optionally. Arabic and Hebrew are given as examples."
+            },
+            {
+              "q": "According to the document, why would a CV language be a natural fit for a syllabic writing system?",
+              "options": [
+                "CV languages have fewer phonemes, so syllabic symbols are easier to draw",
+                "CV languages have simple and regular syllables, making the number of distinct syllables manageable",
+                "CV languages are always tone languages, which syllabic systems handle better",
+                "CV languages evolved historically in regions that invented syllabic writing first"
+              ],
+              "answer": 1,
+              "explanation": "The document states that syllabic systems are a natural fit for languages with simple, regular syllables, and specifically mentions CV languages as an example, since they have a limited and predictable set of syllables."
+            }
+          ]
+        },
+        {
+          "id": "writing-history",
+          "title": "How Real Writing Systems Developed",
+          "type": "document",
+          "content": "Understanding how real writing systems evolved helps you make your invented one feel plausible and grounded. Every writing system in use today traces back to a small number of original inventions, and they all started with pictures.\n\nThe earliest writing was `pictographic`. A picture of the sun meant the sun. A picture of a foot meant foot or walking. Sumerian cuneiform, which appeared around 3200 BCE in Mesopotamia, began this way. So did Egyptian hieroglyphics.\n\nPictographic writing has a fundamental limitation. You can draw concrete things easily. You cannot draw abstract concepts or grammatical relationships. How do you draw `because` or `after` or the past tense?\n\nThe solution is the `rebus principle`. Take a word that is hard to draw, like the English word `belief`. It sounds like `bee` plus `leaf`. You draw a bee and a leaf to write `belief`. You are using pictures for their sounds rather than their meanings. This is the bridge from pictographic writing to phonetic writing.\n\nOnce the rebus principle is established, the symbols start drifting away from their original images. In cuneiform, the symbols were pressed into wet clay with a wedge-shaped reed, and round images are hard to make that way. Over centuries, cuneiform symbols became abstract wedge-shaped marks that no longer resembled anything pictorial.\n\nThe Phoenician alphabet, developed around 1050 BCE, is the ancestor of almost every alphabet in use today. Greek, Latin, Arabic, Hebrew, and through Latin, every European alphabet all trace back to Phoenician. The Phoenician letters still carry traces of their pictographic origins in their names. The first letter is `aleph`, which meant ox. The original symbol was a picture of an ox head. `Beth` meant house. The symbol was a floor plan of a house. These were repurposed to write consonant sounds using the `acrophonic principle`: each letter's sound was the first sound of the picture's name.\n\nFor your conlang's writing system, you can design this history in reverse. Start with the abstract final form you want and invent a plausible pictographic ancestor for it. This adds depth and credibility.",
+          "questions": [
+            {
+              "q": "What is the rebus principle in writing system development?",
+              "options": [
+                "The principle that the oldest symbols in a writing system always remain the most common",
+                "The principle of using a picture for its sound value rather than its literal meaning to write a new word",
+                "The principle that abstract concepts must be written with multiple symbols combined",
+                "The principle that writing systems evolve from complex to simple over time"
+              ],
+              "answer": 1,
+              "explanation": "The document defines the rebus principle as using a picture for its sound rather than its meaning. The `bee` plus `leaf` equals `belief` example illustrates this clearly."
+            },
+            {
+              "q": "Why did cuneiform symbols lose their pictographic appearance over time?",
+              "options": [
+                "Scribes simplified them to write faster as the literate population grew",
+                "The clay tablet medium made round pictorial shapes difficult to produce, so wedge-shaped marks replaced them",
+                "A major political reform standardized the symbols and removed pictorial elements",
+                "Trade with non-Sumerian peoples required symbols that were culturally neutral"
+              ],
+              "answer": 1,
+              "explanation": "The document explains that cuneiform was pressed into wet clay with a wedge-shaped reed. Round pictorial shapes are hard to make with this tool, so symbols gradually became abstract wedge patterns."
+            },
+            {
+              "q": "What is the acrophonic principle as described in the document?",
+              "options": [
+                "The principle that each letter in an alphabet should visually resemble what it sounds like",
+                "The principle that the sound of a letter is the first sound of the name of the original picture it came from",
+                "The principle that vowels always come before consonants in syllabic writing",
+                "The principle that writing systems should have fewer than 30 symbols for practical use"
+              ],
+              "answer": 1,
+              "explanation": "The document defines the acrophonic principle as using the first sound of a picture's name as the sound value of the letter. `Aleph` meant ox, so the letter gets the sound /a/."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Designing Your Script",
+      "lessons": [
+        {
+          "id": "script-design-principles",
+          "title": "Visual Principles: Making Your Script Look Real",
+          "type": "document",
+          "content": "A well-designed script has internal consistency. The symbols follow the same visual logic. They look like they belong to the same system. If you look at the Greek alphabet or the Korean Hangul, you can feel this coherence. There is a shared design language.\n\nHere are the main principles that make a script feel authentic.\n\n`Stroke economy` means each symbol is made of a small number of simple strokes that are natural to produce with the writing tool. Cuneiform uses wedge shapes because that is what a reed in clay makes. Arabic script uses flowing curves because it is written with a brush or pen in ink. Think about what your language's people write with and on what surface.\n\n`Internal logic` means the symbols for related sounds look related. In Korean Hangul, this is explicit and intentional. The symbols for all bilabial sounds (made with the lips) share a visual component. The symbols for all alveolar sounds share a different visual component. This is called a `featural` writing system because visual features of the symbol encode phonetic features of the sound.\n\n`Directionality` is the direction in which the writing flows. Left to right is common but not universal. Arabic and Hebrew go right to left. Classical Mongolian goes top to bottom. Some ancient scripts like early Greek were written alternating direction in each line (left to right on the first line, right to left on the second), a style called `boustrophedon`, meaning `as the ox plows`.\n\n`Diacritics` are small marks added to base symbols to modify them. The accent marks in French, the umlauts in German, and the vowel marks in Arabic are all diacritics. They let you expand a small base symbol set without inventing entirely new symbols.\n\nFor your conlang, even a rough sketch of a dozen or so symbols, drawn with attention to these principles, creates a powerful sense that the language exists as a real artifact.",
+          "questions": [
+            {
+              "q": "What makes Korean Hangul a `featural` writing system?",
+              "options": [
+                "It was designed by a single person rather than evolving over centuries",
+                "The visual features of each symbol encode the phonetic features of the sound it represents",
+                "It uses more diacritics than any other writing system in the world",
+                "Each symbol represents a complete word rather than a single sound"
+              ],
+              "answer": 1,
+              "explanation": "The document defines a featural writing system as one where visual features of the symbol reflect phonetic features of the sound. Hangul encodes place of articulation visually so related sounds look related."
+            },
+            {
+              "q": "What does `boustrophedon` writing mean?",
+              "options": [
+                "Writing that flows from top to bottom in vertical columns",
+                "Writing that uses only consonants and omits vowels entirely",
+                "Writing that alternates direction each line, right to left then left to right",
+                "Writing where each symbol represents a complete syllable"
+              ],
+              "answer": 2,
+              "explanation": "The document defines boustrophedon as alternating direction each line, derived from the Greek phrase meaning `as the ox plows`, because a plow goes one direction then turns and comes back."
+            },
+            {
+              "q": "According to the document, what purpose do diacritics serve in a writing system?",
+              "options": [
+                "They indicate grammatical case by modifying the ending of written words",
+                "They expand a small base symbol set by modifying existing symbols rather than creating new ones",
+                "They mark word boundaries so readers know where one word ends and the next begins",
+                "They indicate the tone or pitch of a syllable in tonal languages exclusively"
+              ],
+              "answer": 1,
+              "explanation": "The document says diacritics let you expand a small base symbol set without inventing entirely new symbols. French accents, German umlauts, and Arabic vowel marks are all given as examples."
+            }
+          ]
+        },
+        {
+          "id": "writing-systems-fillblank",
+          "title": "Fill in the Blank: Writing System Terms",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "A writing system where each symbol represents a single phoneme is called a(n) ___.",
+              "code": "Symbol unit: single phoneme\nSystem type: ___\nExamples: Latin alphabet, Greek alphabet, Cyrillic",
+              "blanks": ["alphabet"],
+              "explanation": "The document defines alphabetic systems as those where each symbol represents a single phoneme. This is the definition of an alphabet."
+            },
+            {
+              "prompt": "The style of writing that alternates direction each line, left to right on the first and right to left on the second, is called ___.",
+              "code": "Line 1: left → right\nLine 2: right → left\nLine 3: left → right\nWriting style name: ___",
+              "blanks": ["boustrophedon"],
+              "explanation": "The document defines boustrophedon as alternating directional writing. The name comes from the Greek for `as the ox plows`."
+            },
+            {
+              "prompt": "A writing system that records only consonants and leaves vowels unwritten is called a(n) ___.",
+              "code": "Vowels: unwritten or optional\nConsonants: always written\nSystem type: ___\nExamples: Arabic, Hebrew",
+              "blanks": ["abjad"],
+              "explanation": "The document defines an abjad as a writing system that records only consonants. Arabic and Hebrew are the classic examples."
+            }
+          ]
+        },
+        {
+          "id": "writing-systems-project",
+          "title": "Project: Design Your Writing System",
+          "type": "project",
+          "fileLabel": "writing-system-notes.txt",
+          "initialCode": "LANGUAGE NAME: [Your Language]\n\n=== SYSTEM TYPE ===\nType (alphabet / syllabary / abjad / logographic / featural): \nRationale (why does this match your language's structure): \n\n=== PHYSICAL CONTEXT ===\nWriting tool: (e.g. reed in clay, brush in ink, carved into stone)\nWriting surface: \nDirectionality: (left to right / right to left / top to bottom)\n\n=== SYMBOL INVENTORY ===\n(List each phoneme or syllable and describe or sketch the symbol)\n\nExample format:\n/a/ - a single horizontal bar\n/k/ - two strokes meeting at a point\n\n=== FEATURAL LOGIC ===\n(Describe any visual patterns linking related sounds)\n\n=== DIACRITICS ===\n(Describe any diacritics and what they modify)\n\n=== HISTORICAL ORIGIN STORY ===\n(Briefly describe the pictographic ancestors of 3 of your symbols)\n",
+          "steps": [
+            {
+              "id": "ws-proj-1",
+              "title": "Choose system type and writing context",
+              "instructions": "Fill in the System Type and Physical Context sections. Explain why your chosen type fits your language's phonology.",
+              "validation": [
+                { "rule": "Type.*:", "message": "Fill in the writing system type." },
+                { "rule": "Writing tool:", "message": "Fill in the writing tool field." }
+              ]
+            },
+            {
+              "id": "ws-proj-2",
+              "title": "Document your symbol inventory",
+              "instructions": "List at least 8 symbols from your writing system with brief descriptions. Include all vowels in your language.",
+              "validation": [
+                { "rule": "\\/[a-z]\\/", "message": "Use IPA notation for the phonemes your symbols represent." }
+              ]
+            },
+            {
+              "id": "ws-proj-3",
+              "title": "Add featural logic and origin story",
+              "instructions": "Describe any visual patterns linking related sounds (featural logic), and write brief origin stories for at least 3 symbols.",
+              "validation": [
+                { "rule": "FEATURAL LOGIC", "message": "Keep the Featural Logic section header." },
+                { "rule": "HISTORICAL ORIGIN STORY", "message": "Keep the Historical Origin Story section." }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,445 @@
+{
+  "sections": [
+    {
+      "title": "Module 1: What Is a Sound System?",
+      "lessons": [
+        {
+          "id": "phonology-intro",
+          "title": "What Phonology Actually Is",
+          "type": "document",
+          "content": "Every language is built on a small set of sounds that its speakers agree to use. Phonology is the study of which sounds a language uses and how they behave next to each other. It is not about spelling. It is about the actual physical sounds that come out of a mouth.\n\nThink of it like a color palette. A painter does not use every color on earth at once. They choose a palette, maybe twelve to twenty colors, and make everything from those. A language does the same thing with sound. English uses roughly forty four distinct sounds. Hawaiian uses only thirteen. Taa, a language spoken in Botswana, uses over a hundred and fifty.\n\nThe technical term for one of these sounds, when it is distinct enough to change the meaning of a word, is a `phoneme`. The word `bat` and the word `pat` differ by exactly one phoneme. That difference is meaningful. That is what makes a phoneme worth tracking.\n\nYou do not need to memorize every phoneme in every language to build your own. What you need is a way of thinking about sound clearly and systematically. That is what this course gives you.",
+          "questions": [
+            {
+              "q": "A `phoneme` is best described as which of the following?",
+              "options": [
+                "A letter of an alphabet that represents a sound in writing",
+                "A distinct sound unit that can change the meaning of a word in a language",
+                "Any noise that a human being is physically capable of producing",
+                "A group of similar sounds that are written with the same letter"
+              ],
+              "answer": 1,
+              "explanation": "A phoneme is specifically a meaningful sound unit. The key word is meaningful. Two sounds are separate phonemes only when swapping one for the other changes the meaning of a word."
+            },
+            {
+              "q": "According to the document, what does a language's sound system have in common with a painter's color palette?",
+              "options": [
+                "Both are inherited from older traditions and cannot be changed",
+                "Both involve selecting a limited working set from a much larger range of possibilities",
+                "Both grow larger the more skilled the person using them becomes",
+                "Both are defined primarily by the tools used to record them"
+              ],
+              "answer": 1,
+              "explanation": "The palette analogy captures how a language picks a finite set of sounds from the full range of sounds humans can make, then builds everything from that set."
+            }
+          ]
+        },
+        {
+          "id": "ipa-introduction",
+          "title": "The International Phonetic Alphabet",
+          "type": "document",
+          "content": "When linguists write down sounds, they use a special notation called the International Phonetic Alphabet, or IPA. The IPA gives every distinct human speech sound its own symbol, separate from any particular language's spelling rules.\n\nThis matters because normal spelling is unreliable. The letter `c` in English makes a different sound in `cat` than in `cell`. The letters `gh` make no sound at all in `night`. Spelling is a historical accident, not a guide to pronunciation.\n\nThe IPA solves this. When you see `/p/`, it always means one specific sound, no matter what language you are describing. When you see `/ʃ/`, it always means the sound at the start of `shoe`.\n\nFor building a conlang, you do not need to memorize the entire IPA. You just need to understand its logic. The IPA is organized by how sounds are made in the mouth. Every symbol is a shortcut for a precise physical action.\n\nHere are some IPA symbols you will use regularly in this course:\n\n`/p/` - the sound in `pin` (lips pressed together, then released with air)\n`/b/` - the sound in `bin` (same as /p/ but your voice is on)\n`/t/` - the sound in `tip` (tongue touches the ridge behind your top teeth)\n`/d/` - the sound in `dip` (same as /t/ but your voice is on)\n`/k/` - the sound in `kit` (back of tongue touches soft part of the roof of your mouth)\n`/s/` - the sound in `sit` (air streams over the front of your tongue)\n`/m/` - the sound in `mat` (lips closed, air goes through your nose)\n`/n/` - the sound in `nap` (tongue up, air goes through your nose)\n`/a/` - the vowel sound in `father`\n`/e/` - the vowel sound in `they`\n`/i/` - the vowel sound in `see`\n`/o/` - the vowel sound in `go`\n`/u/` - the vowel sound in `moon`\n\nNotice the pattern with /p/ and /b/. They are made in exactly the same place in exactly the same way. The only difference is whether your vocal cords are vibrating. This vibration is called `voicing`. /b/ is voiced. /p/ is not.",
+          "questions": [
+            {
+              "q": "The IPA symbol `/ʃ/` represents the sound found at the start of which English word?",
+              "options": [
+                "\"sit\"",
+                "\"chin\"",
+                "\"shoe\"",
+                "\"thin\""
+              ],
+              "answer": 2,
+              "explanation": "The document explicitly states that /ʃ/ represents the sound at the start of the word \"shoe\"."
+            },
+            {
+              "q": "What is the only difference between the sounds `/p/` and `/b/` according to this document?",
+              "options": [
+                "Where the tongue is placed inside the mouth",
+                "Whether the lips are open or closed during the sound",
+                "Whether the vocal cords are vibrating during the sound",
+                "Whether air exits through the nose or the mouth"
+              ],
+              "answer": 2,
+              "explanation": "The document explains that /p/ and /b/ are produced in exactly the same place and way. The only difference is voicing, which means whether the vocal cords vibrate. /b/ is voiced, /p/ is not."
+            },
+            {
+              "q": "Why does the IPA exist as a separate system rather than just using normal English spelling?",
+              "options": [
+                "Normal spelling changes too often across generations to be useful",
+                "Normal spelling is inconsistent and cannot reliably represent actual sounds",
+                "Normal spelling was designed for handwriting and cannot be printed",
+                "Normal spelling only works for languages that use the Latin alphabet"
+              ],
+              "answer": 1,
+              "explanation": "The document shows that English spelling is unreliable with examples like the letter `c` sounding different in `cat` and `cell`, and `gh` being silent in `night`. The IPA fixes this by giving each sound one consistent symbol."
+            }
+          ]
+        },
+        {
+          "id": "voiced-voiceless-spot",
+          "title": "Spot the Bug: Voiced vs Voiceless",
+          "type": "spot_bug",
+          "prompt": "A student is labeling a small phoneme inventory for their conlang. They wrote descriptions for four consonants. One description contains a factual error based on what you just learned about voicing. Click the line with the error.",
+          "code": "/p/ - lips pressed together, air released, no vocal cord vibration\n/b/ - lips pressed together, air released, vocal cords vibrating\n/t/ - tongue at the tooth ridge, air released, no vocal cord vibration\n/d/ - tongue at the tooth ridge, air released, no vocal cord vibration",
+          "bugLine": 4,
+          "explanation": "/d/ is the voiced counterpart of /t/. The description on line 4 says `no vocal cord vibration`, which is the description of /t/. The /d/ sound requires the vocal cords to vibrate."
+        },
+        {
+          "id": "phoneme-inventory-challenge",
+          "title": "Challenge: Write Your First Phoneme Inventory",
+          "type": "challenge",
+          "prompt": "Write a phoneme inventory for a fictional language called Karev. Use IPA symbols between forward slashes.\n\nYour inventory must include:\n- At least 3 stop consonants (sounds like /p/, /b/, /t/, /d/, /k/)\n- At least 2 nasal consonants (sounds like /m/ or /n/)\n- At least 3 vowels from this set: /a/ /e/ /i/ /o/ /u/\n\nFormat it like this example:\nConsonants: /p/ /b/ /t/ /m/ /n/\nVowels: /a/ /i/ /u/\n\nWrite your inventory below.",
+          "validation": [
+            {
+              "rule": "Consonants:",
+              "message": "Include a 'Consonants:' label in your answer."
+            },
+            {
+              "rule": "Vowels:",
+              "message": "Include a 'Vowels:' label in your answer."
+            },
+            {
+              "rule": "\\/[pbtkdg]\\/.*\\/[pbtkdg]\\/.*\\/[pbtkdg]\\/",
+              "message": "Include at least 3 stop consonants like /p/, /b/, /t/, /d/, or /k/."
+            },
+            {
+              "rule": "\\/[mn]\\/.*\\/[mn]\\/",
+              "message": "Include at least 2 nasal consonants like /m/ or /n/."
+            },
+            {
+              "rule": "\\/[aeiou]\\/.*\\/[aeiou]\\/.*\\/[aeiou]\\/",
+              "message": "Include at least 3 vowels from /a/ /e/ /i/ /o/ /u/."
+            }
+          ],
+          "solution": "Consonants: /p/ /b/ /t/ /d/ /k/ /m/ /n/ /s/\nVowels: /a/ /e/ /i/ /o/ /u/"
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Places and Manners of Articulation",
+      "lessons": [
+        {
+          "id": "place-of-articulation",
+          "title": "Where in the Mouth Sounds Are Made",
+          "type": "document",
+          "content": "Every consonant is made by blocking or squeezing airflow somewhere in your vocal tract. The location where this happens is called the `place of articulation`. Learning the main places is like learning the keys on a keyboard. Once you know where each key lives, you can hit any combination you want.\n\nHere are the main places, from the front of the mouth toward the back:\n\n`Bilabial` means both lips. The sounds /p/, /b/, and /m/ are all bilabial. Your two lips come together to make them.\n\n`Labiodental` means lip and teeth. The sounds /f/ and /v/ are labiodental. Your bottom lip touches your upper front teeth.\n\n`Dental` means the tongue touches the actual teeth. The `th` sounds in English are dental. The symbol for the voiced version is /ð/ and the voiceless version is /θ/.\n\n`Alveolar` means the tongue touches the alveolar ridge, which is the little bump just behind your top front teeth. The sounds /t/, /d/, /s/, /z/, /n/, and /l/ are all alveolar in English.\n\n`Palatal` means the tongue moves toward the hard palate, the bony dome of your mouth. The sound /j/ as in `yes` is palatal.\n\n`Velar` means the back of the tongue rises toward the velum, the soft part at the very back of the roof of your mouth. The sounds /k/ and /g/ are velar.\n\n`Glottal` means the restriction happens at the vocal cords themselves, deep in the throat. The English /h/ is glottal. So is the glottal stop, written as /ʔ/, the catch in the middle of the word `uh-oh`.\n\nWhy does this matter for language invention? Because real languages cluster their sounds in ways that feel physically natural. A language with many bilabial sounds feels round and soft to speak. A language heavy in velars feels guttural and deep. You get to choose the personality of your language through these decisions.",
+          "questions": [
+            {
+              "q": "The sounds /f/ and /v/ are produced at which place of articulation?",
+              "options": [
+                "Bilabial, using both lips pressed together",
+                "Dental, using the tongue touching the upper teeth",
+                "Labiodental, using the bottom lip and the upper front teeth",
+                "Alveolar, using the tongue at the ridge behind the teeth"
+              ],
+              "answer": 2,
+              "explanation": "The document defines labiodental as lip and teeth. Specifically the bottom lip touching the upper front teeth. /f/ and /v/ are the examples given."
+            },
+            {
+              "q": "Which of the following sounds is produced at the velar place of articulation?",
+              "options": [
+                "/m/ as in `mat`",
+                "/s/ as in `sit`",
+                "/n/ as in `nap`",
+                "/k/ as in `kit`"
+              ],
+              "answer": 3,
+              "explanation": "The document states that /k/ and /g/ are velar sounds, produced by the back of the tongue rising toward the velum at the back of the roof of the mouth."
+            },
+            {
+              "q": "According to the document, what is the glottal stop and how is it written in IPA?",
+              "options": [
+                "A deep rumbling sound produced by vibrating the uvula, written as /ʀ/",
+                "The catch sound in the middle of `uh-oh`, produced at the vocal cords, written as /ʔ/",
+                "A breathy sound produced by air escaping past nearly closed lips, written as /ɦ/",
+                "The sound at the back of the throat made before vowels, written as /q/"
+              ],
+              "answer": 1,
+              "explanation": "The document explicitly describes the glottal stop as the catch in the middle of `uh-oh`, explains it is produced at the vocal cords, and gives its IPA symbol as /ʔ/."
+            }
+          ]
+        },
+        {
+          "id": "manner-of-articulation",
+          "title": "How Sounds Are Made: Manner of Articulation",
+          "type": "document",
+          "content": "Place tells you where a sound happens. Manner tells you how the airflow is blocked or shaped. Same place, different manner, different sound. Understanding this is what lets you describe any consonant precisely with just two or three labels.\n\n`Stops` are sounds where airflow is completely blocked and then released in a tiny burst. /p/, /b/, /t/, /d/, /k/, and /g/ are all stops. The air builds up behind a total blockage, then pops out.\n\n`Fricatives` are sounds where airflow is squeezed through a narrow gap, creating continuous turbulent noise. /f/, /v/, /s/, /z/, /ʃ/ (as in `shoe`), and /h/ are all fricatives. Instead of a pop, you get a hiss or a rush.\n\n`Affricates` are a stop followed immediately by a fricative at the same place of articulation. The `ch` sound in `cheese` is written /tʃ/. It starts with a /t/ stop and releases into a /ʃ/ fricative. The `j` in `judge` is written /dʒ/.\n\n`Nasals` let air flow out through the nose while the mouth is blocked. /m/ blocks at the lips and releases through the nose. /n/ blocks at the alveolar ridge and releases through the nose.\n\n`Liquids` are sounds like /l/ and /r/ where air flows around the tongue or the tongue briefly flaps. They are smooth and vowel-like but are still classified as consonants.\n\n`Approximants` are sounds where the articulators get close together but not close enough to create friction. /j/ as in `yes` and /w/ as in `wet` are approximants.\n\nPutting place and manner together gives you a two-word description of almost any consonant. `/s/` is an alveolar fricative. `/m/` is a bilabial nasal. `/k/` is a velar stop. This is the system linguists use, and it is the system you will use to document your own language.",
+          "questions": [
+            {
+              "q": "What is the defining feature of a fricative consonant?",
+              "options": [
+                "Airflow is completely blocked and then released in a sudden burst",
+                "Airflow exits through the nose while the mouth remains blocked",
+                "Airflow is squeezed through a narrow gap, producing continuous turbulent noise",
+                "Airflow moves around the sides of the tongue without any friction"
+              ],
+              "answer": 2,
+              "explanation": "The document defines fricatives as sounds where air is squeezed through a narrow gap, creating continuous turbulent noise. The hiss or rush of /s/ or /f/ is the key feature."
+            },
+            {
+              "q": "Using the system from this document, how would you correctly describe the sound `/n/`?",
+              "options": [
+                "A bilabial stop",
+                "An alveolar nasal",
+                "A velar fricative",
+                "A palatal approximant"
+              ],
+              "answer": 1,
+              "explanation": "The document says /n/ blocks at the alveolar ridge, which gives it alveolar as its place. It releases through the nose, which makes it a nasal by manner. So it is an alveolar nasal."
+            },
+            {
+              "q": "The English word `cheese` begins with the sound /tʃ/. What manner of articulation is this?",
+              "options": [
+                "A fricative, because the sound contains a sustained hiss",
+                "A stop, because the airflow is completely blocked at the start",
+                "An affricate, because it is a stop that immediately releases into a fricative",
+                "A liquid, because the tongue moves smoothly through the sound"
+              ],
+              "answer": 2,
+              "explanation": "The document defines affricates as a stop followed immediately by a fricative at the same place of articulation, and gives /tʃ/ as the specific example from the word `cheese`."
+            }
+          ]
+        },
+        {
+          "id": "articulation-fill",
+          "title": "Fill in the Blank: Describing Consonants",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "A consonant is fully described by naming its place and manner. Complete the description of /s/: it is an alveolar ___.",
+              "code": "Place: alveolar\nManner: ___\nExample: the sound at the start of 'sit'",
+              "blanks": ["fricative"],
+              "explanation": "/s/ is made by squeezing air through a narrow gap at the alveolar ridge, producing a hiss. That continuous turbulent noise is the defining feature of a fricative."
+            },
+            {
+              "prompt": "Complete the description of /m/: it is a bilabial ___.",
+              "code": "Place: bilabial\nManner: ___\nExample: the sound at the start of 'mat'",
+              "blanks": ["nasal"],
+              "explanation": "/m/ is made with both lips closed while air exits through the nose. Sounds where air flows out through the nose are called nasals."
+            },
+            {
+              "prompt": "Complete the description of /k/: it is a velar ___.",
+              "code": "Place: velar\nManner: ___\nExample: the sound at the start of 'kit'",
+              "blanks": ["stop"],
+              "explanation": "/k/ completely blocks airflow by pressing the back of the tongue against the velum, then releases it in a burst. A complete blockage followed by a burst release is the definition of a stop."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Vowel Systems",
+      "lessons": [
+        {
+          "id": "vowel-basics",
+          "title": "How Vowels Work",
+          "type": "document",
+          "content": "Vowels are the opposite of consonants in one important way. While consonants work by blocking or restricting airflow, vowels work by shaping an open and unobstructed flow of air. The sound changes depending on where your tongue sits in your mouth and the shape of your lips.\n\nLinguists describe vowels using two main axes.\n\nThe first axis is `height`. When you say /i/ as in `see`, your tongue is high up near the roof of your mouth. When you say /a/ as in `father`, your tongue is low and flat. These are called high vowels and low vowels respectively. /e/ as in `they` and /o/ as in `go` sit in the middle and are called mid vowels.\n\nThe second axis is `backness`. When you say /i/, your tongue bunches up toward the front of your mouth. When you say /u/ as in `moon`, your tongue pulls back toward the rear. So /i/ is a front vowel and /u/ is a back vowel.\n\nLip rounding is the third variable. /u/ is rounded because your lips form a circle. /i/ is unrounded. Many languages have front rounded vowels that English does not use, such as the German /ü/ or the French /u/ in `lune`.\n\nPutting these together:\n- `/i/` is a high front unrounded vowel\n- `/u/` is a high back rounded vowel\n- `/e/` is a mid front unrounded vowel\n- `/o/` is a mid back rounded vowel\n- `/a/` is a low central unrounded vowel\n\nThis five vowel system /a e i o u/ is the most common vowel inventory in the world's languages. If you are building your first conlang, starting here is a solid choice. But you can expand by adding front rounded vowels, central vowels, or length distinctions where /a/ and /aː/ are two different phonemes (the colon means the vowel is held longer).",
+          "questions": [
+            {
+              "q": "When describing vowels, what does the term `height` refer to?",
+              "options": [
+                "How loud or soft the vowel is when spoken at normal volume",
+                "The position of the tongue in the mouth along a high to low axis",
+                "Whether the vowel is long or short in the duration it is held",
+                "The shape of the lips, whether they are rounded or spread"
+              ],
+              "answer": 1,
+              "explanation": "The document defines height as the tongue's position on a high to low axis. /i/ is high because the tongue sits near the roof of the mouth. /a/ is low because the tongue is flat and down."
+            },
+            {
+              "q": "Using the three-variable system from the document, how would you correctly describe the vowel `/u/`?",
+              "options": [
+                "A high front rounded vowel",
+                "A mid back unrounded vowel",
+                "A high back rounded vowel",
+                "A low central unrounded vowel"
+              ],
+              "answer": 2,
+              "explanation": "The document explicitly lists `/u/` as a high back rounded vowel. The tongue is high and pulled back, and the lips form a circle."
+            },
+            {
+              "q": "According to the document, what does the colon in `/aː/` indicate?",
+              "options": [
+                "The vowel is pronounced with extra stress or emphasis",
+                "The vowel is a front vowel rather than a central or back vowel",
+                "The vowel is held for a longer duration than the short version",
+                "The vowel is rounded and requires the lips to form a circle"
+              ],
+              "answer": 2,
+              "explanation": "The document states that the colon marks vowel length, where /aː/ is a longer version of /a/, and that some languages treat short and long versions as two different phonemes."
+            }
+          ]
+        },
+        {
+          "id": "vowel-inventory-spot",
+          "title": "Spot the Bug: Vowel Description",
+          "type": "spot_bug",
+          "prompt": "A student wrote descriptions for five vowels using the height and backness system. One description is factually wrong based on what the document taught. Click the line with the error.",
+          "code": "/i/ - high front unrounded vowel\n/u/ - high back rounded vowel\n/e/ - mid front unrounded vowel\n/o/ - mid front rounded vowel\n/a/ - low central unrounded vowel",
+          "bugLine": 4,
+          "explanation": "The document states that /o/ is a mid back rounded vowel, not a mid front rounded vowel. /o/ is produced with the tongue pulled toward the back of the mouth."
+        },
+        {
+          "id": "vowel-harmony",
+          "title": "Vowel Harmony: When Vowels Agree With Each Other",
+          "type": "document",
+          "content": "Some languages have a rule where all the vowels in a word must belong to the same group. This rule is called `vowel harmony`. Turkish is a famous example. Finnish, Hungarian, and Mongolian also use it.\n\nHere is how it works in Turkish. The vowels are divided into two groups based on backness. Front vowels are /e/, /i/, /ø/, and /y/. Back vowels are /a/, /ɯ/, /o/, and /u/. A word must use vowels from only one of these groups. The suffix you attach to a word also has to match the group of the root word's vowels.\n\nSo in Turkish, the word for `house` is `ev`, which uses the front vowel /e/. When you make it plural, you add the suffix `-ler`, which also uses a front vowel. The word for `arm` is `kol`, which uses the back vowel /o/. Its plural is `kollar`, using the back vowel /a/ in the suffix.\n\nFor your conlang, vowel harmony is a powerful tool. It makes your language sound internally consistent and gives it a distinct musical quality. It also makes it easier for learners to learn suffixes because they have fewer to memorize. Instead of memorizing one plural suffix, you just memorize the pattern and apply it automatically.\n\nYou do not have to use backness as the axis for your harmony system. You could organize it around height, so all vowels in a word must be either high or low. Or you could organize it around rounding, so either all vowels are rounded or none are. The logic is the same regardless of which feature you choose.",
+          "questions": [
+            {
+              "q": "What is vowel harmony in a language?",
+              "options": [
+                "A rule that requires all syllables in a word to have the same number of vowels",
+                "A rule that requires all vowels within a word to belong to the same group based on a shared feature",
+                "A rule that prevents two identical vowels from appearing next to each other in a word",
+                "A rule that requires stressed vowels to be longer than unstressed vowels"
+              ],
+              "answer": 1,
+              "explanation": "The document defines vowel harmony as a rule where all vowels in a word must belong to the same group. Turkish organizes this by backness, but the principle applies to any shared feature."
+            },
+            {
+              "q": "In the Turkish example from the document, why does the plural of `kol` use the suffix `-lar` rather than `-ler`?",
+              "options": [
+                "Because `kol` is a noun referring to a body part, which always takes back-vowel suffixes",
+                "Because the root word `kol` contains a back vowel, and the suffix must match the vowel group",
+                "Because `-ler` is only used with words that have more than one syllable",
+                "Because front-vowel suffixes are reserved for adjectives in Turkish"
+              ],
+              "answer": 1,
+              "explanation": "The document explains that `kol` uses the back vowel /o/, and vowel harmony requires the suffix to also use a back vowel. So `-lar` with /a/ is used instead of `-ler` with /e/."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 4: Phonotactics and Sound Patterns",
+      "lessons": [
+        {
+          "id": "phonotactics",
+          "title": "Which Sounds Can Stand Next to Each Other",
+          "type": "document",
+          "content": "Phonotactics is the set of rules in a language that governs which sounds can appear next to each other and in which positions. It is the reason why some made-up words feel like they could belong to a language and others obviously do not.\n\nConsider the difference between these two invented words: `strauk` and `krstbn`. The first one feels plausible in English. The second one is impossible. Your brain knows this instantly. The rule you are applying without thinking is a phonotactic rule.\n\nThe most basic phonotactic concept is the `syllable`. A syllable has a nucleus, which is almost always a vowel, and optional sounds before and after it called the onset and the coda. The structure looks like this: `(C)V(C)`. The C stands for consonant and the V stands for vowel. The parentheses mean those parts are optional.\n\nLanguages differ dramatically in what their syllable structure allows.\n\nJapanese has very simple syllables, mostly CV (consonant then vowel). Almost every syllable ends in a vowel. This is why Japanese loanwords from English tend to add vowels everywhere. `Strike` becomes `sutoraiku` because Japanese syllable structure does not allow those consonant clusters.\n\nArabic has a richer coda and allows CVC syllables regularly. Classical Arabic grammar is in fact built around roots of three consonants.\n\nEnglish is one of the most permissive languages for consonant clusters. It allows up to three consonants before a vowel and up to four after, which is why words like `strengths` are valid English (CCCVCCCCC when you count all the sounds).\n\nFor your conlang, deciding on syllable structure early is important because it shapes how words look and sound. A language with CV syllables will have open, melodic words. A language with CVC or CVCC syllables will feel denser and more compact.",
+          "questions": [
+            {
+              "q": "What is phonotactics?",
+              "options": [
+                "The study of how sounds change over time as a language evolves",
+                "The rules in a language governing which sounds can appear next to each other",
+                "The system a language uses to assign stress or tone to syllables",
+                "The process by which borrowed words are adapted to fit a new language"
+              ],
+              "answer": 1,
+              "explanation": "The document defines phonotactics as the rules governing which sounds can appear next to each other and in which positions within a syllable or word."
+            },
+            {
+              "q": "In syllable structure notation, what does `(C)V(C)` mean?",
+              "options": [
+                "A syllable that must have exactly one consonant before and one after a vowel",
+                "A syllable with a required vowel at the center and optional consonants before and after",
+                "A syllable where consonants are required and the vowel is optional",
+                "A syllable template used only in languages with vowel harmony"
+              ],
+              "answer": 1,
+              "explanation": "The document explains that V is the nucleus and is required, while the C before and after it are in parentheses, meaning they are optional. The vowel is the core of the syllable."
+            },
+            {
+              "q": "According to the document, why does the English word `strike` become `sutoraiku` in Japanese?",
+              "options": [
+                "Japanese speakers find the /r/ sound difficult to pronounce",
+                "Japanese loanword rules require all foreign words to be lengthened",
+                "Japanese syllable structure does not allow the consonant clusters found in `strike`",
+                "The meaning of `strike` has no direct equivalent in Japanese culture"
+              ],
+              "answer": 2,
+              "explanation": "The document explains that Japanese syllables are mostly CV and do not allow consonant clusters. To fit `strike` into Japanese phonotactics, vowels are inserted between the consonants."
+            }
+          ]
+        },
+        {
+          "id": "phonotactics-fillblank",
+          "title": "Fill in the Blank: Syllable Structure",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "The center of a syllable, almost always a vowel, is called its ___.",
+              "code": "Syllable structure: (C) ___ (C)\nThe ___ is the required part.\nThe consonants in parentheses are optional.",
+              "blanks": ["nucleus"],
+              "explanation": "The document names the center of the syllable the nucleus. It is the required element. The optional consonants before it are the onset and after it are the coda."
+            },
+            {
+              "prompt": "A language where almost every syllable ends in a vowel and consonant clusters are very rare is said to have ___ syllable structure.",
+              "code": "Language example: Japanese\nSyllable type: ___\nResult: loanwords gain extra vowels to fit the pattern",
+              "blanks": ["CV"],
+              "explanation": "The document uses Japanese as the example of a CV language, where syllables are consonant then vowel. This is the simplest possible syllable structure."
+            }
+          ]
+        },
+        {
+          "id": "allophony",
+          "title": "Allophones: The Same Phoneme, Different Sounds",
+          "type": "document",
+          "content": "A phoneme is not always pronounced exactly the same way every time. It has slight variations depending on where it appears in a word or what sounds surround it. These predictable variations are called `allophones`.\n\nHere is a clear English example. The phoneme /p/ has two main allophones. When /p/ appears at the start of a stressed syllable, as in `pin`, it is pronounced with a small puff of air called `aspiration`. You can feel this puff by holding your hand in front of your mouth. When /p/ appears after /s/, as in `spin`, there is no puff of air at all. These are two different actual sounds, but English speakers treat them as the same thing because the difference is predictable.\n\nThe aspirated version is written in IPA as /pʰ/. The unaspirated version is just /p/. In English, which one appears is entirely predictable from context, so native speakers never consciously notice the difference.\n\nIn other languages this very difference is phonemic, meaning it changes word meaning. In Hindi and many South Asian languages, /p/ and /pʰ/ are two completely separate phonemes. Using the wrong one changes what you are saying.\n\nThe rule that determines which allophone appears is called a `distribution rule`. You never have to choose. The environment makes the choice for you automatically.\n\nFor building a conlang this is useful in two ways. First, you can add richness to your sound system without adding phonemic complexity. Your language might have one /r/ phoneme that is trilled at the start of a word and flapped in the middle of a word. Speakers of your language would hear these as the same sound even though they are physically different. Second, it explains why even simple sound systems can feel rich and textured when spoken.",
+          "questions": [
+            {
+              "q": "What is an allophone?",
+              "options": [
+                "A phoneme that appears only in borrowed words and not in native vocabulary",
+                "A predictable variant of a phoneme that appears in certain sound environments",
+                "Two completely different phonemes that happen to sound similar to foreign speakers",
+                "A sound that a language borrows from a neighboring language over time"
+              ],
+              "answer": 1,
+              "explanation": "The document defines allophones as predictable variations of a phoneme based on where it appears. The key word is predictable. You do not choose which allophone to use. The environment determines it automatically."
+            },
+            {
+              "q": "In English, the aspirated /pʰ/ in `pin` and the unaspirated /p/ in `spin` are allophones because they are which of the following?",
+              "options": [
+                "Two sounds that native speakers consciously choose between based on emphasis",
+                "Two physically different sounds that are treated as the same phoneme because the difference is predictable",
+                "Two phonemes that change word meaning when one substitutes for the other",
+                "Two sounds that come from different historical origins in the language"
+              ],
+              "answer": 1,
+              "explanation": "The document explains that English speakers treat aspirated and unaspirated /p/ as the same phoneme because which one appears is entirely predictable from context. That predictability is what makes them allophones rather than separate phonemes."
+            }
+          ]
+        },
+        {
+          "id": "phonology-project",
+          "title": "Project: Document Your Language's Sound System",
+          "type": "project",
+          "fileLabel": "sound-system.txt",
+          "initialCode": "LANGUAGE NAME: [Your Language]\n\n=== PHONEME INVENTORY ===\n\nConsonants:\n  Stops:      \n  Fricatives: \n  Nasals:     \n  Other:      \n\nVowels:\n\n=== SYLLABLE STRUCTURE ===\n\nTemplate: (e.g. CV, CVC, CVCC)\nNotes: (what clusters are allowed or forbidden)\n\n=== ALLOPHONY RULES ===\n\nRule 1: \nRule 2: \n\n=== SAMPLE WORDS ===\n\n(Write 10 words in your phoneme inventory that follow your syllable rules)\n",
+          "steps": [
+            {
+              "id": "proj-sounds-1",
+              "title": "Define your consonant inventory",
+              "instructions": "Fill in at least 6 consonants across the Stops, Fricatives, and Nasals rows. Use IPA symbols. Each consonant goes between forward slashes.",
+              "validation": [
+                { "rule": "Stops:.*\\/[a-z]", "message": "Add at least one stop consonant using IPA notation." },
+                { "rule": "Nasals:.*\\/[a-z]", "message": "Add at least one nasal consonant using IPA notation." }
+              ]
+            },
+            {
+              "id": "proj-sounds-2",
+              "title": "Define your vowel inventory",
+              "instructions": "Fill in your vowels. Minimum 3. Describe each using height and backness (e.g. /a/ - low central).",
+              "validation": [
+                { "rule": "Vowels:\\n.*\\/[aeiou]", "message": "Add at least one vowel with an IPA symbol." }
+              ]
+            },
+            {
+              "id": "proj-sounds-3",
+              "title": "Define syllable structure and write sample words",
+              "instructions": "Write your syllable template (CV, CVC, etc.), add a note about any consonant clusters you allow or forbid, and write 10 sample words.",
+              "validation": [
+                { "rule": "Template:", "message": "Fill in your syllable template line." },
+                { "rule": "SAMPLE WORDS", "message": "Keep the Sample Words section in your document." }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

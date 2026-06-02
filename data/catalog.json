@@ -80,5 +80,35 @@
     "category": "programming",
     "description": "Animate elements based on scroll position using JavaScript and CSS. *Generated*",
     "file": "data/scroll-animation.json"
+  },
+  {
+    "id": "conlang-mythology-track",
+    "type": "bundle",
+    "title": "Language and Mythology",
+    "category": "other",
+    "difficulty": "intermediate",
+    "description": "Invent realistic languages and deep mythologies using the same tools real linguists and mythographers use. Five focused courses covering sound systems, grammar, writing, world mythology, and divine storytelling.",
+    "courses": [
+      {
+        "id": "phonology-and-sound",
+        "title": "Phonology",
+        "file": "data/conlang-mythology/phonology-and-sound.json"
+      },
+      {
+        "id": "grammar-and-structure",
+        "title": "Grammar",
+        "file": "data/conlang-mythology/grammar-and-structure.json"
+      },
+      {
+        "id": "writing-systems",
+        "title": "Writing Systems",
+        "file": "data/conlang-mythology/writing-systems.json"
+      },
+      {
+        "id": "comparative-mythology",
+        "title": "Comparative Mythology",
+        "file": "data/conlang-mythology/comparative-mythology.json"
+      }
+    ]
   }
 ]

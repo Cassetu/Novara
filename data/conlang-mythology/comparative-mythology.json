@@ -1,0 +1,323 @@
+{
+  "sections": [
+    {
+      "title": "Module 1: What Mythology Is and How to Read It",
+      "lessons": [
+        {
+          "id": "mythology-intro",
+          "title": "What Makes a Story a Myth?",
+          "type": "document",
+          "content": "The word `myth` in everyday English has come to mean a false belief. But in the academic study of religion and culture, a myth is something quite different. A myth is a sacred story that a community uses to explain the origin of the world, the nature of reality, or the proper way to live. Its truth or falseness is beside the point. What matters is the cultural work it does.\n\nHere is a working definition from the scholar Wendy Doniger: a myth is a story that is sacred to and shared by a group of people who find their most important meanings in it.\n\nMyths do several kinds of work simultaneously:\n\n`Cosmogonic` myths explain the origin of the universe. How did everything begin? What existed before the world? Greek myth gives us Chaos as the original state. Norse myth gives us the void Ginnungagap and the first frost giant Ymir. Mesopotamian myth gives us the saltwater ocean Tiamat.\n\n`Etiological` myths explain the origin of a specific thing: why does the snake shed its skin, why does the raven have black feathers, how did fire come to humanity. These are origin stories for particular features of the world.\n\n`Eschatological` myths describe the end of the world. Norse Ragnarök is the classic example. Judeo-Christian apocalypse literature belongs to this category.\n\n`Theogonic` myths describe the origin and genealogy of the gods. Hesiod's Theogony is the name that has become the category. It literally means the birth of the gods.\n\nFor building your own mythology, understanding these categories is essential. You need at least one cosmogonic myth to establish what your world is and where it came from. Other categories fill in the texture of the world around it.",
+          "questions": [
+            {
+              "q": "In academic mythology studies, what primarily defines a myth?",
+              "options": [
+                "A story that has been scientifically proven to be false",
+                "A sacred story that a community uses to explain the origin or nature of the world",
+                "Any traditional story passed down orally before the invention of writing",
+                "A story featuring supernatural beings like gods, giants, or spirits"
+              ],
+              "answer": 1,
+              "explanation": "The document contrasts the everyday meaning of myth (false belief) with the academic definition: a sacred story that a community uses to explain origin, reality, or proper living."
+            },
+            {
+              "q": "What is a cosmogonic myth?",
+              "options": [
+                "A myth that describes the end and destruction of the world",
+                "A myth that explains the origin and genealogy of the gods",
+                "A myth that explains the origin of a specific thing in the world",
+                "A myth that explains the origin of the universe or how everything began"
+              ],
+              "answer": 3,
+              "explanation": "The document defines cosmogonic myths as those explaining the origin of the universe. Greek Chaos, Norse Ginnungagap, and Mesopotamian Tiamat are all given as cosmogonic examples."
+            },
+            {
+              "q": "Which of the following is an example of an etiological myth according to the document?",
+              "options": [
+                "A story describing the final battle at the end of the world",
+                "A story about how fire first came to humanity",
+                "A story listing the names and parentage of the gods",
+                "A story about the void that existed before creation"
+              ],
+              "answer": 1,
+              "explanation": "The document defines etiological myths as explanations for the origin of a specific thing. How fire came to humanity is one of the direct examples given."
+            }
+          ]
+        },
+        {
+          "id": "structuralism-myth",
+          "title": "Claude Lévi-Strauss and the Structure Beneath the Story",
+          "type": "document",
+          "content": "In the mid-twentieth century, the anthropologist Claude Lévi-Strauss developed a way of reading myths that changed how scholars thought about them. He argued that the surface story is not where the meaning lives. The meaning lives in the binary oppositions that the story navigates.\n\nA `binary opposition` is a pair of contrasting categories that a culture uses to organize the world. Nature versus culture. Raw versus cooked. Life versus death. Male versus female. Sacred versus profane. These are not just analytical categories. Lévi-Strauss argued they are the fundamental architecture through which human minds organize experience.\n\nMyths, in this view, are machines for thinking through unresolvable contradictions. The contradiction between life and death cannot be solved in the real world. But a myth about a hero who travels to the underworld and returns, or a god who dies and is reborn, mediates between those two poles. The myth does not solve the contradiction. It gives a community a way of living with it.\n\nHis most famous analysis was of the Oedipus myth. Rather than reading it as a story about fate or forbidden desire, he mapped it as a system of oppositions between overvaluing and undervaluing kinship, and between the denial and affirmation of a human being's earthly origins.\n\nYou do not have to accept Lévi-Strauss's framework completely to find it useful. For building a mythology, his approach is a practical tool. Before you write a myth, ask yourself: what two things is this story thinking about? What tension is it navigating? The myth will have more internal coherence when you know its underlying logic.",
+          "questions": [
+            {
+              "q": "According to Lévi-Strauss, where does the primary meaning of a myth reside?",
+              "options": [
+                "In the surface narrative and the sequence of events in the story",
+                "In the historical facts the myth was designed to preserve",
+                "In the binary oppositions the story navigates beneath its surface",
+                "In the moral lesson explicitly stated at the end of the story"
+              ],
+              "answer": 2,
+              "explanation": "The document explains that Lévi-Strauss argued the surface story is not where the meaning lives. The meaning is in the binary oppositions the myth navigates beneath the narrative."
+            },
+            {
+              "q": "According to the document, what do myths do with the unresolvable contradictions of human life?",
+              "options": [
+                "They solve the contradictions by offering a definitive answer about which side is correct",
+                "They ignore contradictions and focus on entertaining stories instead",
+                "They mediate between opposing poles and give a community a way to live with unresolvable tensions",
+                "They record how ancient societies resolved social disputes through religious law"
+              ],
+              "answer": 2,
+              "explanation": "The document says myths are machines for thinking through unresolvable contradictions. They do not solve them. They mediate between the poles and give communities a way of living with tensions like life and death."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Module 2: Creation Myths Across Cultures",
+      "lessons": [
+        {
+          "id": "creation-myth-patterns",
+          "title": "How Cultures Begin the World: Eight Creation Patterns",
+          "type": "document",
+          "content": "Across the world's mythologies, cosmogonic myths tend to cluster around a small number of structural patterns. These are not carbon copies of each other. The details, characters, and cultural specifics are wildly different. But the underlying logic recurs.\n\n`Creation from chaos or void` is the most common pattern. Something formless, dark, or empty precedes the world. Order and form are imposed upon it. Greek Chaos, Norse Ginnungagap, Mesopotamian Apsu and Tiamat, and the `without form and void` of Genesis all follow this pattern.\n\n`Cosmic egg` myths describe a primordial egg from which the universe hatches. Orphic Greek mythology has this. Hindu mythology has the golden egg Hiranyagarbha. Finnish mythology has the world-egg laid by a bird on the knee of the primordial water goddess Ilmatar.\n\n`Emergence myths` describe the world's people coming up from a lower world beneath the earth into the present world. This pattern is extremely common in Indigenous North American traditions, particularly among Pueblo peoples.\n\n`Earth diver` myths involve a creator figure sending a diving animal into a primordial ocean to bring up a bit of mud from the bottom, from which the earth is built. This pattern appears widely in North American and Siberian traditions.\n\n`Dismemberment of a primal being` describes the world being built from the body of a killed or sacrificed original being. The Mesopotamian creation epic Enuma Elish has the god Marduk kill the chaos dragon Tiamat and form the sky from one half of her body and the earth from the other. The Norse giant Ymir is killed by Odin and his brothers, and the world is made from his body.\n\n`Divine fiat` describes a powerful deity creating the world through speech or will alone. The Judeo-Christian creation in Genesis, where God speaks and things come into existence, is the archetype. The Maori creator Io calls things into being with speech as well.\n\n`Creation through conflict` describes the world being formed as a byproduct of conflict between primordial forces. Enuma Elish partially belongs here. The Zoroastrian cosmic struggle between Ahura Mazda and Angra Mainyu is another example.\n\n`Craftsman or artisan creation` describes a divine craftsman building the world deliberately, as a maker builds something from raw materials. Plato's Demiurge in the Timaeus works this way.\n\nFor building your mythology, you do not have to pick just one of these. Real mythologies often blend several. But knowing which pattern is dominant in your cosmogony gives it structure and internal logic.",
+          "questions": [
+            {
+              "q": "In the Mesopotamian creation epic Enuma Elish, how is the physical world formed according to the document?",
+              "options": [
+                "A divine craftsman shapes raw materials into the sky and earth over seven days",
+                "The god Marduk kills the chaos dragon Tiamat and makes the world from her body",
+                "A cosmic egg hatches and releases the elements that form the world",
+                "Diving animals bring mud from the bottom of a primordial ocean to build the earth"
+              ],
+              "answer": 1,
+              "explanation": "The document describes the Enuma Elish as an example of dismemberment creation. Marduk kills Tiamat and forms the sky from one half of her body and the earth from the other."
+            },
+            {
+              "q": "What distinguishes an emergence myth from other creation patterns?",
+              "options": [
+                "It describes a deity creating the world through the power of speech alone",
+                "It describes the world being built from the body of a killed primordial being",
+                "It describes people coming up from a world beneath the earth into the present world",
+                "It describes a bird or animal hatching from a cosmic egg at the beginning of time"
+              ],
+              "answer": 2,
+              "explanation": "The document defines emergence myths as stories where the world's people come up from a lower world beneath the earth. This pattern is especially common in Indigenous North American traditions."
+            },
+            {
+              "q": "The Finnish creation myth involving a bird laying an egg on the knee of the water goddess Ilmatar is an example of which creation pattern?",
+              "options": [
+                "Creation from chaos or void",
+                "Earth diver myth",
+                "Divine fiat",
+                "Cosmic egg myth"
+              ],
+              "answer": 3,
+              "explanation": "The document identifies the Finnish myth featuring a world-egg as an example of the cosmic egg pattern alongside the Orphic Greek and Hindu Hiranyagarbha traditions."
+            }
+          ]
+        },
+        {
+          "id": "trickster-figure",
+          "title": "The Trickster: The God Who Breaks the Rules",
+          "type": "document",
+          "content": "Almost every mythology in the world has a trickster figure. This is one of the most cross-culturally consistent patterns in all of comparative mythology, and it is one of the most interesting.\n\nA `trickster` is a being who operates by breaking social rules. They lie, steal, play pranks, break taboos, and disrupt the established order. What makes them mythologically significant is that their rule-breaking often produces something essential for humanity. The trickster is often a creator or a bringer of gifts precisely because of their transgression.\n\nRaven in Pacific Northwest Indigenous mythology steals light from a box in which the creator has hidden it, flooding the world with brightness. The theft is the gift.\n\nLoki in Norse mythology is the most complex Nordic character. He is a shape-shifter and schemer who creates problems for the gods but also solves them. He helps build Asgard's walls through deception. He helps Thor retrieve Mjolnir through cross-dressing. Eventually, his transgressions go too far when he arranges the death of Baldr, and he is punished.\n\nAnansi the Spider in West African and Caribbean mythology is a wisdom trickster who acquires stories (and therefore all knowledge) from the Sky God through cleverness and tricks.\n\nCoyote in many Indigenous North American traditions brings fire, creates the landscape, and sometimes introduces death into the world, all through scheming and accident.\n\nPrometheus in Greek mythology is a titan who steals fire from the gods and gives it to humanity. He is punished horribly. But humanity has fire because of his theft.\n\nThe anthropologist Paul Radin described the trickster as representing the oldest layer of religious consciousness, a being who is simultaneously creator, destroyer, fool, and culture hero. The trickster is appealing because they represent the boundary between order and chaos, the dangerous necessary energy that makes change possible.\n\nFor your mythology, a trickster figure serves a narrative function that no other archetype fills. They introduce unpredictability, they explain how things went wrong, and they smuggle in the gifts that make civilization possible.",
+          "questions": [
+            {
+              "q": "What makes a trickster mythologically significant according to the document?",
+              "options": [
+                "Their ability to shapeshift and take the form of animals",
+                "Their rule-breaking often produces something essential for humanity",
+                "Their role as judge and enforcer of divine law for the gods",
+                "Their age as the oldest and most powerful beings in any mythology"
+              ],
+              "answer": 1,
+              "explanation": "The document states that what makes tricksters mythologically significant is that their rule-breaking often produces something essential. The theft or transgression is how the gift enters the world."
+            },
+            {
+              "q": "In West African and Caribbean mythology, what does Anansi the Spider acquire through trickery?",
+              "options": [
+                "Fire, which he steals from the sun and gives to humanity",
+                "Immortality, which he tricks the Sky God into granting all spiders",
+                "Stories, which represent all knowledge, which he acquires from the Sky God",
+                "Light, which he steals from a box where the creator has hidden it"
+              ],
+              "answer": 2,
+              "explanation": "The document states that Anansi acquires stories (and therefore all knowledge) from the Sky God through cleverness and tricks."
+            },
+            {
+              "q": "According to the document, what does Radin mean when he says the trickster represents the boundary between order and chaos?",
+              "options": [
+                "The trickster creates order from chaos by inventing civilization",
+                "The trickster is a messenger between the gods of order and the forces of chaos",
+                "The trickster embodies the dangerous necessary energy that makes change possible",
+                "The trickster enforces the boundary to prevent chaos from entering the ordered world"
+              ],
+              "answer": 2,
+              "explanation": "The document quotes Radin's description and then explains that the trickster is appealing because they represent the dangerous necessary energy that makes change possible, sitting at the line between order and chaos."
+            }
+          ]
+        },
+        {
+          "id": "hero-journey",
+          "title": "The Hero's Journey: Joseph Campbell's Monomyth",
+          "type": "document",
+          "content": "In 1949 the mythologist Joseph Campbell published `The Hero with a Thousand Faces`. In it he argued that beneath the enormous variety of hero stories from every culture on earth, there is a single underlying story structure. He called it the `monomyth` or the Hero's Journey.\n\nCampbell identified around seventeen stages in the complete monomyth, but the core structure has three phases:\n\nThe `Departure`. The hero lives in an ordinary world. They receive a call to adventure, which they may initially refuse. A mentor or helper appears. They cross a threshold into an unfamiliar world.\n\nThe `Initiation`. In the special world, the hero faces a series of tests and ordeals. They may descend into an innermost cave or pit, face their greatest fear or enemy, and survive. This central ordeal is sometimes called the Supreme Ordeal. They receive a reward or boon as a result of surviving.\n\nThe `Return`. The hero must bring the reward back to the ordinary world. The return path has its own challenges. The hero may be reluctant to return. Eventually they cross back over the threshold and the boon benefits their community.\n\nCampbell found this structure in myths from ancient Sumer, in the Greek labors of Hercules, in the Hindu Ramayana, in Buddhist stories about the Buddha's enlightenment, and in contemporary folklore. The specifics are wildly different. The deep grammar is the same.\n\nCampbell's theory has critics. Some scholars argue that he was too selective in what he included and too forceful in fitting diverse stories into one template. The pattern fits some myths very well and others only loosely. But as a tool for constructing stories, the Hero's Journey is enormously practical.\n\nFor your mythology, every major divine or heroic figure should have a journey of some kind. It does not have to follow every stage. But the arc of departure, ordeal, and return gives a figure mythic weight.",
+          "questions": [
+            {
+              "q": "What is Campbell's monomyth?",
+              "options": [
+                "A single original myth from which all world mythologies are historically derived",
+                "A single underlying story structure that Campbell argued appears beneath diverse hero stories across cultures",
+                "A comparative index of the world's creation myths organized by geographic region",
+                "The oldest surviving hero story, found in Sumerian cuneiform tablets"
+              ],
+              "answer": 1,
+              "explanation": "The document defines the monomyth as an underlying story structure, not a literal original story. Campbell argued this structure appears across the enormous variety of hero myths from different cultures."
+            },
+            {
+              "q": "In the Hero's Journey, what occurs in the Initiation phase?",
+              "options": [
+                "The hero receives a call to adventure and is mentored by a wise figure",
+                "The hero returns the boon to their community after crossing back over the threshold",
+                "The hero faces tests, confronts a supreme ordeal, and receives a reward",
+                "The hero refuses the call and must be persuaded by a supernatural helper"
+              ],
+              "answer": 2,
+              "explanation": "The document defines the Initiation phase as the phase with tests, the Supreme Ordeal, and the reward. Departure is the call and threshold, and Return is bringing the boon back."
+            }
+          ]
+        },
+        {
+          "id": "myth-comparison-challenge",
+          "title": "Challenge: Identify the Creation Pattern",
+          "type": "challenge",
+          "prompt": "Below are four brief myth summaries. For each one, write the name of the creation pattern it represents.\n\nPatterns: cosmic egg, earth diver, divine fiat, dismemberment, emergence, creation from void, craftsman creation\n\n1. In the beginning there was only water. The creator sent a muskrat down to dive and bring up a clump of earth from the bottom. From this clump the world was built.\n\n2. Before anything existed, there was Chaos: a formless gap. From Chaos came the first beings, and order slowly emerged.\n\n3. The people lived in a dark underground world. One by one they climbed through a hole in the ceiling into the bright world above, which they now inhabit.\n\n4. The sky god spoke four words. Each word became one of the four elements. When all four were spoken, the world was complete.\n\nWrite your answers like this:\n1. [pattern name]\n2. [pattern name]\n3. [pattern name]\n4. [pattern name]",
+          "validation": [
+            {
+              "rule": "(?i)1\\..*earth.?diver",
+              "message": "Story 1 describes an animal diving to bring mud from the bottom of primordial waters. Review the earth diver pattern in the document."
+            },
+            {
+              "rule": "(?i)2\\..*void|chaos",
+              "message": "Story 2 describes a formless gap before creation. This is the creation from chaos or void pattern."
+            },
+            {
+              "rule": "(?i)3\\..*emerg",
+              "message": "Story 3 describes people coming up from a world below. This is the emergence pattern."
+            },
+            {
+              "rule": "(?i)4\\..*fiat|speech|word",
+              "message": "Story 4 describes creation through spoken words. This is the divine fiat pattern."
+            }
+          ],
+          "solution": "1. earth diver\n2. creation from void\n3. emergence\n4. divine fiat"
+        }
+      ]
+    },
+    {
+      "title": "Module 3: Divine Archetypes and Pantheon Structures",
+      "lessons": [
+        {
+          "id": "pantheon-structure",
+          "title": "How Pantheons Are Organized",
+          "type": "document",
+          "content": "A `pantheon` is the complete assembly of gods worshipped by a culture. The word comes from Greek: `pan` (all) + `theos` (god). The Pantheon building in Rome was literally `the temple of all the gods`.\n\nPantheons are not random collections of divine figures. They have structure. They reflect the social, environmental, and philosophical concerns of the culture that produced them.\n\nMost pantheons have a `skyfather`: a sovereign god associated with the sky, storms, and divine authority. The Proto-Indo-European skyfather god `*Dyeus Ph₂tér` (reconstructed with an asterisk to show it is hypothetical, not attested) gives us Zeus, Jupiter, Dyaus Pita, and the Norse Tyr. All of these figures descend from the same reconstructed ancestor.\n\nMost pantheons pair the skyfather with an earth mother figure. `Gaia` in Greek, `Terra` in Latin, `Prithvi` in Sanskrit. The sky above and the earth below, the male and female cosmological pair, is one of the most persistent structures in world mythology.\n\nBeyond the sky and earth, pantheons typically include:\n\n`Storm gods` who overlap with but are distinct from skyfathers. Thor in Norse mythology is a storm god subordinate to Odin. Hadad/Baal in West Semitic mythology is a storm god. Indra in early Vedic religion is a storm and war god.\n\n`Underworld rulers` who govern the realm of the dead. Hades in Greek, Osiris in Egyptian, Ereshkigal in Sumerian, Hel in Norse.\n\n`Sun and moon deities`. In many mythologies the sun and moon are divine. Which is male and which is female varies. In Norse mythology, the sun Sol is female and the moon Mani is male, which is the reverse of common Greek and Roman conventions.\n\n`Wisdom and craft gods`. Athena in Greek, Odin (also) in Norse, Thoth in Egyptian. Knowledge, writing, magic, and craft are often assigned to a specific divine figure.\n\nFor your mythology, deciding which of these roles you want to fill and who fills them is a structural choice. A pantheon that has a storm god but no underworld ruler will feel incomplete to a reader familiar with real mythologies. You can subvert the archetypes, but knowing what you are subverting matters.",
+          "questions": [
+            {
+              "q": "What does the reconstructed Proto-Indo-European deity name `*Dyeus Ph₂tér` demonstrate according to the document?",
+              "options": [
+                "That Zeus was the original name for all sky gods across Indo-European cultures",
+                "That Zeus, Jupiter, Dyaus Pita, and Tyr all descend from a common ancestral sky deity concept",
+                "That the skyfather archetype was invented in Greece and spread to other cultures",
+                "That storm gods and sky gods are the same category in all Indo-European traditions"
+              ],
+              "answer": 1,
+              "explanation": "The document uses the asterisked reconstructed form to show that Zeus, Jupiter, Dyaus Pita, and Tyr all descend from the same reconstructed Proto-Indo-European ancestor, the skyfather deity."
+            },
+            {
+              "q": "According to the document, what makes the Norse treatment of Sol and Mani unusual compared to Greek and Roman conventions?",
+              "options": [
+                "Norse mythology assigned both the sun and moon to male deities",
+                "Norse mythology had no sun or moon deity, only weather gods",
+                "The Norse sun Sol is female and the moon Mani is male, reversing the more common Greek and Roman gender assignments",
+                "Norse mythology merged the sun and moon into a single deity rather than separating them"
+              ],
+              "answer": 2,
+              "explanation": "The document explicitly notes that in Norse mythology Sol (sun) is female and Mani (moon) is male, and states this is the reverse of common Greek and Roman conventions."
+            },
+            {
+              "q": "The Sumerian goddess Ereshkigal, Greek Hades, and Norse Hel are all examples of which divine archetype?",
+              "options": [
+                "Wisdom and craft gods associated with writing and magic",
+                "Storm gods associated with rain, thunder, and war",
+                "Earth mother figures paired with a skyfather deity",
+                "Underworld rulers who govern the realm of the dead"
+              ],
+              "answer": 3,
+              "explanation": "The document groups Hades, Osiris, Ereshkigal, and Hel together as underworld rulers who govern the realm of the dead."
+            }
+          ]
+        },
+        {
+          "id": "divine-attributes",
+          "title": "How Gods Work: Attributes, Domains, and Epithets",
+          "type": "document",
+          "content": "A god in mythology is more than a powerful person. They are a concentration of a particular domain of existence. Everything that falls within that domain becomes theirs. They are not just associated with war. They are, in some sense, what war means.\n\n`Divine attributes` are the physical objects, animals, and symbols consistently associated with a deity. They appear in art, in ritual, and in stories. Greek Athena's attributes include the owl (wisdom, keen sight), the olive tree (civilization, nourishment), the aegis shield, and the helmet and spear. Each attribute encodes something about her nature.\n\nAttributes do not appear by accident. Scholars trace them through cognate relationships (related figures in related cultures), through the history of cult practice at specific temples, and through the logic of the deity's domain. If a god rules over water and the sea, expect fish, ships, and tridents to appear in their iconography.\n\n`Divine epithets` are names or titles that highlight one aspect of a deity's nature. Greek Zeus has dozens: Zeus Olympios (of Olympus, the sovereign), Zeus Xenios (protector of guests and strangers), Zeus Soter (savior). Each epithet reflects a different role the god plays and often corresponds to different forms of worship at different temples.\n\nEpithets are also how myths handle what look like contradictions. Athena is both a war goddess and a goddess of wisdom. These are not inconsistent in the Greek worldview. War requires strategy, and strategy is a product of wisdom. The epithets Athena Polias (guardian of the city) and Athena Promachos (she who fights in front) represent her warrior aspect, while Athena Ergane (the craftworker) represents her skill aspect.\n\nFor your invented gods, building a list of three to five consistent attributes and a set of epithets is the single most efficient way to make them feel like real mythological figures rather than characters in a fantasy novel.",
+          "questions": [
+            {
+              "q": "What is a divine epithet in mythology?",
+              "options": [
+                "A physical object consistently depicted with a deity in religious art",
+                "A name or title that highlights one specific aspect of a deity's nature or role",
+                "A sacred animal that is sacrificed to a deity in religious ritual",
+                "A genealogical term describing a deity's parents and divine lineage"
+              ],
+              "answer": 1,
+              "explanation": "The document defines divine epithets as names or titles that highlight one aspect of a deity's nature, and gives Zeus's many epithets as examples."
+            },
+            {
+              "q": "According to the document, why are Athena's roles as both a war goddess and a goddess of wisdom not contradictory in the Greek worldview?",
+              "options": [
+                "Because Greek religion allowed any god to claim any domain without logical consistency",
+                "Because war and wisdom were assigned to separate aspects of Athena through different temples",
+                "Because war requires strategy and strategy is a product of wisdom, making the two domains logically connected",
+                "Because Athena inherited the war domain from a different deity and kept wisdom as her original domain"
+              ],
+              "answer": 2,
+              "explanation": "The document explicitly states that war requires strategy and strategy is a product of wisdom, so the combination of domains is internally coherent in the Greek worldview."
+            }
+          ]
+        },
+        {
+          "id": "mythology-fill",
+          "title": "Fill in the Blank: Mythology Terms",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "The complete assembly of gods worshipped by a culture is called a ___.",
+              "code": "Definition: the full assembly of gods in a culture's religion\nTerm: ___\nExample: the Greek gods collectively form the Greek ___",
+              "blanks": ["pantheon"],
+              "explanation": "The document defines a pantheon as the complete assembly of gods worshipped by a culture and traces the word to Greek `pan` (all) and `theos` (god)."
+            },
+            {
+              "prompt": "A myth that explains why the snake sheds its skin or how fire came to humanity is classified as a(n) ___ myth.",
+              "code": "Type of myth: explains the origin of a specific thing in the world\nClassification: ___\nExamples: why the raven is black, how fire came to humans",
+              "blanks": ["etiological"],
+              "explanation": "The document defines etiological myths as those explaining the origin of a specific thing. Origin stories for particular features of the world fall into this category."
+            },
+            {
+              "prompt": "In the Lévi-Strauss framework, myths are machines for mediating between unresolvable ___.",
+              "code": "Lévi-Strauss's view: myths navigate pairs of opposing categories\nTerm for these opposing categories: binary ___\nExamples: life/death, nature/culture, raw/cooked",
+              "blanks": ["oppositions"],
+              "explanation": "The document explains that Lévi-Strauss argued myths navigate binary oppositions, pairs of contrasting categories through which human minds organize experience."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
