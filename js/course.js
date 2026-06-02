@@ -794,6 +794,30 @@ function startLesson(lesson) {
     else renderQuestion(activeLessonData, analytics, onUpdate, () => finishLesson());
 }
 
+function pickBonusQuestion(lessonType) {
+    if (PRACTICE_TYPES.includes(lessonType)) return null;
+    if (!activeLessonData?.questions?.length) return null;
+    if (!activeCD) return null;
+
+    const analytics = ud.analytics[activeCD.id] || {};
+
+    const candidates = activeLessonData.questions.filter(q =>
+        q.globalId && Array.isArray(q.options) && q.options.length > 0
+    );
+
+    if (!candidates.length) return null;
+
+    candidates.sort((a, b) => {
+        const aS = analytics[a.globalId] || { correct: 0, incorrect: 0 };
+        const bS = analytics[b.globalId] || { correct: 0, incorrect: 0 };
+        const aRatio = aS.correct / Math.max(1, aS.correct + aS.incorrect);
+        const bRatio = bS.correct / Math.max(1, bS.correct + bS.incorrect);
+        return aRatio - bRatio;
+    });
+
+    return candidates[0] || null;
+}
+
 async function finishFillBlank(correctCount, total) {
     $("lesson-back-btn")?.remove();
     const score = correctCount === total ? 4
@@ -924,21 +948,64 @@ async function finishLesson() {
         ratingText   = `rating: ${finalScore} / 4`;
     }
 
-    viewLesson.innerHTML = `
-        <div class="lesson-workspace" style="text-align:center;">
-            <h2>Complete</h2>
-            <p style="line-height:1.5;">${accuracyText}</p>
-            <p style="color:var(--accent);font-size:24px;margin-top:20px;">${ratingText}</p>
-            <button id="return-btn" style="margin-top:40px;">Return</button>
-        </div>
-    `;
-
     if (!PRACTICE_TYPES.includes(t)) {
         const cur = ud.scores[activeLessonData.id] || 0;
         if (finalScore > cur) {
             ud.scores[activeLessonData.id] = finalScore;
             await saveField("scores", ud.scores);
         }
+    }
+
+    const bonusQ = pickBonusQuestion(t);
+
+    viewLesson.innerHTML = `
+        <div class="lesson-workspace" style="text-align:center;">
+            <h2>Complete</h2>
+            <p style="line-height:1.5;">${accuracyText}</p>
+            <p style="color:var(--accent);font-size:24px;margin-top:20px;">${ratingText}</p>
+            ${bonusQ ? `
+            <div id="bonus-block" style="margin-top:40px;text-align:left;border-top:3px solid var(--border);padding-top:28px;">
+                <p style="font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:16px;">one more</p>
+                <p style="font-size:16px;font-weight:700;margin-bottom:20px;">${parseCode(bonusQ.q)}</p>
+                <div id="bonus-options">
+                    ${bonusQ.options.map((opt, i) => `
+                        <label class="mcq-option" id="bonus-opt-${i}" style="margin:8px 0;font-size:14px;">
+                            <input type="radio" name="bonus-answer" value="${i}"> ${parseCode(opt)}
+                        </label>
+                    `).join("")}
+                </div>
+                <div id="bonus-feedback" style="display:none;margin-top:16px;padding:14px 18px;border-left:6px solid var(--accent);background:var(--surface);font-size:14px;"></div>
+                <button id="bonus-submit-btn" style="margin-top:16px;" disabled>submit</button>
+            </div>` : ""}
+            <button id="return-btn" style="margin-top:${bonusQ ? "24px" : "40px"};">Return</button>
+        </div>
+    `;
+
+    if (bonusQ) {
+        document.querySelectorAll('input[name="bonus-answer"]').forEach(r => {
+            r.addEventListener("change", () => {
+                document.getElementById("bonus-submit-btn").disabled = false;
+            });
+        });
+        document.getElementById("bonus-submit-btn").addEventListener("click", () => {
+            const sel = document.querySelector('input[name="bonus-answer"]:checked');
+            if (!sel) return;
+            const correct = parseInt(sel.value) === bonusQ.answer;
+            document.querySelectorAll('input[name="bonus-answer"]').forEach(r => r.disabled = true);
+            document.querySelectorAll(".mcq-option").forEach(l => l.classList.add("locked"));
+            const selLabel = document.getElementById(`bonus-opt-${sel.value}`);
+            const corrLabel = document.getElementById(`bonus-opt-${bonusQ.answer}`);
+            if (correct) {
+                selLabel?.classList.add("reveal-correct");
+            } else {
+                selLabel?.classList.add("reveal-incorrect");
+                corrLabel?.classList.add("reveal-correct");
+            }
+            const fb = document.getElementById("bonus-feedback");
+            fb.style.display = "block";
+            fb.innerHTML = `<strong>${correct ? "correct." : "not quite."}</strong>${bonusQ.explanation ? " " + parseCode(bonusQ.explanation) : ""}`;
+            document.getElementById("bonus-submit-btn").style.display = "none";
+        });
     }
 
     $("return-btn").onclick = () => {
@@ -1121,27 +1188,48 @@ async function compileMasterTest() {
 }
 
 async function compileStandardPractice(entry) {
-    const settings = ud.practiceSettings[entry.id] || getDefaultPracticeSettings();
     const dataMap = await fetchBundleData(entry);
     const firstKey = Object.keys(dataMap)[0];
     activeCD = dataMap[firstKey];
     activeCD.id = firstKey;
 
-    const all = await getAllQuestionsForEntry(entry, settings);
-    if (!all.length) { alert("Complete more lessons first."); return; }
+    const allEnrolled = [];
+    for (const entryId of ud.enrolled) {
+        const e = catalogData.find(c => c.id === entryId);
+        if (!e) continue;
+        const s = ud.practiceSettings[entryId] || getDefaultPracticeSettings();
+        const qs = await getAllQuestionsForEntry(e, s);
+        allEnrolled.push(...qs);
+    }
 
-    const an = ud.analytics[entry.id] || {};
-    all.sort((a, b) => {
-        const aS = an[a.globalId] || { correct: 0, incorrect: 0 };
-        const bS = an[b.globalId] || { correct: 0, incorrect: 0 };
-        return (bS.incorrect - bS.correct) - (aS.incorrect - aS.correct);
+    if (!allEnrolled.length) { alert("Complete more lessons first."); return; }
+
+    const mergedAnalytics = {};
+    for (const entryId of ud.enrolled) {
+        Object.assign(mergedAnalytics, ud.analytics[entryId] || {});
+    }
+
+    allEnrolled.sort((a, b) => {
+        const aS = mergedAnalytics[a.globalId] || { correct: 0, incorrect: 0 };
+        const bS = mergedAnalytics[b.globalId] || { correct: 0, incorrect: 0 };
+        const aRatio = aS.correct / Math.max(1, aS.correct + aS.incorrect);
+        const bRatio = bS.correct / Math.max(1, bS.correct + bS.incorrect);
+        return aRatio - bRatio;
     });
+
+    const weakCount = allEnrolled.filter(q => {
+        const s = mergedAnalytics[q.globalId] || { correct: 0, incorrect: 0 };
+        const ratio = s.correct / Math.max(1, s.correct + s.incorrect);
+        return ratio < 0.6;
+    }).length;
+
+    const sessionLen = weakCount >= 8 ? 20 : weakCount >= 4 ? 15 : 10;
 
     startLesson({
         id: "practice-standard",
         title: "Standard Practice",
         type: "practice_standard",
-        questions: shuffleArray(all.slice(0, 10))
+        questions: shuffleArray(allEnrolled.slice(0, sessionLen))
     });
 }
 

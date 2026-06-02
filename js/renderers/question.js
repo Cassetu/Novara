@@ -6,6 +6,7 @@ let correctAnswersCount = 0;
 let isQuestionSubmitted = false;
 let questionResults = [];
 let survivalStrikes = 0;
+let questionStartTime = 0;
 
 function initQuestionState() {
     currentQuestionIndex = 0;
@@ -13,6 +14,7 @@ function initQuestionState() {
     isQuestionSubmitted = false;
     questionResults = [];
     survivalStrikes = 0;
+    questionStartTime = 0;
 }
 
 function getQuestionStats() {
@@ -34,6 +36,7 @@ function renderQuestion(lessonData, analytics, onAnalyticsUpdate, onFinish) {
 
     const lessonView = document.getElementById("view-lesson");
     isQuestionSubmitted = false;
+    questionStartTime = Date.now();
 
     const optionsHtml = qData.options.map((opt, i) => `
         <label class="mcq-option" id="opt-label-${i}">
@@ -92,13 +95,17 @@ async function handleActionClick(lessonData, analytics, onAnalyticsUpdate, onFin
 
         const selectedVal = parseInt(selected.value);
         const isCorrect = selectedVal === qData.answer;
+        const responseTime = Date.now() - questionStartTime;
 
         questionResults[currentQuestionIndex] = isCorrect;
 
         if (qData.globalId && analytics) {
-            if (!analytics[qData.globalId]) analytics[qData.globalId] = { correct: 0, incorrect: 0 };
+            if (!analytics[qData.globalId]) analytics[qData.globalId] = { correct: 0, incorrect: 0, totalTime: 0, attempts: 0 };
             if (isCorrect) analytics[qData.globalId].correct++;
             else analytics[qData.globalId].incorrect++;
+            analytics[qData.globalId].totalTime = (analytics[qData.globalId].totalTime || 0) + responseTime;
+            analytics[qData.globalId].attempts = (analytics[qData.globalId].attempts || 0) + 1;
+            analytics[qData.globalId].lastSeen = Date.now();
             await onAnalyticsUpdate(analytics);
         }
 
@@ -114,7 +121,7 @@ async function handleActionClick(lessonData, analytics, onAnalyticsUpdate, onFin
         document.querySelectorAll(".mcq-option").forEach(l => l.classList.add("locked"));
 
         const selectedLabel = document.getElementById(`opt-label-${selectedVal}`);
-        const correctLabel = document.getElementById(`opt-label-${qData.answer}`);
+        const correctLabel  = document.getElementById(`opt-label-${qData.answer}`);
 
         if (selectedLabel) {
             if (isCorrect) {
