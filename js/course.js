@@ -411,7 +411,25 @@ async function renderExplorer() {
 }
 
 async function enrollInCourse(entry) {
-    if (ud.enrolled.length >= 3) { alert("Maximum 3 active curriculums."); return; }
+    if (ud.enrolled.length >= 3) {
+        const errorOverlay = document.createElement("div");
+        const errorBox = document.createElement("div");
+        errorBox.innerText = "You can only be enrolled in 3 curriculums at once. Please unenroll from an active curriculum to enroll in a new one.";
+        const errorBtn = document.createElement("button");
+        errorBtn.innerText = "OK";
+        errorBtn.className = "danger-btn";
+        errorBox.id = "errorBox";
+
+        errorOverlay.id = "errorOverlay";
+
+        errorBtn.addEventListener("click", () => {
+            errorOverlay.remove();
+        });
+        errorOverlay.appendChild(errorBox);
+        errorBox.appendChild(errorBtn);
+        document.body.appendChild(errorOverlay);
+        return;
+    }
     ud.enrolled.push(entry.id);
     await saveField("enrolled", ud.enrolled);
 
