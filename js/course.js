@@ -1195,7 +1195,25 @@ async function getAllQuestionsForEntry(entry, settings) {
 async function compileMasterTest() {
     if (!activeCD) return;
     const all = collectQuestions(activeCD, getDefaultPracticeSettings());
-    if (!all.length) { alert("No questions available."); return; }
+    if (!all.length) {
+        const errorOverlay = document.createElement("div");
+        const errorBox = document.createElement("div");
+        errorBox.innerText = "No Questions Available!";
+        const errorBtn = document.createElement("button");
+        errorBtn.innerText = "OK";
+        errorBtn.className = "danger-btn";
+        errorBox.id = "errorBox";
+
+        errorOverlay.id = "errorOverlay";
+
+        errorBtn.addEventListener("click", () => {
+            errorOverlay.remove();
+        });
+        errorOverlay.appendChild(errorBox);
+        errorBox.appendChild(errorBtn);
+        document.body.appendChild(errorOverlay);
+        return;
+    }
     startLesson({
         id: "master-test",
         courseId: activeCD.id,
@@ -1220,7 +1238,25 @@ async function compileStandardPractice(entry) {
         allEnrolled.push(...qs);
     }
 
-    if (!allEnrolled.length) { alert("Complete more lessons first."); return; }
+    if (!allEnrolled.length) {
+        const errorOverlay = document.createElement("div");
+        const errorBox = document.createElement("div");
+        errorBox.innerText = "Complete more Lessons First!";
+        const errorBtn = document.createElement("button");
+        errorBtn.innerText = "OK";
+        errorBtn.className = "danger-btn";
+        errorBox.id = "errorBox";
+
+        errorOverlay.id = "errorOverlay";
+
+        errorBtn.addEventListener("click", () => {
+            errorOverlay.remove();
+        });
+        errorOverlay.appendChild(errorBox);
+        errorBox.appendChild(errorBtn);
+        document.body.appendChild(errorOverlay);
+        return;
+    }
 
     const mergedAnalytics = {};
     for (const entryId of ud.enrolled) {
@@ -1259,7 +1295,25 @@ async function compileSurvivalPractice(entry) {
     activeCD.id = firstKey;
 
     const all = await getAllQuestionsForEntry(entry, settings);
-    if (!all.length) { alert("No questions available."); return; }
+    if (!all.length) {
+        const errorOverlay = document.createElement("div");
+            const errorBox = document.createElement("div");
+            errorBox.innerText = "No Questions Available!";
+            const errorBtn = document.createElement("button");
+            errorBtn.innerText = "OK";
+            errorBtn.className = "danger-btn";
+            errorBox.id = "errorBox";
+
+            errorOverlay.id = "errorOverlay";
+
+            errorBtn.addEventListener("click", () => {
+                errorOverlay.remove();
+            });
+            errorOverlay.appendChild(errorBox);
+            errorBox.appendChild(errorBtn);
+            document.body.appendChild(errorOverlay);
+            return;
+    }
     startLesson({
         id: "practice-survival",
         courseId: entry.id,
