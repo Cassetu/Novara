@@ -225,9 +225,8 @@ h1, h2, h3 {
     background-image: radial-gradient(var(--text-dim) 1px, transparent 1px);
     background-size: 30px 30px;
 }
-body.lesson-active .workspace {
-    padding: 40px 60px;
-}
+body.lesson-active .workspace { padding: 40px 60px; }
+body.lesson-active #app-topbar { pointer-events: none; opacity: 0.7; }
 .view-layer {
     width: 100%;
     max-width: 960px;
