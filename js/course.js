@@ -110,6 +110,62 @@ function setAuthStatus(msg, color) {
     authStatus.style.color = color;
 }
 
+function startOnboarding() {
+    const onboardingOverlay = document.createElement("div");
+    onboardingOverlay.id = "onboardingOverlay";
+    document.body.appendChild(onboardingOverlay);
+    const steps = [
+        { selector: ".course-card", title: "Curriculums", text: "Each card is a structured course with lessons and quizzes.", interaction: false },
+        { selector: ".b-enroll-btn", title: "Enrolling", text: "Enroll in curriculums with a click of a button!", interaction: true },
+        { selector: "#nav-hub", title: "Navigation & Hub", text: "This is the navigation, where you can find other things, such as the Hub. The Hub has practice mode to practice all information you've learned in an curriculum.", interaction: false },
+        { selector: "#nav-active-btn", title: "Active Dropdown", text: "Here is where your curriculums will be, you can have a maximum of three curriculums active at once.", interaction: false }
+    ];
+    let lastTarget = null;
+    function renderStep(index) {
+        if (lastTarget) {
+            lastTarget.style.position = "";
+            lastTarget.style.zIndex = "";
+        }
+        const step = steps[index];
+        const target = document.querySelector(step.selector);
+        lastTarget = target;
+        console.log(step.selector, target);
+        const rect = target.getBoundingClientRect();
+        onboardingOverlay.innerHTML = "";
+        target.style.position = "relative";
+        target.style.zIndex = "10000";
+        const card = document.createElement("div");
+        card.id = "onboardingCard";
+        card.innerHTML = `
+            <h3>${step.title}</h3>
+            <p>${step.text}</p>
+        `;
+        card.style.position = "fixed";
+        card.style.top = rect.top + "px";
+        card.style.left = rect.right + 20 + "px";
+        onboardingOverlay.appendChild(card);
+
+        if (step.interaction) {
+            target.addEventListener("click", () => {
+                renderStep(index + 1)
+            });
+        } else {
+            const nextBtn = document.createElement("button");
+            nextBtn.innerText = "Got it!";
+            card.appendChild(nextBtn);
+            nextBtn.addEventListener("click", () => {
+                if (index === steps.length - 1) {
+                    onboardingOverlay.remove();
+                    ud.onboarded = true;
+                    saveField("onboarded", true);
+                } else {
+                    renderStep(index + 1);
+                }
+            });
+        }
+    }
+    renderStep(0);
+}
 async function loadUserData() {
     const ref = window.doc(window.db, "users", currentUser.uid);
     const snap = await window.getDoc(ref);
@@ -122,8 +178,9 @@ async function loadUserData() {
         ud.projectProgress  = ud.projectProgress  || {};
         ud.mastery          = ud.mastery          || {};
         ud.practiceSettings = ud.practiceSettings || {};
+        ud.onboarded = ud.onboarded || false;
     } else {
-        ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {} };
+        ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {}, onboarded: false };
         await window.setDoc(ref, ud);
     }
     console.log("user data loaded", currentUser.uid);
@@ -220,6 +277,7 @@ navExplorer?.addEventListener("click", async e => {
     await renderExplorer();
     switchView("view-explorer");
     setActiveNavBtn(navExplorer);
+    if (!ud.onboarded) startOnboarding();
 });
 
 navHub?.addEventListener("click", async e => {

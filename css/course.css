@@ -1234,3 +1234,24 @@ button:disabled {
     from { opacity: 0; scale: 0.97; }
     to   { opacity: 1; scale: 1; }
 }
+#onboardingOverlay {
+    z-index: 9998;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+#onboardingCard {
+    position: fixed;
+    background: var(--surface);
+    border: 4px solid var(--border);
+    box-shadow: 8px 8px 0px var(--border);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    padding: 40px;
+    width: 280px;
+    z-index: 9999;
+    animation: errorBoxFadeIn 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
