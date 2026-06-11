@@ -137,6 +137,7 @@ function startOnboarding() {
         const card = document.createElement("div");
         card.id = "onboardingCard";
         card.innerHTML = `
+            <p>${index + 1} / ${steps.length}</p>
             <h3>${step.title}</h3>
             <p>${step.text}</p>
         `;
@@ -155,9 +156,16 @@ function startOnboarding() {
             card.appendChild(nextBtn);
             nextBtn.addEventListener("click", () => {
                 if (index === steps.length - 1) {
-                    onboardingOverlay.remove();
-                    ud.onboarded = true;
-                    saveField("onboarded", true);
+                    onboardingOverlay.classList.add("onboarding-fadeout");
+                    onboardingOverlay.addEventListener("animationend", () => {
+                        if (lastTarget) {
+                            lastTarget.style.position = "";
+                            lastTarget.style.zIndex = "";
+                        }
+                        onboardingOverlay.remove();
+                        ud.onboarded = true;
+                        saveField("onboarded", true);
+                    });
                 } else {
                     renderStep(index + 1);
                 }

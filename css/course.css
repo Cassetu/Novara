@@ -1250,8 +1250,10 @@ button:disabled {
     padding: 40px;
     width: 280px;
     z-index: 9999;
-    animation: errorBoxFadeIn 0.2s ease;
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+.onboardingFadeout {
+    animation: fadeOut 0.3s ease forwards;
 }
