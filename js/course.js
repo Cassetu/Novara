@@ -113,6 +113,7 @@ function setAuthStatus(msg, color) {
 function startOnboarding() {
     const onboardingOverlay = document.createElement("div");
     onboardingOverlay.id = "onboardingOverlay";
+    if (existing) existing.remove();
     document.body.appendChild(onboardingOverlay);
     const steps = [
         { selector: ".course-card", title: "Curriculums", text: "Each card is a structured course with lessons and quizzes.", interaction: false },
@@ -478,22 +479,7 @@ async function renderExplorer() {
 
 async function enrollInCourse(entry) {
     if (ud.enrolled.length >= 3) {
-        const errorOverlay = document.createElement("div");
-        const errorBox = document.createElement("div");
-        errorBox.innerText = "You can only be enrolled in 3 curriculums at once. Please unenroll from an active curriculum to enroll in a new one.";
-        const errorBtn = document.createElement("button");
-        errorBtn.innerText = "OK";
-        errorBtn.className = "danger-btn";
-        errorBox.id = "errorBox";
-
-        errorOverlay.id = "errorOverlay";
-
-        errorBtn.addEventListener("click", () => {
-            errorOverlay.remove();
-        });
-        errorOverlay.appendChild(errorBox);
-        errorBox.appendChild(errorBtn);
-        document.body.appendChild(errorOverlay);
+        showError("You can only be enrolled in 3 curriculums at once. Please unenroll from an active curriculum to enroll in a new one.");
         return;
     }
     ud.enrolled.push(entry.id);
@@ -508,6 +494,29 @@ async function enrollInCourse(entry) {
 
     updateActiveCountBadge();
     await renderExplorer();
+}
+
+function showError(message) {
+    const existing = $("errorOverlay");
+    if (existing) existing.remove();
+    const errorOverlay = document.createElement("div");
+    const errorBox = document.createElement("div");
+    errorBox.innerText = message;
+    const errorBtn = document.createElement("button");
+    errorBtn.innerText = "OK";
+    errorBtn.className = "danger-btn";
+    errorBox.id = "errorBox";
+
+    errorOverlay.id = "errorOverlay";
+
+    errorBtn.addEventListener("click", () => {
+        errorOverlay.remove();
+    });
+    errorOverlay.appendChild(errorBox);
+    errorBox.appendChild(errorBtn);
+
+    document.body.appendChild(errorOverlay);
+    return;
 }
 
 async function unenrollFromCourse(entry) {
@@ -1262,22 +1271,7 @@ async function compileMasterTest() {
     if (!activeCD) return;
     const all = collectQuestions(activeCD, getDefaultPracticeSettings());
     if (!all.length) {
-        const errorOverlay = document.createElement("div");
-        const errorBox = document.createElement("div");
-        errorBox.innerText = "No Questions Available!";
-        const errorBtn = document.createElement("button");
-        errorBtn.innerText = "OK";
-        errorBtn.className = "danger-btn";
-        errorBox.id = "errorBox";
-
-        errorOverlay.id = "errorOverlay";
-
-        errorBtn.addEventListener("click", () => {
-            errorOverlay.remove();
-        });
-        errorOverlay.appendChild(errorBox);
-        errorBox.appendChild(errorBtn);
-        document.body.appendChild(errorOverlay);
+        showError("No Questions Available!");
         return;
     }
     startLesson({
@@ -1305,22 +1299,7 @@ async function compileStandardPractice(entry) {
     }
 
     if (!allEnrolled.length) {
-        const errorOverlay = document.createElement("div");
-        const errorBox = document.createElement("div");
-        errorBox.innerText = "Complete more Lessons First!";
-        const errorBtn = document.createElement("button");
-        errorBtn.innerText = "OK";
-        errorBtn.className = "danger-btn";
-        errorBox.id = "errorBox";
-
-        errorOverlay.id = "errorOverlay";
-
-        errorBtn.addEventListener("click", () => {
-            errorOverlay.remove();
-        });
-        errorOverlay.appendChild(errorBox);
-        errorBox.appendChild(errorBtn);
-        document.body.appendChild(errorOverlay);
+        showError("Complete more Lessons First!");]
         return;
     }
 
@@ -1344,6 +1323,7 @@ async function compileStandardPractice(entry) {
     }).length;
 
     const sessionLen = weakCount >= 8 ? 20 : weakCount >= 4 ? 15 : 10;
+    activeCourseRef = null;
 
     startLesson({
         id: "practice-standard",
@@ -1362,24 +1342,10 @@ async function compileSurvivalPractice(entry) {
 
     const all = await getAllQuestionsForEntry(entry, settings);
     if (!all.length) {
-        const errorOverlay = document.createElement("div");
-            const errorBox = document.createElement("div");
-            errorBox.innerText = "No Questions Available!";
-            const errorBtn = document.createElement("button");
-            errorBtn.innerText = "OK";
-            errorBtn.className = "danger-btn";
-            errorBox.id = "errorBox";
-
-            errorOverlay.id = "errorOverlay";
-
-            errorBtn.addEventListener("click", () => {
-                errorOverlay.remove();
-            });
-            errorOverlay.appendChild(errorBox);
-            errorBox.appendChild(errorBtn);
-            document.body.appendChild(errorOverlay);
-            return;
+        showError("No Questions Available!");
+        return;
     }
+    activeCourseRef = null;
     startLesson({
         id: "practice-survival",
         courseId: entry.id,
