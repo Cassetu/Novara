@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Theme Tool</title>
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../css/course.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&display=swap');
         body {
@@ -40,6 +39,11 @@
         #headerContent {
             text-align: center;
         }
+        #preview * {
+            all: unset;
+            display: revert;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
@@ -52,7 +56,7 @@
         <div style="display:flex; align-items:center; justify-content:center; gap:40px; margin-top:30px;">
             <div>
                 <label for="baseColor">BASE COLOR:</label><br>
-                <input type="color" id="baseColor" value="#77BBA2">
+                <input type="color" id="baseColor" value="#7B3FA0">
             </div>
             <div>
                 <label for="radiusSlider">Corner Radius</label><br>
@@ -68,7 +72,7 @@
                 <label for="styleModifier">Style</label><br>
                 <select id="styleModifier">
                     <option value="brutalist">Brutalist</option>
-                    <option value="sleek">Sleek</option>
+                    <option value="sleek" selected>Sleek</option>
                     <option value="bright">Bright</option>
                     <option value="glass">Glass</option>
                 </select>
@@ -96,7 +100,7 @@
         <div style="display:flex; align-items:center; justify-content:center; gap:40px; margin-top:40px;">
             <div>
                 <label>Modes</label><br>
-                <button id="modeToggle">LIGHT</button>
+                <button id="modeToggle">DARK</button>
                 <button style="margin-left:20px;" id="glowToggle">GLOW OFF</button>
             </div>
         </div>
@@ -130,7 +134,7 @@
         const copyBtn = document.getElementById("copyBtn");
 
         let currentBorder = "#0a0a0a";
-        let darkMode = false;
+        let darkMode = true;
         let glowMode = false;
 
         colorPicker.addEventListener("input", (e) => {
@@ -254,6 +258,11 @@
                 : `${boxShadowSlider.value}px ${boxShadowSlider.value}px 0px ${border}`;
             preview.style.color = textMain;
             preview.style.fontFamily = `'${fontMod.value}', sans-serif`;
+            preview.style.fontSize = "16px";
+            preview.style.lineHeight = "1.6";
+            preview.style.padding = "40px";
+            preview.style.boxSizing = "border-box";
+
 
             preview.innerHTML = `
                 <div style="height:6px;background:${accent};margin:-40px -40px 24px -40px;border-radius:${radiusSlider.value}px ${radiusSlider.value}px 0 0;"></div>
