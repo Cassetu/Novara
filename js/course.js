@@ -1299,7 +1299,7 @@ async function compileStandardPractice(entry) {
     }
 
     if (!allEnrolled.length) {
-        showError("Complete more Lessons First!");]
+        showError("Complete more Lessons First!");
         return;
     }
 
