@@ -64,6 +64,15 @@
                 <input type="range" min="0" max="16" value="0" id="boxShadowSlider">
                 <span id="boxShadowValue">0px</span>
             </div>
+            <div>
+                <label for="styleModifier">Style</label><br>
+                <select id="styleModifier">
+                    <option value="brutalist">Brutalist</option>
+                    <option value="sleek">Sleek</option>
+                    <option value="bright">Bright</option>
+                    <option value="glass">Glass</option>
+                </select>
+            </div>
         </div>
         <div style="display:flex; justify-content:center;" id="palette">
 
@@ -86,10 +95,16 @@
         const boxShadowValue = document.getElementById("boxShadowValue");
         const preview = document.getElementById("preview");
         const cssOutput = document.getElementById("cssOutput");
+        const styleModifier = document.getElementById("styleModifier");
+
         let currentBorder = "#0a0a0a";
 
         colorPicker.addEventListener("input", (e) => {
             updatePalette(e.target.value);
+        });
+
+        styleModifier.addEventListener("change", (e) => {
+            updatePalette(colorPicker.value);
         });
 
         radiusSlider.addEventListener("input", () => {
@@ -109,13 +124,21 @@
         function updatePalette(hex) {
             const hsl = hexToHSL(hex);
 
-            const complement = (hsl.h + 180) % 360;
-            const surface = `hsl(${hsl.h}, ${hsl.s}%, 97%)`;
-            const textMain = `hsl(${hsl.h}, 20%, 10%)`;
-            const textDim = `hsl(${hsl.h}, 10%, 45%)`;
-            const bg = `hsl(${hsl.h}, ${hsl.s}%, 95%)`;
+            const styles = {
+                brutalist: { surfaceS: hsl.s, surfaceL: 97, borderS: 20, borderL: 15, textS: 20, textL: 10, dimS: 10, dimL: 45, bgL: 95 },
+                sleek:     { surfaceS: 5,     surfaceL: 98, borderS: 5,  borderL: 60, textS: 10, textL: 15, dimS: 5,  dimL: 55, bgL: 96 },
+                bright:    { surfaceS: hsl.s, surfaceL: 95, borderS: 40, borderL: 20, textS: 30, textL: 8,  dimS: 20, dimL: 40, bgL: 90 },
+                glass:     { surfaceS: 10,    surfaceL: 96, borderS: 10, borderL: 70, textS: 15, textL: 12, dimS: 5,  dimL: 50, bgL: 94 }
+            };
+
+            const st = styles[styleModifier.value];
+
+            const surface = `hsl(${hsl.h}, ${st.surfaceS}%, ${st.surfaceL}%)`;
+            const border = `hsl(${hsl.h}, ${st.borderS}%, ${st.borderL}%)`;
+            const textMain = `hsl(${hsl.h}, ${st.textS}%, ${st.textL}%)`;
+            const textDim = `hsl(${hsl.h}, ${st.dimS}%, ${st.dimL}%)`;
+            const bg = `hsl(${hsl.h}, ${st.surfaceS}%, ${st.bgL}%)`;
             const accent = hex;
-            const border = `hsl(${hsl.h}, 20%, 15%)`;
             currentBorder = border;
 
             const colors = [
