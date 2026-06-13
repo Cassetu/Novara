@@ -25,6 +25,10 @@
             gap: 20px;
             margin-top: 30px;
         }
+        #preview {
+            padding: 40px;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
@@ -40,14 +44,41 @@
         <div id="palette">
 
         </div>
+        <div>
+            <label for="radiusSlider">Corner Radius</label>
+            <input type="range" min="0" max="20" value="0" id="radiusSlider">
+            <span id="radiusValue">0px</span>
+            <br>
+            <label for="boxShadowSlider">Box Shadow</label>
+            <input type="range" min="0" max="16" value="0" id="boxShadowSlider">
+            <span id="boxShadowValue">0px</span>
+        </div>
+        <div id="preview">
+
+        </div>
     </main>
     <script>
-
         const colorPicker = document.getElementById("baseColor");
         const palette = document.getElementById("palette");
+        const radiusSlider = document.getElementById("radiusSlider");
+        const radiusValue = document.getElementById("radiusValue");
+        const boxShadowSlider = document.getElementById("boxShadowSlider");
+        const boxShadowValue = document.getElementById("boxShadowValue");
+        const preview = document.getElementById("preview");
+        let currentBorder = "#0a0a0a";
 
         colorPicker.addEventListener("input", (e) => {
             updatePalette(e.target.value);
+        });
+
+        radiusSlider.addEventListener("input", () => {
+            radiusValue.innerText = radiusSlider.value + "px";
+            preview.style.borderRadius = radiusSlider.value + "px";
+        });
+
+        boxShadowSlider.addEventListener("input", () => {
+            boxShadowValue.innerText = boxShadowSlider.value + "px";
+            preview.style.boxShadow = `${boxShadowSlider.value}px ${boxShadowSlider.value}px 0px ${currentBorder}`;
         });
 
         updatePalette(colorPicker.value);
@@ -62,6 +93,7 @@
             const bg = `hsl(${hsl.h}, ${hsl.s}%, 95%)`;
             const accent = hex;
             const border = `hsl(${hsl.h}, 20%, 15%)`;
+            currentBorder = border;
 
             const colors = [
                 { name: "--accent", value: accent },
@@ -82,6 +114,18 @@
                 `;
                 palette.appendChild(swatch);
             });
+
+            preview.style.background = surface;
+            preview.style.border = `4px solid ${border}`;
+            preview.style.borderRadius = radiusSlider.value + "px";
+            preview.style.boxShadow = `${boxShadowSlider.value}px ${boxShadowSlider.value}px 0px ${border}`;
+            preview.style.color = textMain;
+
+            preview.innerHTML = `
+                <h3 style="color:${textMain}">Placeholder Heading</h3>
+                <p style="color:${textDim}">This is what your body text looks like with this theme.</p>
+                <button style="background:${accent};color:${surface};border:2px solid ${border};">Button</button>
+            `;
         }
 
         function hexToHSL(hex) {
