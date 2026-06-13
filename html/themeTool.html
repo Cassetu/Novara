@@ -51,6 +51,10 @@
         </div>
         <div style="display:flex; align-items:center; justify-content:center; gap:40px; margin-top:30px;">
             <div>
+                <label>Mode</label><br>
+                <button id="modeToggle">LIGHT</button>
+            </div>
+            <div>
                 <label for="baseColor">BASE COLOR:</label><br>
                 <input type="color" id="baseColor" value="#77BBA2">
             </div>
@@ -96,11 +100,19 @@
         const preview = document.getElementById("preview");
         const cssOutput = document.getElementById("cssOutput");
         const styleModifier = document.getElementById("styleModifier");
+        const modeToggle = document.getElementById("modeToggle");
 
         let currentBorder = "#0a0a0a";
+        let darkMode = false;
 
         colorPicker.addEventListener("input", (e) => {
             updatePalette(e.target.value);
+        });
+
+        modeToggle.addEventListener("click", () => {
+            darkMode = !darkMode;
+            modeToggle.innerText = darkMode ? "DARK" : "LIGHT";
+            updatePalette(colorPicker.value);
         });
 
         styleModifier.addEventListener("change", (e) => {
@@ -133,11 +145,25 @@
 
             const st = styles[styleModifier.value];
 
-            const surface = `hsl(${hsl.h}, ${st.surfaceS}%, ${st.surfaceL}%)`;
-            const border = `hsl(${hsl.h}, ${st.borderS}%, ${st.borderL}%)`;
-            const textMain = `hsl(${hsl.h}, ${st.textS}%, ${st.textL}%)`;
-            const textDim = `hsl(${hsl.h}, ${st.dimS}%, ${st.dimL}%)`;
-            const bg = `hsl(${hsl.h}, ${st.surfaceS}%, ${st.bgL}%)`;
+            const bgL    = darkMode ? 8  : st.bgL;
+            const surfL  = darkMode ? 12 : st.surfaceL;
+            const surfS  = darkMode ? st.surfaceS : st.surfaceS;
+            const textL  = darkMode ? 90 : st.textL;
+            const dimL   = darkMode ? 55 : st.dimL;
+            const borderL = darkMode ? 25 : st.borderL;
+
+            const surface  = `hsl(${hsl.h}, ${surfS}%, ${surfL}%)`;
+            const bg       = `hsl(${hsl.h}, ${surfS}%, ${bgL}%)`;
+            const textMain = `hsl(${hsl.h}, ${st.textS}%, ${textL}%)`;
+            const textDim  = `hsl(${hsl.h}, ${st.dimS}%, ${dimL}%)`;
+            const border   = `hsl(${hsl.h}, ${st.borderS}%, ${borderL}%)`;
+            const surface2 = darkMode
+                ? `hsl(${hsl.h}, ${surfS}%, 18%)`
+                : `hsl(${hsl.h}, ${surfS}%, 93%)`;
+
+            const void_ = darkMode
+                ? `hsl(${hsl.h}, 20%, 4%)`
+                : `hsl(${hsl.h}, 20%, 98%)`;
             const accent = hex;
             currentBorder = border;
 
@@ -148,6 +174,8 @@
                 { name: "--text-dim", value: textDim },
                 { name: "--bg", value: bg },
                 { name: "--border", value: border },
+                { name: "--surface2", value: surface2 },
+                { name: "--void", value: void_ },
             ];
 
             palette.innerHTML = "";
@@ -168,9 +196,13 @@
             preview.style.color = textMain;
 
             preview.innerHTML = `
-                <h3 style="color:${textMain}">Placeholder Heading</h3>
-                <p style="color:${textDim}">This is what your body text looks like with this theme.</p>
-                <button style="background:${accent};color:${surface};border:2px solid ${border};">Button</button>
+                <div style="height:6px;background:${accent};margin:-40px -40px 24px -40px;border-radius:${radiusSlider.value}px ${radiusSlider.value}px 0 0;"></div>
+                <h3 style="color:${textMain};margin-bottom:8px;">Card Title</h3>
+                <p style="color:${textDim};font-size:14px;line-height:1.7;margin-bottom:20px;">This is a preview of your theme. Body text sits here, showing contrast and readability at a glance.</p>
+                <div style="display:flex;gap:10px;">
+                    <button style="background:${accent};color:${surface};border:2px solid ${accent};padding:10px 20px;box-shadow:0 4px 12px ${accent}44;">Primary</button>
+                    <button style="background:transparent;color:${accent};border:2px solid ${accent};padding:10px 20px;">Secondary</button>
+                </div>
             `;
 
             cssOutput.value = `
@@ -182,6 +214,8 @@
     --bg: ${bg};
     --border: ${border};
     --topbar-h: 56px;
+    --surface2: ${surface2};
+    --void: ${void_};
 }
             `;
         }
