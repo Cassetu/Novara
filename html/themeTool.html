@@ -51,10 +51,6 @@
         </div>
         <div style="display:flex; align-items:center; justify-content:center; gap:40px; margin-top:30px;">
             <div>
-                <label>Mode</label><br>
-                <button id="modeToggle">LIGHT</button>
-            </div>
-            <div>
                 <label for="baseColor">BASE COLOR:</label><br>
                 <input type="color" id="baseColor" value="#77BBA2">
             </div>
@@ -77,8 +73,6 @@
                     <option value="glass">Glass</option>
                 </select>
             </div>
-        </div>
-        <div style="display:flex; align-items:center; justify-content:center; gap:40px; margin-top:0px;">
             <div>
                 <label for="fontMod">Font:</label><br>
                 <select id="fontMod">
@@ -97,6 +91,13 @@
                     <option value="Cinzel">Cinzel</option>
                     <option value="Syne">Syne</option>
                 </select>
+            </div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:center; gap:40px; margin-top:40px;">
+            <div>
+                <label>Modes</label><br>
+                <button id="modeToggle">LIGHT</button>
+                <button style="margin-left:20px;" id="glowToggle">GLOW OFF</button>
             </div>
         </div>
         <div style="display:flex; justify-content:center;" id="palette">
@@ -130,6 +131,7 @@
 
         let currentBorder = "#0a0a0a";
         let darkMode = false;
+        let glowMode = false;
 
         colorPicker.addEventListener("input", (e) => {
             updatePalette(e.target.value);
@@ -138,6 +140,12 @@
         modeToggle.addEventListener("click", () => {
             darkMode = !darkMode;
             modeToggle.innerText = darkMode ? "DARK" : "LIGHT";
+            updatePalette(colorPicker.value);
+        });
+
+        glowToggle.addEventListener("click", () => {
+            glowMode = !glowMode;
+            glowToggle.innerText = glowMode ? "GLOW ON" : "GLOW OFF";
             updatePalette(colorPicker.value);
         });
 
@@ -212,6 +220,8 @@
                 ? `hsl(${hsl.h}, 20%, 4%)`
                 : `hsl(${hsl.h}, 20%, 98%)`;
             const accent = hex;
+            const btnGlow = glowMode ? `0 0 16px ${accent}88, 0 4px 12px ${accent}44` : `none`;
+
             currentBorder = border;
 
             const colors = [
@@ -239,7 +249,9 @@
             preview.style.background = surface;
             preview.style.border = `4px solid ${border}`;
             preview.style.borderRadius = radiusSlider.value + "px";
-            preview.style.boxShadow = `${boxShadowSlider.value}px ${boxShadowSlider.value}px 0px ${border}`;
+            preview.style.boxShadow = glowMode
+                ? `0 0 24px ${accent}66, 0 0 8px ${accent}33`
+                : `${boxShadowSlider.value}px ${boxShadowSlider.value}px 0px ${border}`;
             preview.style.color = textMain;
             preview.style.fontFamily = `'${fontMod.value}', sans-serif`;
 
@@ -248,7 +260,7 @@
                 <h3 style="color:${textMain};margin-bottom:8px;">Card Title</h3>
                 <p style="color:${textDim};font-size:14px;line-height:1.7;margin-bottom:20px;">This is a preview of your theme. Body text sits here, showing contrast and readability at a glance.</p>
                 <div style="display:flex;gap:10px;">
-                    <button style="background:${accent};color:${surface};border:2px solid ${accent};padding:10px 20px;box-shadow:0 4px 12px ${accent}44;">Primary</button>
+                    <button style="background:${accent};color:${surface};border:2px solid ${accent};padding:10px 20px;box-shadow:${btnGlow};">Primary</button>
                     <button style="background:transparent;color:${accent};border:2px solid ${accent};padding:10px 20px;">Secondary</button>
                 </div>
             `;
@@ -266,6 +278,7 @@
     --topbar-h: 56px;
     --surface2: ${surface2};
     --void: ${void_};
+    --glow: ${glowMode ? `0 0 24px ${accent}66` : "none"};
     --font-family: '${fontMod.value}', sans-serif;
 }
             `;
