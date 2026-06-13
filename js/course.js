@@ -54,6 +54,16 @@ const MASTERY_THRESHOLD = 0.75;
 const isBinaryLesson = l =>
     BINARY_TYPES.includes(l.type) || (!l.questions?.length && l.type === "document");
 
+const navToolsBtn = document.getElementById("nav-tools-btn");
+const toolsDropdown = document.getElementById("tools-dropdown");
+
+navToolsBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    const isOpen = toolsDropdown.classList.contains("open");
+    closeAllDropdowns();
+    if (!isOpen) toolsDropdown.classList.add("open");
+});
+
 function applyTheme(t) {
     document.body.className = document.body.className.replace(/theme-\w+/g, "").trim();
     if (t) document.body.classList.add(t);
