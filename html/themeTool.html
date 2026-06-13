@@ -78,6 +78,27 @@
                 </select>
             </div>
         </div>
+        <div style="display:flex; align-items:center; justify-content:center; gap:40px; margin-top:0px;">
+            <div>
+                <label for="fontMod">Font:</label><br>
+                <select id="fontMod">
+                    <option value="Inter">Inter</option>
+                    <option value="Space Grotesk">Space Grotesk</option>
+                    <option value="Playfair Display">Playfair Display</option>
+                    <option value="Outfit">Outfit</option>
+                    <option value="DM Serif Display">DM Serif Display</option>
+                    <option value="JetBrains Mono">JetBrains Mono</option>
+                    <option value="Raleway">Raleway</option>
+                    <option value="Nunito">Nunito</option>
+                    <option value="Bebas Neue">Bebas Neue</option>
+                    <option value="Josefin Sans">Josefin Sans</option>
+                    <option value="Merriweather">Merriweather</option>
+                    <option value="Fira Code">Fira Code</option>
+                    <option value="Cinzel">Cinzel</option>
+                    <option value="Syne">Syne</option>
+                </select>
+            </div>
+        </div>
         <div style="display:flex; justify-content:center;" id="palette">
 
         </div>
@@ -85,7 +106,10 @@
 
         </div>
         <br>
-        <label for="cssOutput" style="font-size:23px; text-decoration:underline;">CSS Output:</label>
+        <div style="display:flex; align-items:center; gap:20px; margin-top:20px;">
+            <label for="cssOutput" style="font-size:23px; text-decoration:underline;">CSS Output:</label>
+            <button id="copyBtn">COPY ALL</button>
+        </div>
         <textarea id="cssOutput">
 
         </textarea>
@@ -101,6 +125,8 @@
         const cssOutput = document.getElementById("cssOutput");
         const styleModifier = document.getElementById("styleModifier");
         const modeToggle = document.getElementById("modeToggle");
+        const fontMod = document.getElementById("fontMod");
+        const copyBtn = document.getElementById("copyBtn");
 
         let currentBorder = "#0a0a0a";
         let darkMode = false;
@@ -119,6 +145,11 @@
             updatePalette(colorPicker.value);
         });
 
+        fontMod.addEventListener("change", () => {
+            loadFont(fontMod.value);
+            updatePalette(colorPicker.value);
+        });
+
         radiusSlider.addEventListener("input", () => {
             radiusValue.innerText = radiusSlider.value + "px";
             preview.style.borderRadius = radiusSlider.value + "px";
@@ -131,7 +162,23 @@
             updatePalette(colorPicker.value);
         });
 
+        copyBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(cssOutput.value);
+            copyBtn.innerText = "COPIED!";
+            setTimeout(() => copyBtn.innerText = "COPY", 2000);
+        });
+
+
+        //init
         updatePalette(colorPicker.value);
+        loadFont(fontMod.value);
+
+        function loadFont(font) {
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = `https://fonts.googleapis.com/css2?family=${font.replace(/ /g, "+")}&display=swap`;
+            document.head.appendChild(link);
+        }
 
         function updatePalette(hex) {
             const hsl = hexToHSL(hex);
@@ -194,6 +241,7 @@
             preview.style.borderRadius = radiusSlider.value + "px";
             preview.style.boxShadow = `${boxShadowSlider.value}px ${boxShadowSlider.value}px 0px ${border}`;
             preview.style.color = textMain;
+            preview.style.fontFamily = `'${fontMod.value}', sans-serif`;
 
             preview.innerHTML = `
                 <div style="height:6px;background:${accent};margin:-40px -40px 24px -40px;border-radius:${radiusSlider.value}px ${radiusSlider.value}px 0 0;"></div>
@@ -206,6 +254,8 @@
             `;
 
             cssOutput.value = `
+@import url('https://fonts.googleapis.com/css2?family=${fontMod.value.replace(/ /g, "+")}&display=swap');
+
 :root {
     --accent: ${accent};
     --surface: ${surface};
@@ -216,6 +266,7 @@
     --topbar-h: 56px;
     --surface2: ${surface2};
     --void: ${void_};
+    --font-family: '${fontMod.value}', sans-serif;
 }
             `;
         }
