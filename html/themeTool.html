@@ -264,10 +264,11 @@
             preview.style.lineHeight = "1.6";
             preview.style.padding = "40px";
             preview.style.boxSizing = "border-box";
+            preview.style.overflow = "hidden";
 
 
             preview.innerHTML = `
-                <div style="height:6px;background:${accent};margin:-40px -40px 24px -40px;border-radius:${radiusSlider.value}px ${radiusSlider.value}px 0 0;"></div>
+                <div style="height:6px;background:${accent};margin:-40px -40px 24px -40px;"></div>
                 <h3 style="color:${textMain};margin-bottom:8px;">Card Title</h3>
                 <p style="color:${textDim};font-size:14px;line-height:1.7;margin-bottom:20px;">This is a preview of your theme. Body text sits here, showing contrast and readability at a glance.</p>
                 <div style="display:flex;gap:10px;">
