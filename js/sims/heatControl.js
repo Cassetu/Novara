@@ -13,6 +13,7 @@ function heatControl(lessonData, simArea, revealPoint, onFinish) {
 
     let currentTemp = 0;
     let targetTemp = 0;
+    let timeInZone = 0;
 
     simArea.innerHTML = `
         <div id="heat-sim" style="position:relative;width:400px;height:200px;">
@@ -32,11 +33,18 @@ function heatControl(lessonData, simArea, revealPoint, onFinish) {
         currentTemp += (targetTemp - currentTemp) * 0.05;
         document.getElementById("temp-display").innerText =
             Math.round(currentTemp) + "°C";
+        if (currentTemp >= target - tolerance && currentTemp <= target + tolerance) {
+            timeInZone++;
+            if (timeInZone === 20) revealPoint();
+            if (timeInZone === 60) onFinish();
+        } else {
+            timeInZone = 0;
+        }
+        if (timeInZone === 60) {
+            clearInterval(loop);
+            onFinish();
+        }
     }, 50);
-
-    if (currentTemp >= target - tolerance && currentTemp <= target + tolerance) {
-        //continue here tmrw (need timer)
-    }
 
     slider.addEventListener("input", () => {
         targetTemp = (slider.value / 100) * 300;
