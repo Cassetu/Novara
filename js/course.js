@@ -314,6 +314,7 @@ function updateActiveCountBadge() {
 }
 
 navExplorer?.addEventListener("click", async e => {
+    history.pushState({}, "", window.location.pathname);
     e.preventDefault();
     closeAllDropdowns();
     await loadCatalog();
@@ -571,6 +572,7 @@ function findProjectLesson(data) {
 }
 
 async function openCurriculumHome(entry) {
+    history.pushState({}, "", `?view=curriculum-home&id=${entry.id}`);
     activeCurriculumEntry = entry;
     switchView("view-syllabus");
     setActiveNavBtn(null);
@@ -680,6 +682,7 @@ async function openCurriculumHome(entry) {
 }
 
 async function openSyllabus(courseRef, dataArg, parentEntry) {
+    history.pushState({}, "", `?view=syllabus&id=${courseRef.id}&parentId=${parentEntry?.id || ""}`);
     activeCourseRef = courseRef;
     switchView("view-syllabus");
     setActiveNavBtn(null);
@@ -1152,6 +1155,7 @@ function getDefaultPracticeSettings() {
 }
 
 async function openHub(tab) {
+    history.pushState({}, "", `?view=hub&tab=${tab}`);
     document.querySelectorAll(".hub-tab").forEach(tb =>
         tb.classList.toggle("active", tb.dataset.hubtab === tab)
     );
