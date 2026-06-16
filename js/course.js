@@ -7,6 +7,7 @@ import { renderGodotScene } from "./renderers/godotScene.js";
 import { renderFillBlank } from "./renderers/fillBlank.js";
 import { renderSpotBug } from "./renderers/spotBug.js";
 import { renderProject } from "./renderers/project.js";
+import { renderCookingSim } from "./renderers/cookingSim.js";
 
 let currentUser = null;
 let ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {} };
@@ -47,7 +48,7 @@ const wipeAuthBlock    = $("wipe-auth-block");
 const wipeConfirmInput = $("wipe-confirm-input");
 const execWipeBtn      = $("execute-wipe-btn");
 
-const BINARY_TYPES   = ["challenge", "code_fix", "godot_scene", "spot_bug", "project"];
+const BINARY_TYPES = ["challenge", "code_fix", "godot_scene", "spot_bug", "project", "cooking_sim"];
 const PRACTICE_TYPES = ["practice_standard", "practice_survival", "master_test"];
 const MASTERY_THRESHOLD = 0.75;
 
@@ -891,6 +892,7 @@ function startLesson(lesson) {
     else if (t === "godot_scene")  renderGodotScene(activeLessonData, () => finishLesson());
     else if (t === "fill_blank")   renderFillBlank(activeLessonData, (c, tot) => finishFillBlank(c, tot));
     else if (t === "spot_bug")     renderSpotBug(activeLessonData, (c) => finishSpotBug(c));
+    else if (t === "cooking_sim") renderCookingSim(activeLessonData, () => finishLesson());
     else if (t === "practice_standard" || t === "practice_survival") {
         runMixedPractice(activeLessonData, analytics, onUpdate);
     }

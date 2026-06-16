@@ -1257,3 +1257,9 @@ button:disabled {
 .onboardingFadeout {
     animation: fadeOut 0.3s ease forwards;
 }
+.teaching-point {
+    transition: color 0.4s ease;
+}
+.dimmed {
+    color: rgba(0,0,0,0.5);
+}

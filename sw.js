@@ -22,7 +22,9 @@ const STATIC = [
     "/js/renderers/spotBug.js",
     "/js/renderers/project.js",
     "/js/renderers/godotScene.js",
-    "/data/catalog.json"
+    "/data/catalog.json",
+    "/js/renderers/cookingSim.js",
+    "/js/sims/heatControl.js"
 ];
 
 const SKIP_CACHE = [
