@@ -44,7 +44,7 @@ Visit About page: [cassetu.github.io/Novara/html/about.html](https://cassetu.git
 ![ex-course.png](assets/readme/ex-course.png)
 
 ## Tech Stack
-*   **Frontend:** HTML5, CSS3, JavaScript (or state React/Vue if applicable)
+*   **Frontend:** HTML5, CSS3, JavaScript
 *   **Backend/Auth:** Firebase Auth / Google Sign-In
 *   **Hosting:** GitHub Pages
 *   **AI Content Generation:** Claude.ai (for course content generation)
