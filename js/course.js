@@ -89,7 +89,16 @@ window.firebaseAuth.onAuthStateChanged(async user => {
     await loadUserData();
     const initial = (user.displayName || user.email || "N")[0].toUpperCase();
     if (userAvatarBtn) userAvatarBtn.textContent = initial;
-    navExplorer.click();
+    const params = new URLSearchParams(window.location.search);
+    const view = params.get("view");
+    const id = params.get("id");
+    if (view == "explorer") {
+        navExplorer.click();
+    } else if (view == "hub") { navHub.click();
+    } else if (view == "syllabus") { //sylabbus
+    } else {
+        navExplorer.click();
+    }
 });
 
 authGoogleBtn.addEventListener("click", async () => {
