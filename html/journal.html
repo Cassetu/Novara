@@ -143,6 +143,39 @@
         <h1 class="journal-heading">JOURNAL</h1>
         <p class="journal-subheading">NOVARA CHANGELOG</p>
 
+        <div class="entry">
+            <div class="entry-meta">
+                <span class="entry-date">JUNE 16 2026</span>
+                <span class="entry-tag feature">Feature</span>
+            </div>
+            <h2 class="entry-title">v1.03.55</h2>
+            <div class="entry-body">
+                <p>
+                    I added a new lesson type, "cookingSim". It currently only has one simulation,
+                    "heatControl", a simple minigame for monitoring heat.
+                </p>
+                <p>
+                    Later I plan to add several cooking simulations and use them in a cooking
+                    curriculum. Cooking is a visual, hands-on skill, and you can't really learn
+                    it by simply reading and answering questions.
+                </p>
+                <p>
+                    I'm also working on a way for the URL to reflect the current view, allowing
+                    users to bookmark specific courses or share specific curriculums.
+                </p>
+                <p>
+                    The main focus is history.pushState() and the popstate event. On page load,
+                    URL parameters can be used to determine the correct view and content, such
+                    as ?view=syllabus&id=js-course showing the syllabus for a JavaScript course.
+                </p>
+                <p>
+                    Since this happens during initialization, most of the logic currently lives
+                    in window.firebaseAuth.onAuthStateChanged, which already handles automatic
+                    sign-in for returning users.
+                </p>
+            </div>
+        </div>
+
 
         <div class="entry">
             <div class="entry-meta">
