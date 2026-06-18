@@ -91,29 +91,10 @@ window.firebaseAuth.onAuthStateChanged(async user => {
     if (userAvatarBtn) userAvatarBtn.textContent = initial;
 
     await loadCatalog();
-
-    const params = new URLSearchParams(window.location.search);
-    const view = params.get("view");
-    const id = params.get("id");
-    const tab = params.get("tab");
-    const parentId = params.get("parentId");
-
-    if (view === "hub") {
-        navHub.click();
-        if (tab) openHub(tab);
-    } else if (view === "curriculum-home") {
-        const entry = catalogData.find(c => c.id === id);
-        if (entry) openCurriculumHome(entry);
-        else navExplorer.click();
-    } else if (view === "syllabus") {
-        const entry = catalogData.find(c => c.id === id);
-        const parent = catalogData.find(c => c.id === parentId);
-        if (entry) openSyllabus(entry, null, parent || entry);
-        else navExplorer.click();
-    } else {
-        navExplorer.click();
-    }
+    await routeFromURL();
 });
+
+window.addEventListener("popstate", routeFromURL);
 
 authGoogleBtn.addEventListener("click", async () => {
     try {
@@ -209,6 +190,31 @@ function startOnboarding() {
     }
     renderStep(0);
 }
+
+async function routeFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const view = params.get("view");
+    const id = params.get("id");
+    const tab = params.get("tab");
+    const parentId = params.get("parentId");
+
+    if (view === "hub") {
+        navHub.click();
+        if (tab) openHub(tab);
+    } else if (view === "curriculum-home") {
+        const entry = catalogData.find(c => c.id === id);
+        if (entry) openCurriculumHome(entry);
+        else navExplorer.click();
+    } else if (view === "syllabus") {
+        const entry = catalogData.find(c => c.id === id);
+        const parent = catalogData.find(c => c.id === parentId);
+        if (entry) openSyllabus(entry, null, parent || entry);
+        else navExplorer.click();
+    } else {
+        navExplorer.click();
+    }
+}
+
 async function loadUserData() {
     const ref = window.doc(window.db, "users", currentUser.uid);
     const snap = await window.getDoc(ref);
