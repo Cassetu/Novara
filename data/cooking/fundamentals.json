@@ -1,0 +1,27 @@
+{
+  "id": "cooking-fundamentals",
+  "title": "Cooking Fundamentals",
+  "sections": [
+    {
+      "title": "Module 1: Heat Control",
+      "lessons": [
+        {
+          "id": "heat-control-sim",
+          "title": "Controlling Pan Temperature",
+          "type": "cooking_sim",
+          "sim": "heat_control",
+          "config": {
+            "targetTemp": 180,
+            "tolerance": 10
+          },
+          "teachingPoints": [
+            "Heat transfers from the burner to the pan gradually, not instantly.",
+            "Overshooting the target temperature is easy — reduce heat before you reach the target.",
+            "Holding a steady temperature requires small, constant adjustments.",
+            "Different foods require different temperature ranges to cook correctly."
+          ]
+        }
+      ]
+    }
+  ]
+}

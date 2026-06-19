@@ -110,5 +110,13 @@
         "file": "data/conlang-mythology/comparative-mythology.json"
       }
     ]
+  },
+  {
+    "id": "cooking-fundamentals",
+    "title": "Cooking Fundamentals",
+    "category": "other",
+    "difficulty": "beginner",
+    "description": "Learn the fundamentals of cooking through hands-on interactive simulations. *IN PROGRESS*",
+    "file": "data/cooking/fundamentals.json"
   }
 ]
