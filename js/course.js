@@ -400,8 +400,25 @@ async function loadCatalog() {
 function isBundle(entry) { return entry.type === "bundle"; }
 
 async function fetchCourseData(meta) {
-    const res = await fetch(meta.file);
-    return res.json();
+    try {
+        const res = await fetch(meta.file);
+        if (!res.ok) throw new Error();
+        return res.json();
+    } catch {
+        show404();
+    }
+}
+
+function show404() {
+    switchView("view-explorer");
+    viewExplorer.innerHTML = `
+        <div style="text-align:center;padding:80px 0;">
+            <img src="assets/abstract/abstract2.svg" width="25%" height="25%" alt="">
+            <p style="font-size:48px;font-weight:900;letter-spacing:-2px;margin-top:24px;">404</p>
+            <p style="color:var(--text-dim);font-family:monospace;margin-top:8px;letter-spacing:2px;">Page Not Found.</p>
+            <button onclick="navExplorer.click()" style="margin-top:32px;">Return Home</button>
+        </div>
+    `;
 }
 
 async function fetchBundleData(entry) {
@@ -1181,7 +1198,12 @@ async function buildPracticePanel() {
     content.innerHTML = "";
 
     if (!ud.enrolled.length) {
-        content.innerHTML = "<p style='color:var(--text-dim)'>no curriculums active.</p>";
+        content.innerHTML = `
+            <div style="text-align:center;padding:60px 0;">
+                <img src="assets/abstract/abstract2.svg" alt="abstract empty"/ width="25%" height="25%">
+                <p style="color:var(--text-dim);font-family:monospace;margin-top:20px;font-size:13px;letter-spacing:2px;">No Curriculums Active.</p>
+            </div>
+        `;
         return;
     }
 
