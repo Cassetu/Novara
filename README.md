@@ -34,6 +34,7 @@ View journal/changelog page: [cassetu.github.io/Novara/html/journal.html](https:
 
 Visit About page: [cassetu.github.io/Novara/html/about.html](https://cassetu.github.io/Novara/html/about.html)
 
+Privacy Policy: [cassetu.github.io/Novara/html/privacy.html](https://cassetu.github.io/Novara/html/privacy.html)
 
 ## Features
 *   **Focused Learning:** Enrollment is limited to a maximum of 3 curriculums at a time to encourage focus and prevent overwhelm.
