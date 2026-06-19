@@ -7,7 +7,66 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../css/landing.css">
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <style></style>
+    <style>
+        .policy-body {
+            max-width: 680px;
+            margin: 80px auto 0;
+            padding-bottom: 120px;
+        }
+
+        .policy-heading {
+            font-size: 64px;
+            font-weight: 900;
+            letter-spacing: -3px;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 12px;
+        }
+
+        .policy-subheading {
+            font-size: 13px;
+            font-family: monospace;
+            color: #666666;
+            letter-spacing: 2px;
+            margin-bottom: 60px;
+            border-bottom: 2px solid #0a0a0a;
+            padding-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 64px;
+            padding-bottom: 64px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .section-body {
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.9;
+            color: #333333;
+        }
+
+        .section-body p {
+            margin-bottom: 14px;
+        }
+
+        .section-body p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
 </head>
 <body style="margin: 0; background-color: #ffffff;">
 <div style="background-color: #ffffff; color: #0a0a0a; min-height: 100vh; font-family: 'Space Grotesk', system-ui, sans-serif; padding: 4vw; box-sizing: border-box;">
@@ -29,6 +88,64 @@
         </nav>
 
     </header>
+    <div class="policy-body">
+        <h1 class="policy-heading">PRIVACY POLICY</h1>
+        <p class="policy-subheading">FROM NOVARA</p>
+
+        <div class="section">
+            <h2 class="section-title">What Data We Collect</h2>
+            <div class="section-body">
+                <p>
+                    Novara collects your email address, name, learning progress and scores.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Why We Collect Data</h2>
+            <div class="section-body">
+                <p>
+                    To save your learning progress across devices, and prevent spam bots. Also used to store your data/personalization. I designed Novara to be passwordless.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">How We Store It</h2>
+            <div class="section-body">
+                <p>
+                    Using Firebase/Firestore, an infrastructure from Google designed for authentication.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Who Has Access</h2>
+            <div class="section-body">
+                <p>
+                    Only Me, The Developer. Your data is not sold or shared with third parties.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">How Long We Keep Your Data</h2>
+            <div class="section-body">
+                <p>
+                    Until you choose to delete it.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">How To Delete Your Data</h2>
+            <div class="section-body">
+                <p>
+                    Contact me at <a href="mailto:cassetunium@gmail.com">cassetunium@gmail.com</a> or use the purge button under settings to immediately clear it!
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
