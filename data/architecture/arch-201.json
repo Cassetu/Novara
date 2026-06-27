@@ -1,0 +1,291 @@
+{
+  "id": "arch-201",
+  "title": "Architectural Styles and Movements",
+  "description": "From Gothic cathedrals to glass skyscrapers. How architectural ideas changed over time and why.",
+  "category": "design",
+  "difficulty": "beginner",
+  "sections": [
+    {
+      "title": "The Medieval World: Gothic Architecture",
+      "lessons": [
+        {
+          "id": "arch-gothic-doc",
+          "type": "document",
+          "title": "The Gothic Cathedral and the Quest for Light",
+          "content": "Medieval European architecture is dominated by one building type: the cathedral. And for about 400 years, from roughly 1100 CE to 1500 CE, the most ambitious cathedrals were built in the `Gothic` style.\n\nThe goal of Gothic architecture was to fill a massive stone building with as much light as possible. This was not just an aesthetic preference. It was a theological one. Medieval Christian thinkers believed that light was a metaphor for the divine. More light meant more God. So Gothic architects spent centuries figuring out how to make their stone walls thinner and their windows larger.\n\nThe problem is structural. Stone walls carry load. If you cut large holes in them for windows, you weaken the wall. Roman builders had solved this with the round arch, which keeps everything in compression but creates relatively thick walls and low, dark interiors.\n\nGothic architects solved this with two inventions. The first was the `pointed arch`. A pointed arch, unlike a round arch, can be adjusted in height independently of its width. This gave architects much more flexibility. It also directs the downward forces more steeply, reducing the outward thrust that a round arch creates.\n\nBut even with pointed arches, the stone walls were being pushed outward. The second invention solved this problem: the `flying buttress`. A flying buttress is an external arch that leans against the outside of the cathedral wall at the exact point where the roof is pushing outward. It catches that outward force and redirects it down into a heavy stone pillar called a pier that sits away from the wall. This lets the wall between the buttresses be almost entirely glass.\n\nThe result is what you see in great cathedrals like Notre-Dame de Paris or Chartres Cathedral. Walls that are almost entirely stained glass. Soaring vaults. Vertical lines everywhere pulling the eye upward. And an interior flooded with colored light.\n\nThe Gothic period also gave us the `gargoyle`, which is a carved stone water spout shaped like a monster or creature. They drain rainwater off the roof and away from the walls. Yes, they have a functional purpose.",
+          "examples": [
+            {
+              "label": "How the Flying Buttress Works",
+              "code": "Problem:\n  Roof pushes DOWN and OUTWARD on the top of the wall.\n  If wall is weakened by windows, it will collapse outward.\n\nSolution:\n  Flying buttress = external arch that pushes INWARD at the same point.\n  Outward thrust is countered and redirected DOWN into the pier.\n  The wall between buttresses can now be filled with glass.\n\nResult:\n  Thin walls. Huge stained glass windows. Vertical, light-filled interior."
+            }
+          ],
+          "questions": [
+            {
+              "q": "What was the primary theological motivation behind Gothic architects' desire to fill cathedrals with as much light as possible?",
+              "options": [
+                "Medieval guilds demanded more window area to showcase their stained glass craftsmanship and trade",
+                "Medieval Christian thinkers believed light was a metaphor for the divine, so more light meant closeness to God",
+                "Large windows reduced heating costs in cold northern European climates during winter months",
+                "More light made the interiors safer for large gatherings of people during evening services"
+              ],
+              "answer": 1,
+              "explanation": "The reading states that medieval Christian thinkers believed light was a metaphor for the divine. More light meant more God. This was a theological motivation, not a practical or economic one."
+            },
+            {
+              "q": "What specific structural problem did the flying buttress solve in Gothic cathedral design?",
+              "options": [
+                "It prevented the floor from sinking under the weight of large stone vaults above",
+                "It transferred the outward thrust from the roof away from the thinned wall and into an external pier",
+                "It allowed pointed arches to be taller than round arches by redistributing vertical load",
+                "It reinforced the foundation against water damage caused by the large stained glass window openings"
+              ],
+              "answer": 1,
+              "explanation": "The roofing structure pushed outward on the top of the wall. The flying buttress is an external arch that counters this outward force and redirects it downward into a heavy pier sitting away from the wall. This freed the wall to be almost entirely glass."
+            },
+            {
+              "q": "According to the reading, what structural advantage does a pointed arch have over a round arch that made it useful for Gothic cathedral design?",
+              "options": [
+                "A pointed arch can span wider openings than a round arch of the same stone thickness",
+                "A pointed arch can be adjusted in height independently of its width, and directs forces more steeply with less outward thrust",
+                "A pointed arch distributes load in tension rather than compression, which suits thin stone walls better",
+                "A pointed arch eliminates the need for a keystone at the top, which reduces weight at the apex"
+              ],
+              "answer": 1,
+              "explanation": "The pointed arch can be made taller or shorter regardless of its width, giving architects much more design flexibility. It also directs forces more steeply downward, which reduces the outward horizontal thrust that pushes on the walls."
+            },
+            {
+              "q": "What is the functional purpose of a gargoyle according to the reading?",
+              "options": [
+                "To ward off evil spirits through symbolic animal forms carved at roof level",
+                "To reinforce the joint between the flying buttress and the cathedral wall",
+                "To drain rainwater off the roof and away from the walls",
+                "To mark the location of structural piers on the exterior of the cathedral"
+              ],
+              "answer": 2,
+              "explanation": "Gargoyles are carved stone water spouts. They drain rainwater off the roof and direct it away from the walls. The monstrous shapes are decorative, but the function is drainage."
+            }
+          ]
+        },
+        {
+          "id": "arch-gothic-fillblank",
+          "type": "fill_blank",
+          "title": "Gothic Architecture: Key Terms",
+          "questions": [
+            {
+              "prompt": "The external arch that leans against a Gothic cathedral wall to counter the outward thrust of the roof is called a flying ___. Fill in the single word.",
+              "code": "The flying ___ catches the outward thrust\nand redirects it into an external pier.",
+              "blanks": ["buttress"],
+              "explanation": "The flying buttress is the external support arch that made it possible to thin the walls and fill them with glass. Without it, the walls would have been pushed outward and collapsed."
+            },
+            {
+              "prompt": "Gothic architects used a ___ arch instead of a round arch. Fill in the single word that names this arch type.",
+              "code": "The ___ arch can be adjusted in height\nindependently of its width.",
+              "blanks": ["pointed"],
+              "explanation": "The pointed arch was one of the two key inventions of Gothic architecture. Unlike a round arch, its height and width can be varied independently, which gave Gothic architects much more flexibility."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Renaissance and Baroque",
+      "lessons": [
+        {
+          "id": "arch-renaissance-doc",
+          "type": "document",
+          "title": "The Renaissance: Rediscovering the Classical World",
+          "content": "The `Renaissance`, which means rebirth in Italian, began in Italy in the 15th century. European scholars and artists rediscovered the texts, sculptures, and ruins of ancient Greece and Rome. They decided that the ancient world had achieved something magnificent that had been lost during the medieval period, and they set about recreating it.\n\nIn architecture this meant returning to the classical orders. Doric, Ionic, and Corinthian columns reappeared. Round arches came back. Domes came back. Symmetry became a core principle. The idea was that beauty comes from clear rational order, and the ancients had figured out what that order was.\n\nThe key figure of Renaissance architecture is `Filippo Brunelleschi`. In 1418, the city of Florence had a cathedral with a massive unfinished octagonal opening at the crossing of the nave. Everyone assumed it was impossible to build a dome over such a wide span without traditional wooden scaffolding, which would have required more wood than the entire region possessed.\n\nBrunelleschi won the competition to design the dome by proposing to build it without centering, which is the temporary wooden structure that usually supports a dome while the mortar sets. He engineered a double-shell dome with herringbone brick patterns, internal stone chains, and a lightweight octagonal lantern at the top. The Florence Cathedral dome, completed in 1436, is still one of the greatest engineering achievements in architectural history.\n\nAnother crucial development of the Renaissance was the architectural treatise. Architects began writing down their ideas in books. `Leon Battista Alberti` wrote a famous treatise called `De re aedificatoria`, which means On the Art of Building, modeled on Vitruvius. These books spread architectural ideas across Europe faster than buildings could.\n\nRenaissance architects also developed `linear perspective`, the geometric technique that makes flat drawings appear three-dimensional. Brunelleschi himself is credited with demonstrating perspective in a famous experiment with a painted panel and a mirror. This gave architects a new tool for designing and communicating their ideas.",
+          "examples": [
+            {
+              "label": "Renaissance vs Gothic: A Direct Comparison",
+              "code": "Gothic:\n  Pointed arches    → vertical, soaring, reaching upward\n  Flying buttresses → structural but external\n  Goal: fill with light, reach toward heaven\n\nRenaissance:\n  Round arches      → calm, rational, balanced\n  Domes             → central, unified, humanist\n  Goal: rational order and harmony, modeled on antiquity"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What does the word Renaissance mean in English, and where did the movement begin?",
+              "options": [
+                "Rebirth, and it began in France in the 14th century",
+                "Rebirth, and it began in Italy in the 15th century",
+                "Revival, and it began in England in the 16th century",
+                "Renewal, and it began in Spain in the 15th century"
+              ],
+              "answer": 1,
+              "explanation": "Renaissance means rebirth in Italian. The movement began in Italy in the 15th century when scholars and artists rediscovered the texts and ruins of ancient Greece and Rome."
+            },
+            {
+              "q": "What was the primary technical challenge of building the Florence Cathedral dome that Brunelleschi overcame?",
+              "options": [
+                "The dome had to be built in an earthquake zone, requiring flexible connections between the shell layers",
+                "The dome had to span the octagonal crossing without traditional wooden centering scaffolding, which there was not enough wood to build",
+                "The dome had to be lighter than any previous dome in order not to overload the medieval walls below",
+                "The dome had to be built quickly because the patron was dying and wanted to see it finished in his lifetime"
+              ],
+              "answer": 1,
+              "explanation": "The problem was that building a dome over such a wide span normally required wooden centering to support it while the mortar set. There was not enough wood in the region to build the necessary scaffolding. Brunelleschi solved this by designing a self-supporting construction technique."
+            },
+            {
+              "q": "How did architectural treatises change the way architectural ideas spread during the Renaissance?",
+              "options": [
+                "They created a standard system of measurement that allowed builders in different cities to collaborate on the same project",
+                "They replaced the role of patrons, allowing architects to fund their own projects without church support",
+                "They spread architectural ideas across Europe faster than buildings themselves could, reaching audiences who had never visited Italy",
+                "They established formal licensing requirements that allowed only certified architects to design major public buildings"
+              ],
+              "answer": 2,
+              "explanation": "Books spread ideas much faster than buildings could. An architect in England or France who had never visited Florence could read Alberti's treatise and understand Renaissance principles. This accelerated the movement enormously."
+            }
+          ]
+        },
+        {
+          "id": "arch-baroque-doc",
+          "type": "document",
+          "title": "Baroque Architecture: Drama and Power",
+          "content": "The `Baroque` style emerged in the late 16th century and dominated European architecture through most of the 17th century. If the Renaissance was about calm rational order, Baroque was about emotion, drama, and overwhelming the senses.\n\nThe Catholic Church used Baroque architecture as a weapon. After the Protestant Reformation challenged Church authority in the early 1500s, the Church fought back with art and architecture designed to overwhelm the viewer with the glory of Catholicism. This was called the Counter-Reformation. The goal was to make visitors feel the power and majesty of the Church through sheer sensory impact.\n\nBaroque buildings are characterized by curved forms, elaborate decoration, and dynamic movement. Where Renaissance architecture feels still and balanced, Baroque architecture feels like it is in motion. Columns twist. Facades curve in and out. Light is manipulated dramatically to create highlights and deep shadows. The goal is not to create calm order but to create an emotional experience.\n\n`Gian Lorenzo Bernini` is the defining figure of Roman Baroque. His `Piazza di San Pietro`, the plaza in front of St. Peter's Basilica in Rome, is a masterclass in Baroque urbanism. Two curved colonnades embrace the piazza like welcoming arms, then pull visitors toward the basilica entrance. The space is designed as a dramatic sequence, not a static composition.\n\nIn France, Louis XIV used Baroque architecture to project royal power. The `Palace of Versailles`, begun in 1661, is the largest palace in the world. Its Hall of Mirrors, with 357 mirrors reflecting light from 17 arched windows facing the gardens, was designed to make visiting ambassadors feel that France was the most powerful nation on earth. Architecture as political theater.\n\nBaroque eventually evolved into the even more decorative `Rococo` style in the early 18th century, which pushed ornamentation to an extreme. By the late 18th century, a reaction set in and architects returned to simpler classical forms. This reaction is called `Neoclassicism`.",
+          "examples": [
+            {
+              "label": "Baroque vs Renaissance Sensibility",
+              "code": "Renaissance → Still. Rational. Symmetrical. Serene. Modeled on antiquity.\nBaroque     → Dynamic. Emotional. Curved. Dramatic light. Overwhelming.\n\nKey tools of Baroque architecture:\n  - Curved and undulating facades\n  - Twisted columns\n  - Dramatic lighting (chiaroscuro in space)\n  - Theatrical sequences of spaces\n  - Overwhelming scale and decoration"
+            }
+          ],
+          "questions": [
+            {
+              "q": "The Catholic Church used Baroque architecture during the Counter-Reformation. What was the stated goal of this strategy?",
+              "options": [
+                "To demonstrate that Catholic builders were more technically skilled than Protestant ones",
+                "To overwhelm visitors with the glory and power of Catholicism through sensory and emotional impact",
+                "To create a standardized church design that could be built quickly in regions where Protestantism was spreading",
+                "To reduce the cost of church construction by replacing expensive stone with more theatrical painted surfaces"
+              ],
+              "answer": 1,
+              "explanation": "The Counter-Reformation used Baroque art and architecture to fight back against the Protestant challenge. The goal was emotional and sensory impact. They wanted visitors to feel the overwhelming power and majesty of the Catholic Church."
+            },
+            {
+              "q": "The Hall of Mirrors at Versailles has 357 mirrors reflecting light from 17 arched windows. What was the primary purpose of designing this room according to the reading?",
+              "options": [
+                "To allow the king to see into adjacent rooms for security purposes without moving from his throne",
+                "To make visiting ambassadors feel that France was the most powerful nation on earth through overwhelming spectacle",
+                "To maximize natural light in a room that was used for treaty signings and required accurate document reading",
+                "To demonstrate the technical mastery of French glassmakers who had recently learned to produce large mirror panels"
+              ],
+              "answer": 1,
+              "explanation": "The reading specifically says the Hall of Mirrors was designed to make visiting ambassadors feel that France was the most powerful nation on earth. Architecture was being used as political theater, projecting royal power through overwhelming visual impact."
+            },
+            {
+              "q": "What late-18th-century architectural movement emerged as a reaction against the extreme decoration of Baroque and Rococo?",
+              "options": [
+                "Romanticism, which rejected classical forms in favor of medieval Gothic inspiration",
+                "Neoclassicism, which returned to simpler classical forms away from excessive ornamentation",
+                "Gothic Revival, which reintroduced pointed arches and flying buttresses in secular buildings",
+                "Expressionism, which used distorted forms to convey emotional states directly"
+              ],
+              "answer": 1,
+              "explanation": "By the late 18th century, architects and critics reacted against the excesses of Baroque and Rococo. They returned to simpler, more rational classical forms. This movement is called Neoclassicism."
+            }
+          ]
+        },
+        {
+          "id": "arch-renaissance-baroque-spotbug",
+          "type": "spot_bug",
+          "title": "Spot the Error: Architectural Movements Summary",
+          "prompt": "This is a reference summary of three architectural periods. One line contains a factual error. Click the line that is wrong.",
+          "code": "1. The Renaissance began in Italy in the 15th century and drew inspiration from ancient Greece and Rome.\n2. Brunelleschi built the Florence Cathedral dome without traditional wooden centering scaffolding.\n3. Baroque architecture is characterized by calm rational order, symmetry, and stillness.\n4. Bernini designed the Piazza di San Pietro, a curved colonnade in front of St. Peter's Basilica in Rome.\n5. Neoclassicism emerged as a reaction against the excessive ornamentation of Baroque and Rococo.",
+          "bugLine": 3,
+          "explanation": "Line 3 describes Baroque architecture as calm, rational, and still. That is the description of Renaissance architecture, not Baroque. Baroque is characterized by drama, emotion, curved forms, dynamic movement, and overwhelming sensory impact."
+        }
+      ]
+    },
+    {
+      "title": "The Modern Movement",
+      "lessons": [
+        {
+          "id": "arch-modern-doc",
+          "type": "document",
+          "title": "Modernism: Form Follows Function",
+          "content": "By the late 19th century, a new kind of architect was asking a radical question: why do we keep decorating buildings with historical styles? What do Greek columns have to do with a factory, a train station, or an office building?\n\nThe `Modern Movement` in architecture, which came to dominate the 20th century, rejected historical ornament entirely. The motto, coined by American architect `Louis Sullivan`, was `form follows function`. The idea was that a building's shape should emerge from what the building needs to do, not from historical precedent or decorative convention.\n\nSullivan is important for another reason. He was one of the first architects to design a true `skyscraper`. Steel-frame construction, developed in the 1880s in Chicago after the Great Fire of 1871, made it possible to build very tall buildings where the floor loads were carried by an internal steel frame rather than by thick masonry walls. The exterior wall could now be a thin `curtain wall` of glass and metal.\n\nIn Europe, the `Bauhaus` school, founded in Germany in 1919 by `Walter Gropius`, became the intellectual center of Modernism. The Bauhaus believed that art, craft, and industrial production should be united. They rejected ornament. They embraced simple geometric forms, industrial materials, and honest expression of structure. A steel column should look like a steel column. A concrete wall should look like concrete.\n\n`Le Corbusier`, a Swiss-French architect, published a manifesto in 1923 called `Vers une Architecture`, which translates as Towards a New Architecture. He proposed his `Five Points of Architecture`: the building raised on pilotis, which are structural columns that free the ground floor; a flat roof garden; a free plan, meaning interior walls can be placed anywhere because the structure is a column grid; a free facade, meaning the exterior skin is independent of the structure; and horizontal ribbon windows running the full width of the facade.\n\nModernism reached its peak influence in the post-World War II period. Governments and corporations around the world hired Modernist architects to design housing, offices, and public buildings. The style came to be called `International Style` because the same aesthetic appeared in New York, Tokyo, London, and Nairobi. Glass curtain walls. Flat roofs. No ornament. Pure function.\n\nNot everyone loved it. By the 1970s and 80s, critics argued that Modernism had produced cold, alienating environments that people did not actually enjoy living and working in. This criticism gave rise to `Postmodernism`.",
+          "examples": [
+            {
+              "label": "Le Corbusier's Five Points",
+              "code": "1. Pilotis          → columns raise the building, freeing the ground floor\n2. Roof garden      → flat roof used as outdoor space\n3. Free plan        → interior walls placed anywhere (column grid handles structure)\n4. Free facade      → exterior skin is independent of the structure\n5. Ribbon windows   → horizontal windows running the full width of the facade"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Louis Sullivan's motto 'form follows function' means which of the following?",
+              "options": [
+                "A building's exterior decoration should be based on the function of the institution it represents",
+                "A building's shape should emerge from what the building needs to do, not from historical decoration",
+                "Structural forms should be determined by the functional requirements of the materials being used",
+                "The form of a city block should follow the functional pattern of pedestrian traffic through it"
+              ],
+              "answer": 1,
+              "explanation": "Form follows function means the building's shape should come from what it needs to do. Modernists rejected applying historical decoration, like Greek columns, to buildings that had nothing to do with ancient Greece."
+            },
+            {
+              "q": "Steel-frame construction made skyscrapers possible. What specific change in building design did this enable?",
+              "options": [
+                "It allowed roofs to be made flat instead of sloped, which reduced construction costs significantly",
+                "It let the exterior wall be a thin curtain wall of glass and metal instead of thick load-bearing masonry",
+                "It eliminated the need for foundations by distributing the building's weight across the entire floor plate",
+                "It made columns unnecessary on upper floors by transferring all loads to a central concrete core"
+              ],
+              "answer": 1,
+              "explanation": "With a steel frame carrying all the structural loads, the exterior wall no longer needed to be thick and heavy to carry weight. It could be a thin curtain wall of glass and metal. This is what gives skyscrapers their characteristic glass facades."
+            },
+            {
+              "q": "Which of Le Corbusier's Five Points allows interior walls to be placed anywhere within a floor plate?",
+              "options": [
+                "Pilotis, because raising the building on columns removes the need for any ground-level partitions",
+                "Ribbon windows, because horizontal glazing eliminates the structural function of exterior walls",
+                "Free plan, because the structure is a column grid and interior walls do not need to carry load",
+                "Roof garden, because the flat roof transfers all vertical loads to the column perimeter"
+              ],
+              "answer": 2,
+              "explanation": "The free plan is possible because the structure is handled by a column grid. Interior walls do not need to carry load, so they can be placed anywhere. This was a revolutionary departure from historical buildings where walls were often structural."
+            },
+            {
+              "q": "What criticism led to the rise of Postmodernism as a reaction against Modernism by the 1970s and 1980s?",
+              "options": [
+                "Modernist buildings were too expensive to construct because industrial materials cost more than traditional stone",
+                "Modernist architects ignored structural safety in favor of minimalist aesthetics, leading to building failures",
+                "Modernism had produced cold, alienating environments that people did not enjoy living and working in",
+                "Modernist buildings aged poorly because glass curtain walls degraded faster than masonry construction"
+              ],
+              "answer": 2,
+              "explanation": "Critics argued that the International Style produced environments that felt cold and alienating to actual human beings. Despite the theory of function following form, many people found these buildings uncomfortable to inhabit. This is what drove the Postmodern reaction."
+            }
+          ]
+        },
+        {
+          "id": "arch-modern-challenge",
+          "type": "challenge",
+          "title": "Apply the Five Points",
+          "prompt": "Imagine you are describing a building designed using Le Corbusier's Five Points. Write a short description of what a person would see and experience walking up to and into this building. Your description must mention all five of the following elements: `pilotis`, `roof garden`, `free plan`, `free facade`, and `ribbon windows`. Each term must appear in your response.",
+          "validation": [
+            {
+              "rule": "pilotis",
+              "message": "Your description needs to include 'pilotis'. Remember that pilotis are the structural columns that raise the building and free the ground floor."
+            },
+            {
+              "rule": "roof garden",
+              "message": "Your description needs to mention the 'roof garden'. This is the flat roof used as usable outdoor space."
+            },
+            {
+              "rule": "free plan",
+              "message": "Your description needs to mention the 'free plan'. This is the ability to place interior walls anywhere because the structure is handled by columns."
+            },
+            {
+              "rule": "free facade",
+              "message": "Your description needs to mention the 'free facade'. This is the exterior skin that is independent of the structural system."
+            },
+            {
+              "rule": "ribbon windows",
+              "message": "Your description needs to mention 'ribbon windows'. These are horizontal windows that run the full width of the facade."
+            }
+          ],
+          "solution": "You approach the building and notice it is raised off the ground on pilotis, slender columns that lift the whole structure and leave the ground level open as a shaded public space. Looking up at the facade, you see ribbon windows running continuously across the full width of each floor. The free facade means there is no structural masonry to interrupt the glazing at any point. Inside, the floor plate is wide open because the building uses a free plan. The column grid carries all the load, so the office partitions can be arranged in any configuration. Above everything, a staircase in the corner leads up to a roof garden, a flat usable terrace with planted areas and views over the city."
+        }
+      ]
+    }
+  ]
+}

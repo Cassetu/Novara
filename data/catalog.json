@@ -1,26 +1,5 @@
 [
   {
-    "id": "js-core",
-    "title": "Javascript",
-    "category": "programming",
-    "description": "The fundamental matrix of the web. variables, loops, and logic.",
-    "file": "data/js-core.json"
-  },
-  {
-    "id": "py-core",
-    "title": "Python",
-    "category": "programming",
-    "description": "Data structures and scripting algorithms.*Generated*",
-    "file": "data/py-core.json"
-  },
-  {
-    "id": "css-arch",
-    "title": "CSS Architecture",
-    "category": "programming",
-    "description": "Design patterns and layout engines.*Generated*",
-    "file": "data/css-arch.json"
-  },
-  {
     "id": "html-mastery",
     "type": "bundle",
     "title": "HTML: Beginner to Master",
@@ -40,20 +19,6 @@
     ]
   },
   {
-    "id": "cpp-core",
-    "title": "C++",
-    "category": "programming",
-    "description": "Pointers, memory, and compiled logic.*Generated*",
-    "file": "data/cpp-core.json"
-  },
-  {
-    "id": "algebra1-core",
-    "title": "Algebra 1 ",
-    "category": "math",
-    "description": "Variables, equations, and functions. *Generated*",
-    "file": "data/algebra1-core.json"
-  },
-  {
     "id": "godot-core",
     "title": "Godot 4: Game Development",
     "category": "gamedev",
@@ -66,20 +31,6 @@
     "category": "other",
     "description": "Supply and demand, market structures, fiscal policy *Generated*",
     "file": "data/economics-core.json"
-  },
-  {
-    "id": "biology-core",
-    "title": "Biology",
-    "category": "other",
-    "description": "Cell structure, genetics, evolution, and ecology. *Generated*",
-    "file": "data/biology-core.json"
-  },
-  {
-    "id": "scroll-animation",
-    "title": "Scroll Animation",
-    "category": "programming",
-    "description": "Animate elements based on scroll position using JavaScript and CSS. *Generated*",
-    "file": "data/scroll-animation.json"
   },
   {
     "id": "conlang-mythology-track",
@@ -118,5 +69,30 @@
     "difficulty": "beginner",
     "description": "Learn the fundamentals of cooking through hands-on interactive simulations. *IN PROGRESS*",
     "file": "data/cooking/fundamentals.json"
+  },
+  {
+    "id": "architecture-bundle",
+    "title": "Architecture",
+    "type": "bundle",
+    "description": "A complete introduction to architecture. How buildings stand up, why they look the way they do, and how architects design with light, site, and climate.",
+    "category": "design",
+    "difficulty": "beginner",
+    "courses": [
+      {
+        "id": "arch-101",
+        "title": "Foundations of Architecture",
+        "file": "data/architecture/arch-101.json"
+      },
+      {
+        "id": "arch-201",
+        "title": "Architectural Styles and Movements",
+        "file": "data/architecture/arch-201.json"
+      },
+      {
+        "id": "arch-301",
+        "title": "Space, Site, and Environmental Design",
+        "file": "data/architecture/arch-301.json"
+      }
+    ]
   }
 ]

@@ -1,0 +1,403 @@
+{
+  "id": "arch-101",
+  "title": "Foundations of Architecture",
+  "description": "What buildings actually are, how they stand up, and why they look the way they do. Start here.",
+  "category": "design",
+  "difficulty": "beginner",
+  "sections": [
+    {
+      "title": "What Is Architecture?",
+      "lessons": [
+        {
+          "id": "arch-what-is",
+          "type": "document",
+          "title": "Architecture Is Not Just Buildings",
+          "content": "You might think architecture is just about designing pretty buildings. But it goes much deeper than that.\n\nArchitecture is the art and science of designing spaces for people to live, work, worship, and gather in. It has to solve two problems at the same time. First, it needs to work. A hospital has to function as a hospital. A school has to function as a school. Second, it needs to feel like something. Walk into a cathedral and you feel small on purpose. Walk into a cozy cafe and you feel warm on purpose. That feeling is not an accident. It was designed.\n\nThe ancient Roman architect Vitruvius wrote that every building must have three qualities. He called them `firmitas`, `utilitas`, and `venustas`. Translated into modern English, these mean strength, usefulness, and beauty. Architects still use this framework today, even though Vitruvius wrote it around 30 BCE.\n\n`Firmitas` means the building must stand up. It must resist gravity, wind, earthquakes, and time.\n\n`Utilitas` means the building must work well for the people using it. Doors must be in the right places. Rooms must be the right size. Light must come in where it is needed.\n\n`Venustas` means the building must be beautiful or meaningful. It must connect to the people around it in some way that goes beyond pure function.\n\nThink of a chair. A chair has to hold your weight without collapsing. That is strength. It has to be the right height and shape for sitting. That is usefulness. And it has to look inviting enough that you want to sit in it. That is beauty. Architecture is just this same idea at a much bigger scale.\n\nArchitects do not just draw buildings. They manage materials, budgets, safety codes, environmental impact, and the needs of many different people all at once. A building is one of the most complex objects a human being can create.",
+          "examples": [
+            {
+              "label": "Vitruvius's Three Qualities Applied to a Library",
+              "code": "Firmitas  → Steel and concrete frame that handles snow loads on the roof\nUtilitas  → Wide aisles, reading nooks, natural light over the stacks\nVenustas  → Soaring atrium that makes knowledge feel grand and important"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Vitruvius defined three essential qualities every building must have. Which of the following correctly names all three in their original Latin terms?",
+              "options": [
+                "`firmitas`, `utilitas`, and `venustas`",
+                "`forma`, `functio`, and `fortis`",
+                "`structura`, `usus`, and `pulchritudo`",
+                "`basis`, `corpus`, and `apex`"
+              ],
+              "answer": 0,
+              "explanation": "Vitruvius used `firmitas` for strength, `utilitas` for usefulness, and `venustas` for beauty. These three Latin terms are the ones he actually wrote around 30 BCE."
+            },
+            {
+              "q": "A building has beautiful marble walls but the staircase is too steep for most people to climb safely. Which of Vitruvius's qualities is this building most clearly failing?",
+              "options": [
+                "`venustas`, because beauty is being prioritized over everything else",
+                "`firmitas`, because steep stairs suggest a structural instability",
+                "`utilitas`, because the space does not function well for the people using it",
+                "`firmitas`, because the marble material choice affects load distribution"
+              ],
+              "answer": 2,
+              "explanation": "`Utilitas` is about usefulness and how well a space works for its occupants. A staircase that is too steep to climb safely is a failure of function, not of strength or beauty."
+            },
+            {
+              "q": "A cathedral is designed so that its ceilings are extremely tall and the interior is mostly dim except for colored light streaming through stained glass windows. What is the most accurate description of what the architect is doing?",
+              "options": [
+                "Prioritizing `firmitas` by using tall structural columns for load transfer",
+                "Using `venustas` intentionally to make people feel a specific emotion inside the space",
+                "Maximizing `utilitas` by distributing natural light to the most occupied areas",
+                "Applying `firmitas` through vertical height to counteract lateral wind loads"
+              ],
+              "answer": 1,
+              "explanation": "The tall ceilings and dramatic light are deliberate aesthetic choices designed to make people feel awe or reverence. This is `venustas` in action. The feeling is not accidental. It was designed."
+            },
+            {
+              "q": "Architecture must solve two problems simultaneously. Based on the reading, what are those two problems?",
+              "options": [
+                "It must look modern and it must cost less than the client's budget",
+                "It must use local materials and it must meet fire safety codes",
+                "It must function correctly for its users and it must feel like something meaningful",
+                "It must withstand natural disasters and it must photograph well from the street"
+              ],
+              "answer": 2,
+              "explanation": "The reading says architecture must work and it must feel like something. Function and meaning. Both are required. Cost, photography, and local materials are real concerns but they are not the two core problems described here."
+            }
+          ]
+        },
+        {
+          "id": "arch-scale-proportion",
+          "type": "document",
+          "title": "Scale and Proportion",
+          "content": "Two of the most important tools an architect has are scale and proportion. They sound similar but they mean different things.\n\n`Scale` is about how big something is relative to a human body. A doorway that is 2 meters tall feels comfortable to walk through because it is just slightly bigger than a person. A doorway that is 10 meters tall makes you feel tiny. That feeling of being small is not a mistake. Many public buildings use oversized doors and ceilings deliberately so you feel the weight of the institution. Think of courthouses, government buildings, and cathedrals.\n\nA building that uses human-scale details makes you feel comfortable and at ease. A building that uses superhuman scale makes you feel small, powerful forces are at work, or that something important is happening here.\n\n`Proportion` is about the relationship between parts of a building. It does not matter what the actual size is. What matters is how one element relates to another. A window that is twice as wide as it is tall has a specific proportion. A door that is three times taller than it is wide has a different proportion. When proportions feel right, people usually do not notice them. But when proportions are off, something feels wrong even if you cannot name exactly why.\n\nArchitects have used mathematical systems to control proportion for thousands of years. The ancient Greeks developed what they called the Golden Ratio, a proportion of approximately 1 to 1.618. You can find it in the proportions of the Parthenon in Athens. The Renaissance architects rediscovered it and used it extensively.\n\nYou do not need to memorize the math right now. The key idea is that proportion is a system of intentional relationships between parts. It is not random. It is a design decision.\n\nHuman scale matters most in places where people spend time. Homes, restaurants, and shops tend to use human scale so people feel comfortable. Monumental scale is used in places where the goal is to impress, inspire, or intimidate.",
+          "examples": [
+            {
+              "label": "Scale vs Proportion at a Glance",
+              "code": "Scale      → How big is this element compared to a human body?\nProportion → How does this element relate in size to the other elements around it?\n\nHuman scale    → Ceiling at 2.4m, cozy, comfortable, domestic\nMonumental scale → Ceiling at 20m, awe-inspiring, powerful, institutional"
+            }
+          ],
+          "questions": [
+            {
+              "q": "A restaurant has ceilings that are 2.5 meters tall and tables spaced comfortably apart. A nearby government building has ceilings 15 meters tall and a grand entrance staircase. Which term best describes the difference between how these two buildings are designed to make visitors feel?",
+              "options": [
+                "The restaurant uses proportion while the government building uses rhythm",
+                "The restaurant uses human scale while the government building uses monumental scale",
+                "The restaurant uses monumental scale while the government building uses human scale",
+                "The restaurant uses the Golden Ratio while the government building uses structural proportion"
+              ],
+              "answer": 1,
+              "explanation": "Human scale refers to spaces sized to feel comfortable relative to the human body. Monumental scale deliberately makes people feel small or impressed. The restaurant is human scale and the government building is monumental scale."
+            },
+            {
+              "q": "According to the reading, what is the definition of proportion in architecture?",
+              "options": [
+                "The ratio of a building's height to the number of floors it contains",
+                "The system of intentional size relationships between the parts of a building",
+                "The measurement of how large a building is relative to the street it sits on",
+                "The percentage of a facade that is covered by windows versus solid wall"
+              ],
+              "answer": 1,
+              "explanation": "Proportion is about the relationships between parts. It is not about absolute size. A window might be twice as wide as it is tall. A door might be three times taller than it is wide. These are proportional relationships and they are intentional design decisions."
+            }
+          ]
+        },
+        {
+          "id": "arch-scale-fillblank",
+          "type": "fill_blank",
+          "title": "Scale and Proportion: Quick Check",
+          "questions": [
+            {
+              "prompt": "A building element sized relative to the human body is said to be at ___ scale. Fill in the single word used in the reading.",
+              "code": "A doorway just slightly taller than a person uses ___ scale.\nA 10-meter-tall doorway uses monumental scale.",
+              "blanks": ["human"],
+              "explanation": "The reading defines human scale as sizing that feels comfortable relative to a person's body."
+            },
+            {
+              "prompt": "According to the reading, proportion is a system of intentional ___ between parts of a building. Fill in the single word from the text.",
+              "code": "Proportion is a system of intentional ___ between parts.\nIt is not random. It is a design decision.",
+              "blanks": ["relationships"],
+              "explanation": "The reading says proportion is a system of intentional relationships between parts. That word, relationships, is the key to understanding what proportion actually is."
+            },
+            {
+              "prompt": "The ancient Greeks developed a proportion system called the Golden Ratio, which is approximately 1 to ___. Fill in the decimal value given in the reading.",
+              "code": "The Golden Ratio is approximately 1 to ___.",
+              "blanks": ["1.618"],
+              "explanation": "The reading states the Golden Ratio is a proportion of approximately 1 to 1.618. You can find it in the proportions of the Parthenon."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "How Buildings Stand Up",
+      "lessons": [
+        {
+          "id": "arch-structure-basics",
+          "type": "document",
+          "title": "Structure: The Invisible Engine",
+          "content": "A building has to fight gravity every second of every day. The job of a building's structure is to transfer all of that weight safely down into the ground.\n\nEvery force that acts on a building eventually has to travel through the structure to the foundation, and from the foundation into the earth. Architects call this a load path. Think of it like water flowing downhill. The load has to have a clear path from where it starts to where it ends. If there is a break in that path, something fails.\n\nThere are two main types of load. `Dead load` is the weight of the building itself. The walls, the floors, the roof, the concrete. All of that is sitting there all the time. `Live load` is everything that comes and goes. People, furniture, snow on the roof, cars on a parking deck. The structure has to handle both.\n\nThe simplest structural system is a `post and beam`. You put up two vertical posts and lay a horizontal beam across the top. The beam carries load and transfers it down to the posts. The posts transfer it to the ground. You can see this system in ancient Greek temples, in Japanese wooden houses, and in your average front porch.\n\nAnother key idea is compression versus tension. A material under `compression` is being squeezed. Stone and concrete are very strong in compression. Stack a lot of stone and it will hold enormous weight. But those same materials are weak in `tension`, which is when something is being pulled or stretched. If you try to hang a concrete beam horizontally and put weight in the middle, it will crack and break from the bottom because the bottom is under tension.\n\n`Steel` is strong in both compression and tension. That is why modern skyscrapers are built with steel frames. You can use steel beams horizontally and they will not crack under their own weight.\n\nThe arch was a revolutionary invention because it transfers load in pure compression. All the weight in an arch pushes outward and downward into the two supports at the base. Nothing in a pure arch is under tension, which means you can build very wide spans out of stone or brick without them cracking. The Romans used this to build enormous aqueducts and bathhouses.",
+          "examples": [
+            {
+              "label": "Load Path in a Simple Post and Beam",
+              "code": "Roof load\n  ↓\nHorizontal beam\n  ↓           ↓\nLeft post   Right post\n  ↓               ↓\nFoundation  Foundation\n  ↓               ↓\n        Ground"
+            },
+            {
+              "label": "Compression vs Tension",
+              "code": "Compression → material is being SQUEEZED  → stone, brick, and concrete handle this well\nTension     → material is being STRETCHED → steel handles this well, stone does not"
+            }
+          ],
+          "questions": [
+            {
+              "q": "The reading describes a load path. What is the correct definition of a load path in a building?",
+              "options": [
+                "The visual line that a viewer's eye follows when looking at a building's facade",
+                "The route that structural forces travel from where they originate down to the foundation and into the ground",
+                "The physical hallways and corridors that allow people to move through a building",
+                "The sequence of rooms that connects a building's entrance to its core service areas"
+              ],
+              "answer": 1,
+              "explanation": "A load path is how forces travel through a structure. Every structural load must have a clear path from where it starts down to the foundation and into the ground. If that path is broken, something fails."
+            },
+            {
+              "q": "A concrete beam spans horizontally between two walls. Weight is placed at the center of that beam. According to the reading, where will the beam most likely crack and why?",
+              "options": [
+                "At the top of the beam, because the top is under compression and concrete is weak in compression",
+                "At the center of the beam, because that is where the weight is applied and both forces meet",
+                "At the bottom of the beam, because the bottom is under tension and concrete is weak in tension",
+                "At the ends of the beam, because the connection to the wall is the weakest point in the load path"
+              ],
+              "answer": 2,
+              "explanation": "When a horizontal beam carries weight at its center, the bottom of the beam is pulled apart. That pulling is called tension. Concrete is very weak in tension, so it cracks at the bottom first."
+            },
+            {
+              "q": "Why did the arch allow the Romans to build wide spans out of stone without the stone cracking?",
+              "options": [
+                "Because the arch distributes load in pure tension, which is what stone handles best",
+                "Because the arch redirects all load sideways into the ground through the keystone",
+                "Because the arch transfers all load in pure compression, and stone is very strong in compression",
+                "Because the arch eliminates dead load by redirecting the weight of the structure upward"
+              ],
+              "answer": 2,
+              "explanation": "In a pure arch, every part of the structure is under compression. Load pushes outward and downward into the supports. Stone is very strong in compression, so it can carry these forces across a wide span without cracking."
+            },
+            {
+              "q": "Which of the following is the correct definition of dead load as used in the reading?",
+              "options": [
+                "The temporary forces that act on a building during a seismic event or strong wind storm",
+                "The weight of people, furniture, and other items that enter and leave the building",
+                "The constant weight of the building's own materials including walls, floors, and roof",
+                "The downward force created by a building's foundation settling into soft soil over time"
+              ],
+              "answer": 2,
+              "explanation": "Dead load is the weight of the building itself. Walls, floors, the roof, the concrete. It is there all the time. Live load is the stuff that comes and goes, like people and furniture."
+            }
+          ]
+        },
+        {
+          "id": "arch-spot-beam",
+          "type": "spot_bug",
+          "title": "Spot the Error: Load Transfer Diagram",
+          "prompt": "This diagram is meant to show a correct load path from a roof down to the ground. One line contains a factual error about how forces behave. Click the line with the error.",
+          "code": "1. Roof load is created by the weight of roofing materials (dead load) and snow (live load).\n2. Load travels downward through the roof structure into the tops of the walls.\n3. Walls transfer load downward through compression into the foundation.\n4. The arch transfers all its load in pure tension, allowing stone to span wide distances.\n5. The foundation spreads load into the bearing soil beneath the building.",
+          "bugLine": 4,
+          "explanation": "Line 4 says the arch works through pure tension. That is wrong. The arch transfers load in pure compression. That is exactly why stone arches work at all. Stone is strong in compression and weak in tension."
+        },
+        {
+          "id": "arch-structure-fix",
+          "type": "code_fix",
+          "title": "Fix the Structural Description",
+          "prompt": "This HTML snippet is a study card about structural materials. There is one factual error in the content. Find it and fix it so the description is accurate.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<head><title>Structure Card</title></head>\n<body>\n  <h2>Structural Materials</h2>\n  <ul>\n    <li>Stone: strong in tension, weak in compression</li>\n    <li>Steel: strong in both compression and tension</li>\n    <li>Concrete: strong in compression, weak in tension</li>\n  </ul>\n</body>\n</html>",
+          "targetFix": "strong in compression, weak in tension",
+          "solution": "<!DOCTYPE html>\n<html>\n<head><title>Structure Card</title></head>\n<body>\n  <h2>Structural Materials</h2>\n  <ul>\n    <li>Stone: strong in compression, weak in tension</li>\n    <li>Steel: strong in both compression and tension</li>\n    <li>Concrete: strong in compression, weak in tension</li>\n  </ul>\n</body>\n</html>"
+        }
+      ]
+    },
+    {
+      "title": "Architectural Elements",
+      "lessons": [
+        {
+          "id": "arch-elements-doc",
+          "type": "document",
+          "title": "The Vocabulary of a Building",
+          "content": "Buildings are made of recurring elements. Once you know the vocabulary, you will see these things everywhere.\n\nLet's start with the wall. A wall does two things. It defines space by separating inside from outside, or one room from another. And it often carries structural load downward. A `bearing wall` is one that carries the weight of the floor or roof above it. You cannot remove a bearing wall without replacing its structural function. A `partition wall` is non-structural. It only divides space. You can remove it without the building falling down.\n\nA `column` is a vertical structural element. It carries load in compression from above. Columns are distinct from walls because they are isolated. They take up very little floor space but carry enormous weight. You can build large, open floors between columns where no walls are needed at all. This is called a `column grid`.\n\nA `beam` is a horizontal structural element. It spans between two supports, usually columns or walls, and carries load across an open space. The beam transfers that load to whatever supports it at each end.\n\nThe space that a beam covers is called a `bay`. The bay is the basic repeating unit of a building's floor plan. If a building has columns 8 meters apart, each space between four columns is one bay. Architects use a consistent bay size throughout a building because it makes the structure more economical and easier to build.\n\nThe `facade` is the exterior face of a building. It is what you see from the street. The facade has to do several things at once. It protects the inside from weather. It expresses the identity of the building. And it has to handle structural forces if it is a bearing facade, or it can be purely decorative skin if the structure is handled by an internal frame.\n\nThe `plan` is the horizontal slice through a building. Imagine cutting the building at chest height and looking down. What you see is the plan. The `section` is the vertical slice. Imagine cutting the building in half and looking at the cut face. The section shows you the ceiling heights, the floor thicknesses, and the relationship between floors.\n\nArchitects draw in plan and section because these two views together give you a complete picture of a space. A photo of a building only shows you the outside. A plan and section show you how a building actually works.",
+          "examples": [
+            {
+              "label": "Key Architectural Elements",
+              "code": "Bearing wall  → carries structural load from above. Cannot be removed.\nPartition wall → divides space only. Not structural. Can be removed.\nColumn        → isolated vertical element. Carries load in compression.\nBeam          → horizontal element. Spans between supports.\nBay           → the space enclosed by four columns. Repeating unit.\nFacade        → the exterior face of the building.\nPlan          → horizontal slice showing layout from above.\nSection       → vertical slice showing heights and floor relationships."
+            }
+          ],
+          "questions": [
+            {
+              "q": "A renovation team removes a wall to open up a floor plan and the ceiling above sags immediately. What type of wall did they most likely remove?",
+              "options": [
+                "A partition wall, because it was dividing the space and the space above responded to its removal",
+                "A facade wall, because exterior walls always carry the structural loads in a building",
+                "A bearing wall, because it was carrying the weight of the floor or structure above it",
+                "A column grid wall, because bay-defining walls transfer load to the columns at their ends"
+              ],
+              "answer": 2,
+              "explanation": "A bearing wall carries the structural weight of whatever is above it. If you remove it without replacing that structural function, the ceiling or floor above will begin to sag or fail."
+            },
+            {
+              "q": "According to the reading, what is a bay in architectural terms?",
+              "options": [
+                "The horizontal distance between the top and bottom chords of a structural beam",
+                "The repeating space enclosed by four columns that forms the basic unit of a floor plan",
+                "The gap between a building's facade and the structural columns behind it",
+                "The vertical distance from finished floor to finished ceiling in any given room"
+              ],
+              "answer": 1,
+              "explanation": "A bay is the repeating space between four columns. It is the basic unit of a floor plan. Architects use a consistent bay size throughout a building because it makes structure more economical."
+            },
+            {
+              "q": "What does a building's section drawing show, and how is it different from a plan drawing?",
+              "options": [
+                "A section shows the exterior facade, while a plan shows the structural frame",
+                "A section is a vertical cut showing heights and floor relationships, while a plan is a horizontal cut showing the layout from above",
+                "A section shows the foundation and site, while a plan shows only the roof profile",
+                "A section is a horizontal cut at ground level, while a plan is a vertical cut through the tallest wall"
+              ],
+              "answer": 1,
+              "explanation": "A plan is a horizontal slice at chest height looking down. A section is a vertical slice through the building. They are two complementary views that together show how a building actually works."
+            },
+            {
+              "q": "A building uses an internal steel frame to carry all structural loads. The exterior walls hang off the frame like a curtain. What is the correct term for this outer skin?",
+              "options": [
+                "Bearing wall, because the exterior always bears some portion of the lateral loads",
+                "Facade, functioning as a decorative skin because the frame handles the structural forces",
+                "Partition wall, because non-load-bearing walls are classified as partitions regardless of location",
+                "Column grid, because the exterior skin is what defines the bay spacing of the frame"
+              ],
+              "answer": 1,
+              "explanation": "When the structure is handled by an internal frame, the exterior can be a purely decorative skin called a facade. It still protects the inside from weather and expresses the building's identity, but it does not carry structural load."
+            }
+          ]
+        },
+        {
+          "id": "arch-elements-challenge",
+          "type": "challenge",
+          "title": "Label the Elements",
+          "prompt": "Write a short description that correctly uses all four of these terms in a single paragraph: `bearing wall`, `column`, `beam`, and `bay`. Your paragraph must demonstrate that you understand what each term means. Don't worry about perfect prose. Just make sure each term is used correctly.",
+          "validation": [
+            {
+              "rule": "bearing wall",
+              "message": "Your paragraph needs to include the term 'bearing wall'. Check that you've used it and that your usage matches the definition from the reading."
+            },
+            {
+              "rule": "column",
+              "message": "Your paragraph needs to include the term 'column'. Remember that a column is an isolated vertical structural element."
+            },
+            {
+              "rule": "beam",
+              "message": "Your paragraph needs to include the term 'beam'. A beam is a horizontal element that spans between supports."
+            },
+            {
+              "rule": "bay",
+              "message": "Your paragraph needs to include the term 'bay'. A bay is the repeating space enclosed by four columns."
+            }
+          ],
+          "solution": "In a typical office building, the floors above the lobby are held up by a grid of steel columns. Between each pair of columns, a steel beam spans horizontally to carry the floor load across the open space. The rectangular space defined by four of these columns is called a bay, and the building repeats this bay consistently across the whole floor plate. Down in the stairwell core, however, the thick concrete walls around the stairs are bearing walls. They carry structural load and cannot be removed without replacing their function."
+        }
+      ]
+    },
+    {
+      "title": "Architectural History: A First Look",
+      "lessons": [
+        {
+          "id": "arch-history-ancient",
+          "type": "document",
+          "title": "Ancient Architecture: Stone, Post, and Arch",
+          "content": "Architecture has been around as long as human civilization. But the forms that early architects developed are still visible everywhere around you today.\n\nThe earliest major architectural tradition in the Western world is `Egyptian` architecture. The Egyptians built enormous stone structures using a simple post and beam system. They had massive columns and heavy stone lintels spanning between them. The scale was superhuman by design. The pharaoh was a god. The buildings had to reflect that.\n\nEgyptian columns were covered in carved decoration and often shaped like plants. Lotus flowers, papyrus reeds, and palm leaves were common motifs. This connection between architecture and nature is something you see repeated in many different cultures.\n\n`Greek` architecture refined the post and beam into an elegant system of proportional rules. The Greeks developed three main column styles called `orders`. The `Doric` order is the simplest and most muscular. Its capital, which is the decorative top of the column, is a plain flat slab. The `Ionic` order is slender and elegant, with a capital featuring two scroll shapes called volutes. The `Corinthian` order is the most ornate, with a capital covered in carved acanthus leaves.\n\nYou need to know these three orders because they show up constantly in architecture through the 19th century and in many government buildings, courthouses, and banks even today.\n\n`Roman` architecture took Greek forms and combined them with a revolutionary structural invention: the arch, and its three-dimensional cousin the vault, and the dome. The arch let Romans build much larger interior spaces than the Greeks ever could because they were no longer limited by how far a stone beam could span.\n\nThe `Pantheon` in Rome, completed around 125 CE, has a dome 43.3 meters in diameter. The oculus, which is the circular opening at the top of the dome, is 8.3 meters wide. For 1,300 years it was the largest dome in the world. The concrete the Romans used was so well-made that the Pantheon still stands today.\n\nThis period is important because it established the core vocabulary. Columns, arches, domes, pediments, pilasters. All of these elements appear over and over again in Western architecture for the next 2,000 years.",
+          "examples": [
+            {
+              "label": "The Three Greek Orders at a Glance",
+              "code": "Doric     → Simple, sturdy, plain flat capital\n            Used in the Parthenon (Athens, 447 BCE)\n\nIonic     → Slender, scroll capitals (volutes)\n            Common in Athenian civic buildings\n\nCorinthian → Ornate, capital covered in acanthus leaves\n             Adopted enthusiastically by the Romans"
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which Greek column order has a capital decorated with carved acanthus leaves?",
+              "options": [
+                "Doric, which uses a plain flat slab as its capital",
+                "Ionic, which uses two scroll shapes called volutes",
+                "Corinthian, which has the most ornate capital of the three orders",
+                "Egyptian, which uses plant forms including lotus flowers and papyrus"
+              ],
+              "answer": 2,
+              "explanation": "The Corinthian order is the most ornate of the three Greek orders. Its capital is covered in carved acanthus leaves. The Doric capital is a plain flat slab. The Ionic capital has scroll shapes called volutes."
+            },
+            {
+              "q": "The Roman Pantheon's dome was the largest in the world for approximately how long after its completion?",
+              "options": [
+                "About 300 years, until Byzantine builders surpassed it in Constantinople",
+                "About 800 years, until Gothic cathedral builders developed pointed arches",
+                "About 1,300 years, which reflects the extraordinary structural achievement it represented",
+                "About 400 years, until the Romans themselves built a larger dome in Milan"
+              ],
+              "answer": 2,
+              "explanation": "The reading states the Pantheon was the largest dome in the world for 1,300 years after its completion around 125 CE. This is a measure of how extraordinary the Roman achievement was."
+            },
+            {
+              "q": "Why could Roman architects build larger interior spaces than Greek architects could?",
+              "options": [
+                "Romans used bronze reinforcement inside their stone beams, which allowed longer spans",
+                "Romans developed the arch and dome, which transfer load in compression and allow much wider spans than stone beams",
+                "Romans used lighter roofing materials that reduced dead load and allowed thinner spanning elements",
+                "Romans imported marble from longer distances, which gave them access to stronger stone than the Greeks had"
+              ],
+              "answer": 1,
+              "explanation": "The arch and dome transfer load in compression and do not depend on a stone beam spanning horizontally. This freed Roman architects from the strict span limits that confined the Greeks to relatively narrow interior spaces."
+            },
+            {
+              "q": "Egyptian columns were frequently decorated with motifs derived from which source?",
+              "options": [
+                "Geometric patterns derived from mathematical ratios used in pyramid construction",
+                "Mythological scenes depicting battles between gods and mortals",
+                "Natural plant forms including lotus flowers, papyrus, and palm leaves",
+                "Portrait carvings of the pharaohs and their household members"
+              ],
+              "answer": 2,
+              "explanation": "The reading specifically states that Egyptian columns featured lotus flowers, papyrus reeds, and palm leaves. This connection between architecture and nature is a recurring theme across many cultures."
+            }
+          ]
+        },
+        {
+          "id": "arch-orders-spotbug",
+          "type": "spot_bug",
+          "title": "Spot the Error: Greek Orders Summary",
+          "prompt": "This is a summary reference card for the three Greek column orders. One line contains a factual error. Click the line that is wrong.",
+          "code": "1. The Doric order is the simplest and most muscular of the three Greek orders.\n2. The Doric capital is a plain flat slab with no decorative carving.\n3. The Ionic order has a capital featuring two scroll shapes called volutes.\n4. The Corinthian capital is the plainest of the three, using only a flat circular disk.\n5. All three orders appear in Western architecture through the 19th century and beyond.",
+          "bugLine": 4,
+          "explanation": "Line 4 is wrong. The Corinthian capital is the most ornate of the three orders, covered in carved acanthus leaves. It is the Doric order that has the plain capital. The description on line 4 actually describes the Doric, not the Corinthian."
+        },
+        {
+          "id": "arch-history-fillblank",
+          "type": "fill_blank",
+          "title": "Ancient Architecture: Key Terms",
+          "questions": [
+            {
+              "prompt": "The three Greek column orders are Doric, Ionic, and ___. Fill in the single word name of the third order.",
+              "code": "Greek Column Orders:\n1. Doric\n2. Ionic\n3. ___",
+              "blanks": ["Corinthian"],
+              "explanation": "The three Greek orders are Doric, Ionic, and Corinthian. Corinthian is the most ornate, with a capital covered in carved acanthus leaves."
+            },
+            {
+              "prompt": "The circular opening at the top of the Pantheon's dome is called the ___. Fill in the single word term used in the reading.",
+              "code": "The Pantheon dome has a circular opening at the top called the ___.\nIt is 8.3 meters wide.",
+              "blanks": ["oculus"],
+              "explanation": "The oculus is the circular opening at the top of the Pantheon's dome. It is 8.3 meters wide and is the only source of natural light in the interior."
+            },
+            {
+              "prompt": "In the Greek orders, the decorative top element of a column is called the ___. Fill in the single word.",
+              "code": "The ___ sits at the top of each column.\nIn the Ionic order it features two scroll shapes called volutes.",
+              "blanks": ["capital"],
+              "explanation": "The capital is the decorative top of a column. Each of the three Greek orders has a distinct capital design."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

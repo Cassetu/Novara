@@ -1,0 +1,255 @@
+{
+  "id": "arch-301",
+  "title": "Space, Site, and Environmental Design",
+  "description": "How architects design with light, climate, and place. The invisible forces that shape every building.",
+  "category": "design",
+  "difficulty": "intermediate",
+  "sections": [
+    {
+      "title": "Designing with Light",
+      "lessons": [
+        {
+          "id": "arch-light-doc",
+          "type": "document",
+          "title": "Natural Light as a Design Material",
+          "content": "Light is not just something that lets you see. In architecture, light is a material. Architects design with it as deliberately as they design with concrete or glass.\n\nThere are two types of natural light to understand. `Direct sunlight` enters a space at a specific angle depending on the time of day and time of year. It creates sharp shadows and high contrast. In hot climates, too much direct sunlight makes spaces uncomfortably hot. In cold climates, direct winter sunlight is welcome because it adds warmth. `Diffuse light` is indirect light. It comes from the sky rather than directly from the sun. It is soft, even, and creates gentle shadows. North-facing windows in the northern hemisphere receive almost entirely diffuse light, which is why artists and studios often prefer them.\n\nThe angle of the sun changes dramatically depending on the season. In summer, the sun travels high in the sky. In winter, it sits low. This matters enormously for building design. A deep horizontal overhang above a south-facing window can be sized to block the high summer sun but allow the low winter sun in. This is called `solar shading`, and it is one of the oldest passive energy strategies in architecture.\n\nThe size, shape, and placement of windows controls the quality of light in a room. A small window creates a dramatic shaft of light and deep shadows. A large window floods a room with even illumination. A window near a ceiling bounces light off the ceiling, which distributes it more evenly across the room. This technique is called `toplighting` and is common in museums and galleries where even, glare-free light is needed to view art.\n\n`Glare` is when light is so intense or direct that it creates discomfort or reduces visibility. Architects avoid glare by sizing windows carefully, using overhangs and shading devices, and positioning screens or diffusing glass in critical locations.\n\nArchitects like `Louis Kahn` built entire design philosophies around light. Kahn said that a room is not a room without natural light. His buildings, like the `Salk Institute` in La Jolla, California, create powerful experiences through careful control of light direction, reflection, and shadow. The concrete at the Salk is designed so that the light of the Pacific sun at different times of day transforms the quality of the space.",
+          "examples": [
+            {
+              "label": "North vs South Windows in the Northern Hemisphere",
+              "code": "North-facing windows:\n  Receive diffuse sky light\n  No direct sunlight all day\n  Even, consistent illumination\n  Ideal for studios, workshops, galleries\n\nSouth-facing windows:\n  Receive direct sunlight for much of the day\n  Can be controlled with overhangs for seasonal shading\n  Ideal for solar gain in cold climates\n  Require shading design in hot climates"
+            }
+          ],
+          "questions": [
+            {
+              "q": "A museum director asks an architect for galleries where the light is soft, even, and never creates harsh shadows on the artwork. Which window orientation in the northern hemisphere best achieves this?",
+              "options": [
+                "South-facing windows, because they receive the most hours of direct sunlight throughout the year",
+                "East-facing windows, because morning light is cooler and creates less heat gain on the artworks",
+                "North-facing windows, because they receive diffuse sky light without any direct sunlight",
+                "West-facing windows, because afternoon light is lower in the sky and less intense than midday sun"
+              ],
+              "answer": 2,
+              "explanation": "North-facing windows in the northern hemisphere receive diffuse sky light. There is no direct sunlight at all. This creates the soft, even, glare-free light that museums and galleries need to display artwork well."
+            },
+            {
+              "q": "A south-facing window has a deep horizontal overhang above it. The overhang is sized to block the summer sun but allow the winter sun in. This design strategy is called what?",
+              "options": [
+                "Toplighting, because the overhang redirects light toward the ceiling surface of the room",
+                "Solar shading, because the overhang is designed to control solar access based on the sun's seasonal position",
+                "Diffuse lighting, because the overhang converts direct sunlight into reflected indirect light",
+                "Glare control, because the overhang eliminates all direct light and replaces it with sky light only"
+              ],
+              "answer": 1,
+              "explanation": "Solar shading is the strategy of using overhangs or other devices to block the high summer sun while allowing the low winter sun to enter. The summer sun is high in the sky and is blocked by the overhang. The winter sun is low and passes under it."
+            },
+            {
+              "q": "A ceiling-mounted window that bounces light off the ceiling to distribute it evenly across a room is an example of which lighting technique?",
+              "options": [
+                "Solar shading, because the ceiling acts as a shading surface that redistributes incoming solar radiation",
+                "Diffuse glazing, because the ceiling material scatters the light passing through the glass",
+                "Toplighting, because the window is positioned near or at the ceiling level to bounce and distribute light",
+                "Direct illumination, because the light travels in a straight path from the window to the floor"
+              ],
+              "answer": 2,
+              "explanation": "Toplighting refers to placing windows high on walls or in ceilings so that light bounces off the ceiling and spreads evenly across a room. It reduces glare and gives more even illumination than windows placed at eye level."
+            },
+            {
+              "q": "According to the reading, what does the term 'diffuse light' mean in architectural terms?",
+              "options": [
+                "Light that has been filtered through tinted glass to reduce its color temperature",
+                "Indirect light that comes from the sky rather than directly from the sun, which is soft and creates gentle shadows",
+                "Light that is reflected off a white ceiling surface after entering through a south-facing window",
+                "Artificial light that mimics the spectrum of natural daylight using LED technology"
+              ],
+              "answer": 1,
+              "explanation": "Diffuse light is indirect light that comes from the sky, not directly from the sun. It is soft and even and creates gentle shadows without the harshness of direct sunlight."
+            }
+          ]
+        },
+        {
+          "id": "arch-light-spotbug",
+          "type": "spot_bug",
+          "title": "Spot the Error: Lighting Strategy Notes",
+          "prompt": "These are design notes for a museum gallery. One line contains a factual error about how natural light behaves. Click the wrong line.",
+          "code": "1. Use north-facing clerestory windows to provide soft, diffuse light without direct solar glare.\n2. Avoid east and west windows in gallery spaces as they introduce low-angle direct sunlight.\n3. South windows with deep overhangs can be used to block high summer sun while admitting low winter sun.\n4. Positioning windows near the ceiling allows light to bounce off the ceiling and distribute evenly.\n5. Direct sunlight creates soft, even illumination, making it ideal for viewing detailed artwork.",
+          "bugLine": 5,
+          "explanation": "Line 5 is wrong. Direct sunlight creates sharp shadows and high contrast, not soft even illumination. Diffuse sky light creates soft, even illumination. Direct sunlight is the opposite of what you want for viewing artwork and is associated with glare."
+        }
+      ]
+    },
+    {
+      "title": "Site and Context",
+      "lessons": [
+        {
+          "id": "arch-site-doc",
+          "type": "document",
+          "title": "Reading a Site",
+          "content": "Before an architect designs a single room, they have to understand the place where the building will sit. This is called reading the site.\n\nA `site analysis` is a systematic investigation of a piece of land before design begins. It covers many factors.\n\n`Topography` is the shape of the land. Is the site flat, sloped, or dramatically hilly? A sloped site creates opportunities for split-level designs, terraces, and views, but also creates drainage challenges and construction complexity. Flat sites are easier to build on but may feel monotonous.\n\n`Solar orientation` tells you which direction is south, how high the sun gets at different times of year, and which parts of the site are shaded by trees or neighboring buildings. This directly shapes where you put windows, how you orient the building, and whether passive solar heating is possible.\n\n`Prevailing winds` tell you which direction wind most often comes from. You can position the building to take advantage of cross-ventilation for natural cooling, or to shelter courtyards and outdoor spaces from uncomfortable wind.\n\n`Views` are an asset if you are lucky enough to have them. Architects orient key rooms toward the best views and put service spaces where views are poor.\n\n`Circulation` is how people arrive at the site. Where is the street? Where does the bus stop? Where do pedestrians walk? How do cars arrive? The entrance to a building should be legible and easy to find from the direction most people approach from.\n\n`Drainage` is critical in wet climates. Where does water flow on the site when it rains? Buildings should not be placed at the lowest point of a site where water collects. Roof water must be directed away from foundations.\n\n`Context` means the character of the surrounding area. Are neighboring buildings high or low? What materials are they made of? What is the street scale? An architect designing a building in a historic area has to decide how much to blend in and how much to contrast. Both are valid choices, but they must be made deliberately.\n\nSite analysis is not just a technical checklist. It is about discovering what makes a place specific. The best buildings feel like they belong exactly where they are.",
+          "examples": [
+            {
+              "label": "Site Analysis Checklist",
+              "code": "Topography     → Shape and slope of the land\nSolar orient.  → Sun direction, angle, shadow patterns\nPrevailing wind → Direction, speed, seasonal variation\nViews          → Good and bad views from the site\nCirculation    → How people and vehicles arrive\nDrainage       → Where water flows in rain events\nContext        → Character, scale, materials of surroundings"
+            }
+          ],
+          "questions": [
+            {
+              "q": "An architect places a building at the lowest point of a sloped site. According to the reading, what problem does this most directly create?",
+              "options": [
+                "The building will block views from the street, which affects the legibility of its entrance",
+                "Rainwater will drain toward and collect at the building, creating drainage problems for the foundation",
+                "The low placement will cause the building to receive less direct sunlight and increase energy costs",
+                "Neighboring buildings on higher ground will be able to look down into the new building's courtyards"
+              ],
+              "answer": 1,
+              "explanation": "The reading specifically says buildings should not be placed at the lowest point of a site where water collects. Drainage is a critical site concern. Rainwater and roof water must be directed away from foundations, not toward them."
+            },
+            {
+              "q": "A site faces a beautiful ocean view to the west and a busy highway to the east. Which site analysis category most directly informs the architect's decision to put living rooms on the west side and a service corridor on the east?",
+              "options": [
+                "Topography, because the slope of the land toward the west determines where occupied spaces can be placed",
+                "Circulation, because traffic from the highway determines the primary arrival path to the entrance",
+                "Views, because the architect is orienting key rooms toward the best view and putting service spaces where views are poor",
+                "Context, because the architect is responding to the character of the surrounding area on each side"
+              ],
+              "answer": 2,
+              "explanation": "The reading says architects orient key rooms toward the best views and put service spaces where views are poor. This is a direct application of the views category in site analysis."
+            },
+            {
+              "q": "What does the reading mean by 'context' in site analysis?",
+              "options": [
+                "The legal zoning regulations and setback requirements that govern what can be built on the site",
+                "The character of the surrounding area including the height, scale, and materials of neighboring buildings",
+                "The historical narrative of how the site was previously used before the new building is constructed",
+                "The social and demographic profile of the community that will use the building once it is complete"
+              ],
+              "answer": 1,
+              "explanation": "Context refers to the character of the surrounding area. The height, scale, and materials of neighboring buildings. The street scale. An architect must decide whether to blend in with this context or contrast with it, but either way it must be a deliberate choice."
+            }
+          ]
+        },
+        {
+          "id": "arch-site-fillblank",
+          "type": "fill_blank",
+          "title": "Site Analysis: Key Terms",
+          "questions": [
+            {
+              "prompt": "The shape and slope of the land on a site is called its ___. Fill in the single word from the reading.",
+              "code": "___ is the shape of the land.\nIs the site flat, sloped, or dramatically hilly?",
+              "blanks": ["Topography"],
+              "explanation": "Topography is the term for the shape and slope of the land. A sloped site creates design opportunities but also construction and drainage challenges."
+            },
+            {
+              "prompt": "A systematic investigation of a piece of land before design begins is called a site ___. Fill in the single word.",
+              "code": "A site ___ investigates topography,\nsolar orientation, views, and drainage.",
+              "blanks": ["analysis"],
+              "explanation": "Site analysis is the process of investigating a piece of land before design begins. It covers topography, solar orientation, prevailing winds, views, circulation, drainage, and context."
+            },
+            {
+              "prompt": "The direction from which wind most commonly blows on a site is called the ___ wind. Fill in the single adjective used in the reading.",
+              "code": "___ winds tell you which direction\nwind most often comes from.",
+              "blanks": ["prevailing"],
+              "explanation": "Prevailing winds are the winds that blow most commonly from a specific direction. Architects use this information to position buildings for cross-ventilation or to shelter outdoor spaces."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Passive Environmental Design",
+      "lessons": [
+        {
+          "id": "arch-passive-doc",
+          "type": "document",
+          "title": "Building Without Machines: Passive Design",
+          "content": "Before air conditioning existed, buildings had to keep people comfortable through design alone. Architects used the shape of the building, the placement of openings, and the mass of materials to control temperature, humidity, and airflow. These strategies are called `passive design` because they require no mechanical energy to work.\n\nThe most fundamental passive strategy for hot climates is `shading`. Thick walls, deep overhangs, and covered loggias keep direct sunlight off the building's surfaces. In traditional Middle Eastern architecture, buildings cluster tightly together so that they shade each other and the narrow streets between them stay cool.\n\n`Thermal mass` is the ability of a material to absorb and store heat. A thick stone or adobe wall will absorb heat during the day, when temperatures are high. At night, when temperatures drop, it releases that stored heat slowly. This effect smooths out the extremes. In a hot desert climate where days are blazingly hot and nights are cold, thick earthen walls can make the interior comfortable in both conditions without any mechanical help.\n\n`Cross-ventilation` uses the movement of air through a building to cool it. If you open a window on the windward side of a building and another on the leeward side, air will flow through. For cross-ventilation to work, openings must be on opposite sides of the space, and the prevailing wind direction must be known from the site analysis.\n\nThe `stack effect` is a different natural ventilation strategy. Hot air rises. If you create an opening at the top of a tall space, hot air will flow upward and out, drawing cooler air in from openings at the bottom. Traditional Persian architecture uses `wind towers` called `badgirs` to catch and channel breezes down into lower spaces using this principle in reverse. The Victorians used a version of this in their tall interior spaces to ventilate hospitals naturally.\n\nFor cold climates, `passive solar heating` is a key strategy. This means orienting the building so that large south-facing windows collect solar energy in winter. The sunlight enters the space and heats the floor and interior walls. If those surfaces have high thermal mass, they store the heat and release it at night when the temperature drops.\n\n`Insulation` is the resistance of a building envelope to heat transfer. A well-insulated wall slows the rate at which heat moves through it in either direction. In winter, insulation keeps heat inside. In summer, insulation keeps heat outside. Modern high-performance buildings combine excellent insulation with carefully designed passive strategies and then supplement with minimal mechanical heating and cooling.",
+          "examples": [
+            {
+              "label": "Passive Strategies by Climate",
+              "code": "Hot arid climate:\n  Thick walls with high thermal mass\n  Tiny north-facing windows, shading on south\n  Courtyard with fountain for evaporative cooling\n  Tight clustering to shade streets\n\nCold climate:\n  Large south-facing windows for solar gain\n  High insulation on all envelope surfaces\n  Thermal mass floors to store daytime solar heat\n  Minimal windows on north, east, west\n\nHot humid climate:\n  Cross-ventilation as primary cooling strategy\n  Elevated floor on stilts to catch breezes\n  Deep overhangs on all sides against rain and sun\n  Light-frame construction with low thermal mass"
+            }
+          ],
+          "questions": [
+            {
+              "q": "A thick adobe wall in a desert building absorbs heat during the hot day and releases it slowly at night when it is cold. Which passive design concept does this describe?",
+              "options": [
+                "Cross-ventilation, because the temperature difference between day and night drives air movement through the wall material",
+                "Thermal mass, because the material stores heat energy and releases it slowly over time",
+                "Passive solar heating, because the south-facing wall is collecting solar energy during daylight hours",
+                "Insulation, because the thickness of the wall slows the transfer of heat in both directions"
+              ],
+              "answer": 1,
+              "explanation": "Thermal mass is the ability of a material to absorb and store heat. A thick adobe wall stores daytime heat and releases it at night. This smooths out temperature extremes without any mechanical systems."
+            },
+            {
+              "q": "The stack effect in natural ventilation works because of which property of hot air?",
+              "options": [
+                "Hot air is denser than cold air and sinks toward floor level, creating pressure that pushes cold air upward",
+                "Hot air rises and exits through high openings, drawing cooler air in through lower openings",
+                "Hot air expands and creates positive pressure that forces it horizontally through openings on the leeward side",
+                "Hot air carries moisture that condenses on cool wall surfaces, creating a circulation loop"
+              ],
+              "answer": 1,
+              "explanation": "The stack effect uses the fact that hot air rises. Hot air exits through a high opening and draws cooler outside air in through low openings at the bottom. This creates a natural upward airflow without any fans."
+            },
+            {
+              "q": "For cross-ventilation to work in a building, two conditions must both be true. According to the reading, what are they?",
+              "options": [
+                "The building must have a tall interior space, and the openings must be placed at different vertical heights",
+                "The openings must be on opposite sides of the space, and the prevailing wind direction must be known from site analysis",
+                "The building must have high thermal mass walls, and the windows must face the direction of the prevailing wind",
+                "The windows must be operable, and the floor plan must be open enough to allow air to move without obstruction"
+              ],
+              "answer": 1,
+              "explanation": "The reading specifies both conditions: openings must be on opposite sides of the space, and the prevailing wind direction must be known from site analysis so you know which side is windward and which is leeward."
+            },
+            {
+              "q": "In a cold climate, passive solar heating works best with which combination of building features?",
+              "options": [
+                "Small north-facing windows and thick insulated walls on the south side to minimize heat loss",
+                "Large south-facing windows to collect solar energy and high thermal mass floors to store and release the heat",
+                "A tall interior volume with high openings on the south side to allow warm air to collect near the ceiling",
+                "Deep overhangs on the south side to prevent overheating combined with skylights for diffuse winter light"
+              ],
+              "answer": 1,
+              "explanation": "Passive solar heating requires large south-facing windows to let winter sunlight in and high thermal mass interior surfaces to absorb and store that heat. The stored heat is then released slowly as temperatures drop at night."
+            }
+          ]
+        },
+        {
+          "id": "arch-passive-codefix",
+          "type": "code_fix",
+          "title": "Fix the Passive Design Reference Card",
+          "prompt": "This HTML page is a quick reference for passive design strategies. It contains one factual error in the content. Find it and correct it.",
+          "initialCode": "<!DOCTYPE html>\n<html>\n<head><title>Passive Design</title></head>\n<body>\n  <h2>Passive Design Strategies</h2>\n  <ul>\n    <li><strong>Thermal mass:</strong> Materials that absorb and store heat, smoothing out temperature swings.</li>\n    <li><strong>Cross-ventilation:</strong> Air flows through openings on the same side of the building.</li>\n    <li><strong>Stack effect:</strong> Hot air rises and exits high openings, drawing cool air in from below.</li>\n    <li><strong>Passive solar:</strong> Large south-facing windows collect winter sunlight for heating.</li>\n  </ul>\n</body>\n</html>",
+          "targetFix": "opposite sides",
+          "solution": "<!DOCTYPE html>\n<html>\n<head><title>Passive Design</title></head>\n<body>\n  <h2>Passive Design Strategies</h2>\n  <ul>\n    <li><strong>Thermal mass:</strong> Materials that absorb and store heat, smoothing out temperature swings.</li>\n    <li><strong>Cross-ventilation:</strong> Air flows through openings on opposite sides of the building.</li>\n    <li><strong>Stack effect:</strong> Hot air rises and exits high openings, drawing cool air in from below.</li>\n    <li><strong>Passive solar:</strong> Large south-facing windows collect winter sunlight for heating.</li>\n  </ul>\n</body>\n</html>"
+        },
+        {
+          "id": "arch-passive-challenge",
+          "type": "challenge",
+          "title": "Design a Passive Strategy",
+          "prompt": "You are designing a small house in a hot, dry desert. Nights get cold. There is a steady prevailing breeze from the northwest. Write a short paragraph describing the passive design strategies you would use. Your response must correctly use all four of these terms: `thermal mass`, `shading`, `cross-ventilation`, and `solar orientation`.",
+          "validation": [
+            {
+              "rule": "thermal mass",
+              "message": "Your response needs to mention 'thermal mass'. In a desert climate, thick walls with high thermal mass absorb daytime heat and release it slowly at night."
+            },
+            {
+              "rule": "shading",
+              "message": "Your response needs to mention 'shading'. Deep overhangs, thick walls, or clustering buildings all provide shading in hot climates."
+            },
+            {
+              "rule": "cross-ventilation",
+              "message": "Your response needs to mention 'cross-ventilation'. The prevailing northwest breeze can be used to drive air through the building if openings are placed on opposite sides."
+            },
+            {
+              "rule": "solar orientation",
+              "message": "Your response needs to mention 'solar orientation'. Knowing which direction is south is critical for placing windows to control solar gain."
+            }
+          ],
+          "solution": "For a hot desert house where nights turn cold, I would first use thermal mass by building thick adobe or rammed earth walls. These walls absorb the intense daytime heat and release it slowly after sunset, keeping the interior comfortable in both conditions. I would combine this with aggressive shading using deep overhangs on the south and west sides, and by grouping rooms around a central courtyard that provides shade to the surrounding walls. Solar orientation is critical. I would limit glazing on the east and west where the low sun angle is hardest to control, and put small carefully shaded windows on the south. For nighttime relief during hot evenings, I would use cross-ventilation by placing openings on the northwest to catch the prevailing breeze and opposite openings on the southeast to let air flow through the main living spaces."
+        }
+      ]
+    }
+  ]
+}
