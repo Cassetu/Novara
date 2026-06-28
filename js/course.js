@@ -966,6 +966,7 @@ function startLesson(lesson) {
 
         window.activeTopbarGate = (e) => {
             e.preventDefault();
+            e.stopPropagation();
             showConfirmDialog("Return? Progress on this lesson will not be saved.", () => {
                 resetTopBarLayout();
 
