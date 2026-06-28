@@ -654,6 +654,8 @@ button:disabled {
 }
 .danger-btn { color: #ff4444; border-color: var(--border); }
 .danger-btn:hover:not(:disabled) { background-color: #ff4444; color: #ffffff; }
+.blue-btn { color: #33ccff; border-color: var(--border); }
+.blue-btn:hover:not(:disabled) { background-color: #33ccff; color: #ffffff; }
 .lesson-footer {
     display: flex;
     justify-content: flex-end;

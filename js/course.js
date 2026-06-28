@@ -577,6 +577,47 @@ function showError(message) {
     return;
 }
 
+function showConfirmDialog(message, onConfirm) {
+    const existing = $("errorOverlay");
+    if (existing) existing.remove();
+
+    const errorOverlay = document.createElement("div");
+    const errorBox = document.createElement("div");
+    errorBox.innerText = message;
+
+    const btnContainer = document.createElement("div");
+    btnContainer.style.display = "flex";
+    btnContainer.style.gap = "10px";
+    btnContainer.style.marginTop = "15px";
+    btnContainer.style.justifyContent = "center";
+
+    const errorBtn = document.createElement("button");
+    errorBtn.innerText = "OK";
+    errorBtn.className = "danger-btn";
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.innerText = "Cancel";
+    cancelBtn.className = "blue-btn";
+
+    errorBox.id = "errorBox";
+    errorOverlay.id = "errorOverlay";
+
+    errorBtn.addEventListener("click", () => {
+        errorOverlay.remove();
+        if (onConfirm) onConfirm();
+    });
+
+    cancelBtn.addEventListener("click", () => {
+        errorOverlay.remove();
+    });
+    btnContainer.appendChild(errorBtn);
+    btnContainer.appendChild(cancelBtn);
+
+    errorBox.appendChild(btnContainer);
+    errorOverlay.appendChild(errorBox);
+    document.body.appendChild(errorOverlay);
+}
+
 async function unenrollFromCourse(entry) {
     if (!confirm(`Remove '${entry.title}'? Scores are preserved.`)) return;
     ud.enrolled = ud.enrolled.filter(id => id !== entry.id);
@@ -843,7 +884,7 @@ function openProject(projectLesson, entry) {
     switchView("view-lesson");
     document.body.classList.add("lesson-active");
 
-    $("lesson-back-btn")?.remove();
+    resetTopBarLayout();
     const backBtn = document.createElement("button");
     backBtn.id = "lesson-back-btn";
     backBtn.innerText = "Return";
@@ -905,53 +946,39 @@ function startLesson(lesson) {
     initQuestionState();
     switchView("view-lesson");
 
-    if ($("nav-explorer")) $("nav-explorer").style.display = "none";
     if ($("nav-active-btn")) $("nav-active-btn").style.display = "none";
-    if ($("nav-tools")) $("nav-tools-btn").style.display = "none";
+    if ($("nav-tools-btn")) $("nav-tools-btn").style.display = "none";
 
     if ($("user-avatar-btn")) {
         $("user-avatar-btn").style.pointerEvents = "none";
         $("user-avatar-btn").style.cursor = "default";
+        $("user-avatar-btn").style.opacity = "0.5";
     }
 
-    $("lesson-back-btn")?.remove();
-    const backBtn = document.createElement("button");
-    backBtn.id = "lesson-back-btn";
-    backBtn.innerText = "Return";
-    backBtn.style.cssText = `
-        background: transparent;
-        color:var(--text-main, #0a0a0a);
-        border: none;
-        padding: 11px 20px;
-        font-size: 12px;
-        letter-spacing:0.3px;
-        font-family: 'Courier New', Courier, monospace;
-        font-weight: bold;
-        cursor: pointer;
-    `;
-    const leftNav = $("topbar-left")?.parentElement;
-    if (leftNav) {
-        leftNav.insertBefore(backBtn, leftNav.firstChild);
-    } else {
-        document.body.appendChild(backBtn);
+    const topNavBtn = $("nav-explorer");
+    let originalText = "Explore";
+
+    if (topNavBtn) {
+        originalText = topNavBtn.innerText;
+        topNavBtn.innerText = "← Return";
+        topNavBtn.style.fontWeight = "bold";
+        topNavBtn.style.color = "var(--text-dim, #0a0a0a)";
+
+        window.activeTopbarGate = (e) => {
+            e.preventDefault();
+            showConfirmDialog("Return? Progress on this lesson will not be saved.", () => {
+                resetTopBarLayout();
+
+                if (activeCourseRef) {
+                    openSyllabus(activeCourseRef, null, activeCurriculumEntry || activeCourseRef);
+                } else {
+                    switchView("view-explorer");
+                }
+            });
+        };
+
+        topNavBtn.addEventListener("click", window.activeTopbarGate, true);
     }
-    backBtn.onclick = () => {
-        if (!confirm("Return? Progress on this lesson will not be saved.")) return;
-        backBtn.remove();
-        document.body.classList.remove("lesson-active");
-        if ($("nav-explorer")) $("nav-explorer").style.style.display = "";
-        if ($("nav-active")) $("nav-active").style.display = "";
-        if ($("nav-tools")) $("nav-tools").style.display = "";
-        if ($("user-avatar-btn")) {
-            $("user-avatar-btn").style.pointerEvents = "auto";
-            $("user-avatar-btn").style.cursor = "pointer";
-        }
-        if (activeCourseRef) {
-            openSyllabus(activeCourseRef, null, activeCurriculumEntry || activeCourseRef);
-        } else {
-            navExplorer.click();
-        }
-    };
 
     const analytics = activeCD ? (ud.analytics[activeCD.id] || {}) : {};
     const onUpdate = async a => {
@@ -976,6 +1003,30 @@ function startLesson(lesson) {
         runMixedPractice(activeLessonData, analytics, onUpdate);
     }
     else renderQuestion(activeLessonData, analytics, onUpdate, () => finishLesson());
+}
+
+function resetTopBarLayout() {
+    const topNavBtn = $("nav-explorer")
+    if (topNavBtn) {
+        topNavBtn.innerText = "Explore";
+        topNavBtn.style.fontWeight = "";
+        topNavBtn.style.color = "";
+        topNavBtn.onclick = null;
+        if (window.activeTopbarGate) {
+            topNavBtn.removeEventListener("click", window.activeTopbarGate, true);
+            window.activeTopbarGate = null;
+        }
+
+    }
+
+    if ($("nav-active-btn")) $("nav-active-btn").style.display = "";
+    if ($("nav-tools-btn")) $("nav-tools-btn").style.display = "";
+
+    if ($("user-avatar-btn")) {
+        $("user-avatar-btn").style.pointerEvents = "auto";
+        $("user-avatar-btn").style.cursor = "pointer";
+        $("user-avatar-btn").style.opacity = "1";
+    }
 }
 
 function pickBonusQuestion(lessonType) {
@@ -1003,7 +1054,7 @@ function pickBonusQuestion(lessonType) {
 }
 
 async function finishFillBlank(correctCount, total) {
-    $("lesson-back-btn")?.remove();
+    resetTopBarLayout();
     const score = correctCount === total ? 4
         : correctCount >= total * 0.75 ? 3
         : correctCount >= total * 0.5  ? 2
@@ -1031,7 +1082,7 @@ async function finishFillBlank(correctCount, total) {
 }
 
 async function finishSpotBug(correct) {
-    $("lesson-back-btn")?.remove();
+    resetTopBarLayout();
     const score = correct ? 1 : 0;
 
     viewLesson.innerHTML = `
@@ -1056,7 +1107,7 @@ async function finishSpotBug(correct) {
 }
 
 async function finishLesson() {
-    $("lesson-back-btn")?.remove();
+    resetTopBarLayout();
 
     const { correctAnswersCount, questionResults, survivalStrikes } = getQuestionStats();
     const hasQ = activeLessonData.questions?.length > 0;
