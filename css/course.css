@@ -227,6 +227,34 @@ h1, h2, h3 {
 }
 body.lesson-active .workspace { padding: 40px 60px; }
 body.lesson-active #app-topbar { pointer-events: none; opacity: 0.7; }
+
+.hide {
+    display:none !important;
+}
+
+.disabled {
+    pointer-events: none !important;
+    opacity: 0.7
+}
+
+.topbar-return-btn {
+    display:block;
+    padding: 11px 20px;
+    color:var(--accent,#0a0a0a);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    font-family: `Courier New`, Courier, monospace;
+    background: transparent;
+    border:none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.topbar-return=btn {
+    background-color: var(--void, #f0f0f0);
+}
+
 .view-layer {
     width: 100%;
     max-width: 960px;

@@ -904,18 +904,48 @@ function startLesson(lesson) {
 
     initQuestionState();
     switchView("view-lesson");
-    document.body.classList.add("lesson-active");
+
+    if ($("nav-explorer")) $("nav-explorer").style.display = "none";
+    if ($("nav-active-btn")) $("nav-active-btn").style.display = "none";
+    if ($("nav-tools")) $("nav-tools-btn").style.display = "none";
+
+    if ($("user-avatar-btn")) {
+        $("user-avatar-btn").style.pointerEvents = "none";
+        ${"user-avatar-btn"}.style.cursor = "default";
+    }
 
     $("lesson-back-btn")?.remove();
     const backBtn = document.createElement("button");
     backBtn.id = "lesson-back-btn";
     backBtn.innerText = "Return";
-    backBtn.style.cssText = "position:fixed;top:70px;left:24px;z-index:999;background:var(--surface);color:var(--text-main);border:2px solid var(--border);padding:10px 16px;font-size:12px;letter-spacing:2px;box-shadow:4px 4px 0px var(--border);cursor:pointer;";
-    document.body.appendChild(backBtn);
+    backBtn.style.cssText = `
+        background: transparent;
+        color:var(--text-main, #0a0a0a);
+        border: none;
+        padding: 11px 20px;
+        font-size: 12px;
+        letter-spacing:0.3px;
+        font-family: `Courier New`, Courier, monospace;
+        font-weight: bold;
+        cursor: pointer;
+    `;
+    const leftNav = $("topbar-left")?.parentElement;
+    if (leftNav) {
+        leftNav.insertBefore(backBtn, leftNav.firstChild);
+    } else {
+        document.body.appendChild(backBtn);
+    }
     backBtn.onclick = () => {
         if (!confirm("Return? Progress on this lesson will not be saved.")) return;
         backBtn.remove();
         document.body.classList.remove("lesson-active");
+        if ($("nav-explorer")) $("nav-explorer").style.style.display = "";
+        if ($("nav-active")) $("nav-active").style.display = "";
+        if ($("nav-tools")) $("nav-tools").style.display = "";
+        if ($("user-avatar-btn")) {
+            $("user-avatar-btn").style.pointerEvents = "auto";
+            ${"user-avatar-btn"}.style.cursor = "pointer";
+        }
         if (activeCourseRef) {
             openSyllabus(activeCourseRef, null, activeCurriculumEntry || activeCourseRef);
         } else {
