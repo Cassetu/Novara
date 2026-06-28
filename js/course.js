@@ -911,7 +911,7 @@ function startLesson(lesson) {
 
     if ($("user-avatar-btn")) {
         $("user-avatar-btn").style.pointerEvents = "none";
-        ${"user-avatar-btn"}.style.cursor = "default";
+        $("user-avatar-btn").style.cursor = "default";
     }
 
     $("lesson-back-btn")?.remove();
@@ -925,7 +925,7 @@ function startLesson(lesson) {
         padding: 11px 20px;
         font-size: 12px;
         letter-spacing:0.3px;
-        font-family: `Courier New`, Courier, monospace;
+        font-family: 'Courier New', Courier, monospace;
         font-weight: bold;
         cursor: pointer;
     `;
@@ -944,7 +944,7 @@ function startLesson(lesson) {
         if ($("nav-tools")) $("nav-tools").style.display = "";
         if ($("user-avatar-btn")) {
             $("user-avatar-btn").style.pointerEvents = "auto";
-            ${"user-avatar-btn"}.style.cursor = "pointer";
+            $("user-avatar-btn").style.cursor = "pointer";
         }
         if (activeCourseRef) {
             openSyllabus(activeCourseRef, null, activeCurriculumEntry || activeCourseRef);
