@@ -478,6 +478,7 @@ async function renderExplorer() {
         card.dataset.category = entry.category || "";
         card.dataset.difficulty = entry.difficulty || "";
         card.style.cssText = "display:flex;flex-direction:column;";
+        const actionWrapper = document.createElement("div");
 
         const diffBadge = entry.difficulty
             ? `<span class="diff-badge ${entry.difficulty}">${entry.difficulty}</span>` : "";
@@ -524,7 +525,28 @@ async function renderExplorer() {
             btnGroup.appendChild(enroll);
         }
 
+        let authorText = "Unkown Author";
+        if (entry.author && Array.isArray(entry.author)) {
+            authorText = entry.author.join(", ");
+        } else if (typeof entry.author === "string") {
+            authorText = entry.author;
+        }
+
+        const authorEl = document.createElement("div");
+        authorEl.innerText = `By ${authorText}`;
+
+        authorEl.style.cssText = `
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            color: var(--text-dim, #888888);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 12px;
+            text-align: center;
+        `;
+
         card.appendChild(btnGroup);
+        btnGroup.appendChild(authorEl);
         catalogGrid.appendChild(card);
     }
 
