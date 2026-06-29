@@ -349,8 +349,9 @@ navSettings?.addEventListener("click", e => {
 navSignout?.addEventListener("click", e => {
     e.stopPropagation();
     closeAllDropdowns();
-    if (!confirm("Sign out of Novara?")) return;
-    window.firebaseAuth.signOut();
+    showConfirmDialog("Sign out of Novara?", () => {
+        window.firebaseAuth.signOut();
+    });
 });
 
 function setActiveNavBtn(el) {
@@ -509,8 +510,8 @@ async function renderExplorer() {
             cont.onclick = () => openCurriculumHome(entry);
 
             const drop = document.createElement("button");
-            drop.innerText = "drop";
-            drop.style.cssText = "flex:1;border-color:#ff4444;color:#ff4444;background:transparent;";
+            drop.innerText = "Drop";
+            drop.className = "danger-btn";
             drop.onclick = () => unenrollFromCourse(entry);
 
             btnGroup.append(cont, drop);
@@ -619,11 +620,12 @@ function showConfirmDialog(message, onConfirm) {
 }
 
 async function unenrollFromCourse(entry) {
-    if (!confirm(`Remove '${entry.title}'? Scores are preserved.`)) return;
-    ud.enrolled = ud.enrolled.filter(id => id !== entry.id);
-    await saveField("enrolled", ud.enrolled);
-    updateActiveCountBadge();
-    await renderExplorer();
+    showConfirmDialog(`Disenroll from ${entry.title}? Scores are preserved.`, async () => {
+        ud.enrolled = ud.enrolled.filter(id => id !== entry.id);
+        await saveField("enrolled", ud.enrolled);
+        updateActiveCountBadge();
+        await renderExplorer();
+    });
 }
 
 function findProjectLesson(data) {

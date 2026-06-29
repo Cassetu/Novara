@@ -318,7 +318,7 @@ body.lesson-active #app-topbar { pointer-events: none; opacity: 0.7; }
 #search-bar::placeholder { color: var(--text-dim); }
 .catalog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 30px;
     margin-top: 24px;
 }
@@ -354,7 +354,7 @@ body.lesson-active #app-topbar { pointer-events: none; opacity: 0.7; }
 }
 .syllabus-sections-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
     gap: 16px;
     margin-top: 8px;
 }
