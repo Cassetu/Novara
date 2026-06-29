@@ -171,25 +171,25 @@
 
     <main class="workspace" id="main-workspace">
 
-        <div id="view-explorer" class="view-layer">
-            <div class="explorer-header">
-                <div>
-                    <div class="category-filters">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="engineering">Engineering</button>
-                        <button class="filter-btn" data-filter="data">Data</button>
-                        <button class="filter-btn" data-filter="design">Design</button>
-                        <button class="filter-btn" data-filter="gamedev">Game Dev</button>
-                    </div>
-                    <div class="difficulty-filters" style="display:flex;gap:6px;margin-top:8px;">
-                        <button class="diff-btn active" data-diff="all">All levels</button>
-                        <button class="diff-btn" data-diff="beginner">Beginner</button>
-                        <button class="diff-btn" data-diff="intermediate">Intermediate</button>
-                        <button class="diff-btn" data-diff="advanced">Advanced</button>
-                    </div>
-                </div>
-                <input type="text" id="search-bar" placeholder="search">
+        <div id="view-explorer" class="view-layer" style="display: none; padding: 40px; max-width: 1800px; margin: 0 auto;">
+
+            <h1 style="font-size: 48px; font-weight: 900; letter-spacing: -2px; margin-bottom: 10px; text-transform: uppercase;">Curriculums</h1>
+            <p style="color: var(--text-dim); margin-bottom: 24px; font-family: monospace;">Select a pathway to enroll and build track progress.</p>
+
+            <div style="display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;" id="explorer-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="engineering">Engineering</button>
+                <button class="filter-btn" data-filter="gamedev">Game Dev</button>
+                <button class="filter-btn" data-filter="data">Data</button>
+                <button class="filter-btn" data-filter="design">Design</button>
+
+                <span style="margin-left:auto;display:flex;gap:8px;">
+            <button class="diff-btn" data-diff="beginner">Beginner</button>
+            <button class="diff-btn" data-diff="intermediate">Intermediate</button>
+            <button class="diff-btn" data-diff="advanced">Advanced</button>
+        </span>
             </div>
+
             <div id="catalog-grid" class="catalog-grid"></div>
         </div>
 

@@ -488,7 +488,7 @@ async function renderExplorer() {
                 <div class="course-progress-wrapper">
                     <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
                 </div>
-                <p style="font-size:12px;color:var(--accent);margin-top:-6px;margin-bottom:15px;text-align:right;">${pct}% complete</p>
+                <p style="font-size:12px;color:var(--accent);margin-top:6px;margin-bottom:15px;text-align:right;">${pct}% complete</p>
             `;
         }
 
