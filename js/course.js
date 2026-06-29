@@ -864,15 +864,25 @@ function buildSectionCard(section, data, courseId) {
         const score    = ud.scores?.[id] || 0;
         const mastered = ud.mastery?.[id];
 
+        const maxScore = isBinaryLesson(lesson) ? 1 : 4;
+        const pct = (score / maxScore) * 100;
+
         let dotsHtml = "";
-        if (isBinaryLesson(lesson)) {
-            dotsHtml = mastered
-                ? `<div class="rating-star" title="Mastered"></div>`
-                : `<div class="rating-dot ${score >= 1 ? "filled" : ""}"></div>`;
+
+        if (mastered) {
+            dotsHtml = `
+                <div style="width: 32px; height: 16px; background: var(--accent); display: flex; align-items: center; justify-content: center; border: 1px solid var(--accent);">
+                    <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: var(--surface, #ffffff);">
+                        <path d="M2 16 L4 5 L9 10 L12 3 L15 10 L20 5 L22 16 Z" />
+                    </svg>
+                </div>
+            `;
         } else {
-            dotsHtml = mastered
-                ? `<div class="rating-star"></div><div class="rating-star"></div><div class="rating-star"></div><div class="rating-star"></div>`
-                : [1,2,3,4].map(n => `<div class="rating-dot ${score >= n ? "filled" : ""}"></div>`).join("");
+            dotsHtml = `
+                <div style="width: 16px; height: 16px; background: transparent; border: 2px solid var(--text-main); position: relative; overflow: hidden; border-radius:5px;">
+                    <div style="position: absolute; left: 0; bottom: 0; right: 0; height: ${pct}%; background: var(--accent); transition: height 0.3s ease;"></div>
+                </div>
+            `;
         }
 
         const typeLabel = (lesson.type && lesson.type !== "document") ? lesson.type.replace(/_/g, " ") : "";
