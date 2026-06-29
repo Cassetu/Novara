@@ -26,6 +26,14 @@
     "file": "data/godot-core.json"
   },
   {
+    "id": "markdown",
+    "title": "Markdown and Plain-Text Academic Workflows",
+    "category": "other",
+    "difficulty": "intermediate",
+    "description": "Write, cite, and publish academic work entirely in plain text. Covers core Markdown syntax, Pandoc conversion, BibTeX citations, and multi-file document organization.",
+    "file": "data/markdown/markdown.json"
+  },
+  {
     "id": "economics-core",
     "title": "Economics",
     "category": "other",

@@ -1,0 +1,823 @@
+{
+  "title": "Markdown and Plain-Text Academic Workflows",
+  "description": "Learn to write, structure, and publish academic work using Markdown, Pandoc, citation tools, and plain-text pipelines. No word processor required.",
+  "sections": [
+    {
+      "title": "Section 1: What Markdown Is and Why It Exists",
+      "lessons": [
+        {
+          "id": "md-what-is-markdown",
+          "title": "What Markdown Actually Is",
+          "type": "document",
+          "content": "Markdown is a lightweight markup language created by John Gruber in 2004. The idea is simple: you write plain text with a few special characters, and those characters get converted into formatted output like HTML or PDF.\n\nThink of it like this. In a word processor, you press a button to make text bold. In Markdown, you wrap the word in two asterisks. The asterisks are not displayed. They are instructions to the renderer.\n\nHere is why academics love it:\n\nFirst, Markdown files are plain text. That means they open on any device, any operating system, and any era of computer. A `.docx` file from 2010 might not open cleanly today. A plain `.md` file will always open.\n\nSecond, Markdown separates content from formatting. You focus on what you are writing, not how it looks. The appearance is decided later, at render time.\n\nThird, Markdown works beautifully with version control tools like Git. Because it is plain text, you can track every change line by line. That is nearly impossible with binary file formats like `.docx`.\n\nFourth, Markdown converts to almost everything. One source file can become a PDF, a Word document, a slide deck, or a webpage. This is a huge deal for academic publishing.\n\nThe file extension for Markdown is `.md`. You write in any plain-text editor. Notepad works. VS Code works. Obsidian works. The choice of editor does not change the file format.\n\nMarkdown was deliberately designed to look readable even before it is rendered. If you open a raw Markdown file, the formatting characters are small and unobtrusive. That is intentional.",
+          "examples": [
+            {
+              "label": "Raw Markdown source",
+              "code": "# My Research Paper\n\nThis is the **introduction** to my study.\n\nThe key finding was *statistically significant*."
+            },
+            {
+              "label": "What it renders to (conceptually)",
+              "code": "Large heading: My Research Paper\nBold word: introduction\nItalic phrase: statistically significant"
+            }
+          ],
+          "questions": [
+            {
+              "q": "What happens to the asterisks when Markdown is rendered into a formatted document?",
+              "options": [
+                "They are displayed as literal asterisk characters in the output",
+                "They are converted into bold or italic formatting and not shown",
+                "They are stored separately in a metadata file",
+                "They become visible only in print preview mode"
+              ],
+              "answer": 1,
+              "explanation": "Markdown syntax characters like `**` act as instructions to the renderer. They produce formatting in the output but are not displayed themselves."
+            },
+            {
+              "q": "Which of the following is a reason plain-text Markdown files are considered more durable than `.docx` files for long-term academic storage?",
+              "options": [
+                "Markdown files include embedded fonts that prevent visual drift",
+                "Plain text opens on any device and software without format dependencies",
+                "Markdown encrypts the content automatically for archival safety",
+                "Word processors cannot open plain text files at all"
+              ],
+              "answer": 1,
+              "explanation": "Plain text has no software dependencies. A `.md` file written today will be readable by any text editor decades from now, unlike proprietary binary formats."
+            },
+            {
+              "q": "What is the primary reason Markdown works well with version control systems like Git?",
+              "options": [
+                "Markdown files are compressed smaller than other document formats",
+                "Git requires all tracked files to use the `.md` extension",
+                "Plain text allows line-by-line change tracking unlike binary formats",
+                "Markdown automatically commits changes to a repository on save"
+              ],
+              "answer": 2,
+              "explanation": "Git tracks changes at the text level. Because Markdown is plain text, every edit shows up as a specific line change. Binary formats like `.docx` appear as a single changed blob."
+            }
+          ]
+        },
+        {
+          "id": "md-flavors",
+          "title": "Markdown Flavors and CommonMark",
+          "type": "document",
+          "content": "Here is something that confuses a lot of people when they first start with Markdown: there is no single official Markdown. John Gruber's original 2004 spec left a lot of behavior undefined. Different tools filled in the gaps differently. These variations are called flavors.\n\nThe most common flavors you will encounter are:\n\n`CommonMark` is the most carefully specified version. It defines every edge case precisely. Many modern tools use it as a base.\n\n`GitHub Flavored Markdown` (GFM) is CommonMark plus extras like task lists, tables, and strikethrough. It is what GitHub uses to render README files and issues.\n\n`Pandoc Markdown` is what the academic conversion tool Pandoc uses. It adds features for citations, footnotes, definition lists, and metadata blocks. This is what this course focuses on most.\n\n`MultiMarkdown` is another academic-focused flavor with similar goals to Pandoc Markdown.\n\nFor practical academic work, you mostly need to know two things. First, the core syntax is the same across all flavors. Headings, bold, italic, links, and lists work the same everywhere. Second, the extended features like footnotes and citations vary, so you need to know which flavor your tool expects.\n\nWhen you are writing for Pandoc, which converts Markdown to PDF, Word, or presentations, you are writing Pandoc Markdown. That is what most of this course teaches.\n\nDo not worry about memorizing every flavor right now. Focus on learning the core syntax first. The differences in extensions will become clear when you start using specific tools.",
+          "questions": [
+            {
+              "q": "A student writes a Markdown file with footnotes and submits it to a tool that only supports CommonMark. What is the most likely outcome?",
+              "options": [
+                "The footnotes render correctly because all Markdown flavors share the same footnote syntax",
+                "The footnote syntax is treated as plain text because CommonMark does not define footnotes",
+                "The file is rejected and cannot be processed at all",
+                "The tool automatically upgrades itself to support Pandoc Markdown"
+              ],
+              "answer": 1,
+              "explanation": "Footnotes are a Pandoc Markdown extension, not part of CommonMark. A CommonMark-only tool would treat the footnote syntax as literal characters rather than rendered footnotes."
+            },
+            {
+              "q": "Which Markdown flavor adds support for task lists, tables, and strikethrough on top of the CommonMark standard?",
+              "options": [
+                "Pandoc Markdown",
+                "MultiMarkdown",
+                "GitHub Flavored Markdown",
+                "Original Gruber Markdown"
+              ],
+              "answer": 2,
+              "explanation": "GitHub Flavored Markdown (GFM) builds on CommonMark and adds task lists, tables, strikethrough, and a few other features specific to GitHub's platform."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Section 2: Core Markdown Syntax",
+      "lessons": [
+        {
+          "id": "md-headings-paragraphs",
+          "title": "Headings and Paragraphs",
+          "type": "document",
+          "content": "Let's start with the two most fundamental building blocks of any document: headings and paragraphs.\n\nA heading in Markdown is made by putting one or more `#` symbols at the start of a line, followed by a space, followed by the heading text.\n\nOne `#` gives you a top-level heading. This is like a chapter title. Two `#` symbols give you a second-level heading. This is like a section within a chapter. You can go up to six levels deep with six `#` symbols, though in practice most academic documents only use levels 1 through 3.\n\nHere is the key rule: there must be a space between the `#` and the heading text. `#Introduction` does not work. `# Introduction` does.\n\nA paragraph is even simpler. You just write text. Markdown treats any block of consecutive lines as a single paragraph. The important thing is what creates a new paragraph: a blank line.\n\nIf you just press Enter once and keep typing, Markdown treats it as the same paragraph. You need one empty line between blocks of text to start a new paragraph.\n\nThis feels strange at first because it is different from how word processors work. Think of it this way: the empty line is your paragraph break signal.",
+          "examples": [
+            {
+              "label": "Headings at different levels",
+              "code": "# Chapter One: Introduction\n\n## Background\n\n### Prior Research\n\n#### A Sub-Topic (level 4, rarely needed)"
+            },
+            {
+              "label": "Paragraphs separated by blank lines",
+              "code": "This is the first paragraph. It can be as long as you want.\n\nThis is the second paragraph. The blank line above created the break.\n\nThis is the third paragraph."
+            },
+            {
+              "label": "Common mistake: missing space after #",
+              "code": "#This looks like a heading but will not render as one\n\n# This renders correctly as a top-level heading"
+            }
+          ],
+          "questions": [
+            {
+              "q": "In Markdown, which of the following correctly creates a second-level heading with the text 'Literature Review'?",
+              "options": [
+                "`##Literature Review`",
+                "`## Literature Review`",
+                "`# # Literature Review`",
+                "`## -Literature Review`"
+              ],
+              "answer": 1,
+              "explanation": "A second-level heading needs exactly two `#` symbols followed by a single space and then the heading text. Missing the space is a very common mistake that prevents the heading from rendering."
+            },
+            {
+              "q": "A student types two sentences and presses Enter once between them, then renders the document. How will those sentences appear in the output?",
+              "options": [
+                "As two separate paragraphs with visible space between them",
+                "As two lines within the same paragraph with no paragraph break",
+                "As a heading followed by a paragraph",
+                "As a bulleted list with two items"
+              ],
+              "answer": 1,
+              "explanation": "A single line break is not enough to start a new paragraph in Markdown. You need a blank line between text blocks. A single Enter keeps both sentences in the same paragraph."
+            }
+          ]
+        },
+        {
+          "id": "md-fillblank-headings",
+          "title": "Headings Practice",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete the Markdown syntax to create a top-level heading with the text 'Abstract'.",
+              "code": "___ Abstract",
+              "blanks": "#",
+              "explanation": "A single `#` followed by a space creates a top-level (h1) heading. Think of it as the document's main title."
+            },
+            {
+              "prompt": "Complete the Markdown syntax to create a third-level heading with the text 'Methods'.",
+              "code": "___ Methods",
+              "blanks": "###",
+              "explanation": "Three `#` symbols followed by a space creates a third-level heading. The number of `#` symbols equals the heading level."
+            },
+            {
+              "prompt": "Complete this paragraph separator. Two paragraphs need a ___ line between them to render as separate paragraphs.",
+              "code": "First paragraph text.\n___\nSecond paragraph text.",
+              "blanks": "blank",
+              "explanation": "A blank line signals the end of one paragraph and the start of another. Without it, consecutive lines merge into a single paragraph."
+            }
+          ]
+        },
+        {
+          "id": "md-emphasis-inline",
+          "title": "Bold, Italic, and Inline Code",
+          "type": "document",
+          "content": "Markdown gives you three inline formatting tools that you will use constantly in academic writing: bold, italic, and inline code.\n\nBold is made by wrapping text in double asterisks or double underscores. So `**important**` and `__important__` both produce bold text. Most people use double asterisks because it is easier to read in raw form.\n\nItalic is made by wrapping text in single asterisks or single underscores. So `*term*` and `_term_` both produce italic text. In academic writing, you use italics for introducing a new technical term, for titles of works, and for emphasis.\n\nYou can combine bold and italic by using triple asterisks: `***very important***`.\n\nInline code is made by wrapping text in backtick characters. A backtick is the character that lives in the top-left of most keyboards, under the tilde `~`. Wrapping a word or short phrase in single backticks like `` `variableName` `` formats it as monospace code. This is useful for any technical term, file name, command, or piece of syntax that you are referencing in text.\n\nThese are called inline elements because they apply within a line of text, not to whole blocks. You will use them inside paragraphs and headings.\n\nOne important rule: do not use bold or italic for decoration. In academic writing, these tools carry meaning. Bold signals critical importance. Italic signals a term or title. Using them casually dilutes their signal.",
+          "examples": [
+            {
+              "label": "Bold, italic, and combined",
+              "code": "This is **very important** to understand.\n\nThe term *epistemology* refers to the study of knowledge.\n\nThis is ***absolutely critical*** to the argument."
+            },
+            {
+              "label": "Inline code for technical terms and filenames",
+              "code": "Run the `pandoc` command in your terminal.\n\nThe file is called `bibliography.bib`.\n\nSet the variable `output_format` to `pdf`."
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which of the following Markdown snippets correctly produces italic text for the word 'hypothesis'?",
+              "options": [
+                "`**hypothesis**`",
+                "`` `hypothesis` ``",
+                "`_hypothesis_`",
+                "`--hypothesis--`"
+              ],
+              "answer": 2,
+              "explanation": "Single underscores or single asterisks on each side of a word produce italic text. Double asterisks produce bold, backticks produce inline code, and `--` is not a Markdown formatting character."
+            },
+            {
+              "q": "A researcher wants to mention the filename `data_clean.csv` inside a paragraph so it appears in monospace font. Which Markdown syntax is correct?",
+              "options": [
+                "`**data_clean.csv**`",
+                "`` `data_clean.csv` ``",
+                "`_data_clean.csv_`",
+                "`[data_clean.csv]`"
+              ],
+              "answer": 1,
+              "explanation": "Backticks create inline code formatting, which renders in monospace font. This is the correct convention for filenames, commands, and technical terms inside prose."
+            },
+            {
+              "q": "A student wraps a word in triple asterisks like `***finding***`. What does this produce when rendered?",
+              "options": [
+                "A heading with the text 'finding'",
+                "Bold and italic text simultaneously",
+                "A strikethrough effect on the word",
+                "An error that prevents the document from rendering"
+              ],
+              "answer": 1,
+              "explanation": "Triple asterisks combine bold (double asterisks) and italic (single asterisk), producing text that is both bold and italic at the same time."
+            }
+          ]
+        },
+        {
+          "id": "md-spot-bold-syntax",
+          "title": "Spot the Bug: Inline Formatting",
+          "type": "spot_bug",
+          "prompt": "This Markdown file has one syntax error that prevents a word from rendering as bold. Click the line that contains the bug.",
+          "code": "# Research Findings\n\nThe results were **significant** across all trials.\n\nThe **primary outcome was an increase in retention rates.\n\nAll secondary metrics showed *moderate* improvement.",
+          "bugLine": 5,
+          "explanation": "Line 5 opens with `**` to start bold text but never closes with another `**`. The opening delimiter without a matching closing delimiter prevents the bold formatting from rendering. The fix is: `The **primary outcome** was an increase in retention rates.`"
+        },
+        {
+          "id": "md-lists",
+          "title": "Ordered and Unordered Lists",
+          "type": "document",
+          "content": "Lists are one of the most common structural elements in academic documents. Markdown supports two kinds: unordered lists and ordered lists.\n\nAn unordered list uses a dash `-`, a plus `+`, or an asterisk `*` at the start of a line, followed by a space, followed by the list item. Most people use dashes because they are visually clean.\n\nAn ordered list uses a number followed by a period and a space. Here is something useful: the actual number you type does not matter. Markdown only looks at the first number and then counts from there. So you could write `1.` for every item and Markdown would still output 1, 2, 3, 4 in the final document. This is helpful when you are reordering items and do not want to renumber everything.\n\nTo create a nested list, indent the child items with four spaces or one tab. The nested items can be a different list type from the parent.\n\nFor academic writing, use ordered lists when the sequence matters or when you are presenting numbered steps or ranked items. Use unordered lists when you are listing items where the order is not meaningful.\n\nOne rule that catches people off guard: you need a blank line before the first list item if the list follows a paragraph. Without that blank line, some Markdown renderers will not recognize the list.",
+          "examples": [
+            {
+              "label": "Unordered list",
+              "code": "The study included the following variables:\n\n- Age of participants\n- Years of education\n- Socioeconomic status\n- Geographic region"
+            },
+            {
+              "label": "Ordered list where numbers do not have to be sequential in source",
+              "code": "Follow these steps:\n\n1. Collect raw data\n1. Clean and normalize\n1. Run statistical tests\n1. Interpret results"
+            },
+            {
+              "label": "Nested list",
+              "code": "- Quantitative methods\n    - Surveys\n    - Experiments\n- Qualitative methods\n    - Interviews\n    - Ethnography"
+            }
+          ],
+          "questions": [
+            {
+              "q": "A student types `1.` for every item in an ordered list. When the document renders, what numbers appear next to the list items?",
+              "options": [
+                "All items show the number 1 because each line says `1.`",
+                "The items are numbered sequentially starting from 1 regardless of what numbers are typed",
+                "The list fails to render because only sequential numbers are valid",
+                "The items are displayed in reverse order to match the source"
+              ],
+              "answer": 1,
+              "explanation": "Markdown only uses the first number you write and then generates the sequence automatically. Writing `1.` for every item is a valid shortcut that renders as 1, 2, 3, and so on."
+            },
+            {
+              "q": "To create a nested sub-item under a list item in Markdown, the sub-item must be indented by how much?",
+              "options": [
+                "One space from the parent item",
+                "Two spaces from the start of the line",
+                "Four spaces or one tab from the start of the line",
+                "A greater-than symbol before the text"
+              ],
+              "answer": 2,
+              "explanation": "Markdown requires four spaces or one tab to create a nested list level. Less indentation is typically not recognized as nesting by most Markdown processors."
+            }
+          ]
+        },
+        {
+          "id": "md-links-images",
+          "title": "Links, Images, and Block Quotes",
+          "type": "document",
+          "content": "Three more formatting tools round out the core syntax: links, images, and block quotes.\n\nA hyperlink in Markdown uses two parts next to each other. First, the display text goes inside square brackets. Then, immediately after with no space, the URL goes inside parentheses. So the pattern is `[display text](URL)`.\n\nAn image uses almost the same syntax, but with an exclamation mark `!` at the very front. The pattern is `![alt text](path/to/image.png)`. The alt text inside the brackets describes the image for screen readers and appears when the image fails to load. In academic Markdown you use this for figures. The path can be a relative file path or a URL.\n\nA block quote is for quoting a source directly. You put a `>` character and a space at the start of the line. Everything on that line becomes a visually indented quotation block. For multi-paragraph quotes, start each paragraph line with `>`.\n\nIn academic writing, block quotes are used for long direct quotations (usually more than four lines, following MLA or APA conventions). Short quotations stay inline with quotation marks.\n\nNote that these are display-level formatting tools. Proper academic citations require additional tools we will cover in the citations module. A block quote shows visual indentation but does not automatically generate a citation.",
+          "examples": [
+            {
+              "label": "Hyperlink syntax",
+              "code": "See the [Pandoc documentation](https://pandoc.org) for more details.\n\nThe data is available at [this repository](https://github.com/example/data)."
+            },
+            {
+              "label": "Image syntax",
+              "code": "![Figure 1: Survey response distribution](figures/survey_chart.png)\n\n![Diagram of the experimental setup](images/lab_diagram.jpg)"
+            },
+            {
+              "label": "Block quote for direct quotation",
+              "code": "> Knowledge is always knowledge from a particular point of view.\n> The claim to objectivity conceals more than it reveals.\n\nThis challenges the positivist assumption embedded in early frameworks."
+            }
+          ],
+          "questions": [
+            {
+              "q": "Which Markdown syntax correctly creates a clickable link with the display text 'Methodology' pointing to the URL `https://example.com/methods`?",
+              "options": [
+                "`(Methodology)[https://example.com/methods]`",
+                "`![Methodology](https://example.com/methods)`",
+                "`[Methodology](https://example.com/methods)`",
+                "`[https://example.com/methods](Methodology)`"
+              ],
+              "answer": 2,
+              "explanation": "The correct link syntax is `[display text](URL)`. The square brackets hold what the reader sees, and the parentheses hold the destination. Swapping them or adding `!` changes the meaning entirely."
+            },
+            {
+              "q": "What is the difference in Markdown between `[Figure](path.png)` and `![Figure](path.png)`?",
+              "options": [
+                "The first opens the image in a new tab while the second embeds it inline",
+                "The first creates a hyperlink to the file while the second embeds the image in the document",
+                "There is no functional difference between the two syntaxes",
+                "The first syntax is for vector images and the second is for raster images"
+              ],
+              "answer": 1,
+              "explanation": "Adding `!` at the start turns a link into an embedded image. Without `!`, Markdown creates a hyperlink. With `!`, Markdown renders the image directly in the document."
+            }
+          ]
+        },
+        {
+          "id": "md-fill-blank-syntax",
+          "title": "Core Syntax Fill in the Blank",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete the Markdown syntax for a hyperlink. The display text is 'References' and the URL is `https://zotero.org`.",
+              "code": "___(References)(https://zotero.org)",
+              "blanks": "[",
+              "explanation": "A Markdown link starts with an opening square bracket `[`. The full pattern is `[display text](URL)`. The square bracket opens the display text portion."
+            },
+            {
+              "prompt": "Complete the Markdown syntax to embed an image. The alt text is 'Chart' and the file path is `results.png`.",
+              "code": "___[Chart](results.png)",
+              "blanks": "!",
+              "explanation": "An exclamation mark `!` before the square bracket is what turns a link into an embedded image. Without it, you would create a clickable hyperlink to the image file instead."
+            },
+            {
+              "prompt": "Complete the Markdown syntax to create a block quote from the text 'Data does not speak for itself.'",
+              "code": "___ Data does not speak for itself.",
+              "blanks": ">",
+              "explanation": "A `>` character followed by a space at the start of a line creates a block quote. This is the standard way to display extended direct quotations in Markdown."
+            }
+          ]
+        },
+        {
+          "id": "md-code-blocks-tables",
+          "title": "Code Blocks, Horizontal Rules, and Tables",
+          "type": "document",
+          "content": "Three more structural elements complete the core toolkit: fenced code blocks, horizontal rules, and tables.\n\nA fenced code block is for displaying multi-line code or any content that should appear exactly as typed, with no Markdown rendering. You create it by putting three backtick characters on a line by themselves, then your content, then three more backtick characters on another line by themselves. You can add a language name after the opening backticks to enable syntax highlighting in tools that support it.\n\nA horizontal rule is a visual divider. You make one by putting three or more dashes `---`, asterisks `***`, or underscores `___` on a line by themselves. In academic papers this is not used often, but it appears in templates and document separators.\n\nBe careful: three dashes right after a line of text creates a second-level heading using the older Setext heading style, not a horizontal rule. To be safe, always leave a blank line before three dashes if you intend a rule.\n\nA table uses pipe characters `|` to separate columns and hyphens `-` in the second row to define the header separator. The second row with hyphens is required. Without it, the table will not render.\n\nYou can control column alignment in the header separator row. A colon on the left `:---` means left-align. A colon on the right `---:` means right-align. Colons on both sides `:---:` means center-align. The default when no colons are present is left-align.\n\nFor academic writing, tables are excellent for presenting comparative data, survey results, and variable definitions. Keep them clear and label every column.",
+          "examples": [
+            {
+              "label": "Fenced code block with language hint",
+              "code": "```python\nimport pandas as pd\ndf = pd.read_csv('data.csv')\nprint(df.head())\n```"
+            },
+            {
+              "label": "Table with alignment",
+              "code": "| Variable     | Type        | Mean  |\n|:-------------|:------------|------:|\n| Age          | Continuous  | 34.2  |\n| Education    | Ordinal     | 3.1   |\n| Income Level | Categorical | N/A   |"
+            },
+            {
+              "label": "Horizontal rule (with blank line before it)",
+              "code": "End of section.\n\n---\n\nBeginning of next section."
+            }
+          ],
+          "questions": [
+            {
+              "q": "In a Markdown table, what is the purpose of the second row that contains hyphens like `|---|---|---|`?",
+              "options": [
+                "It is a visual decoration that can be omitted if the table looks fine without it",
+                "It defines the table header separator and is required for the table to render",
+                "It sets the minimum width of each column in pixels",
+                "It marks the last row of data before a table footer"
+              ],
+              "answer": 1,
+              "explanation": "The hyphen row separates the header from the body and is required syntax. Without it, most Markdown processors will not recognize the structure as a table at all."
+            },
+            {
+              "q": "A researcher adds `:---:` in a table column separator. What alignment does this apply to that column?",
+              "options": [
+                "Left alignment",
+                "Right alignment",
+                "Center alignment",
+                "Justified alignment"
+              ],
+              "answer": 2,
+              "explanation": "Colons on both sides of the hyphens in the separator row set center alignment for that column. Left colon only means left-align, right colon only means right-align."
+            }
+          ]
+        },
+        {
+          "id": "md-codefixlesson",
+          "title": "Fix the Broken Table",
+          "type": "code_fix",
+          "prompt": "This Markdown table is missing a critical component that prevents it from rendering as a table at all. Find and fix the error so the table displays correctly.",
+          "initialCode": "| Participant | Age | Score |\n| Alice       | 24  | 87    |\n| Bob         | 31  | 92    |\n| Carol       | 28  | 78    |",
+          "targetFix": "|:------------|:----|------:|"
+        }
+      ]
+    },
+    {
+      "title": "Section 3: Pandoc and Document Conversion",
+      "lessons": [
+        {
+          "id": "md-pandoc-intro",
+          "title": "What Pandoc Does and How to Use It",
+          "type": "document",
+          "content": "Pandoc is a command-line tool that converts documents from one format to another. It is often called the universal document converter. You write your Markdown file, then run Pandoc to turn it into a PDF, a Word document, a presentation, an HTML file, or many other formats.\n\nThe basic pattern of a Pandoc command is: `pandoc input.md -o output.pdf`\n\nThe word `pandoc` calls the tool. `input.md` is your source file. `-o` means 'output to'. `output.pdf` is the file you want to create. Pandoc figures out the format from the file extension.\n\nHere are the output formats you will use most in academic contexts:\n\n`output.pdf` generates a PDF through a LaTeX engine installed on your system. This requires a LaTeX distribution like TeX Live or MiKTeX.\n\n`output.docx` generates a Word document. This is extremely useful for collaborating with people who do not use Markdown.\n\n`output.html` generates a standalone webpage.\n\n`output.pptx` generates a PowerPoint presentation where each heading becomes a slide.\n\nYou can also pass extra options to Pandoc. The most important for academic work is `--citeproc`, which processes citations. We will cover that in the citations section.\n\nFor PDF output, Pandoc has a default visual style. You can override it with a template or by passing options like `--pdf-engine=xelatex` to use a different LaTeX engine, which gives you access to system fonts.\n\nThe key mental model: Pandoc reads your Markdown source and converts it into a target format. Your writing stays in one place. The output format is chosen at conversion time, not at writing time.",
+          "examples": [
+            {
+              "label": "Common Pandoc conversions",
+              "code": "# Convert Markdown to PDF\npandoc thesis.md -o thesis.pdf\n\n# Convert Markdown to Word\npandoc thesis.md -o thesis.docx\n\n# Convert Markdown to HTML\npandoc thesis.md -o thesis.html\n\n# Convert Markdown to PowerPoint\npandoc slides.md -o slides.pptx"
+            },
+            {
+              "label": "Pandoc with extra options",
+              "code": "# Use XeLaTeX engine and add a table of contents\npandoc thesis.md -o thesis.pdf --pdf-engine=xelatex --toc\n\n# Process citations while converting\npandoc thesis.md -o thesis.pdf --citeproc --bibliography=refs.bib"
+            }
+          ],
+          "questions": [
+            {
+              "q": "A student runs `pandoc paper.md -o paper.docx`. What does the `-o` flag tell Pandoc to do?",
+              "options": [
+                "Override the default Markdown flavor with a custom one",
+                "Open the output file automatically after conversion",
+                "Write the converted result to the specified output file",
+                "Use the original file as a template for formatting"
+              ],
+              "answer": 2,
+              "explanation": "The `-o` flag stands for 'output'. It tells Pandoc where to write the converted result and what format to use, which Pandoc determines from the file extension."
+            },
+            {
+              "q": "What additional software does Pandoc require to produce PDF output from a Markdown file?",
+              "options": [
+                "A web browser with PDF printing capability",
+                "A LaTeX distribution installed on the same system",
+                "The Microsoft Office suite for formatting support",
+                "A cloud API key for remote rendering"
+              ],
+              "answer": 1,
+              "explanation": "Pandoc generates PDFs by first converting Markdown to LaTeX and then using a LaTeX engine to compile the PDF. A LaTeX distribution like TeX Live or MiKTeX must be installed."
+            },
+            {
+              "q": "A researcher has one Markdown file and needs to submit it as a PDF to a journal and as a Word document to a co-author. What is the most efficient approach using Pandoc?",
+              "options": [
+                "Write two separate versions of the document in different formats",
+                "Run two Pandoc commands from the same source `.md` file with different output extensions",
+                "Convert the PDF to Word after Pandoc generates the PDF",
+                "Copy the Markdown content into Word and use its built-in PDF exporter"
+              ],
+              "answer": 1,
+              "explanation": "This is one of Pandoc's core strengths. One source file can be converted to multiple formats with separate commands. The Markdown source stays unchanged between both conversions."
+            }
+          ]
+        },
+        {
+          "id": "md-yaml-frontmatter",
+          "title": "YAML Front Matter for Document Metadata",
+          "type": "document",
+          "content": "When you convert a Markdown file with Pandoc, it needs to know things like the document title, your name, and the date. You do not type these as regular paragraphs. Instead, you put them in a metadata block at the very top of the file using YAML front matter.\n\nYAML front matter starts with three dashes `---` on the very first line of the file. Then you write key-value pairs. Then you close it with three more dashes `---`. Everything between those two sets of dashes is metadata that Pandoc reads and uses when generating output.\n\nThe most common academic metadata fields are `title`, `author`, `date`, and `abstract`.\n\nFor the `title` field, if your title contains a colon, you need to wrap the entire title in quotes. Otherwise YAML treats the colon as a separator and misreads the field.\n\nFor the `author` field, you can have a single author as a plain string or multiple authors as a YAML list.\n\nFor the `date` field, you can type a date directly or use `today` in some Pandoc templates to auto-fill the current date.\n\nPandoc uses this metadata to populate the title page, headers, footers, and other template-driven content. Different output formats use the metadata differently. A PDF title page looks different from an HTML title. But the metadata you write is the same regardless.\n\nOne important rule: the `---` block must be at the very top of the file. If there is any text or blank lines before it, Pandoc will not recognize it as metadata.",
+          "examples": [
+            {
+              "label": "Basic YAML front matter",
+              "code": "---\ntitle: Effects of Sleep Deprivation on Academic Performance\nauthor: Jordan Lee\ndate: 2024-03-15\n---\n\n# Introduction\n\nSleep deprivation has been linked to..."
+            },
+            {
+              "label": "Multiple authors and an abstract",
+              "code": "---\ntitle: \"A Study of Language Acquisition: Cross-Linguistic Patterns\"\nauthor:\n  - Jordan Lee\n  - Sam Patel\n  - Robin Chen\ndate: 2024-03-15\nabstract: |\n  This paper examines patterns of language acquisition\n  across three language families. We find that...\n---"
+            }
+          ],
+          "questions": [
+            {
+              "q": "In a Pandoc Markdown document, where must the YAML front matter block be located for Pandoc to recognize it as metadata?",
+              "options": [
+                "Anywhere in the document as long as it is enclosed in `---` delimiters",
+                "After the first heading but before any body paragraphs",
+                "At the very beginning of the file, starting on line 1 with `---`",
+                "In a separate `.yaml` file in the same directory as the `.md` file"
+              ],
+              "answer": 2,
+              "explanation": "YAML front matter must start on the very first line of the file. Any text or blank lines before the opening `---` will cause Pandoc to skip the metadata block entirely."
+            },
+            {
+              "q": "A student writes `title: Methods: A Comparative Analysis` in their YAML block. Why might this cause a problem?",
+              "options": [
+                "YAML does not allow titles longer than five words",
+                "The colon inside the title value will be misread by YAML as a key-value separator",
+                "Pandoc requires titles to be written in lowercase inside YAML",
+                "A title field cannot appear before the author field in YAML"
+              ],
+              "answer": 1,
+              "explanation": "YAML uses the colon as a separator between a key and its value. A colon inside the title text confuses the parser. Wrapping the value in quotes like `title: \"Methods: A Comparative Analysis\"` fixes this."
+            }
+          ]
+        },
+        {
+          "id": "md-yaml-spot-bug",
+          "title": "Spot the Bug: YAML Front Matter",
+          "type": "spot_bug",
+          "prompt": "This YAML front matter block has one error that will cause Pandoc to misread the title field. Click the line containing the bug.",
+          "code": "---\ntitle: Language Acquisition: A Review of the Literature\nauthor: Sam Rivera\ndate: 2024-05-01\nabstract: This paper reviews findings from 2010 to 2024.\n---",
+          "bugLine": 2,
+          "explanation": "Line 2 contains a colon inside the title text without wrapping the value in quotes. YAML treats the first colon as a key-value separator, which breaks the title into two parts. The fix is: `title: \"Language Acquisition: A Review of the Literature\"`"
+        },
+        {
+          "id": "md-challenge-pandoc-command",
+          "title": "Write a Pandoc Command",
+          "type": "challenge",
+          "prompt": "Write a single Pandoc command that converts a file called `thesis.md` into a Word document called `thesis.docx` while also processing citations using the `--citeproc` flag.\n\nYour command should:\n- Start with `pandoc`\n- Specify the input file\n- Use `-o` to name the output file\n- Include the `--citeproc` flag\n\nThe flags can appear in any order after `pandoc`.",
+          "validation": [
+            {
+              "rule": "^pandoc",
+              "message": "Your command needs to start with `pandoc`."
+            },
+            {
+              "rule": "thesis\\.md",
+              "message": "Include the input file `thesis.md` in your command."
+            },
+            {
+              "rule": "-o\\s+thesis\\.docx|thesis\\.docx",
+              "message": "Use `-o thesis.docx` to specify the output file."
+            },
+            {
+              "rule": "--citeproc",
+              "message": "Add the `--citeproc` flag to enable citation processing."
+            }
+          ],
+          "solution": "pandoc thesis.md -o thesis.docx --citeproc"
+        }
+      ]
+    },
+    {
+      "title": "Section 4: Citations and Bibliographies",
+      "lessons": [
+        {
+          "id": "md-bibtex-intro",
+          "title": "BibTeX and Citation Keys",
+          "type": "document",
+          "content": "Academic writing requires citations. In Markdown-based workflows, citations are managed through a separate bibliography file, most commonly in the BibTeX format with the extension `.bib`.\n\nA `.bib` file is a plain-text file that stores reference information in a structured format. Each entry starts with an `@` symbol followed by the reference type, like `@article`, `@book`, or `@inproceedings`. Then comes an opening curly brace, then a citation key, then a comma, then a list of fields.\n\nThe citation key is the critical piece. It is a short identifier you choose when you add a source to your `.bib` file. It has to be unique within the file. When you want to cite that source inside your Markdown document, you use that same key.\n\nCommon conventions for citation keys are author-year format like `smith2019` or `jones2022memory`. Some people add a word from the title to disambiguate like `lee2020sleep`. The convention you pick does not matter as long as you are consistent and the key has no spaces.\n\nTypical fields in a `.bib` entry include `author`, `title`, `year`, `journal` (for articles), `volume`, `number`, `pages`, and `doi`. The minimum fields needed vary by entry type, but `author`, `title`, and `year` are almost always required.\n\nYou do not have to write `.bib` files by hand. Tools like Zotero and Mendeley can export your library as a `.bib` file automatically. You just maintain your references in the tool and export when you need to compile your document.",
+          "examples": [
+            {
+              "label": "A journal article entry in BibTeX",
+              "code": "@article{smith2019,\n  author  = {Smith, Jane and Patel, Raj},\n  title   = {Sleep deprivation and working memory},\n  journal = {Journal of Cognitive Science},\n  year    = {2019},\n  volume  = {14},\n  number  = {3},\n  pages   = {45--67},\n  doi     = {10.1000/jcs.2019.14.3}\n}"
+            },
+            {
+              "label": "A book entry in BibTeX",
+              "code": "@book{jones2020,\n  author    = {Jones, Michael},\n  title     = {Foundations of Academic Writing},\n  publisher = {University Press},\n  year      = {2020},\n  address   = {New York}\n}"
+            }
+          ],
+          "questions": [
+            {
+              "q": "In a BibTeX entry, what is the purpose of the citation key, such as `smith2019` in `@article{smith2019, ...}`?",
+              "options": [
+                "It specifies the journal database where the article is indexed",
+                "It is a unique identifier used to reference that source in Markdown documents",
+                "It sets the display format of the citation in the output",
+                "It indicates the year the entry was added to the `.bib` file"
+              ],
+              "answer": 1,
+              "explanation": "The citation key is the identifier you use when you write a citation in your Markdown text. When Pandoc processes the document, it matches your in-text key to the full entry in the `.bib` file."
+            },
+            {
+              "q": "Which of the following is a valid BibTeX citation key for an article written by Torres in 2021?",
+              "options": [
+                "`Torres 2021`",
+                "`torres2021`",
+                "`@torres2021`",
+                "`[Torres, 2021]`"
+              ],
+              "answer": 1,
+              "explanation": "Citation keys cannot contain spaces or special characters like `@` or brackets. `torres2021` is a clean, lowercase author-year key that follows common conventions and will work correctly."
+            },
+            {
+              "q": "What entry type would you use in BibTeX for a chapter published in an edited academic book?",
+              "options": [
+                "`@article`",
+                "`@book`",
+                "`@incollection`",
+                "`@misc`"
+              ],
+              "answer": 2,
+              "explanation": "`@incollection` is the BibTeX type for a chapter or section within a larger edited book. `@article` is for journal articles, `@book` is for whole books, and `@misc` is a catch-all for uncategorized sources."
+            }
+          ]
+        },
+        {
+          "id": "md-pandoc-citations",
+          "title": "Writing Citations in Pandoc Markdown",
+          "type": "document",
+          "content": "Now that you know what a citation key is, here is how you use it inside your Markdown document.\n\nIn Pandoc Markdown, you write an in-text citation by putting the citation key inside square brackets with an `@` sign before the key: `[@smith2019]`.\n\nWhen Pandoc processes the document with `--citeproc`, it replaces `[@smith2019]` with the properly formatted citation, like `(Smith, 2019)` for APA or `[1]` for IEEE, depending on the citation style you have selected.\n\nHere are the main citation patterns:\n\nA standard parenthetical citation uses `[@key]`. This produces something like `(Smith, 2019)`.\n\nAn author-in-text citation uses `@key` without brackets. This produces something like `Smith (2019)`. Use this when you name the author in your sentence.\n\nA citation with a page number uses `[@key, p. 45]` or `[@key, pp. 45--67]`. This produces `(Smith, 2019, p. 45)`.\n\nA citation with multiple sources uses `[@key1; @key2; @key3]` with the sources separated by semicolons inside the same brackets.\n\nAt the end of your document, Pandoc automatically generates the full bibliography from all the sources you cited. You do not manually write the reference list. You just make sure every cited key exists in your `.bib` file.\n\nYou also need to add the bibliography file path to your YAML front matter: `bibliography: refs.bib`. Without this, Pandoc does not know which `.bib` file to use.",
+          "examples": [
+            {
+              "label": "Citation patterns in context",
+              "code": "Sleep deprivation impairs working memory [@smith2019].\n\n@jones2020 argues that academic writing is a learnable skill [p. 12].\n\nMultiple studies confirm this pattern [@smith2019; @lee2021; @torres2022]."
+            },
+            {
+              "label": "YAML with bibliography declared",
+              "code": "---\ntitle: My Research Paper\nauthor: Robin Nguyen\ndate: 2024-04-01\nbibliography: references.bib\ncsl: apa.csl\n---"
+            }
+          ],
+          "questions": [
+            {
+              "q": "A student wants to cite two sources in one parenthetical note: a paper by Xu from 2020 with key `xu2020` and a paper by Walsh from 2018 with key `walsh2018`. Which syntax is correct?",
+              "options": [
+                "`[@xu2020] [@walsh2018]`",
+                "`[@xu2020, @walsh2018]`",
+                "`[@xu2020; @walsh2018]`",
+                "`[@xu2020 + @walsh2018]`"
+              ],
+              "answer": 2,
+              "explanation": "Multiple sources in one parenthetical citation are separated by semicolons inside a single pair of brackets. The format is `[@key1; @key2]`."
+            },
+            {
+              "q": "Which YAML front matter field tells Pandoc which `.bib` file to use when processing citations?",
+              "options": [
+                "`citations: refs.bib`",
+                "`references: refs.bib`",
+                "`bibliography: refs.bib`",
+                "`sources: refs.bib`"
+              ],
+              "answer": 2,
+              "explanation": "The `bibliography` field in YAML front matter points Pandoc to the `.bib` file that contains your reference data. Without this field, `--citeproc` has no source to pull citation data from."
+            },
+            {
+              "q": "A researcher writes `@chen2022 found that reaction times increased significantly`. What does the `@` without brackets produce when Pandoc renders this?",
+              "options": [
+                "A footnote at the bottom of the page with the full citation",
+                "An author-in-text citation where the author's name appears inline followed by the year in parentheses",
+                "A hyperlink to the source in the bibliography list",
+                "A parenthetical citation in the same format as `[@chen2022]`"
+              ],
+              "answer": 1,
+              "explanation": "Using `@key` without brackets produces an author-in-text citation. It renders the author name as part of the sentence flow with the year in parentheses, like `Chen (2022) found that...`"
+            }
+          ]
+        },
+        {
+          "id": "md-bibtex-fill-blank",
+          "title": "BibTeX Entry Practice",
+          "type": "fill_blank",
+          "questions": [
+            {
+              "prompt": "Complete the BibTeX entry type declaration for a journal article with the citation key `miller2023`.",
+              "code": "@___(miller2023,\n  author  = {Miller, Alex},\n  title   = {Cognitive load in note-taking},\n  journal = {Memory Studies},\n  year    = {2023}\n}",
+              "blanks": "article",
+              "explanation": "Journal articles use the `@article` entry type in BibTeX. The type goes right after the `@` symbol, before the opening brace and citation key."
+            },
+            {
+              "prompt": "Complete the Pandoc Markdown citation syntax to produce a parenthetical citation using the key `wang2021` with a page reference to page 88.",
+              "code": "This conclusion has been challenged ___@wang2021, p. 88].",
+              "blanks": "[@",
+              "explanation": "A parenthetical citation in Pandoc Markdown opens with `[@` and closes with `]`. To add a page number, include `, p. 88` after the key inside the same brackets."
+            },
+            {
+              "prompt": "Complete the YAML front matter field that specifies the citation style sheet file `chicago-author-date.csl`.",
+              "code": "---\nbibliography: sources.bib\n___: chicago-author-date.csl\n---",
+              "blanks": "csl",
+              "explanation": "The `csl` field points to a Citation Style Language file that controls the visual format of your citations and bibliography. Without it, Pandoc falls back to a default style."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Section 5: Advanced Academic Features",
+      "lessons": [
+        {
+          "id": "md-footnotes-extensions",
+          "title": "Footnotes and Definition Lists",
+          "type": "document",
+          "content": "Pandoc Markdown supports several extensions beyond core Markdown that are essential for academic writing. The two most important are footnotes and definition lists.\n\nA footnote in Pandoc Markdown uses a caret symbol inside square brackets: `[^1]`. You put this marker in the text where you want the footnote number to appear. Then, anywhere else in the document, you define the footnote content by writing `[^1]:` followed by the footnote text. Pandoc collects all footnotes and renders them at the bottom of the page or section.\n\nYou can also use descriptive labels instead of numbers: `[^method_note]`. This is often clearer when you have many footnotes because you do not have to worry about numbering them in order. Pandoc handles the numbering automatically.\n\nFootnotes are great for clarifications, asides, and source commentary that would interrupt the flow of your main argument if placed inline.\n\nA definition list is used for presenting terms and their definitions in a structured way, which is very useful in methods sections and glossaries. In Pandoc Markdown, you write the term on its own line, then a colon and space at the start of the next line, followed by the definition.\n\nYou can have multiple definitions for one term by putting additional lines starting with `:` right after the first definition.\n\nNote that both footnotes and definition lists are Pandoc Markdown extensions. They will not work in tools that only support CommonMark or GitHub Flavored Markdown.",
+          "examples": [
+            {
+              "label": "Footnotes with numeric and descriptive labels",
+              "code": "The results were statistically significant.[^1]\n\nParticipants were recruited via convenience sampling.[^recruitment]\n\n[^1]: p < 0.05, two-tailed t-test.\n[^recruitment]: See Appendix A for full recruitment protocol."
+            },
+            {
+              "label": "Definition list",
+              "code": "Validity\n:   The degree to which a test measures what it claims to measure.\n\nReliability\n:   The consistency of a measurement across repeated administrations.\n\nEffect Size\n:   A quantitative measure of the magnitude of a difference or relationship."
+            }
+          ],
+          "questions": [
+            {
+              "q": "In Pandoc Markdown, which syntax correctly places a footnote marker in the body text and then defines the footnote content?",
+              "options": [
+                "Marker: `(fn1)` in text; Definition: `fn1: footnote content`",
+                "Marker: `[^1]` in text; Definition: `[^1]: footnote content`",
+                "Marker: `*1*` in text; Definition: `*1* footnote content`",
+                "Marker: `{note1}` in text; Definition: `{note1} footnote content`"
+              ],
+              "answer": 1,
+              "explanation": "Pandoc footnotes use `[^label]` as the in-text marker and `[^label]:` followed by content as the definition. The caret `^` inside square brackets is what signals a footnote to Pandoc."
+            },
+            {
+              "q": "What is one advantage of using descriptive labels like `[^recruitment]` instead of numeric labels like `[^1]` for footnotes?",
+              "options": [
+                "Descriptive labels render in a larger font than numeric labels in PDF output",
+                "Descriptive labels allow multiple definitions per footnote unlike numeric labels",
+                "Descriptive labels make the source file readable without needing to count footnote numbers in order",
+                "Pandoc only processes descriptive labels and ignores numeric footnote labels"
+              ],
+              "answer": 2,
+              "explanation": "Descriptive labels make the source file more readable because you can see what the footnote is about without hunting for the matching number. Pandoc handles the final numbering automatically either way."
+            }
+          ]
+        },
+        {
+          "id": "md-challenge-footnote",
+          "title": "Write a Footnote",
+          "type": "challenge",
+          "prompt": "Write a short Pandoc Markdown paragraph that does all three of the following:\n\n1. Contains the sentence: `The sample size was sufficient for the analysis.`\n2. Places a footnote marker immediately after the word `sufficient` using the label `size_note`\n3. Defines the footnote somewhere after the paragraph with the content: `n=240, exceeding the minimum threshold of 200 for this analysis.`\n\nThe footnote marker and definition must use the Pandoc footnote syntax with a caret `^` inside square brackets.",
+          "validation": [
+            {
+              "rule": "The sample size was sufficient for the analysis",
+              "message": "Include the required sentence in your response."
+            },
+            {
+              "rule": "\\[\\^size_note\\]",
+              "message": "Place a footnote marker `[^size_note]` somewhere in the paragraph text."
+            },
+            {
+              "rule": "\\[\\^size_note\\]:",
+              "message": "Define the footnote using `[^size_note]:` followed by the footnote content."
+            },
+            {
+              "rule": "n=240",
+              "message": "The footnote definition should contain the text starting with `n=240`."
+            }
+          ],
+          "solution": "The sample size was sufficient[^size_note] for the analysis.\n\n[^size_note]: n=240, exceeding the minimum threshold of 200 for this analysis."
+        },
+        {
+          "id": "md-document-structure",
+          "title": "Structuring Long Academic Documents",
+          "type": "document",
+          "content": "When you are writing something long like a thesis or a research paper, how you organize your Markdown file matters a lot. There are two main approaches: a single large file, or multiple files joined by Pandoc.\n\nA single file works well for papers under about 10,000 words. You just use headings to divide the document into sections. Pandoc converts the whole thing in one command.\n\nFor longer documents like theses, a multi-file approach is much more manageable. You break the document into separate `.md` files, one per chapter. Then you pass all the files to Pandoc in order: `pandoc intro.md methods.md results.md discussion.md -o thesis.pdf`. Pandoc concatenates them and processes citations across the whole document.\n\nIn a multi-file setup, you usually keep your YAML front matter in a separate file, often called `metadata.yaml`, and pass it with the `-d` flag or by listing it first.\n\nFor very large projects, a `Makefile` is useful. A Makefile lets you define the Pandoc command once and run it with a single `make` command. This prevents you from retyping the long command every time.\n\nA standard academic Markdown project folder looks something like this: your main `.md` files in the root or a `chapters` folder, a `refs.bib` file for bibliography, a `figures` folder for images, and possibly a `templates` folder for custom Pandoc templates.\n\nThis kind of plain-text folder structure is easy to put under version control with Git. Every change to any file is tracked. You can roll back to any earlier version of your paper. That is essentially impossible with word processors.",
+          "examples": [
+            {
+              "label": "Multi-file Pandoc command",
+              "code": "pandoc metadata.yaml intro.md lit_review.md methods.md \\\n  results.md discussion.md conclusion.md \\\n  -o thesis.pdf --citeproc --bibliography=refs.bib --toc"
+            },
+            {
+              "label": "Suggested project folder structure",
+              "code": "thesis/\n  metadata.yaml\n  01_intro.md\n  02_literature.md\n  03_methods.md\n  04_results.md\n  05_discussion.md\n  06_conclusion.md\n  refs.bib\n  figures/\n    fig1_chart.png\n    fig2_diagram.png"
+            }
+          ],
+          "questions": [
+            {
+              "q": "When passing multiple Markdown files to Pandoc in a single command, what does Pandoc do with them?",
+              "options": [
+                "It converts each file separately and produces multiple output documents",
+                "It uses only the first file and ignores the rest",
+                "It concatenates the files in the order given and produces a single output document",
+                "It merges the files alphabetically regardless of the order specified in the command"
+              ],
+              "answer": 2,
+              "explanation": "Pandoc processes multiple input files by joining them in the order you specify on the command line. This makes chapter-by-chapter organization easy while still producing a single unified output."
+            },
+            {
+              "q": "What is the primary benefit of keeping a thesis project as plain-text Markdown files under Git version control instead of a single Word document?",
+              "options": [
+                "Word processors cannot save files with more than 100 pages",
+                "Git tracks every line-level change so any version of the text can be recovered",
+                "Markdown files are legally required for thesis submission at most universities",
+                "Git automatically formats the document to meet journal style requirements"
+              ],
+              "answer": 1,
+              "explanation": "Git tracks changes at the text level. Because Markdown is plain text, you can see exactly what changed in any revision, compare versions, and roll back to any previous state of your work."
+            }
+          ]
+        },
+        {
+          "id": "md-codefix-yaml",
+          "title": "Fix the Broken YAML Front Matter",
+          "type": "code_fix",
+          "prompt": "This Pandoc Markdown document has a YAML front matter block with a structural error. The `abstract` field value contains a colon, which YAML will misread without proper quoting. Fix the error so the title and abstract parse correctly.",
+          "initialCode": "---\ntitle: Memory Consolidation: A Review\nauthor: Sam Torres\ndate: 2024-01-10\nabstract: This paper reviews Memory Consolidation: Theory and Evidence.\n---\n\n# Introduction\n\nMemory consolidation is the process by which...",
+          "targetFix": "abstract: \"This paper reviews Memory Consolidation: Theory and Evidence.\""
+        },
+        {
+          "id": "md-practice-review",
+          "title": "Module Review Quiz",
+          "type": "document",
+          "content": "You have now covered the full Markdown and plain-text academic workflow. Here is a quick summary of what you know.\n\nYou know core Markdown syntax: headings with `#`, bold with `**`, italic with `*`, inline code with backticks, links with `[text](url)`, images with `![alt](path)`, block quotes with `>`, unordered lists with `-`, ordered lists with numbers, fenced code blocks with triple backticks, and tables with pipes.\n\nYou know Pandoc: how to convert between formats with `pandoc input.md -o output.ext`, how to use YAML front matter for metadata, and how to add `--citeproc`, `--toc`, and `--bibliography` flags.\n\nYou know BibTeX: how to structure a `.bib` file, what a citation key is, and how to write in-text citations in Pandoc Markdown with `[@key]` and `@key`.\n\nYou know Pandoc extensions: footnotes with `[^label]` and definition lists.\n\nYou know project organization: single-file versus multi-file structures and the benefit of version control.\n\nThis is enough to write a complete academic paper entirely in plain text and convert it to any format you need. The next step is practice: pick a real writing task and do it entirely in Markdown from the first sentence.",
+          "questions": [
+            {
+              "q": "A student finishes writing a 40-page thesis in Pandoc Markdown. They need to submit a PDF to their advisor and a `.docx` to a co-author for editing. Which approach correctly achieves both outputs from the same source?",
+              "options": [
+                "Run `pandoc thesis.md -o thesis.pdf` and then open the PDF and save it as `.docx` from a PDF viewer",
+                "Run `pandoc thesis.md -o thesis.pdf` once and `pandoc thesis.md -o thesis.docx` separately from the same `.md` file",
+                "Duplicate the `.md` file into two copies and convert each separately with different file extensions",
+                "Use Pandoc's `--both` flag to generate PDF and `.docx` simultaneously in a single command"
+              ],
+              "answer": 1,
+              "explanation": "This is Pandoc's core value proposition. One source file can produce multiple output formats. Run two separate commands with different `-o` targets. No duplication required, no flag for simultaneous multi-format output."
+            },
+            {
+              "q": "A researcher adds `[@xu2020; @chen2021]` in their Pandoc Markdown document but forgets to add `bibliography: refs.bib` to their YAML front matter. What happens when they run `pandoc paper.md -o paper.pdf --citeproc`?",
+              "options": [
+                "Pandoc automatically searches the current folder for any `.bib` file and uses it",
+                "The citation markers appear as literal text like `[@xu2020; @chen2021]` or are left unresolved without a reference list",
+                "Pandoc stops immediately and refuses to produce any output",
+                "The citations are replaced with placeholder text like `[CITATION MISSING]` in the output"
+              ],
+              "answer": 1,
+              "explanation": "Without a `bibliography` field pointing to a `.bib` file, Pandoc does not know where to find citation data. The `--citeproc` flag has nothing to work with, so citations remain unresolved in the output."
+            },
+            {
+              "q": "Which of the following Markdown elements is specific to Pandoc Markdown and will not render correctly in standard CommonMark processors?",
+              "options": [
+                "A fenced code block using triple backticks",
+                "A hyperlink using `[text](url)` syntax",
+                "A footnote using `[^label]` marker and `[^label]: content` definition",
+                "An unordered list using `-` characters"
+              ],
+              "answer": 2,
+              "explanation": "Footnotes are a Pandoc Markdown extension and are not part of the CommonMark specification. Code blocks, links, and unordered lists are all core CommonMark syntax that works in any compliant processor."
+            },
+            {
+              "q": "A researcher writes `@torres2021 demonstrated that attention spans vary significantly by task type`. What does Pandoc render this as in APA style output?",
+              "options": [
+                "`(Torres, 2021) demonstrated that attention spans vary significantly by task type`",
+                "`Torres (2021) demonstrated that attention spans vary significantly by task type`",
+                "`[Torres, 2021] demonstrated that attention spans vary significantly by task type`",
+                "`Torres, 2021 demonstrated that attention spans vary significantly by task type`"
+              ],
+              "answer": 1,
+              "explanation": "Using `@key` without brackets produces an author-in-text citation, rendering the author name inline with the year in parentheses immediately after. This matches the APA narrative citation format."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
