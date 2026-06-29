@@ -478,7 +478,6 @@ async function renderExplorer() {
         card.dataset.category = entry.category || "";
         card.dataset.difficulty = entry.difficulty || "";
         card.style.cssText = "display:flex;flex-direction:column;";
-        const actionWrapper = document.createElement("div");
 
         const diffBadge = entry.difficulty
             ? `<span class="diff-badge ${entry.difficulty}">${entry.difficulty}</span>` : "";
@@ -501,8 +500,11 @@ async function renderExplorer() {
             ${progressHtml}
         `;
 
+        const actionWrapper = document.createElement("div");
+        actionWrapper.style.cssText = "display: flex; flex-direction: column; margin-top: auto;";
+
         const btnGroup = document.createElement("div");
-        btnGroup.style.cssText = "display:flex;gap:10px;margin-top:auto;";
+        btnGroup.style.cssText = "display:flex;gap:10px;";
 
         if (enrolled) {
             const cont = document.createElement("button");
@@ -525,7 +527,7 @@ async function renderExplorer() {
             btnGroup.appendChild(enroll);
         }
 
-        let authorText = "Unkown Author";
+        let authorText = "Unknown Author";
         if (entry.author && Array.isArray(entry.author)) {
             authorText = entry.author.join(", ");
         } else if (typeof entry.author === "string") {
@@ -545,8 +547,9 @@ async function renderExplorer() {
             text-align: center;
         `;
 
-        card.appendChild(btnGroup);
-        btnGroup.appendChild(authorEl);
+        actionWrapper.appendChild(btnGroup);
+        actionWrapper.appendChild(authorEl);
+        card.appendChild(actionWrapper);
         catalogGrid.appendChild(card);
     }
 

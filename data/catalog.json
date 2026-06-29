@@ -3,6 +3,7 @@
     "id": "html-mastery",
     "type": "bundle",
     "title": "HTML: Beginner to Master",
+    "author": ["Claude AI"],
     "category": "engineering",
     "difficulty": "beginner",
     "description": "Everything about HTML from the ground up. Document structure, text and media, forms, semantic markup, and accessibility across five focused courses.",
@@ -21,6 +22,7 @@
   {
     "id": "godot-core",
     "title": "Godot 4: Game Development",
+    "author": ["Claude AI"],
     "category": "gamedev",
     "description": "Nodes, scenes, GDScript, signals, physics, UI, and game architecture. Build real games *Generated*",
     "file": "data/godot-core.json"
@@ -28,6 +30,7 @@
   {
     "id": "markdown",
     "title": "Markdown and Plain-Text Academic Workflows",
+    "author": ["Claude AI"],
     "category": "other",
     "difficulty": "intermediate",
     "description": "Write, cite, and publish academic work entirely in plain text. Covers core Markdown syntax, Pandoc conversion, BibTeX citations, and multi-file document organization.",
@@ -36,6 +39,7 @@
   {
     "id": "economics-core",
     "title": "Economics",
+    "author": ["Claude AI"],
     "category": "other",
     "description": "Supply and demand, market structures, fiscal policy *Generated*",
     "file": "data/economics-core.json"
@@ -44,6 +48,7 @@
     "id": "conlang-mythology-track",
     "type": "bundle",
     "title": "Language and Mythology",
+    "author": ["Claude AI"],
     "category": "other",
     "difficulty": "intermediate",
     "description": "Invent realistic languages and deep mythologies using the same tools real linguists and mythographers use. Five focused courses covering sound systems, grammar, writing, world mythology, and divine storytelling.",
@@ -73,6 +78,7 @@
   {
     "id": "cooking-fundamentals",
     "title": "Cooking Fundamentals",
+    "author": ["Cassetu"],
     "category": "other",
     "difficulty": "beginner",
     "description": "Learn the fundamentals of cooking through hands-on interactive simulations. *IN PROGRESS*",
@@ -81,6 +87,7 @@
   {
     "id": "architecture-bundle",
     "title": "Architecture",
+    "author": ["Claude AI"],
     "type": "bundle",
     "description": "A complete introduction to architecture. How buildings stand up, why they look the way they do, and how architects design with light, site, and climate.",
     "category": "design",
