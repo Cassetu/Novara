@@ -73,5 +73,62 @@ export function renderArchitectureSim() {
         }
     }
 
+    canvas.addEventListener("mousedown", (e) => {
+        const pos = getMousePos(e);
+        startX = snap(pos.x);
+        startY = snap(pos.y);
+        currentX = startX;
+        currentY = startY;
+        isDrawing = true;
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+        if (!isDrawing) return;
+        const pos = getMousePos(e);
+
+        if (e.shiftKey) {
+            const dx = Math.abs(pos.x - startX);
+            const dy = Math.abs(pos.y - startY);
+            if (dx > dy) {
+                currentX = snap(pos.x);
+                currentY = startY;
+            } else {
+                currentX = startX;
+                currentY = snap(pos.y);
+            }
+        } else {
+            currentX = snap(pos.x);
+            currentY = snap(pos.y);
+        }
+
+        render();
+    });
+
+    canvas.addEventListener("mouseup", (e) => {
+        if (!isDrawing) return;
+        isDrawing = false;
+        if (startX !== currentX || startY !== currentY) {
+            lines.push({ x1: startX, y1: startY, x2: currentX, y2: currentY });
+        }
+        render();
+    }
+
+    canvas.addEventListener("mouseleave", () => {
+        if (isDrawing) {
+            isDrawing = false;
+            render();
+        }
+    });
+
+    //clear
+    document.getElementById("").addEventListener("click", () => {
+        lines = [];
+        render();
+    });
+    //complete
+    document.getElementById("").addEventListener("click", () => {
+        onComplete(true);
+    });
+
     render();
 }
