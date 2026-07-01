@@ -2,11 +2,30 @@
 export function renderArchitectureSim() {
     const viewLesson = document.getElementById("view-lesson");
     viewLesson.innerHTML = `
+        <div style="display: flex; height: 100vh; font-family: monospace; color: var(--text-main);">
+            <div style="width: 300px; padding: 20px; border-right: 2px solid var(--border); display: flex; flex-direction: column;">
+                <h2>${lessonData.title || "Studio Brief"}</h2>
+                <div style="flex-grow: 1; margin-top: 20px;">
+                    <p style="text-transform: uppercase; letter-spacing: 1px; font-size: 11px; color: var(--text-dim);">Objective</p>
+                    <ul style="padding-left: 20px; line-height: 1.5; font-size: 14px;">
+                        ${(lessonData.briefPoints || ["Draw a basic room footprint.", "Close the shape.", "Submit when done."]).map(p => `<li>${p}</li>`).join("")}
+                    </ul>
+                </div>
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border);">
+                    <p style="font-size: 11px; color: var(--text-dim); margin-bottom: 8px;">Scale: 1/16" = 1'-0"</p>
+                    <button id="sim-submit-btn" class="b-enroll-btn" style="width: 100%; cursor: pointer;">Submit Design</button>
+                    <button id="sim-clear-btn" class="danger-btn" style="width: 100%; margin-top: 8px; cursor: pointer;">Clear Draft</button>
+                </div>
+            </div>
+            <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; background: var(--surface-dim); padding: 40px;">
+                <canvas id="drafting-canvas" width="800" height="600" style="background: #ffffff; border: 1px solid var(--border); cursor: crosshair; box-shadow: 5px 5px 0px rgba(0,0,0,0.1);"></canvas>
+            </div>
 
+        </div>
     `;
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
-    const PIXELS_PER_FOOT = 6; //for 1/16"=1'-0" architectural scale
+    const PIXELS_PER_FOOT = 6;
     const SNAP_GRID = 6;
 
     let lines = [];
@@ -60,7 +79,7 @@ export function renderArchitectureSim() {
 
             const dx = currentX - startX;
             const dy = currentY - startY;
-            const distancePx = Math.hypot(dx, dy); //hello pythagorean theorem
+            const distancePx = Math.hypot(dx, dy);
             const distanceFt = Math.round(distancePx / PIXELS_PER_FOOT);
 
             if (distanceFt > 0) {
@@ -120,13 +139,11 @@ export function renderArchitectureSim() {
         }
     });
 
-    //clear
-    document.getElementById("").addEventListener("click", () => {
+    document.getElementById("sim-clear-btn").addEventListener("click", () => {
         lines = [];
         render();
     });
-    //complete
-    document.getElementById("").addEventListener("click", () => {
+    document.getElementById("sim-submit-btn").addEventListener("click", () => {
         onComplete(true);
     });
 
