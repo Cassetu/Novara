@@ -88,8 +88,10 @@ h1, h2, h3 {
 .tb-btn:hover {
     color: #ffffff;
     background: rgba(255,255,255,0.08);
+    height:60px;
 }
 .tb-btn:active {
+    height:60px;
     transform: none;
     box-shadow: none;
 }
@@ -97,6 +99,7 @@ h1, h2, h3 {
     color: #ffffff;
     background: rgba(255,255,255,0.12);
     border-bottom: 2px solid var(--accent);
+    height:60px;
 }
 .tb-dropdown-wrap {
     position: relative;
