@@ -246,6 +246,7 @@ async function saveField(field, value) {
 function closeAllDropdowns() {
     activeDropdown?.classList.remove("open");
     userDropdown?.classList.remove("open");
+    toolsDropdown.classList.remove("open");
 }
 
 navActiveBtn?.addEventListener("click", e => {
