@@ -1,5 +1,6 @@
 
 export function renderArchitectureSim(lessonData, onComplete) {
+    lessonData = lessonData || {};
     const viewLesson = document.getElementById("view-lesson");
     viewLesson.innerHTML = `
         <div style="display: flex; height: 100vh; font-family: monospace; color: var(--text-main);">
@@ -23,7 +24,7 @@ export function renderArchitectureSim(lessonData, onComplete) {
 
         </div>
     `;
-    const canvas = document.createElement("canvas");
+    const canvas = document.getElementById("drafting-canvas");
     const ctx = canvas.getContext("2d");
     const PIXELS_PER_FOOT = 6;
     const SNAP_GRID = 6;
@@ -74,6 +75,7 @@ export function renderArchitectureSim(lessonData, onComplete) {
             ctx.stroke();
         });
         if (isDrawing) {
+            ctx.strokeStyle = "var(--accent, #0055ff)";
             ctx.beginPath();
             ctx.moveTo(startX, startY);
             ctx.lineTo(currentX, currentY);
@@ -87,7 +89,7 @@ export function renderArchitectureSim(lessonData, onComplete) {
             if (distanceFt > 0) {
                 const midX = startX + (dx / 2);
                 const midY = startY + (dy / 2) - 10;
-                ctx.fillStyle = "#000";
+                ctx.fillStyle = "var(--accent, #0055ff)";
                 ctx.font = "bold 12px Monospace";
                 ctx.fillText(`${distanceFt}'`, midX, midY);
             }
