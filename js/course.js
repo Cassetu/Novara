@@ -8,6 +8,7 @@ import { renderFillBlank } from "./renderers/fillBlank.js";
 import { renderSpotBug } from "./renderers/spotBug.js";
 import { renderProject } from "./renderers/project.js";
 import { renderCookingSim } from "./renderers/cookingSim.js";
+import { renderArchitectureSim } from "./renderers/architectureSim.js";
 
 let currentUser = null;
 let ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {} };
@@ -1038,6 +1039,7 @@ function startLesson(lesson) {
     else if (t === "fill_blank")   renderFillBlank(activeLessonData, (c, tot) => finishFillBlank(c, tot));
     else if (t === "spot_bug")     renderSpotBug(activeLessonData, (c) => finishSpotBug(c));
     else if (t === "cooking_sim") renderCookingSim(activeLessonData, () => finishLesson());
+    else if (t === "architecture_sim") renderArchitectureSim(activeLessonData, () => finishLesson());
     else if (t === "practice_standard" || t === "practice_survival") {
         runMixedPractice(activeLessonData, analytics, onUpdate);
     }

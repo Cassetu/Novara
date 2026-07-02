@@ -20,6 +20,17 @@
             "Holding a steady temperature requires small, constant adjustments.",
             "Different foods require different temperature ranges to cook correctly."
           ]
+        },
+        {
+          "id": "arch-studio-1",
+          "title": "Room Footprints",
+          "type": "architecture_sim",
+          "briefPoints": [
+            "Design a single, enclosed room footprint.",
+            "Hold SHIFT while drawing to snap your walls to strict horizontal or vertical axes.",
+            "Ensure your corners touch to close the room.",
+            "Click 'Submit Design' when your draft is complete."
+          ]
         }
       ]
     }

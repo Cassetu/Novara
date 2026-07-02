@@ -1,5 +1,5 @@
 
-export function renderArchitectureSim() {
+export function renderArchitectureSim(lessonData, onComplete) {
     const viewLesson = document.getElementById("view-lesson");
     viewLesson.innerHTML = `
         <div style="display: flex; height: 100vh; font-family: monospace; color: var(--text-main);">
@@ -30,8 +30,10 @@ export function renderArchitectureSim() {
 
     let lines = [];
     let isDrawing = false;
-    let startX = 0, let startY = 0;
-    let currentX = 0, let currentY = 0;
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let currentY = 0;
 
     function getMousePos(e) {
         const rect = canvas.getBoundingClientRect();
@@ -130,7 +132,7 @@ export function renderArchitectureSim() {
             lines.push({ x1: startX, y1: startY, x2: currentX, y2: currentY });
         }
         render();
-    }
+    });
 
     canvas.addEventListener("mouseleave", () => {
         if (isDrawing) {
