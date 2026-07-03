@@ -13,7 +13,7 @@ export function renderArchitectureSim(lessonData, onComplete) {
                     </ul>
                 </div>
                 <div style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border);">
-                    <p style="font-size: 11px; color: var(--text-dim); margin-bottom: 8px;">Scale: 1/16" = 1'-0"</p>
+                    <p style="font-size: 11px; color: var(--text-dim); margin-bottom: 8px;">Scale: 1/8" = 1'-0"</p>
                     <button id="sim-submit-btn" class="b-enroll-btn" style="width: 100%; cursor: pointer;">Submit Design</button>
                     <button id="sim-clear-btn" class="danger-btn" style="width: 100%; margin-top: 8px; cursor: pointer;">Clear Draft</button>
                 </div>
@@ -26,8 +26,8 @@ export function renderArchitectureSim(lessonData, onComplete) {
     `;
     const canvas = document.getElementById("drafting-canvas");
     const ctx = canvas.getContext("2d");
-    const PIXELS_PER_FOOT = 6;
-    const SNAP_GRID = 6;
+    const PIXELS_PER_FOOT = 12;
+    const SNAP_GRID = 12;
 
     let lines = [];
     let isDrawing = false;
@@ -48,17 +48,76 @@ export function renderArchitectureSim(lessonData, onComplete) {
         return Math.round(val / SNAP_GRID) * SNAP_GRID;
     }
 
+    function drawMeasuredLine(x1, y1, x2, y2, color) {
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const distancePx = Math.hypot(dx, dy);
+        const distanceFt = Math.round(distancePx / PIXELS_PER_FOOT);
+
+        if (distancePx === 0) return;
+
+        const midX = x1 + dx/2;
+        const midY = y1 + dy/2;
+
+        ctx.font = "bold 12px Monospace";
+        const text = `${distanceFt}'`;
+        const textWidth = ctx.measureText(text).width;
+        const clearance = (textWidth / 2) + 8;
+
+        ctx.strokeStyle = color;
+        ctx.textAlign = "center";
+        ctx.baseline = "center";
+
+        if (distancePx > clearance * 2) {
+            const uX = dx / distancePx;
+            const uY = dy / distancePx;
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(midX - (uX * clearance), midY - (uY * clearance));
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(midX + (uX * clearance), midY + (uY * clearance));
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+        } else {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+        }
+
+        if (distanceFt > 0) {
+            ctx.save();
+            ctx.translate(midX, midY);
+
+            let angle = Math.atan2(dy, dx);
+            if (angle > Math.PI /2 || angle < -Math.PI /2) {
+                angle += Math.PI;
+            }
+
+            ctx.rotate(angle);
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(-clearance, -10, clearance * 2, 20);
+            ctx.fillStyle = color;
+            ctx.fillText(text, 0, 0);
+
+            ctx.restore();
+        }
+    }
+
     function render() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = "#e0e0e0";
         ctx.lineWidth = 1;
-        for(let i = 0; i < canvas.width; i += SNAP_GRID * 2) {
+        for(let i = 0; i < canvas.width; i += SNAP_GRID) {
             ctx.beginPath();
             ctx.moveTo(i, 0);
             ctx.lineTo(i, canvas.height);
             ctx.stroke();
         }
-        for(let i = 0; i < canvas.height; i += SNAP_GRID * 2) {
+        for(let i = 0; i < canvas.height; i += SNAP_GRID) {
             ctx.beginPath();
             ctx.moveTo(0, i);
             ctx.lineTo(canvas.width, i);
@@ -75,23 +134,15 @@ export function renderArchitectureSim(lessonData, onComplete) {
             ctx.stroke();
         });
         if (isDrawing) {
-            ctx.strokeStyle = "var(--accent, #0055ff)";
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.lineTo(currentX, currentY);
-            ctx.stroke();
+            ctx.lineWidth = 2;
+            ctx.lineCap = "round";
 
-            const dx = currentX - startX;
-            const dy = currentY - startY;
-            const distancePx = Math.hypot(dx, dy);
-            const distanceFt = Math.round(distancePx / PIXELS_PER_FOOT);
+            lines.forEach(l => {
+                drawMeasuredLine(l.x1, l.y1, l.x2, l.y2, "#0");
+            });
 
-            if (distanceFt > 0) {
-                const midX = startX + (dx / 2);
-                const midY = startY + (dy / 2) - 10;
-                ctx.fillStyle = "var(--accent, #0055ff)";
-                ctx.font = "bold 12px Monospace";
-                ctx.fillText(`${distanceFt}'`, midX, midY);
+            if (isDrawing) {
+                drawMeasuredLine(startX, startY, currentX, currentY, "#77BBA2");
             }
         }
     }
