@@ -60,33 +60,38 @@ export function renderArchitectureSim(lessonData, onComplete) {
         const midY = y1 + dy/2;
 
         ctx.font = "bold 12px Monospace";
-        const text = `${distanceFt}'`;
-        const textWidth = ctx.measureText(text).width;
-        const clearance = (textWidth / 2) + 8;
+        const text = distanceFt > 0 ? `${distanceFt}'` : "";
+        const textWidth = distanceFt > 0 ? ctx.measureText(text).width : 0;
+        const clearance = (textWidth / 2) + 6;
+        const fade = 20;
 
-        ctx.strokeStyle = color;
         ctx.textAlign = "center";
         ctx.baseline = "center";
 
-        if (distancePx > clearance * 2) {
-            const uX = dx / distancePx;
-            const uY = dy / distancePx;
+        if (distancePx > (clearance + 20) * 2) {
+            let r = 0, g = 0, b = 0;
+            if (color.length === 4) {
+                r = parseInt(color[1]+color[1], 16);
+                g = parseInt(color[2]+color[2], 16);
+                b = parseInt(color[3]+color[3], 16);
+            } else if (color.length === 7) {
+                r = parseInt(color[1]+color[2], 16);
+                g = parseInt(color[3]+color[4], 16);
+                b = parseInt(color[5]+color[6], 16);
+            }
+            const transparent = `rgba(${r}, ${g}, ${b}, 0)`;
 
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(midX - (uX * clearance), midY - (uY * clearance));
-            ctx.stroke();
+            const grad = ctx.createLinearGradient(x1, y1, x2, y2);
+            const stop1 = (distancePx / 2 - clearance - fade) / distancePx;
+            const stop2 = (distancePx / 2 - clearance) / distancePx;
+            const stop3 = (distancePx / 2 + clearance) / distancePx;
+            const stop4 = (distancePx / 2 + clearance + fade) / distancePx;
 
-            ctx.beginPath();
-            ctx.moveTo(midX + (uX * clearance), midY + (uY * clearance));
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
+            ctx.strokeStyle = grad;
         } else {
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
+            ctx.strokeStyle = color;
         }
+
 
         if (distanceFt > 0) {
             ctx.save();
