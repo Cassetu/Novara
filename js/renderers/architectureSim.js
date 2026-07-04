@@ -56,6 +56,9 @@ export function renderArchitectureSim(lessonData, onComplete) {
 
         if (distancePx === 0) return;
 
+        const uX = dx / distancePx;
+        const uY = dy / distancePx;
+
         const midX = x1 + dx/2;
         const midY = y1 + dy/2;
 
@@ -102,6 +105,18 @@ export function renderArchitectureSim(lessonData, onComplete) {
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
+        ctx.stroke();
+
+        const tickSize = 3;
+        ctx.strokeStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(x1 - uY * tickSize, y1 + uX * tickSize);
+        ctx.lineTo(x1 + uY * tickSize, y1 - uX * tickSize);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x2 - uY * tickSize, y2 + uX * tickSize);
+        ctx.lineTo(x2 + uY * tickSize, y2 - uX * tickSize);
         ctx.stroke();
 
         if (distancePx > (clearance + 20) * 2) {
