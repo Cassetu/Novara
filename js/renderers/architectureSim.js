@@ -59,7 +59,7 @@ export function renderArchitectureSim(lessonData, onComplete) {
         const midX = x1 + dx/2;
         const midY = y1 + dy/2;
 
-        ctx.font = "bold 12px Monospace";
+        ctx.font = "bold 10px Monospace";
         const text = distanceFt > 0 ? `${distanceFt}'` : "";
         const textWidth = distanceFt > 0 ? ctx.measureText(text).width : 0;
         const clearance = (textWidth / 2) + 6;
@@ -87,13 +87,24 @@ export function renderArchitectureSim(lessonData, onComplete) {
             const stop3 = (distancePx / 2 + clearance) / distancePx;
             const stop4 = (distancePx / 2 + clearance + fade) / distancePx;
 
+            grad.addColorStop(0, color);
+            grad.addColorStop(Math.max(0, stop1), color);
+            grad.addColorStop(Math.max(0, stop2), transparent);
+            grad.addColorStop(Math.min(1, stop3), transparent);
+            grad.addColorStop(Math.min(1, stop4), color);
+            grad.addColorStop(1, color);
+
             ctx.strokeStyle = grad;
         } else {
             ctx.strokeStyle = color;
         }
 
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
 
-        if (distanceFt > 0) {
+        if (distancePx > (clearance + 20) * 2) {
             ctx.save();
             ctx.translate(midX, midY);
 
@@ -103,10 +114,8 @@ export function renderArchitectureSim(lessonData, onComplete) {
             }
 
             ctx.rotate(angle);
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(-clearance, -10, clearance * 2, 20);
             ctx.fillStyle = color;
-            ctx.fillText(text, 0, 0);
+            ctx.fillText(text, 0, 2.5);
 
             ctx.restore();
         }
@@ -129,26 +138,15 @@ export function renderArchitectureSim(lessonData, onComplete) {
             ctx.stroke();
         }
 
-        ctx.strokeStyle = "#000";
         ctx.lineWidth = 2;
         ctx.lineCap = "round";
+
         lines.forEach(l => {
-            ctx.beginPath();
-            ctx.moveTo(l.x1, l.y1);
-            ctx.lineTo(l.x2, l.y2);
-            ctx.stroke();
+            drawMeasuredLine(l.x1, l.y1, l.x2, l.y2, "#000");
         });
+
         if (isDrawing) {
-            ctx.lineWidth = 2;
-            ctx.lineCap = "round";
-
-            lines.forEach(l => {
-                drawMeasuredLine(l.x1, l.y1, l.x2, l.y2, "#0");
-            });
-
-            if (isDrawing) {
-                drawMeasuredLine(startX, startY, currentX, currentY, "#77BBA2");
-            }
+            drawMeasuredLine(startX, startY, currentX, currentY, "#77BBA2");
         }
     }
 
