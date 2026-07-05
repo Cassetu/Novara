@@ -53,12 +53,13 @@ export function renderArchitectureSim(lessonData, onComplete) {
 
         const adj = {};
         const addEdge = (p1, p2) => {
-            const k1 = p1.y + "," + p1.x;
-            const k2 = p2.y + "," + p2.x;
+            const k1 = p1.x + "," + p1.y;
+            const k2 = p2.x + "," + p2.y;
+            if (k1 === k2) return;
             if (!adj[k1]) adj[k1] = {point:p1, neighbors: new Set()};
             if (!adj[k2]) adj[k2] = {point:p2, neighbors: new Set()};
-            adj[k1].push(p2);
-            adj[k2].push(p1);
+            adj[k1].neighbors.add(k2);
+            adj[k2].neighbors.add(k1);
         };
 
         drawnLines.forEach(l => addEdge({x:l.x1, y:l.y1}, {x:l.x2, y:l.y2}));
@@ -66,7 +67,7 @@ export function renderArchitectureSim(lessonData, onComplete) {
         const keys = Object.keys(adj);
         if (keys.length === 0) return null;
 
-        for (let k of Keys) {
+        for (let k of keys) {
             if (adj[k].neighbors.size !== 2) return null;
         }
 
@@ -92,6 +93,17 @@ export function renderArchitectureSim(lessonData, onComplete) {
 
         if (vertices.length !== keys.length) return null;
         return vertices;
+    }
+
+    function calculateArea(vertices) {
+        let area = 0;
+        for (let i = 0; i < vertices.length; i++) {
+            const j = (i + 1) % vertices.length;
+            area += vertices[i].x * vertices[j].y;
+            area -= vertices[j].x * vertices[i].y;
+        }
+        area = Math.abs(area)/2;
+        return Math.round(area / (PIXELS_PER_FOOT * PIXELS_PER_FOOT));
     }
 
     function drawMeasuredLine(x1, y1, x2, y2, color) {
@@ -197,6 +209,43 @@ export function renderArchitectureSim(lessonData, onComplete) {
             ctx.moveTo(0, i);
             ctx.lineTo(canvas.width, i);
             ctx.stroke();
+        }
+
+        const roomVertices = detectRoom(lines);
+        if (roomVertices) {
+            ctx.beginPath();
+            ctx.moveTo(roomVertices[0].x, roomVertices[0].y);
+            roomVertices.forEach(p => ctx.lineTo(p.x, p.y));
+            ctx.closePath();
+
+            ctx.fillStyle = "rgba(119, 187, 162, 0.2)";
+            ctx.fill();
+
+            const xs = roomVertices.map(p => p.x);
+            const ys = roomVertices.map(p => p.y);
+            const minX = Math.min(...xs);
+            const maxX = Math.max(...xs);
+            const minY = Math.min(...ys);
+            const maxY = Math.max(...ys);
+
+            const sqFt = calculateArea(roomVertices);
+
+            const centerX = minX + (maxX - minX) / 2;
+            const centerY = minY + (maxY - minY) / 2;
+
+            ctx.fillStyle = "#fff";
+            ctx.beginPath();
+            ctx.roundRect(centerX - 45, centerY - 15, 90, 30, 8);
+            ctx.fill();
+            ctx.strokeStyle = "#77BBA2";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.fillStyle = "#3b6a5a";
+            ctx.font = "bold 14px monospace";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(`${sqFt} sq ft`, centerX, centerY);
         }
 
         ctx.lineWidth = 2;
