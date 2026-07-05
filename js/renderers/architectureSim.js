@@ -48,6 +48,52 @@ export function renderArchitectureSim(lessonData, onComplete) {
         return Math.round(val / SNAP_GRID) * SNAP_GRID;
     }
 
+    function detectRoom(drawnLines) {
+        if (drawnLines.length < 3) return null;
+
+        const adj = {};
+        const addEdge = (p1, p2) => {
+            const k1 = p1.y + "," + p1.x;
+            const k2 = p2.y + "," + p2.x;
+            if (!adj[k1]) adj[k1] = {point:p1, neighbors: new Set()};
+            if (!adj[k2]) adj[k2] = {point:p2, neighbors: new Set()};
+            adj[k1].push(p2);
+            adj[k2].push(p1);
+        };
+
+        drawnLines.forEach(l => addEdge({x:l.x1, y:l.y1}, {x:l.x2, y:l.y2}));
+
+        const keys = Object.keys(adj);
+        if (keys.length === 0) return null;
+
+        for (let k of Keys) {
+            if (adj[k].neighbors.size !== 2) return null;
+        }
+
+        const vertices = [];
+        let currKey = keys[0];
+        let prevKey = null;
+
+        for (let i = 0; i < keys.length; i++) {
+            vertices.push(adj[currKey].point);
+
+            let nextKey = null;
+            for (let neighbor of adj[currKey].neighbors) {
+                if (neighbor !== prevKey) {
+                    nextKey = neighbor;
+                    break;
+                }
+            }
+
+            if (!nextKey) return null;
+            prevKey = currKey;
+            currKey = nextKey;
+        }
+
+        if (vertices.length !== keys.length) return null;
+        return vertices;
+    }
+
     function drawMeasuredLine(x1, y1, x2, y2, color) {
         const dx = x2 - x1;
         const dy = y2 - y1;
