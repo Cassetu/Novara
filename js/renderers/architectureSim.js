@@ -48,51 +48,35 @@ export function renderArchitectureSim(lessonData, onComplete) {
         return Math.round(val / SNAP_GRID) * SNAP_GRID;
     }
 
-    function detectRoom(drawnLines) {
+    function extractRooms(drawnLines) {
         if (drawnLines.length < 3) return null;
 
-        const adj = {};
-        const addEdge = (p1, p2) => {
-            const k1 = p1.x + "," + p1.y;
-            const k2 = p2.x + "," + p2.y;
-            if (k1 === k2) return;
-            if (!adj[k1]) adj[k1] = {point:p1, neighbors: new Set()};
-            if (!adj[k2]) adj[k2] = {point:p2, neighbors: new Set()};
-            adj[k1].neighbors.add(k2);
-            adj[k2].neighbors.add(k1);
-        };
+        const segments = [];
+        drawnLines.forEach(l => {
+            const splits = [];
+            drawnLines.forEach(other => {
+                [ {x: other.x1, y: other.y1}, {x: other.x2, y: other.y2} ].forEach(p => {
+                    const distToStart = Math.hypot(p.x - l.x1, p.y - l.y1);
+                    const distToEnd = Math.hypot(p.x - l.x2, p.y - l.y2);
+                    const lineLen = Math.hypot(l.x2 - l.x1, l.y2 - l.y1);
+                    if Math.abs(distToStart + distToEnd - lineLen) < 1) {
+                        splits.push(p);
+                    }
+                });
+            });
+            splits.sort((a, b) => Math.hypot(a.x - l.x1, a.y - l.y1) - Math.hypot(b.x - l.x1, b.y - l.y1));
 
-        drawnLines.forEach(l => addEdge({x:l.x1, y:l.y1}, {x:l.x2, y:l.y2}));
-
-        const keys = Object.keys(adj);
-        if (keys.length === 0) return null;
-
-        for (let k of keys) {
-            if (adj[k].neighbors.size !== 2) return null;
-        }
-
-        const vertices = [];
-        let currKey = keys[0];
-        let prevKey = null;
-
-        for (let i = 0; i < keys.length; i++) {
-            vertices.push(adj[currKey].point);
-
-            let nextKey = null;
-            for (let neighbor of adj[currKey].neighbors) {
-                if (neighbor !== prevKey) {
-                    nextKey = neighbor;
-                    break;
+            let curr = { x: l.x1, y: l.y1 };
+            splits.forEach(pt => {
+                if (Math.hypot(curr.x - pt.x, curr.y - pt.y) > 2) {
+                    segments.push({x1: curr.x, y1: curr.y, x2: pt.x, y2: pt.y});
+                    curr = pt;
                 }
+            });
+            if (Math.hypot(curr.x - l.x2, curr.y - l.y2) > 2) {
+                segments.push({x1: curr.x, y1: curr.y, x2: l.x2, y2: l.y2});
             }
-
-            if (!nextKey) return null;
-            prevKey = currKey;
-            currKey = nextKey;
-        }
-
-        if (vertices.length !== keys.length) return null;
-        return vertices;
+        });
     }
 
     function calculateArea(vertices) {
