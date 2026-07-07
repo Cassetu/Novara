@@ -59,7 +59,7 @@ export function renderArchitectureSim(lessonData, onComplete) {
                     const distToStart = Math.hypot(p.x - l.x1, p.y - l.y1);
                     const distToEnd = Math.hypot(p.x - l.x2, p.y - l.y2);
                     const lineLen = Math.hypot(l.x2 - l.x1, l.y2 - l.y1);
-                    if Math.abs(distToStart + distToEnd - lineLen) < 1) {
+                    if (Math.abs(distToStart + distToEnd - lineLen) < 1) {
                         splits.push(p);
                     }
                 });
@@ -77,6 +77,73 @@ export function renderArchitectureSim(lessonData, onComplete) {
                 segments.push({x1: curr.x, y1: curr.y, x2: l.x2, y2: l.y2});
             }
         });
+
+        const adj = {};
+        const getK = (x, y) => `${Math.round(x)},${Math.round(y)}`;
+
+        segments.forEach(l => {
+            const k1 = getK(l.x1, l.y1);
+            const k2 = getK(l.x2, l.y2);
+            if (k1 === k2) return;
+
+            if (!adj[k1]) adj[k1] = { x: l.x1, y: l.y1, neighbors: [] };
+            if (!adj[k2]) adj[k2] = { x: l.x2, y: l.y2, neighbors: [] };
+
+            if (!adj[k1].neighbors.includes(k2)) adj[k1].neighbors.push(k2);
+            if (!adj[k2].neighbors.includes(k1)) adj[k2].neighbors.push(k1);
+        });
+
+        for (let k in adj) {
+            const node = adj[k];
+            node.neighbors.sort((a, b) => {
+                return Math.atan2(adj[a].y - node.y, adj[a].x - node.x) - Math.atan2(adj[b].y - node.y, adj[b].x - node.x);
+            });
+        }
+
+        const edgesTraversed = new Set();
+        const rooms = [];
+
+        for (let k in adj) {
+            const node = adj[k];
+            for (let i = 0; i < node.neighbors.length; i++) {
+                const startK = k;
+                const nextK = node.neighbors[i];
+                if (edgesTraversed.has(`${startK}->${nextK}`)) continue;
+
+                let currK = startK
+                let stepK = nextK;
+                const faceVertices = [];
+                let valid = true;
+
+                while (true) {
+                    edgesTraversed.add(`${currK}->${stepK}`);
+                    faceVertices.push(adj[currK]);
+
+                    if (stepK === startK) break;
+                    if (faceVertices.length > Object.keys(adj).length) { valid = false; break; }
+
+                    const stepNode = adj[stepK];
+                    const incomingIdx = stepNode.neighbors.indexOf(currK);
+                    let nextIdx = incomingIdx - 1;
+                    if (nextIdx < 0) {
+                        nextIdx = stepNode.neighbors.length - 1;
+                    }
+
+                    currK = stepK;
+                    stepK = stepNode.neighbors[nextIdx];
+                }
+
+                if (valid && faceVertices.length >= 3) {
+                    let area = 0;
+                    for (let v = 0; v < faceVertices.length; v++) {
+                        const nextV = (v + 1) % faceVertices.length;
+                        area += (faceVertices[v].x * faceVertices[nextV].y) - (faceVertices[nextV].x * faceVertices[v].y);
+                    }
+                    if (area > 0) rooms.push(faceVertices);
+                }
+            }
+        }
+        return rooms;
     }
 
     function calculateArea(vertices) {
@@ -195,8 +262,9 @@ export function renderArchitectureSim(lessonData, onComplete) {
             ctx.stroke();
         }
 
-        const roomVertices = detectRoom(lines);
-        if (roomVertices) {
+        const rooms = extractRooms(lines);
+
+        rooms.forEach(roomVertices => {
             ctx.beginPath();
             ctx.moveTo(roomVertices[0].x, roomVertices[0].y);
             roomVertices.forEach(p => ctx.lineTo(p.x, p.y));
@@ -230,7 +298,7 @@ export function renderArchitectureSim(lessonData, onComplete) {
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText(`${sqFt} sq ft`, centerX, centerY);
-        }
+        });
 
         ctx.lineWidth = 2;
         ctx.lineCap = "round";
