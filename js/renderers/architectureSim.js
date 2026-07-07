@@ -49,7 +49,7 @@ export function renderArchitectureSim(lessonData, onComplete) {
     }
 
     function extractRooms(drawnLines) {
-        if (drawnLines.length < 3) return null;
+        if (drawnLines.length < 3) return [];
 
         const segments = [];
         drawnLines.forEach(l => {
