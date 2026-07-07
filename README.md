@@ -1,6 +1,6 @@
 
 
-<h1 align="center"><img src="assets/img/favicon.png" alt="favicon" width="34"> NOVARA - A Gateway To Learning </h1>
+<h1 align="center"><img src="assets/img/brand/favicon.png" alt="favicon" width="34"> NOVARA - A Gateway To Learning </h1>
 
 #### A free learning website with curriculums and courses on a wide variety of subjects, designed to be accessible to everyone.
 [![Work time](https://hackatime.hackclub.com/api/v1/badge/U0B7KLS4R9R/Cassetu/Novara)](https://hackatime-badge.hackclub.com)
