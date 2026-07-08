@@ -285,19 +285,25 @@ export function renderArchitectureSim(lessonData, onComplete) {
             const centerX = minX + (maxX - minX) / 2;
             const centerY = minY + (maxY - minY) / 2;
 
+            const scale = Math.max(0.55, Math.min(1.0, Math.sqrt(sqFt) / 10));
+
+            const boxWidth = 90 * scale;
+            const boxHeight = 30 * scale;
+            const fontSize = Math.max(4, Math.floor(14 * scale));
+
             ctx.fillStyle = "#fff";
             ctx.beginPath();
-            ctx.roundRect(centerX - 45, centerY - 15, 90, 30, 8);
+            ctx.roundRect(centerX - (boxWidth / 2), centerY - (boxHeight / 2), boxWidth, boxHeight, 4);
             ctx.fill();
             ctx.strokeStyle = "#77BBA2";
             ctx.lineWidth = 1;
             ctx.stroke();
 
             ctx.fillStyle = "#3b6a5a";
-            ctx.font = "bold 14px monospace";
+            ctx.font = `bold ${fontSize}px monospace`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText(`${sqFt} sq ft`, centerX, centerY);
+            ctx.fillText(`${sqFt} ft²`, centerX, centerY);
         });
 
         ctx.lineWidth = 2;
