@@ -3,6 +3,30 @@ export function renderArchitectureSim(lessonData, onComplete) {
     lessonData = lessonData || {};
     const viewLesson = document.getElementById("view-lesson");
     viewLesson.innerHTML = `
+        <style>
+            .arch-tool-btn {
+                width: 44px; height: 44px;
+                background: #1e1e1e;
+                border: 2px solid #333;
+                cursor: pointer;
+                padding: 6px;
+                transition: all 0.2s ease;
+                display: flex; justify-content: center; align-items: center;
+            }
+            .arch-tool-btn img, .arch-tool-btn svg {
+                width: 100%; height: 100%;
+                object-fit: contain;
+            }
+            .arch-tool-btn:hover {
+                background: #2a2a2a;
+                border-color: #77BBA2;
+            }
+            .arch-tool-btn.active {
+                background: #77BBA2;
+                border-color: #559980;
+            }
+        </style>
+
         <div style="display: flex; height: 100vh; font-family: monospace; color: var(--text-main);">
             <div style="width: 300px; padding: 20px; border-right: 2px solid var(--border); display: flex; flex-direction: column;">
                 <h2>${lessonData.title || "Studio Brief"}</h2>
@@ -13,15 +37,44 @@ export function renderArchitectureSim(lessonData, onComplete) {
                     </ul>
                 </div>
                 <div style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border);">
-                    <p style="font-size: 11px; color: var(--text-dim); margin-bottom: 8px;">Scale: 1/8" = 1'-0"</p>
                     <button id="sim-submit-btn" class="b-enroll-btn" style="width: 100%; cursor: pointer;">Submit Design</button>
-                    <button id="sim-clear-btn" class="danger-btn" style="width: 100%; margin-top: 8px; cursor: pointer;">Clear Draft</button>
                 </div>
             </div>
-            <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; background: var(--surface-dim); padding: 40px;">
-                <canvas id="drafting-canvas" width="800" height="600" style="background: #ffffff; border: 1px solid var(--border); cursor: crosshair; box-shadow: 5px 5px 0px rgba(0,0,0,0.1);"></canvas>
+
+            <div style="width: 70px; background: #1a1a1a; border-right: 2px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 20px 0; gap: 15px;">
+                <button id="tool-draw" class="arch-tool-btn active" title="Draw Tool (D)">
+                    <img src="assets/icon/pen.svg" alt="Draw">
+                </button>
+                <button id="tool-erase" class="arch-tool-btn" title="Eraser Tool (E)">
+                    <img src="assets/icon/eraser.svg" alt="Erase">
+                </button>
+                <div style="flex-grow: 1;"></div>
+                <button id="tool-clear" class="arch-tool-btn" title="Clear Canvas">
+                    <img src="assets/icon/trash-can.svg" alt="Clear">
+                </button>
             </div>
 
+            <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; background: var(--surface-dim); position: relative;">
+                <canvas id="drafting-canvas" width="950" height="694" style="background: #ffffff; border: 1px solid var(--border); cursor: crosshair; box-shadow: 5px 5px 0px rgba(0,0,0,0.1);"></canvas>
+
+                <div id="clear-confirm-modal" style="display: none; position: absolute; background: white; padding: 20px 30px; border: 2px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; color: black; z-index: 100;">
+                    <h3 style="margin-top: 0; color: #e74c3c;">Clear Canvas</h3>
+                    <p style="margin-bottom: 20px; font-size: 14px;">Are you sure?</p>
+                    <div style="display: flex; gap: 10px; justify-content: center;">
+                        <button id="confirm-clear-yes" class="danger-btn" style="padding: 8px 16px; cursor: pointer; background: #e74c3c; color: white; border: none;">Yes, demolish</button>
+                        <button id="confirm-clear-no" style="padding: 8px 16px; cursor: pointer; background: #ddd; color: black; border: none;">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="width: 80px; background: #1a1a1a; border-left: 2px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 20px 0; justify-content: space-between;">
+                <button id="tool-house" class="arch-tool-btn" title="Architecture Elements">
+                    <img src="assets/icon/house.svg" alt="House">
+                </button>
+                <div style="color: #888; font-size: 11px; text-align: center; padding-bottom: 10px; line-height: 1.5;">
+                    SCALE<br><strong style="color: white; font-size: 14px;">1/8"</strong><br>↓<br><strong style="color: white; font-size: 14px;">1'-0"</strong>
+                </div>
+            </div>
         </div>
     `;
     const canvas = document.getElementById("drafting-canvas");
@@ -30,7 +83,9 @@ export function renderArchitectureSim(lessonData, onComplete) {
     const SNAP_GRID = 12;
 
     let lines = [];
+    let mode = "draw";
     let isDrawing = false;
+    let isErasing = false;
     let startX = 0;
     let startY = 0;
     let currentX = 0;
@@ -46,6 +101,20 @@ export function renderArchitectureSim(lessonData, onComplete) {
 
     function snap(val) {
         return Math.round(val / SNAP_GRID) * SNAP_GRID;
+    }
+
+    function pointToLineDist(px, py, x1, y1, x2, y2) {
+        const l2 = (x2 - x1) ** 2 + (y2 - y1) ** 2;
+        if (l2 === 0) return Math.hypot(px - x1, py - y1);
+        let t = ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) / l2;
+        t = Math.max(0, Math.min(1, t));
+        return Math.hypot(px - (x1 + t * (x2 - x1)), py - (y1 + t * (y2 - y1)));
+    }
+
+    function eraseAt(x, y) {
+        const initialLen = lines.length;
+        lines = lines.filter(l => pointToLineDist(x, y, l.x1, l.y1, l.x2, l.y2) > 10);
+        if (lines.length !== initialLen) render();
     }
 
     function extractRooms(drawnLines) {
@@ -175,41 +244,10 @@ export function renderArchitectureSim(lessonData, onComplete) {
         const text = distanceFt > 0 ? `${distanceFt}'` : "";
         const textWidth = distanceFt > 0 ? ctx.measureText(text).width : 0;
         const clearance = (textWidth / 2) + 6;
-        const fade = 20;
 
         ctx.textAlign = "center";
         ctx.baseline = "center";
-
-        if (distancePx > (clearance + 20) * 2) {
-            let r = 0, g = 0, b = 0;
-            if (color.length === 4) {
-                r = parseInt(color[1]+color[1], 16);
-                g = parseInt(color[2]+color[2], 16);
-                b = parseInt(color[3]+color[3], 16);
-            } else if (color.length === 7) {
-                r = parseInt(color[1]+color[2], 16);
-                g = parseInt(color[3]+color[4], 16);
-                b = parseInt(color[5]+color[6], 16);
-            }
-            const transparent = `rgba(${r}, ${g}, ${b}, 0)`;
-
-            const grad = ctx.createLinearGradient(x1, y1, x2, y2);
-            const stop1 = (distancePx / 2 - clearance - fade) / distancePx;
-            const stop2 = (distancePx / 2 - clearance) / distancePx;
-            const stop3 = (distancePx / 2 + clearance) / distancePx;
-            const stop4 = (distancePx / 2 + clearance + fade) / distancePx;
-
-            grad.addColorStop(0, color);
-            grad.addColorStop(Math.max(0, stop1), color);
-            grad.addColorStop(Math.max(0, stop2), transparent);
-            grad.addColorStop(Math.min(1, stop3), transparent);
-            grad.addColorStop(Math.min(1, stop4), color);
-            grad.addColorStop(1, color);
-
-            ctx.strokeStyle = grad;
-        } else {
-            ctx.strokeStyle = color;
-        }
+        ctx.strokeStyle = color;
 
         ctx.beginPath();
         ctx.moveTo(x1, y1);
@@ -238,7 +276,13 @@ export function renderArchitectureSim(lessonData, onComplete) {
             }
 
             ctx.rotate(angle);
+
             ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.roundRect(-clearance, -10, clearance * 2, 20, 0);
+            ctx.fill();
+
+            ctx.fillStyle = '#fff';
             ctx.fillText(text, 0, 2.5);
 
             ctx.restore();
@@ -250,16 +294,10 @@ export function renderArchitectureSim(lessonData, onComplete) {
         ctx.strokeStyle = "#e0e0e0";
         ctx.lineWidth = 1;
         for(let i = 0; i < canvas.width; i += SNAP_GRID) {
-            ctx.beginPath();
-            ctx.moveTo(i, 0);
-            ctx.lineTo(i, canvas.height);
-            ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
         }
         for(let i = 0; i < canvas.height; i += SNAP_GRID) {
-            ctx.beginPath();
-            ctx.moveTo(0, i);
-            ctx.lineTo(canvas.width, i);
-            ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
         }
 
         const rooms = extractRooms(lines);
@@ -306,8 +344,8 @@ export function renderArchitectureSim(lessonData, onComplete) {
             ctx.fillText(`${sqFt} ft²`, centerX, centerY);
         });
 
-        ctx.lineWidth = 2;
-        ctx.lineCap = "round";
+        ctx.lineWidth = 6;
+        ctx.lineCap = "square";
 
         lines.forEach(l => {
             drawMeasuredLine(l.x1, l.y1, l.x2, l.y2, "#000");
@@ -320,6 +358,11 @@ export function renderArchitectureSim(lessonData, onComplete) {
 
     canvas.addEventListener("mousedown", (e) => {
         const pos = getMousePos(e);
+        if (mode === "erase") {
+            isErasing = true;
+            eraseAt(pos.x, pos.y);
+            return;
+        }
         startX = snap(pos.x);
         startY = snap(pos.y);
         currentX = startX;
@@ -328,8 +371,12 @@ export function renderArchitectureSim(lessonData, onComplete) {
     });
 
     canvas.addEventListener("mousemove", (e) => {
-        if (!isDrawing) return;
         const pos = getMousePos(e);
+        if (mode === "erase") {
+            if (isErasing) eraseAt(pos.x, pos.y);
+            return;
+        }
+        if (!isDrawing) return;
 
         if (e.shiftKey) {
             const dx = Math.abs(pos.x - startX);
@@ -345,11 +392,14 @@ export function renderArchitectureSim(lessonData, onComplete) {
             currentX = snap(pos.x);
             currentY = snap(pos.y);
         }
-
         render();
     });
 
     canvas.addEventListener("mouseup", (e) => {
+        if (mode === "erase") {
+            isErasing = false;
+            return;
+        }
         if (!isDrawing) return;
         isDrawing = false;
         if (startX !== currentX || startY !== currentY) {
@@ -359,18 +409,46 @@ export function renderArchitectureSim(lessonData, onComplete) {
     });
 
     canvas.addEventListener("mouseleave", () => {
+        isErasing = false;
         if (isDrawing) {
             isDrawing = false;
             render();
         }
     });
 
-    document.getElementById("sim-clear-btn").addEventListener("click", () => {
-        lines = [];
-        render();
+    function setMode(newMode) {
+        mode = newMode;
+        document.getElementById("tool-draw").classList.toggle("active", mode === "draw");
+        document.getElementById("tool-erase").classList.toggle("active", mode === "erase");
+        canvas.style.cursor = mode === "erase" ? "cell" : "crosshair";
+    }
+
+    document.getElementById("tool-draw").addEventListener("click", () => setMode("draw"));
+    document.getElementById("tool-erase").addEventListener("click", () => setMode("erase"));
+
+    document.addEventListener("keydown", (e) => {
+     if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+     if (!document.getElementById("drafting-canvas")) return;
+
+     if (e.key.toLowerCase() === "e") setMode("erase");
+     if (e.key.toLowerCase() === "d") setMode("draw");
     });
+
+    const clearModal = document.getElementById("clear-confirm-modal");
+    document.getElementById("tool-clear").addEventListener("click", () => {
+     clearModal.style.display = "block";
+    });
+    document.getElementById("confirm-clear-no").addEventListener("click", () => {
+     clearModal.style.display = "none";
+    });
+    document.getElementById("confirm-clear-yes").addEventListener("click", () => {
+     lines = [];
+     clearModal.style.display = "none";
+     render();
+    });
+
     document.getElementById("sim-submit-btn").addEventListener("click", () => {
-        onComplete(true);
+     onComplete(true);
     });
 
     render();
