@@ -45,6 +45,9 @@ export function renderArchitectureSim(lessonData, onComplete) {
                 <button id="tool-draw" class="arch-tool-btn active" title="Draw Tool (D)">
                     <img src="assets/icon/pen.svg" alt="Draw">
                 </button>
+                <button id="tool-rect" class="arch-tool-btn" title="Rectangle Tool (R)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                </button>
                 <button id="tool-erase" class="arch-tool-btn" title="Eraser Tool (E)">
                     <img src="assets/icon/eraser.svg" alt="Erase">
                 </button>
@@ -53,10 +56,9 @@ export function renderArchitectureSim(lessonData, onComplete) {
                     <img src="assets/icon/trash-can.svg" alt="Clear">
                 </button>
             </div>
-
             <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; background: var(--surface-dim); position: relative;">
                 <canvas id="drafting-canvas" width="950" height="694" style="background: #ffffff; border: 1px solid var(--border); cursor: crosshair; box-shadow: 5px 5px 0px rgba(0,0,0,0.1);"></canvas>
-
+                <div id="drawing-hud" style="display: none; position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.75); color: #fff; padding: 10px 16px; font-size: 14px; font-weight: bold; pointer-events: none; z-index: 50; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"></div>
                 <div id="clear-confirm-modal" style="display: none; position: absolute; background: white; padding: 20px 30px; border: 2px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; color: black; z-index: 100;">
                     <h3 style="margin-top: 0; color: #e74c3c;">Clear Canvas</h3>
                     <p style="margin-bottom: 20px; font-size: 14px;">Are you sure?</p>
@@ -66,7 +68,6 @@ export function renderArchitectureSim(lessonData, onComplete) {
                     </div>
                 </div>
             </div>
-
             <div style="width: 80px; background: #1a1a1a; border-left: 2px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 20px 0; justify-content: space-between;">
                 <button id="tool-house" class="arch-tool-btn" title="Architecture Elements">
                     <img src="assets/icon/house.svg" alt="House">
@@ -79,6 +80,7 @@ export function renderArchitectureSim(lessonData, onComplete) {
     `;
     const canvas = document.getElementById("drafting-canvas");
     const ctx = canvas.getContext("2d");
+    const hud = document.getElementById("drawing-hud");
     const PIXELS_PER_FOOT = 12;
     const SNAP_GRID = 12;
 
@@ -226,67 +228,65 @@ export function renderArchitectureSim(lessonData, onComplete) {
         return Math.round(area / (PIXELS_PER_FOOT * PIXELS_PER_FOOT));
     }
 
-    function drawMeasuredLine(x1, y1, x2, y2, color) {
-        const dx = x2 - x1;
-        const dy = y2 - y1;
-        const distancePx = Math.hypot(dx, dy);
-        const distanceFt = Math.round(distancePx / PIXELS_PER_FOOT);
-
-        if (distancePx === 0) return;
-
-        const uX = dx / distancePx;
-        const uY = dy / distancePx;
-
-        const midX = x1 + dx/2;
-        const midY = y1 + dy/2;
-
-        ctx.font = "bold 10px Monospace";
-        const text = distanceFt > 0 ? `${distanceFt}'` : "";
-        const textWidth = distanceFt > 0 ? ctx.measureText(text).width : 0;
-        const clearance = (textWidth / 2) + 6;
-
-        ctx.textAlign = "center";
-        ctx.baseline = "center";
+    function drawWall(x1, y1, x2, y2, color) {
         ctx.strokeStyle = color;
-
+        ctx.lineWidth = 6;
+        ctx.lineCap = "square";
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
         ctx.stroke();
+    }
 
-        const tickSize = 3;
-        ctx.strokeStyle = color;
+    function drawDimension(x1, y1, x2, y2, offset) {
+        const isHoriz = Math.abs(x2 - x1) > Math.abs(y2 - y1);
+        let ox1 = x1, oy1 = y1, ox2 = x2, oy2 = y2;
+        if (isHoriz) { oy1 += offset; oy2 += offset; }
+        else { ox1 += offset; ox2 += offset; }
+
+        const dx = ox2 - ox1;
+        const dy = oy2 - oy1;
+        const distFt = Math.round(Math.hypot(dx, dy) / PIXELS_PER_FOOT);
+        if (distFt <= 0) return;
+
+        ctx.strokeStyle = "rgba(136, 136, 136, 0.4)";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
         ctx.beginPath();
-        ctx.moveTo(x1 - uY * tickSize, y1 + uX * tickSize);
-        ctx.lineTo(x1 + uY * tickSize, y1 - uX * tickSize);
+        ctx.moveTo(x1, y1); ctx.lineTo(ox1, oy1);
+        ctx.moveTo(x2, y2); ctx.lineTo(ox2, oy2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.strokeStyle = "#888";
+        ctx.beginPath();
+        ctx.moveTo(ox1, oy1);
+        ctx.lineTo(ox2, oy2);
         ctx.stroke();
 
+        const tick = 5;
+        const uX = dx / Math.hypot(dx, dy);
+        const uY = dy / Math.hypot(dx, dy);
         ctx.beginPath();
-        ctx.moveTo(x2 - uY * tickSize, y2 + uX * tickSize);
-        ctx.lineTo(x2 + uY * tickSize, y2 - uX * tickSize);
+        ctx.moveTo(ox1 - uY * tick, oy1 + uX * tick); ctx.lineTo(ox1 + uY * tick, oy1 - uX * tick);
+        ctx.moveTo(ox2 - uY * tick, oy2 + uX * tick); ctx.lineTo(ox2 + uY * tick, oy2 - uX * tick);
         ctx.stroke();
 
-        if (distancePx > (clearance + 20) * 2) {
-            ctx.save();
-            ctx.translate(midX, midY);
+        ctx.save();
+        ctx.translate(ox1 + dx/2, oy1 + dy/2);
+        let angle = Math.atan2(dy, dx);
+        if (angle > Math.PI/2 || angle < -Math.PI/2) angle += Math.PI;
+        ctx.rotate(angle);
 
-            let angle = Math.atan2(dy, dx);
-            if (angle > Math.PI /2 || angle < -Math.PI /2) {
-                angle += Math.PI;
-            }
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(-15, -8, 30, 16);
 
-            ctx.rotate(angle);
-
-            ctx.fillStyle = color;
-            ctx.beginPath();
-            ctx.roundRect(-clearance, -10, clearance * 2, 20, 0);
-            ctx.fill();
-
-            ctx.fillStyle = '#fff';
-            ctx.fillText(text, 0, 2.5);
-
-            ctx.restore();
-        }
+        ctx.fillStyle = "#555";
+        ctx.font = "bold 11px monospace";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(`${distFt}'`, 0, 1);
+        ctx.restore();
     }
 
     function render() {
@@ -307,8 +307,7 @@ export function renderArchitectureSim(lessonData, onComplete) {
             ctx.moveTo(roomVertices[0].x, roomVertices[0].y);
             roomVertices.forEach(p => ctx.lineTo(p.x, p.y));
             ctx.closePath();
-
-            ctx.fillStyle = "rgba(119, 187, 162, 0.2)";
+            ctx.fillStyle = "rgba(119, 187, 162, 0.1)";
             ctx.fill();
 
             const xs = roomVertices.map(p => p.x);
@@ -317,42 +316,56 @@ export function renderArchitectureSim(lessonData, onComplete) {
             const maxX = Math.max(...xs);
             const minY = Math.min(...ys);
             const maxY = Math.max(...ys);
-
             const sqFt = calculateArea(roomVertices);
 
-            const centerX = minX + (maxX - minX) / 2;
-            const centerY = minY + (maxY - minY) / 2;
+            drawDimension(minX, minY, maxX, minY, -30);
+            drawDimension(minX, minY, minX, maxY, -30);
 
+            const cx = minX + (maxX - minX) / 2;
+            const cy = minY + (maxY - minY) / 2;
             const scale = Math.max(0.55, Math.min(1.0, Math.sqrt(sqFt) / 10));
-
-            const boxWidth = 90 * scale;
-            const boxHeight = 30 * scale;
-            const fontSize = Math.max(4, Math.floor(14 * scale));
+            const bw = 90 * scale, bh = 30 * scale, fs = Math.max(4, Math.floor(14 * scale));
 
             ctx.fillStyle = "#fff";
             ctx.beginPath();
-            ctx.roundRect(centerX - (boxWidth / 2), centerY - (boxHeight / 2), boxWidth, boxHeight, 4);
+            ctx.roundRect(cx - bw/2, cy - bh/2, bw, bh, 4);
             ctx.fill();
             ctx.strokeStyle = "#77BBA2";
             ctx.lineWidth = 1;
             ctx.stroke();
 
             ctx.fillStyle = "#3b6a5a";
-            ctx.font = `bold ${fontSize}px monospace`;
+            ctx.font = `bold ${fs}px monospace`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText(`${sqFt} ft²`, centerX, centerY);
+            ctx.fillText(`${sqFt} ft²`, cx, cy);
         });
 
         ctx.lineWidth = 6;
         ctx.lineCap = "square";
 
-        lines.forEach(l => {
-            drawMeasuredLine(l.x1, l.y1, l.x2, l.y2, "#000");
-        });
+        lines.forEach(l => drawWall(l.x1, l.y1, l.x2, l.y2, "#000"));
 
         if (isDrawing) {
-            drawMeasuredLine(startX, startY, currentX, currentY, "#77BBA2");
+            hud.style.display = "block";
+
+            if (mode === "draw") {
+                drawWall(startX, startY, currentX, currentY, "#77BBA2");
+                const len = Math.round(Math.hypot(currentX - startX, currentY - startY) / PIXELS_PER_FOOT);
+                const ang = Math.abs(Math.round(Math.atan2(currentY - startY, currentX - startX) * 180 / Math.PI));
+                hud.innerHTML = `L: ${len}' - 0" &nbsp;|&nbsp; A: ${ang}&deg;`;
+            } else if (mode === "rect") {
+                drawWall(startX, startY, currentX, startY, "#77BBA2");
+                drawWall(currentX, startY, currentX, currentY, "#77BBA2");
+                drawWall(currentX, currentY, startX, currentY, "#77BBA2");
+                drawWall(startX, currentY, startX, startY, "#77BBA2");
+
+                const w = Math.round(Math.abs(currentX - startX) / PIXELS_PER_FOOT);
+                const h = Math.round(Math.abs(currentY - startY) / PIXELS_PER_FOOT);
+                hud.innerHTML = `W: ${w}' - 0" &nbsp;|&nbsp; H: ${h}' - 0"`;
+            }
+        } else {
+            hud.style.display = "none";
         }
     }
 
@@ -372,22 +385,18 @@ export function renderArchitectureSim(lessonData, onComplete) {
 
     canvas.addEventListener("mousemove", (e) => {
         const pos = getMousePos(e);
-        if (mode === "erase") {
-            if (isErasing) eraseAt(pos.x, pos.y);
-            return;
-        }
+        if (mode === "erase") { if (isErasing) eraseAt(pos.x, pos.y); return; }
         if (!isDrawing) return;
 
-        if (e.shiftKey) {
+        if (mode === "draw" && e.shiftKey) {
             const dx = Math.abs(pos.x - startX);
             const dy = Math.abs(pos.y - startY);
-            if (dx > dy) {
-                currentX = snap(pos.x);
-                currentY = startY;
-            } else {
-                currentX = startX;
-                currentY = snap(pos.y);
-            }
+            if (dx > dy) { currentX = snap(pos.x); currentY = startY; }
+            else { currentX = startX; currentY = snap(pos.y); }
+        } else if (mode === "rect" && e.shiftKey) {
+            const size = Math.max(Math.abs(pos.x - startX), Math.abs(pos.y - startY));
+            currentX = snap(startX + (pos.x > startX ? size : -size));
+            currentY = snap(startY + (pos.y > startY ? size : -size));
         } else {
             currentX = snap(pos.x);
             currentY = snap(pos.y);
@@ -395,15 +404,18 @@ export function renderArchitectureSim(lessonData, onComplete) {
         render();
     });
 
-    canvas.addEventListener("mouseup", (e) => {
-        if (mode === "erase") {
-            isErasing = false;
-            return;
-        }
+    canvas.addEventListener("mouseup", () => {
+        if (mode === "erase") { isErasing = false; return; }
         if (!isDrawing) return;
         isDrawing = false;
-        if (startX !== currentX || startY !== currentY) {
+
+        if (mode === "draw" && (startX !== currentX || startY !== currentY)) {
             lines.push({ x1: startX, y1: startY, x2: currentX, y2: currentY });
+        } else if (mode === "rect" && startX !== currentX && startY !== currentY) {
+            lines.push({ x1: startX, y1: startY, x2: currentX, y2: startY });
+            lines.push({ x1: currentX, y1: startY, x2: currentX, y2: currentY });
+            lines.push({ x1: currentX, y1: currentY, x2: startX, y2: currentY });
+            lines.push({ x1: startX, y1: currentY, x2: startX, y2: startY });
         }
         render();
     });
@@ -419,19 +431,21 @@ export function renderArchitectureSim(lessonData, onComplete) {
     function setMode(newMode) {
         mode = newMode;
         document.getElementById("tool-draw").classList.toggle("active", mode === "draw");
+        document.getElementById("tool-rect").classList.toggle("active", mode === "rect");
         document.getElementById("tool-erase").classList.toggle("active", mode === "erase");
         canvas.style.cursor = mode === "erase" ? "cell" : "crosshair";
     }
 
     document.getElementById("tool-draw").addEventListener("click", () => setMode("draw"));
+    document.getElementById("tool-rect").addEventListener("click", () => setMode("rect"));
     document.getElementById("tool-erase").addEventListener("click", () => setMode("erase"));
 
     document.addEventListener("keydown", (e) => {
-     if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
-     if (!document.getElementById("drafting-canvas")) return;
-
-     if (e.key.toLowerCase() === "e") setMode("erase");
-     if (e.key.toLowerCase() === "d") setMode("draw");
+        if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+        if (!document.getElementById("drafting-canvas")) return;
+        if (e.key.toLowerCase() === "e") setMode("erase");
+        if (e.key.toLowerCase() === "r") setMode("rect");
+        if (e.key.toLowerCase() === "d") setMode("draw");
     });
 
     const clearModal = document.getElementById("clear-confirm-modal");
