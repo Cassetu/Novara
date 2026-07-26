@@ -241,12 +241,19 @@ export function renderArchitectureSim(lessonData, onComplete) {
     function drawDimension(x1, y1, x2, y2, offset) {
         const isHoriz = Math.abs(x2 - x1) > Math.abs(y2 - y1);
         let ox1 = x1, oy1 = y1, ox2 = x2, oy2 = y2;
-        if (isHoriz) { oy1 += offset; oy2 += offset; }
-        else { ox1 += offset; ox2 += offset; }
+
+        if (isHoriz) {
+            oy1 += offset;
+            oy2 += offset;
+        } else {
+            ox1 += offset;
+            ox2 += offset;
+        }
 
         const dx = ox2 - ox1;
         const dy = oy2 - oy1;
-        const distFt = Math.round(Math.hypot(dx, dy) / PIXELS_PER_FOOT);
+        const distPx = Math.hypot(dx, dy);
+        const distFt = Math.round(distPx / PIXELS_PER_FOOT);
         if (distFt <= 0) return;
 
         ctx.strokeStyle = "rgba(136, 136, 136, 0.4)";
@@ -265,11 +272,9 @@ export function renderArchitectureSim(lessonData, onComplete) {
         ctx.stroke();
 
         const tick = 5;
-        const uX = dx / Math.hypot(dx, dy);
-        const uY = dy / Math.hypot(dx, dy);
         ctx.beginPath();
-        ctx.moveTo(ox1 - uY * tick, oy1 + uX * tick); ctx.lineTo(ox1 + uY * tick, oy1 - uX * tick);
-        ctx.moveTo(ox2 - uY * tick, oy2 + uX * tick); ctx.lineTo(ox2 + uY * tick, oy2 - uX * tick);
+        ctx.moveTo(ox1 - tick, oy1 + tick); ctx.lineTo(ox1 + tick, oy1 - tick);
+        ctx.moveTo(ox2 - tick, oy2 +tick); ctx.lineTo(ox2 + tick, oy2 - tick);
         ctx.stroke();
 
         ctx.save();
@@ -301,30 +306,36 @@ export function renderArchitectureSim(lessonData, onComplete) {
         }
 
         const rooms = extractRooms(lines);
+        let globalMinX = Infinity, globalMinY = Infinity;
+        let globalMaxX = -Infinity, globalMaxY = -Infinity;
 
         rooms.forEach(roomVertices => {
             ctx.beginPath();
             ctx.moveTo(roomVertices[0].x, roomVertices[0].y);
             roomVertices.forEach(p => ctx.lineTo(p.x, p.y));
             ctx.closePath();
-            ctx.fillStyle = "rgba(119, 187, 162, 0.1)";
+            ctx.fillStyle = "rgba(119, 187, 162, 0.2)";
             ctx.fill();
 
             const xs = roomVertices.map(p => p.x);
             const ys = roomVertices.map(p => p.y);
-            const minX = Math.min(...xs);
-            const maxX = Math.max(...xs);
-            const minY = Math.min(...ys);
-            const maxY = Math.max(...ys);
-            const sqFt = calculateArea(roomVertices);
+            const minX = Math.min(...xs); const maxX = Math.max(...xs);
+            const minY = Math.min(...ys); const maxY = Math.max(...ys);
+            globalMinX = Math.min(globalMinX, minX)
+            globalMinY = Math.min(globalMinY, minY)
+            globalMaxX = Math.max(globalMaxX, maxX)
+            globalMaxY = Math.max(globalMaxY, maxY)
 
-            drawDimension(minX, minY, maxX, minY, -30);
-            drawDimension(minX, minY, minX, maxY, -30);
+            const sqFt = calculateArea(roomVertices);
+            const wFt = Math.round((maxX - minX) / PIXELS_PER_FOOT);
+            const hFt = Math.round((maxY - minY) / PIXELS_PER_FOOT);
 
             const cx = minX + (maxX - minX) / 2;
             const cy = minY + (maxY - minY) / 2;
             const scale = Math.max(0.55, Math.min(1.0, Math.sqrt(sqFt) / 10));
             const bw = 90 * scale, bh = 30 * scale, fs = Math.max(4, Math.floor(14 * scale));
+            const fsArea = Math.max(12, Math.floor(14 * scale));
+            const fsDim = Math.max(9, Math.floor(11 * scale));
 
             ctx.fillStyle = "#fff";
             ctx.beginPath();
@@ -341,8 +352,10 @@ export function renderArchitectureSim(lessonData, onComplete) {
             ctx.fillText(`${sqFt} ft²`, cx, cy);
         });
 
-        ctx.lineWidth = 6;
-        ctx.lineCap = "square";
+        if (rooms.length > 0) {
+            drawDimension(globalMinX, globalMinY, globalMaxX, globalMinY, -40);
+            drawDimension(globalMinX, globalMinY, globalMinX, globalMaxY, -40);
+        }
 
         lines.forEach(l => drawWall(l.x1, l.y1, l.x2, l.y2, "#000"));
 
