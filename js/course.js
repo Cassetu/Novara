@@ -1616,11 +1616,10 @@ document.addEventListener("keydown", e => {
 
             card.innerHTML = `
                 <h3>${entry.title} ${diffBadge}</h3>
-                ${isBundle(entry) ? `<p style="font-size:10px;color:var(--accent);font-weight:900;letter-spacing:1px;text-transform:uppercase;margin:0;">Bundle</p>` : ""}
+                <span class="public-card-meta">${lessonsNote} &bull; ${entry.category}</span>
                 <p>${entry.description}</p>
                 <div class="public-card-footer">
-                    <span class="public-card-meta">${lessonsNote} &bull; ${entry.category}</span>
-                    <button class="public-signin-trigger" style="font-size:11px;padding:6px 14px;">Sign in to enroll</button>
+                    <button class="public-signin-trigger" style="font-size:11px;padding:6px 14px;width:100%">Sign in to enroll</button>
                 </div>
             `;
 

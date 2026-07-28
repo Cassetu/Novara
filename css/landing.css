@@ -153,18 +153,9 @@
     text-align: right;
     font-family: monospace;
     font-size: 12px;
-    letter-spacing: 4px;
-    font-weight: 700;
-    gap: 15px;
+    line-height:1.8;
 }
 
-.side-decor::after {
-    content: '';
-    width: 2px;
-    height: 60px;
-    background-color: #0a0a0a;
-    margin-right: 15px;
-}
 
 .hero-door-img {
     width: 200%;
