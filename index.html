@@ -25,6 +25,23 @@
             });
         }
     </script>
+    <script type="module">
+        import { createDialogueBox } from "./js/utils/dialogueBox.js";
+        const mayorChat = createDialogueBox({
+            name: "Mayor Bob",
+            imageSrc: "assets/img/minibit/advisor_mayor.png",
+            texts: [
+                "Hey there!! Thanks for checking out Novara! Click 'Next' to see what else I have to say!",
+                "Here are all of Novara's current courses!",
+                "To access the content, you simply need to sign in using google. Its passwordless and easy!",
+                "Not sure? Check our privacy policy on how we handle your information."
+            ],
+            onComplete: () => {
+                console.log("Complete!");
+            }
+        });
+        document.getElementById("mayor-chat").appendChild(mayorChat);
+    </script>
 </head>
 <body>
 
@@ -68,16 +85,7 @@
 <div id="view-public-courses" class="view-layer" style="display: none;max-width: 100%; margin: 0 auto;">
     <button id="btn-back-landing" style="background: transparent; border: none; font-weight: bold; cursor: pointer; margin-bottom: 40px; font-size: 14px; letter-spacing: 2px;">← RETURN</button>
     <h1 style="font-size: 48px; font-weight: 900; letter-spacing: -2px; margin-bottom: 10px; text-transform: uppercase;text-align:center">Courses</h1>
-    <div style="border: 3px solid var(--border); box-shadow: 6px 6px 0px var(--border); margin: 10px; padding: 10px; min-height: 122px; box-sizing: border-box; max-width:400px;">
-        <div style="display: flex; gap: 15px; justify-content:space-between; align-items: flex-start;">
-            <img src="assets/img/minibit/advisor_mayor.png" alt="Mr.Mayor Bob" style="max-height:107px;border:3px solid var(--border);flex-shrink: 0;">
-            <div style="flex-grow:1; font-family: monospace;">
-                <strong style="display:block; color:var(--text-main); font-size: 24px;margin-bottom:4px;">Mayor Bob</strong>
-                <p style="color: var(--text-main); margin:0; line-height:1.4;">Sign in to enroll and track progress for free!</p>
-                <button id="mayor-next-btn" style="align-self:flex-end;margin:10px;padding:4px 12px; font-family: monospace; font-weight:bold; cursor: pointer; border: 2px solid var(--border);color: var(--text-main);">Next</button>
-            </div>
-        </div>
-    </div>
+    <div id="mayor-chat"></div>
     <p style="margin:15px;font-size:11px;font-family:monospace;color:#888888;text-align:center;">
         <a href="html/privacy.html" style="color:#888888;">Privacy Policy</a>
     </p>
