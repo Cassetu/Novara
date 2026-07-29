@@ -6,11 +6,13 @@ LESSON TYPES
 
 document
 challenge
-code_fix
-fill_blank
-spot_bug
-godot_scene
+codeFix
+fillBlank
+spotBug
+godotScene
 project
+architectureSim
+cookingSim
 
 PRACTICE MODES
 --------------
@@ -31,6 +33,8 @@ fill_blank                 4 points max
 spot_bug                   1 point max
 godot_scene                1 point max
 project                    not scored
+architectureSim            not scored (yet)
+cookingSim                 depends on which sim
 
 progress %  =  sum(earned) / sum(max) * 100
 
