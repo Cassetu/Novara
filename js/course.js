@@ -199,6 +199,24 @@ async function routeFromURL() {
     const tab = params.get("tab");
     const parentId = params.get("parentId");
 
+    if (!currentUser) {
+        document.getElementById("view-landing").style.display = "none";
+        document.getElementById("view-public-courses").style.display = "none";
+        document.getElementById("view-auth").style.display = "none";
+
+        if (view === "courses") {
+            document.getElementById("view-public-courses").style.display = "block";
+            if (typeof loadCatalog !== "undefined" && catalogData.length === 0) {
+                await loadCatalog();
+            }
+        } else if (view === "signin") {
+            document.getElementById("view-auth").style.display = "block";
+        } else {
+            document.getElementById("view-landing").style.display = "flex";
+        }
+        return;
+    }
+
     if (view === "hub") {
         navHub.click();
         if (tab) openHub(tab);
@@ -1595,10 +1613,35 @@ document.addEventListener("keydown", e => {
 
     async function openPublic(e) {
         e?.preventDefault();
+        history.pushState({}, "", "?view=courses");
         viewLanding.style.display = "none";
+        viewAuth.style.display = "none";
         viewPublic.style.display  = "block";
         await loadCatalog();
         renderPublicGrid();
+    }
+
+    if (btnCourses) btnCourses.addEventListener("click", openPublic);
+    if (heroCta)    heroCta.addEventListener("click", openPublic);
+
+    if (btnBack) {
+        btnBack.addEventListener("click", (e) => {
+            e.preventDefault();
+            history.pushState({}, "", window.location.pathname);
+            viewPublic.style.display  = "none";
+            viewAuth.style.display = "none";
+            viewLanding.style.display = "flex";
+        });
+    }
+
+    if (btnSignin) {
+        btnSignin.addEventListener("click", e => {
+            e.preventDefault();
+            history.pushState({}, "", "?view=signin");
+            viewLanding.style.display = "none";
+            viewPublic.style.display = "none";
+            viewAuth.style.display    = "block";
+        });
     }
 
     function renderPublicGrid() {
@@ -1629,24 +1672,6 @@ document.addEventListener("keydown", e => {
             });
 
             pubGrid.appendChild(card);
-        });
-    }
-
-    if (btnCourses) btnCourses.addEventListener("click", openPublic);
-    if (heroCta)    heroCta.addEventListener("click", openPublic);
-
-    if (btnBack) {
-        btnBack.addEventListener("click", () => {
-            viewPublic.style.display  = "none";
-            viewLanding.style.display = "flex";
-        });
-    }
-
-    if (btnSignin) {
-        btnSignin.addEventListener("click", e => {
-            e.preventDefault();
-            viewLanding.style.display = "none";
-            viewAuth.style.display    = "block";
         });
     }
 

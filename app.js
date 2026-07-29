@@ -14,13 +14,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (btnLandingSignin) {
         btnLandingSignin.addEventListener("click", (e) => {
             e.preventDefault();
+            history.pushState({}, "", "?view=signin");
             viewLanding.style.display = "none";
             authView.style.display = "block";
         });
     }
 
     const openPublicCatalog = (e) => {
-        e.preventDefault();
+        if (e) e.preventDefault();
+        history.pushState({}, "", "?view=courses");
         viewLanding.style.display = "none";
         viewPublicCourses.style.display = "block";
     };
@@ -29,14 +31,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (heroCta) heroCta.addEventListener("click", openPublicCatalog);
 
     if (btnBackLanding) {
-        btnBackLanding.addEventListener("click", () => {
+        btnBackLanding.addEventListener("click", (e) => {
+            e.preventDefault();
+            history.pushState({}, "", window.location.pathname);
             viewPublicCourses.style.display = "none";
             viewLanding.style.display = "flex";
         });
     }
 
     document.querySelectorAll(".public-signin-trigger").forEach(btn => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            history.pushState({}, "", "?view=signin");
             viewPublicCourses.style.display = "none";
             authView.style.display = "block";
         });
@@ -49,10 +55,20 @@ document.addEventListener("DOMContentLoaded", async () => {
             authView.style.display = "none";
             appView.style.display = "flex";
         } else {
-            viewLanding.style.display = "flex";
+            const params = new URLSearchParams(window.location.search);
+            const view = params.get("view");
+            viewLanding.style.display = "none";
             viewPublicCourses.style.display = "none";
             authView.style.display = "none";
             appView.style.display = "none";
+
+            if (view === "courses") {
+                viewPublicCourses.style.display = "block";
+            } else if (view === "signin") {
+                authView.style.display = "block";
+            } else {
+                viewLanding.style.display = "flex";
+            }
         }
     });
 
