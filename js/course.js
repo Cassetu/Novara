@@ -486,6 +486,68 @@ async function getCourseProgress(entryId) {
 let activeCategory = "all";
 let activeDifficulty = "all";
 
+function showCourseDetails(entry) {
+    const old = document.getElementById("detailsOverlay");
+    if (old) old.remove();
+
+    let sources = "None";
+    if (entry.sources) {
+        if (Array.isArray(entry.sources)) {
+            sources = "<ul>";
+            entry.sources.forEach(source => {
+                sources += `<li>${source}</li>`;
+            });
+            sources += "</ul>";
+        } else {
+            sources = entry.sources;
+        }
+    }
+
+    const overlay = document.createElement("div");
+    overlay.id = "detailsOverlay";
+
+    overlay.innerHTML = `
+        <div style="background:var(--surface);border:4px solid var(--border);box-shadow:8px 8px 0 var(--accent);max-width:500px;width:100%;padding:30px;font-family:monospace;">
+            <h2>${entry.title} Details</h2>
+            <p><b>Author:</b> ${
+                Array.isArray(entry.author)
+                    ? entry.author.join(", ")
+                    : entry.author || "Unknown"
+            }</p>
+            <p><b>Published:</b> ${entry.published || "Unknown"}</p>
+            <p><b>Last Updated:</b> ${entry.updated || "Unknown"}</p>
+            <div style="margin-left:20px;">
+                <b>Sources:</b>
+                ${sources}
+            </div>
+            <button id="closeDetailsBtn" style="margin-top:10px;">Close</button>
+        </div>
+    `;
+
+    overlay.style.cssText = `
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.6);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:20px;
+        z-index:10000;
+    `;
+
+    document.body.appendChild(overlay);
+
+    document.getElementById("closeDetailBtn").onclick = () => {
+        overlay.remove();
+    };
+
+    overlay.onclick = e => {
+        if (e.target === overlay) {
+            overlay.remove();
+        }
+    };
+}
+
 async function renderExplorer() {
     catalogGrid.innerHTML = "";
     for (const entry of catalogData) {
@@ -547,28 +609,13 @@ async function renderExplorer() {
             btnGroup.appendChild(enroll);
         }
 
-        let authorText = "Unknown Author";
-        if (entry.author && Array.isArray(entry.author)) {
-            authorText = entry.author.join(", ");
-        } else if (typeof entry.author === "string") {
-            authorText = entry.author;
-        }
-
-        const authorEl = document.createElement("div");
-        authorEl.innerText = `By ${authorText}`;
-
-        authorEl.style.cssText = `
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 11px;
-            color: var(--text-dim, #888888);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 12px;
-            text-align: center;
-        `;
+        const detailsBtn = document.createElement("button");
+        detailsBtn.innerText = "Details";
+        detailsBtn.style.cssText = "margin-top: 2px; background: transparent;border:none;font-family:monospace;font-size: 11px;box-shadow:none;width:10px; font-weight: bold;color: var(--text-dim); text-decoration:underline;cursor:pointer; text-transform:uppercase;letter-spacing: 1px;";
+        detailsBtn.onclick = () => showCourseDetails(entry);
 
         actionWrapper.appendChild(btnGroup);
-        actionWrapper.appendChild(authorEl);
+        actionWrapper.appendChild(detailsBtn);
         card.appendChild(actionWrapper);
         catalogGrid.appendChild(card);
     }

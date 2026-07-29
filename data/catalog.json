@@ -76,12 +76,15 @@
     ]
   },
   {
-    "id": "cooking-fundamentals",
-    "title": "Cooking Fundamentals",
+    "id": "test-lessons",
+    "title": "Test Lessons",
     "author": ["Cassetu"],
+    "published": "07-29-2026",
+    "updated": "07-29-2026",
+    "sources": ["Nothing Yet","Nothing Yet"],
     "category": "other",
     "difficulty": "beginner",
-    "description": "Learn the fundamentals of cooking through hands-on interactive simulations. *IN PROGRESS*",
+    "description": "A place to test new lessons",
     "file": "data/cooking/fundamentals.json"
   },
   {
