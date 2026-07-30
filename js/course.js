@@ -493,13 +493,13 @@ function showCourseDetails(entry) {
     let sources = "None";
     if (entry.sources) {
         if (Array.isArray(entry.sources)) {
-            sources = "<ul>";
+            sources = "<ul style='margin:8px 0 0 20px;padding: 0;'>";
             entry.sources.forEach(source => {
-                sources += `<li>${source}</li>`;
+                sources += `<li style="margin-bottom:4px;">${source}</li>`;
             });
             sources += "</ul>";
         } else {
-            sources = entry.sources;
+            sources = `<div style="margin-top: 8px;">${entry.sources}</div>`;
         }
     }
 
@@ -507,20 +507,22 @@ function showCourseDetails(entry) {
     overlay.id = "detailsOverlay";
 
     overlay.innerHTML = `
-        <div style="background:var(--surface);border:4px solid var(--border);box-shadow:8px 8px 0 var(--accent);max-width:500px;width:100%;padding:30px;font-family:monospace;">
-            <h2>${entry.title} Details</h2>
-            <p><b>Author:</b> ${
-                Array.isArray(entry.author)
-                    ? entry.author.join(", ")
-                    : entry.author || "Unknown"
-            }</p>
-            <p><b>Published:</b> ${entry.published || "Unknown"}</p>
-            <p><b>Last Updated:</b> ${entry.updated || "Unknown"}</p>
-            <div style="margin-left:20px;">
+        <div style="background:var(--surface);border:4px solid var(--border);box-shadow:8px 8px 0 var(--accent);max-width:550px;width:100%;padding:30px;font-family:monospace; max-height: 90vh; overflow-y: auto;">
+            <h2 style="margin-top:0; border-bottom: 2px dashed var(--border); padding-bottom: 10px;">${entry.title} Details</h2>
+            <p style="margin: 8px 0;"><b>Author:</b> ${Array.isArray(entry.author) ? entry.author.join(", ") : entry.author || "Unknown"}</p>
+            <p style="margin: 8px 0;"><b>Published:</b> ${entry.published || "Unknown"}</p>
+            <p style="margin: 8px 0;"><b>Last Updated:</b> ${entry.updated || "Unknown"}</p>
+
+            <div style="margin: 20px 0; padding: 15px; background: rgba(0,0,0,0.03); border-left: 4px solid var(--accent);">
+                <b style="display:block; margin-bottom: 8px; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: var(--text-dim);">Description</b>
+                <span style="line-height: 1.5; font-size: 14px;">${entry.description || "No description provided."}</span>
+            </div>
+
+            <div style="margin-left:0px;">
                 <b>Sources:</b>
                 ${sources}
             </div>
-            <button id="closeDetailsBtn" style="margin-top:10px;">Close</button>
+            <button id="closeDetailsBtn" style="margin-top:20px; width: 100%; padding: 12px; font-weight: bold; background: transparent; border: 2px solid var(--border); cursor: pointer; text-transform: uppercase; letter-spacing: 1px;">Close</button>
         </div>
     `;
 
@@ -564,26 +566,25 @@ async function renderExplorer() {
         const diffBadge = entry.difficulty
             ? `<span class="diff-badge ${entry.difficulty}">${entry.difficulty}</span>` : "";
 
-        let progressHtml = "";
-        if (enrolled) {
-            const pct = await getCourseProgress(entry.id);
-            progressHtml = `
-                <div class="course-progress-wrapper">
-                    <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
-                </div>
-                <p style="font-size:12px;color:var(--accent);margin-top:6px;margin-bottom:15px;text-align:right;">${pct}% complete</p>
-            `;
-        }
+        const pct = await getCourseProgress(entry.id);
+        const barColor = enrolled ? "var(--accent)" : "var(--accent-orange)";
+        const progressHtml = `
+            <div class="course-progress-wrapper" style="margin-top: auto;">
+                <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%;background:${barColor};"></div>
+            </div>
+            <p style="font-size:12px;color:${barColor};margin-top:6px;margin-bottom:15px;text-align:right;">${pct}% complete</p>
+        `;
 
         card.innerHTML = `
-            <h3>${entry.title}${diffBadge}</h3>
-            ${isBundle(entry) ? `<p style="font-size:10px;color:var(--accent);font-weight:900;letter-spacing:1px;margin-bottom:4px;text-transform:uppercase;">Bundle &bull; ${entry.courses.length} courses</p>` : ""}
-            <p style="flex-grow:1">${entry.description}</p>
+            <div style="flex-grow: 1; min-height: 75px;">
+                <h3 style="margin-bottom:8px; display: -webkit-box;-webkit-line-clamp:3; -webkit-box-orient: vertical;overflow:hidden;">${entry.title}${diffBadge}</h3>
+                ${isBundle(entry) ? `<p style="font-size:10px;color:var(--accent);font-weight:900;letter-spacing:1px;margin-bottom:4px;text-transform:uppercase;">Bundle &bull; ${entry.courses.length} courses</p>` : ""}
+            </div>
             ${progressHtml}
         `;
 
         const actionWrapper = document.createElement("div");
-        actionWrapper.style.cssText = "display: flex; flex-direction: column; margin-top: auto;";
+        actionWrapper.style.cssText = "display: flex; flex-direction:column; margin-top: auto;";
 
         const btnGroup = document.createElement("div");
         btnGroup.style.cssText = "display:flex;gap:10px;";
