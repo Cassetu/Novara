@@ -58,13 +58,14 @@
                     <a href="html/themeTool.html" target="_blank">Theme Tool</a>
                 </div>
             </div>
-            <a href="?view=signin" id="btn-landing-signin">SIGN IN</a>
+            <a href="?view=signin" id="btn-landing-signin" style="margin-left: 40px;">SIGN IN</a>
         </nav>
     </header>
     <main class="landing-hero">
         <div class="hero-content">
             <h1 class="hero-title">ENGINEERING.<br>GAME DEV.<br>DATA.<br>DESIGN.</h1>
-            <p class="hero-desc">Novara is built solo by me, only has one purpose, not profit, just learning!</p>
+            <p class="hero-desc">Novara is built solo by me, only has one purpose, not profit, just learning!<br><b>Total Development Time On Novara:</b></p>
+            <a href="https://hackatime-badge.hackclub.com"><img src="https://hackatime.hackclub.com/api/v1/badge/U0B7KLS4R9R/Cassetu/Novara?color=77BBA2" alt="Work time"></a>
             <a class="hero-cta nav-trigger">EXPLORE COURSES <span class="hero-cta-arrow">↗</span></a>
         </div>
         <div class="hero-graphics">
@@ -80,13 +81,13 @@
     <p style="margin:15px;font-size:11px;font-family:monospace;color:#888888;text-align:center;">
         <a href="html/privacy.html" style="color:#888888;">Privacy Policy</a>
     </p>
-    <div style="display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;" id="public-filters">
+    <div class="filters-row" id="public-filters">
         <button class="filter-btn active" data-pfilter="all">All</button>
         <button class="filter-btn" data-pfilter="engineering">Engineering</button>
         <button class="filter-btn" data-pfilter="gamedev">Game Dev</button>
         <button class="filter-btn" data-pfilter="data">Data</button>
         <button class="filter-btn" data-pfilter="design">Design</button>
-        <span style="margin-left:auto;display:flex;gap:8px;">
+        <span style="margin-left:auto;display:flex;gap:20px;">
             <button class="filter-btn active" data-pdifficulty="all">All</button>
             <button class="filter-btn" data-pdifficulty="beginner">Beginner</button>
             <button class="filter-btn" data-pdifficulty="intermediate">Intermediate</button>
@@ -177,18 +178,21 @@
 
     <main class="workspace" id="main-workspace">
 
-        <div id="view-explorer" class="view-layer" style="display: none; padding: 40px; max-width: 1800px; margin: 0 auto;">
+        <div id="view-explorer" class="explorer-view" style="display:none;">
 
-            <h1 style="font-size: 48px; font-weight: 900; letter-spacing: -2px; margin-bottom: 10px; text-transform: uppercase;">Curriculums</h1>
+            <div class="explorer-title-block">
+                <span class="explorer-kicker">Not finding what you need? Email me!</span>
+                <h1 class="explorer-title">Curriculums</h1>
+            </div>
 
-            <div style="display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;" id="explorer-filters">
+            <div class="filters-row" id="explorer-filters">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="engineering">Engineering</button>
                 <button class="filter-btn" data-filter="gamedev">Game Dev</button>
                 <button class="filter-btn" data-filter="data">Data</button>
                 <button class="filter-btn" data-filter="design">Design</button>
 
-                <span style="margin-left:auto;display:flex;gap:8px;">
+                <span style="margin-left:auto;display:flex;gap:20px;">
                     <button class="diff-btn" data-diff="all">All</button>
                     <button class="diff-btn" data-diff="beginner">Beginner</button>
                     <button class="diff-btn" data-diff="intermediate">Intermediate</button>
