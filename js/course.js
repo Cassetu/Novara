@@ -66,24 +66,6 @@ navToolsBtn.addEventListener("click", e => {
     if (!isOpen) toolsDropdown.classList.add("open");
 });
 
-function applyTheme(t) {
-    document.body.className = document.body.className.replace(/theme-\w+/g, "").trim();
-    if (t) document.body.classList.add(t);
-    localStorage.setItem("novara-theme", t || "");
-    document.querySelectorAll(".theme-swatch").forEach(s =>
-        s.classList.toggle("active-theme", s.dataset.theme === t)
-    );
-}
-
-(function initTheme() {
-    const saved = localStorage.getItem("novara-theme");
-    if (saved) applyTheme(saved);
-})();
-
-document.querySelectorAll(".theme-swatch").forEach(s =>
-    s.addEventListener("click", () => applyTheme(s.dataset.theme))
-);
-
 window.firebaseAuth.onAuthStateChanged(async user => {
     if (!user) return;
     currentUser = user;
