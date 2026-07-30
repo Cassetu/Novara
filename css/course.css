@@ -80,18 +80,19 @@ h1, h2, h3 {
     letter-spacing: 1.5px;
     text-transform: uppercase;
     padding: 6px 14px;
+    height:58px;
     cursor: pointer;
     border-radius: 3px;
     transition: color 0.15s, background 0.15s;
     white-space: nowrap;
 }
 .tb-btn:hover {
+    height:58px;
     color: #ffffff;
     background: rgba(255,255,255,0.08);
-    height:60px;
 }
 .tb-btn:active {
-    height:60px;
+    height:58px;
     transform: none;
     box-shadow: none;
 }
@@ -99,14 +100,14 @@ h1, h2, h3 {
     color: #ffffff;
     background: rgba(255,255,255,0.12);
     border-bottom: 2px solid var(--accent);
-    height:60px;
+    height:58px;
 }
 .tb-dropdown-wrap {
     position: relative;
 }
 .tb-dropdown {
     position: absolute;
-    top: calc(100% + 8px);
+    top:calc(100%);
     left: 0;
     background: #1a1a1a;
     border: 2px solid #333333;
