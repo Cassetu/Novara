@@ -537,7 +537,7 @@ function showCourseDetails(entry) {
 
     document.body.appendChild(overlay);
 
-    document.getElementById("closeDetailBtn").onclick = () => {
+    document.getElementById("closeDetailsBtn").onclick = () => {
         overlay.remove();
     };
 
