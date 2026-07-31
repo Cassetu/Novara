@@ -559,7 +559,7 @@ async function renderExplorer() {
 
         card.innerHTML = `
             <div style="flex-grow: 1; min-height: 75px;">
-                <h3 style="margin-bottom:8px; display: -webkit-box;-webkit-line-clamp:3; -webkit-box-orient: vertical;overflow:hidden;">${entry.title}${diffBadge}</h3>
+                <h3 style="margin-bottom:8px; display: -webkit-box;-webkit-line-clamp:3; -webkit-box-orient: vertical;overflow:hidden;">${entry.title}</h3>
                 ${isBundle(entry) ? `<p style="font-size:10px;color:var(--accent);font-weight:900;letter-spacing:1px;margin-bottom:4px;text-transform:uppercase;">Bundle &bull; ${entry.courses.length} courses</p>` : ""}
             </div>
             ${progressHtml}
@@ -592,13 +592,25 @@ async function renderExplorer() {
             btnGroup.appendChild(enroll);
         }
 
+        const footerRow = document.createElement("div");
+        footerRow.style.cssText = "";
+
         const detailsBtn = document.createElement("button");
         detailsBtn.innerText = "Details";
-        detailsBtn.style.cssText = "margin-top: 2px; background: transparent;border:none;font-family:monospace;font-size: 11px;box-shadow:none;width:10px; font-weight: bold;color: var(--text-dim); text-decoration:underline;cursor:pointer; text-transform:uppercase;letter-spacing: 1px;";
+        detailsBtn.style.cssText = "margin-top: 2px; background: transparent;border:none;font-family:monospace;font-size: 11px;box-shadow:none;width:10px; font-weight: bold;color: var(--text-dim); text-decoration:underline;cursor:pointer; text-transform:uppercase;letter-spacing: 1px;padding:10px 52px 4px 6px";
         detailsBtn.onclick = () => showCourseDetails(entry);
+        footerRow.appendChild(detailsBtn);
+
+        if(entry.difficulty){
+            const badge = document.createElement("span");
+            badge.className = `diff-badge ${entry.difficulty}`;
+            badge.style.cssText = "font-size:10px;padding:2px 6px;text-transform:uppercase;";
+            badge.innerText = entry.difficulty;
+            footerRow.appendChild(badge);
+        }
 
         actionWrapper.appendChild(btnGroup);
-        actionWrapper.appendChild(detailsBtn);
+        actionWrapper.appendChild(footerRow);
         card.appendChild(actionWrapper);
         catalogGrid.appendChild(card);
     }
