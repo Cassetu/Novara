@@ -1039,8 +1039,10 @@ function runMixedPractice(lessonData, analytics, onUpdate) {
 function startLesson(lesson) {
     activeLessonData = JSON.parse(JSON.stringify(lesson));
 
-    if (activeLessonData.questions?.length && activeLessonData.type !== "practice_standard")
+    if (activeLessonData.questions?.length && activeLessonData.type !== "practice_standard") {
         activeLessonData.questions = shuffleArray(activeLessonData.questions);
+        if (activeLessonData.questionCount) activeLessonData.questions = activeLessonData.questions.slice(0, activeLessonData.questionCount);
+    }
 
     initQuestionState();
     switchView("view-lesson");
