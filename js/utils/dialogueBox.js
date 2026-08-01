@@ -7,7 +7,7 @@ export function createDialogueBox(config) {
     let currentIndex = 0;
 
     const container = document.createElement("div");
-    container.style.cssText = "border: 3px solid var(--border); box-shadow: 6px 6px 0px var(--border);margin:10px auto; width: 100%; max-width: 420px; padding: 15px; height:172px; box-sizing:border-box;";
+    container.style.cssText = "border:3px solid var(--border);box-shadow:6px 6px 0px var(--border);margin:10px auto;width:100%;max-width:420px;padding:15px;height:172px;box-sizing:border-box;background:#fff;";
     container.innerHTML = `
         <div style="display: flex; gap: 15px; justify-content:space-between; align-items: flex-start; height:100%;">
             <img src="${imageSrc}" alt="${name}" style="max-height:107px;border:3px solid var(--border);flex-shrink: 0;">

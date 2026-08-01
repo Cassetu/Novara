@@ -9,6 +9,7 @@ import { renderSpotBug } from "./renderers/spotBug.js";
 import { renderProject } from "./renderers/project.js";
 import { renderCookingSim } from "./renderers/cookingSim.js";
 import { renderArchitectureSim } from "./renderers/architectureSim.js";
+import { createDialogueBox } from "./utils/dialogueBox.js";
 
 let currentUser = null;
 let ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {} };
@@ -114,63 +115,61 @@ function startOnboarding() {
     }
     const onboardingOverlay = document.createElement("div");
     onboardingOverlay.id = "onboardingOverlay";
+    onboardingOverlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:9999;pointer-events:none;";
     document.body.appendChild(onboardingOverlay);
 
     const steps = [
-        { selector: ".course-card", title: "Curriculums", text: "Each card is a structured course with lessons and quizzes.", interaction: false },
-        { selector: ".b-enroll-btn", title: "Enrolling", text: "Enroll in curriculums with a click of a button!", interaction: true },
-        { selector: "#nav-hub", title: "Navigation & Hub", text: "This is the navigation, where you can find other things, such as the Hub. The Hub has practice mode to practice all information you've learned in an curriculum.", interaction: false },
-        { selector: "#nav-active-btn", title: "Active Dropdown", text: "Here is where your curriculums will be, you can have a maximum of three curriculums active at once.", interaction: false }
+        { selector: ".course-card", text: "Welcome to Novara! Each card here represents a rigorous curriculum packed with lessons, challenges, and sims." },
+        { selector: ".b-enroll-btn", text: "Ready to start building? Go ahead and click 'Enroll' on any course card to add it to your active workspace!", interaction: true },
+        { selector: "#nav-hub", text: "Need extra drilling? Head over to the Hub anytime to access survival practice modes and complete offline documentation." },
+        { selector: "#nav-active-btn", text: "Your active curriculums live right here in this dropdown menu. You can track your progress or jump straight back in!" }
     ];
 
+    let cur = 0;
     let lastTarget = null;
 
-    function renderStep(index) {
-        if (lastTarget) { lastTarget.style.position = ""; lastTarget.style.zIndex = "";}
-        if (index >= steps.length) {
+    function renderStep() {
+        if (lastTarget) { lastTarget.style.position = ""; lastTarget.style.zIndex = ""; lastTarget.style.pointerEvents = ""; }
+        if (cur >= steps.length) {
             const activeOverlay = document.getElementById("onboardingOverlay");
             if (activeOverlay) activeOverlay.remove();
             ud.onboarded = true;
             saveField("onboarded", true);
             return;
         }
-        const step = steps[index];
+        const step = steps[cur];
         const target = document.querySelector(step.selector);
         lastTarget = target;
-        if (!target) {
-            renderStep(index + 1);
-            return;
-        }
+        if (!target) { cur++; renderStep(); return; }
         const rect = target.getBoundingClientRect();
         onboardingOverlay.innerHTML = "";
         target.style.position = "relative";
         target.style.zIndex = "10000";
+        target.style.pointerEvents = "auto";
+        const dialogueBox = createDialogueBox({
+            name: "Mayor Bob",
+            imageSrc: "assets/img/minibit/advisor_mayor.png",
+            texts: [step.text],
+            onComplete: () => {
+                cur++;
+                renderStep();
+            }
+        });
 
-        const card = document.createElement("div");
-        card.id = "onboardingCard";
-        card.innerHTML = `
-            <p>${index + 1} / ${steps.length}</p>
-            <h3>${step.title}</h3>
-            <p>${step.text}</p>
-        `;
-        card.style.position = "fixed";
-        card.style.top = rect.top + "px";
-        card.style.left = (rect.right + 20) + "px";
-        onboardingOverlay.appendChild(card);
+        dialogueBox.style.position = "fixed";
+        dialogueBox.style.top = Math.min(rect.bottom + 40, window.innerHeight - 200) + "px";
+        dialogueBox.style.left = Math.max(20, Math.min(rect.left, window.innerWidth - 440)) + "px";
+        dialogueBox.style.zIndex = "10001";
+        dialogueBox.style.pointerEvents = "auto";
+        onboardingOverlay.appendChild(dialogueBox);
         if (step.interaction) {
             target.addEventListener("click", () => {
-                renderStep(index + 1);
+                cur++;
+                renderStep();
             }, { once: true });
-        } else {
-            const nextBtn = document.createElement("button");
-            nextBtn.innerText = "Got it!";
-            card.appendChild(nextBtn);
-            nextBtn.addEventListener("click", () => {
-                renderStep(index + 1);
-            });
         }
     }
-    renderStep(0);
+    renderStep();
 }
 
 async function routeFromURL() {
