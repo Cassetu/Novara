@@ -239,9 +239,10 @@ async function loadUserData() {
         ud.mastery          = ud.mastery          || {};
         ud.practiceSettings = ud.practiceSettings || {};
         ud.onboarded = ud.onboarded || false;
-        ud.pacedMode = ud.pacedMode || { active: false, currentCourseId: null, startDate: 0, lastCompletedDate: 0, currentLessonIndex: 0, pendingTargetedPractice: false };
+        ud.pacedMode = ud.pacedMode || { active: false };
+        ud.pacedProgress = ud.pacedProgress || {};
     } else {
-        ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {}, onboarded: false, pacedMode: { active: false, currentCourseId: null, startDate: 0, lastCompletedDate: "", currentLessonIndex: 0, pendingTargetedPractice: false } };
+        ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {}, onboarded: false, pacedMode: { active: false }, pacedProgress: {} };
         await window.setDoc(ref, ud);
     }
     console.log("user data loaded", currentUser.uid);
@@ -361,6 +362,7 @@ navSettings?.addEventListener("click", e => {
 });
 
 $('settings-paced-mode')?.addEventListener("change", async e => {
+    ud.pacedMode = ud.pacedMode || {};
     ud.pacedMode.active = e.target.checked;
     await saveField("pacedMode", ud.pacedMode);
 });
@@ -391,7 +393,7 @@ wipeConfirmInput?.addEventListener("input", e => {
 });
 
 execWipeBtn?.addEventListener("click", async () => {
-    const blank = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {}, pacedMode: { active: false, currentCourseId: null, startDate: 0, lastCompletedDate: "", currentLessonIndex: 0, pendingTargetedPractice: false } };
+    const blank = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {}, onboarded: true, pacedMode: { active: false }, pacedProgress: {} };
     await window.setDoc(window.doc(window.db, "users", currentUser.uid), blank);
     ud = blank;
     wipeConfirmInput.value = "";
@@ -911,7 +913,58 @@ async function openSyllabus(courseRef, dataArg, parentEntry) {
     }, 50);
 }
 
+function getCoursePacedState(data, courseId) {
+    if (!ud.pacedMode || ud.pacedMode.active !== true) {
+        return { active: false };
+    }
+    let nextId = null;
+    let found = false;
+    data.sections.forEach(s => s.lessons.forEach(l => {
+        if (l.type === "project") return;
+        const id = l.id || (l.title || "").replace(/\s+/g, "-").toLowerCase();
+        if (!found && !(ud.scores[id] > 0) && !ud.mastery[id]) {
+            nextId = id;
+            found = true;
+        }
+    }));
+
+    const today = new Date().toLocaleDateString("en-CA");
+    const prog = ud.pacedProgress[courseId] || {};
+
+
+    let absenceDays = 0;
+    if (prog.lastCompletedDate && prog.lastCompletedDate !== today && !prog.absenceClearedToday) {
+        const last = new Date(prog.lastCompletedDate);
+        const curr = new Date(today);
+        absenceDays = Math.floor((curr - last) / (1000 * 60 * 60 * 24));
+    }
+
+    return {
+        active: true,
+        nextId: nextId,
+        lockedToday: prog.lastCompletedDate === today,
+        absenceDays: absenceDays
+    };
+}
+
+function generateAbsenceReview(courseId, data, absenceDays) {
+    const allQ = collectQuestions(data, { mcq: true, fill_blank: true, spot_bug: true });
+    const pool = allQ.filter(q => ud.scores[q.parentLessonId] > 0 || ud.mastery[q.parentLessonId]);
+    if (pool.length === 0) return null;
+
+    const qCount = Math.min(9, (absenceDays - 1) * 3);
+    return {
+        id: "absence-review",
+        courseId: courseId,
+        title: "Absence Review",
+        type: "practice_standard",
+        isAbsenceReview: true,
+        questions: shuffleArray(pool).slice(0, qCount)
+    };
+}
+
 function buildSectionCard(section, data, courseId) {
+    const paced = getCoursePacedState(data, courseId);
     const lessons = section.lessons.filter(l => l.type !== "project");
     const totalLessons = lessons.length;
 
@@ -945,9 +998,12 @@ function buildSectionCard(section, data, courseId) {
 
         const maxScore = isBinaryLesson(lesson) ? 1 : 4;
         const pct = (score / maxScore) * 100;
-
+        let isLocked = false;
+        if (paced.active) {
+            const done = score > 0 || mastered;
+            if (!done && (id !== paced.nextId || paced.lockedToday)) isLocked = true;
+        }
         let dotsHtml = "";
-
         if (mastered) {
             dotsHtml = `
                 <div style="width: 32px; height: 16px; background: var(--accent); display: flex; align-items: center; justify-content: center; border: 1px solid var(--accent);">
@@ -968,18 +1024,79 @@ function buildSectionCard(section, data, courseId) {
 
         const row = document.createElement("div");
         row.className = "lesson-row";
+        if (isLocked) row.style.opacity = "0.4";
         row.innerHTML = `
-            <div class="lesson-title">${lesson.title}</div>
+            <div class="lesson-title" style="display:flex; align-items:center;">${lesson.title} ${isLocked ? `<img src="assets/icon/padlock.svg" style="width:14px;height:14px;margin-left:8px;" alt="Locked">` : ""}</div>
             ${typeLabel ? `<span class="lesson-type-tag">${typeLabel}</span>` : ""}
             <div class="rating-display">${dotsHtml}</div>
         `;
 
         row.onclick = () => {
+            if (isLocked) return;
             if (!activeCD || activeCD.id !== courseId) {
                 activeCD = data;
                 activeCD.id = courseId;
                 activeBundleCourseId = courseId;
             }
+            if (paced.active && paced.absenceDays > 0 && id === paced.nextId) {
+                const reviewQuiz = generateAbsenceReview(courseId, data, paced.absenceDays);
+                if (reviewQuiz) {
+                    const overlay = document.createElement("div");
+                    overlay.style.cssText = "position:fixed;inset:0; background:rgba(0,0,0, 0.8);z-index: 9999;display: flex;align-items:center;justify-content:center;";
+                    document.body.appendChild(overlay);
+                    const dialogue = createDialogueBox({
+                        name: "Mayor Bob",
+                        imageSrc: "assets/img/minibit/advisor_mayor.png",
+                        texts: [
+                            `Welcome back! It looks like you've been away for ${paced.absenceDays} days.`,
+                            "Memory decays over time, so we need to do a quick review before moving forward.",
+                            "Pass this quick recall check, and today's lesson will unlock!"
+                        ],
+                        onComplete: () => {
+                            overlay.remove();
+                            startLesson(reviewQuiz);
+                        }
+                    });
+                    overlay.appendChild(dialogue);
+                    return;
+                }
+            }
+
+            let completedCount = 0;
+            let targetIsCheckpoint = false;
+            data.sections.forEach(s => s.lessons.forEach(l => {
+                if (l.type === "project") return;
+                const lid = l.id || (l.title || "").replace(/\s+/g, "-").toLowerCase();
+                const done = (ud.scores[lid] > 0) || ud.mastery[lid];
+                if (done) completedCount++;
+                if (lid === id && completedCount > 0 && completedCount % 7 === 0) {
+                    targetIsCheckpoint = true;
+                }
+            }));
+
+            if (paced.active && targetIsCheckpoint && !(ud.scores[id] > 0 || ud.mastery[id])) {
+                const exam = generateModuleExam(courseId, data);
+                if (exam) {
+                    const overlay = document.createElement("div");
+                    overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;";
+                    document.body.appendChild(overlay);
+                    const dialogue = createDialogueBox({
+                        name: "Mayor Bob",
+                        imageSrc: "assets/img/minibit/advisor_mayor.png",
+                        texts: [
+                            "You have reached a weekly milestone! Time for your Module Exam.",
+                            "You must score at least 80% to prove your mastery and unlock the next block of lessons."
+                        ],
+                        onComplete: () => {
+                            overlay.remove();
+                            startLesson(exam);
+                        }
+                    });
+                    overlay.appendChild(dialogue);
+                    return;
+                }
+            }
+
             startLesson(lesson);
         };
 
@@ -1191,6 +1308,12 @@ async function finishFillBlank(correctCount, total) {
 
     const cur = ud.scores[activeLessonData.id] || 0;
     if (score > cur) { ud.scores[activeLessonData.id] = score; await saveField("scores", ud.scores); }
+    if (ud.pacedMode?.active && activeCD && cur === 0 && score > 0) {
+        ud.pacedProgress[activeCD.id] = ud.pacedProgress[activeCD.id] || {};
+        ud.pacedProgress[activeCD.id].lastCompletedDate = new Date().toLocaleDateString("en-CA");
+        ud.pacedProgress[activeCD.id].absenceClearedToday = false;
+        await saveField("pacedProgress", ud.pacedProgress);
+    }
 
     $("return-btn").onclick = () => {
         if (activeCourseRef) {
@@ -1216,6 +1339,12 @@ async function finishSpotBug(correct) {
 
     const cur = ud.scores[activeLessonData.id] || 0;
     if (score > cur) { ud.scores[activeLessonData.id] = score; await saveField("scores", ud.scores); }
+    if (ud.pacedMode?.active && activeCD && cur === 0 && score > 0) {
+        ud.pacedProgress[activeCD.id] = ud.pacedProgress[activeCD.id] || {};
+        ud.pacedProgress[activeCD.id].lastCompletedDate = new Date().toLocaleDateString("en-CA");
+        ud.pacedProgress[activeCD.id].absenceClearedToday = false;
+        await saveField("pacedProgress", ud.pacedProgress);
+    }
 
     $("return-btn").onclick = () => {
         if (activeCourseRef) {
@@ -1247,8 +1376,13 @@ async function finishLesson() {
         ratingText   = survivalStrikes >= 3 ? "terminated." : "gauntlet cleared.";
 
     } else if (t === "master_test") {
-        accuracyText = `master test: ${correctAnswersCount} / ${activeLessonData.questions.length}`;
-        ratingText   = "scores updated.";
+        const totalQ = activeLessonData.questions.length;
+        const passRatio = totalQ > 0 ? (correctAnswersCount / totalQ) : 0;
+        const passedExam = passRatio >= 0.8;
+
+        accuracyText = `master test: ${correctAnswersCount} / ${totalQ}`;
+        ratingText = passedExam ? "Exam passed! Weekly lessons mastered." : "Exam failed. 80% required to advance.";
+
         const stats = {};
         activeLessonData.questions.forEach((q, i) => {
             const lid = q.parentLessonId;
@@ -1256,13 +1390,28 @@ async function finishLesson() {
             stats[lid].total++;
             if (questionResults[i]) stats[lid].correct++;
         });
-        for (const [lid, s] of Object.entries(stats)) {
-            const proj = Math.round((s.correct / s.total) * 4);
-            const final = proj === 0 && s.correct > 0 ? 1 : proj;
-            if (final > (ud.scores[lid] || 0)) ud.scores[lid] = final;
-        }
-        await saveField("scores", ud.scores);
 
+        if (activeLessonData.isModuleExam && passedExam) {
+            for (const lid of Object.keys(stats)) {
+                ud.mastery[lid] = true;
+                ud.scores[lid] = 4;
+            }
+            await saveField("mastery", ud.mastery);
+            await saveField("scores", ud.scores);
+
+            if (activeCD && ud.pacedMode?.active) {
+                ud.pacedProgress[activeCD.id] = ud.pacedProgress[activeCD.id] || {};
+                ud.pacedProgress[activeCD.id].lastCompletedDate = new Date().toLocaleDateString("en-CA");
+                await saveField("pacedProgress", ud.pacedProgress);
+            }
+        } else {
+            for (const [lid, s] of Object.entries(stats)) {
+                const proj = Math.round((s.correct / s.total) * 4);
+                const final = proj === 0 && s.correct > 0 ? 1 : proj;
+                if (final > (ud.scores[lid] || 0)) ud.scores[lid] = final;
+            }
+            await saveField("scores", ud.scores);
+        }
     } else if (t === "practice_standard") {
         accuracyText = `accuracy: ${correctAnswersCount} / ${activeLessonData.questions.length}`;
         ratingText   = "complete.";
@@ -1287,7 +1436,14 @@ async function finishLesson() {
                 await saveField("mastery", ud.mastery);
                 await saveField("scores", ud.scores);
             }
-            if (masteryChanged) ratingText = "complete. mastery earned!";
+            if (masteryChanged) ratingText = "Complete. Mastery earned!";
+        }
+
+        if (activeLessonData.isAbsenceReview && activeCD) {
+            ud.pacedProgress[activeCD.id] = ud.pacedProgress[activeCD.id] || {};
+            ud.pacedProgress[activeCD.id].absenceClearedToday = true;
+            await saveField("pacedProgress", ud.pacedProgress);
+            ratingText = "Absence review complete!";
         }
 
     } else if (BINARY_TYPES.includes(t) || (!hasQ && t === "document")) {
@@ -1308,6 +1464,12 @@ async function finishLesson() {
         if (finalScore > cur) {
             ud.scores[activeLessonData.id] = finalScore;
             await saveField("scores", ud.scores);
+        }
+        if (ud.pacedMode?.active && activeCD && cur === 0 && finalScore > 0) {
+            ud.pacedProgress[activeCD.id] = ud.pacedProgress[activeCD.id] || {};
+            ud.pacedProgress[activeCD.id].lastCompletedDate = new Date().toLocaleDateString("en-CA");
+            ud.pacedProgress[activeCD.id].absenceClearedToday = false;
+            await saveField("pacedProgress", ud.pacedProgress);
         }
     }
 
@@ -1371,6 +1533,19 @@ async function finishLesson() {
         } else {
             navExplorer.click();
         }
+    };
+}
+
+function generateModuleExam(courseId, data) {
+    const allQ = collectQuestions(data, { mcq: true, fill_blank: true, spot_bug: true });
+    if (allQ.length === 0) return null;
+    return {
+        id: `module-exam-${courseId}`,
+        courseId: courseId,
+        title: "Weekly Module Exam",
+        type: "master_test",
+        isModuleExam: true,
+        questions: shuffleArray(allQ).slice(0, 10)
     };
 }
 
