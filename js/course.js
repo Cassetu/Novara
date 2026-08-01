@@ -111,6 +111,7 @@ function setAuthStatus(msg, color) {
 function startOnboarding() {
     const onboardingOverlay = document.createElement("div");
     onboardingOverlay.id = "onboardingOverlay";
+    const existing = document.getElementById("onboardingOverlay");
     if (existing) existing.remove();
     document.body.appendChild(onboardingOverlay);
     const steps = [
