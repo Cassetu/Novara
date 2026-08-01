@@ -122,14 +122,20 @@ function startOnboarding() {
     ];
     let lastTarget = null;
     function renderStep(index) {
-        if (lastTarget) {
-            lastTarget.style.position = "";
-            lastTarget.style.zIndex = "";
-        }
+        if (lastTarget) { lastTarget.style.position = ""; lastTarget.style.zIndex = ""; }
         const step = steps[index];
         const target = document.querySelector(step.selector);
         lastTarget = target;
-        console.log(step.selector, target);
+        if (!target) {
+            if (index === steps.length - 1) {
+                ud.onboarded = true;
+                saveField("onboarded", true);
+                if ($("onboardingOverlay")) $("onboardingOverlay").remove();
+            } else {
+                renderStep(index + 1);
+            }
+            return;
+        }
         const rect = target.getBoundingClientRect();
         onboardingOverlay.innerHTML = "";
         target.style.position = "relative";
@@ -147,9 +153,7 @@ function startOnboarding() {
         onboardingOverlay.appendChild(card);
 
         if (step.interaction) {
-            target.addEventListener("click", () => {
-                renderStep(index + 1)
-            });
+            target.addEventListener("click", () => renderStep(index + 1), { once: true });
         } else {
             const nextBtn = document.createElement("button");
             nextBtn.innerText = "Got it!";
