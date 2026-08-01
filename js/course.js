@@ -108,7 +108,6 @@ function setAuthStatus(msg, color) {
     authStatus.innerText = msg;
     authStatus.style.color = color;
 }
-
 function startOnboarding() {
     if (document.getElementById("onboardingOverlay")) {
         document.getElementById("onboardingOverlay").remove();
@@ -121,8 +120,8 @@ function startOnboarding() {
     const steps = [
         { selector: ".course-card", text: "Welcome to Novara! Each card here represents a rigorous curriculum packed with lessons, challenges, and sims." },
         { selector: ".b-enroll-btn", text: "Ready to start building? Go ahead and click 'Enroll' on any course card to add it to your active workspace!", interaction: true },
-        { selector: "#nav-hub", text: "Need extra drilling? Head over to the Hub anytime to access survival practice modes and complete offline documentation." },
-        { selector: "#nav-active-btn", text: "Your active curriculums live right here in this dropdown menu. You can track your progress or jump straight back in!" }
+        { selector: "#user-avatar-btn", text: "Need extra drilling? Head into your user menu to access the Hub anytime for survival practice modes and complete offline documentation.", openMenu: true, blockClick: true },
+        { selector: "#nav-active-btn", text: "Your active curriculums live right here in this dropdown menu. You can track your progress or jump straight back in!", openActive: true, blockClick: true }
     ];
 
     let cur = 0;
@@ -131,6 +130,7 @@ function startOnboarding() {
     function renderStep() {
         if (lastTarget) { lastTarget.style.position = ""; lastTarget.style.zIndex = ""; lastTarget.style.pointerEvents = ""; }
         if (cur >= steps.length) {
+            closeAllDropdowns();
             const activeOverlay = document.getElementById("onboardingOverlay");
             if (activeOverlay) activeOverlay.remove();
             ud.onboarded = true;
@@ -138,19 +138,30 @@ function startOnboarding() {
             return;
         }
         const step = steps[cur];
+        if (step.openMenu && userDropdown) {
+            closeAllDropdowns();
+            userDropdown.classList.add("open");
+        } else if (step.openActive && activeDropdown) {
+            closeAllDropdowns();
+            populateActiveDropdown();
+            activeDropdown.classList.add("open");
+        }
         const target = document.querySelector(step.selector);
         lastTarget = target;
         if (!target) { cur++; renderStep(); return; }
         const rect = target.getBoundingClientRect();
         onboardingOverlay.innerHTML = "";
-        target.style.position = "relative";
-        target.style.zIndex = "10000";
-        target.style.pointerEvents = "auto";
+        const highlightEl = step.openMenu || step.openActive ? target.closest(".tb-dropdown-wrap") || target : target;
+        highlightEl.style.position = "relative";
+        highlightEl.style.zIndex = "10000";
+
+        target.style.pointerEvents = step.blockClick ? "none" : "auto";
         const dialogueBox = createDialogueBox({
             name: "Mayor Bob",
             imageSrc: "assets/img/minibit/advisor_mayor.png",
             texts: [step.text],
             onComplete: () => {
+                closeAllDropdowns();
                 cur++;
                 renderStep();
             }
@@ -164,6 +175,7 @@ function startOnboarding() {
         onboardingOverlay.appendChild(dialogueBox);
         if (step.interaction) {
             target.addEventListener("click", () => {
+                closeAllDropdowns();
                 cur++;
                 renderStep();
             }, { once: true });
