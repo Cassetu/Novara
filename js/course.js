@@ -1583,50 +1583,83 @@ async function buildPracticePanel() {
         return;
     }
 
-    for (const entryId of ud.enrolled) {
-        const entry = catalogData.find(c => c.id === entryId);
-        if (!entry) continue;
+    const banner = document.createElement("div");
+    banner.style.cssText = "background:var(--surface);border:3px solid var(--border); box-shadow:5px 5px 0px var(--border);padding:20px;margin-bottom:30px;font-family:monospace;text-align:center;";
 
-        const settings = ud.practiceSettings[entryId] || getDefaultPracticeSettings();
-
-        const card = document.createElement("div");
-        card.className = "practice-card";
-        card.innerHTML = `
-            <h3>${entry.title}</h3>
-            <p style="font-size:14px;color:var(--text-dim);">2 Modes</p>
-            <p style="font-size:12px;color:#ff4444;margin-top:-5px;font-weight:bold;">Survival Record: ${ud.survivalScores[entryId] || 0}</p>
-            <div class="practice-settings">
-                <div class="practice-settings-title">Include question types</div>
-                <label><input type="checkbox" class="ps-check" data-type="mcq" ${settings.mcq ? "checked" : ""}> Multiple Choice</label>
-                <label><input type="checkbox" class="ps-check" data-type="fill_blank" ${settings.fill_blank ? "checked" : ""}> Fill in the Blank</label>
-                <label><input type="checkbox" class="ps-check" data-type="spot_bug" ${settings.spot_bug ? "checked" : ""}> Spot the Bug</label>
-            </div>
+    if (ud.pacedMode?.active) {
+        banner.innerHTML = `
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim);margin-bottom:6px;">Lessons Renew In</div>
+            <div id="paced-countdown" style="font-size:28px;font-weight:900;color:var(--accent);">Calculating...</div>
         `;
+        content.appendChild(banner);
 
-        card.querySelectorAll(".ps-check").forEach(cb => {
-            cb.addEventListener("change", async () => {
-                if (!ud.practiceSettings[entryId]) ud.practiceSettings[entryId] = getDefaultPracticeSettings();
-                ud.practiceSettings[entryId][cb.dataset.type] = cb.checked;
-                await saveField("practiceSettings", ud.practiceSettings);
-            });
-        });
+        function updateCountdown() {
+            const now = new Date();
+            const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            const diff = tomorrow - now;
 
-        const grp = document.createElement("div");
-        grp.className = "practice-btn-group";
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        const std = document.createElement("button");
-        std.innerText = "standard";
-        std.onclick = () => compileStandardPractice(entry);
-
-        const sur = document.createElement("button");
-        sur.innerText = "survival";
-        sur.style.cssText = "color:#ff4444;border-color:#ff4444;";
-        sur.onclick = () => compileSurvivalPractice(entry);
-
-        grp.append(std, sur);
-        card.appendChild(grp);
-        content.appendChild(card);
+            const el = document.getElementById("paced-countdown");
+            if (el) {
+                el.textContent = `${hours}h ${minutes}m ${seconds}s`;
+            }
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    } else {
+        banner.innerHTML = `
+            <div style="font-size:14px;font-weight:bold;color:var(--text-main);">For Paced Mode Users</div>
+            <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Enable Paced Mode in settings to unlock daily lesson locks and midnight renewal countdowns.</div>
+        `;
+        content.appendChild(banner);
     }
+
+    const globalSettings = ud.practiceSettings["global"] || getDefaultPracticeSettings();
+
+    let maxSurvival = 0;
+    Object.values(ud.survivalScores || {}).forEach(score => {
+        if (score > maxSurvival) maxSurvival = score;
+    });
+
+    const card = document.createElement("div");
+    card.innerHTML = `
+        <h3>Practice Hub</h3>
+        <p style="font-size:14px;color:var(--text-dim);">All Enrolled Curriculums Combined</p>
+        <p style="font-size:12px;color:#ff4444;margin-top:-5px;font-weight:bold;">Highest Survival Record: ${maxSurvival}</p>
+        <div class="practice-settings">
+            <div class="practice-settings-title">Include question types</div>
+            <label><input type="checkbox" class="ps-check" data-type="mcq" ${globalSettings.mcq ? "checked" : ""}> Multiple Choice</label>
+            <label><input type="checkbox" class="ps-check" data-type="fill_blank" ${globalSettings.fill_blank ? "checked" : ""}> Fill in the Blank</label>
+            <label><input type="checkbox" class="ps-check" data-type="spot_bug" ${globalSettings.spot_bug ? "checked" : ""}> Spot the Bug</label>
+        </div>
+    `;
+
+    card.querySelectorAll(".ps-check").forEach(cb => {
+        cb.addEventListener("change", async () => {
+            ud.practiceSettings["global"] = ud.practiceSettings["global"] || getDefaultPracticeSettings();
+            ud.practiceSettings["global"][cb.dataset.type] = cb.checked;
+            await saveField("practiceSettings", ud.practiceSettings);
+        });
+    });
+
+    const grp = document.createElement("div");
+    grp.className = "practice-btn-group";
+
+    const std = document.createElement("button");
+    std.innerText = "standard";
+    std.onclick = () => compileStandardPractice();
+
+    const sur = document.createElement("button");
+    sur.innerText = "survival";
+    sur.style.cssText = "color:#ff4444;border-color:#ff4444;";
+    sur.onclick = () => compileSurvivalPractice();
+
+    grp.append(std, sur);
+    card.appendChild(grp);
+    content.appendChild(card);
 }
 
 async function buildDocsPanel() {
@@ -1726,7 +1759,7 @@ async function compileMasterTest() {
     });
 }
 
-async function compileStandardPractice(entry) {
+async function compileStandardPractice() {
     const dataMap = await fetchBundleData(entry);
     const firstKey = Object.keys(dataMap)[0];
     activeCD = dataMap[firstKey];
@@ -1746,10 +1779,7 @@ async function compileStandardPractice(entry) {
         return;
     }
 
-    const mergedAnalytics = {};
-    for (const entryId of ud.enrolled) {
-        Object.assign(mergedAnalytics, ud.analytics[entryId] || {});
-    }
+    const mergedAnalytics = ud.analytics["global"] || {};
 
     allEnrolled.sort((a, b) => {
         const aS = mergedAnalytics[a.globalId] || { correct: 0, incorrect: 0 };
@@ -1766,6 +1796,8 @@ async function compileStandardPractice(entry) {
     }).length;
 
     const sessionLen = weakCount >= 8 ? 20 : weakCount >= 4 ? 15 : 10;
+
+    activeCD = { id: "global" };
     activeCourseRef = null;
 
     startLesson({
@@ -1776,25 +1808,31 @@ async function compileStandardPractice(entry) {
     });
 }
 
-async function compileSurvivalPractice(entry) {
-    const settings = ud.practiceSettings[entry.id] || getDefaultPracticeSettings();
-    const dataMap = await fetchBundleData(entry);
-    const firstKey = Object.keys(dataMap)[0];
-    activeCD = dataMap[firstKey];
-    activeCD.id = firstKey;
+async function compileSurvivalPractice() {
+    const globalSettings = ud.practiceSettings["global"] || getDefaultPracticeSettings();
+    const allEnrolled = [];
 
-    const all = await getAllQuestionsForEntry(entry, settings);
-    if (!all.length) {
+    for (const entryId of ud.enrolled) {
+        const e = catalogData.find(c => c.id === entryId);
+        if (!e) continue;
+        const qs = await getAllQuestionsForEntry(e, globalSettings);
+        allEnrolled.push(...qs);
+    }
+
+    if (!allEnrolled.length) {
         showError("No Questions Available!");
         return;
     }
+
+    activeCD = { id: "global" };
     activeCourseRef = null;
+
     startLesson({
         id: "practice-survival",
-        courseId: entry.id,
+        courseId: "global",
         title: "Survival",
         type: "practice_survival",
-        questions: shuffleArray(all)
+        questions: shuffleArray(allEnrolled)
     });
 }
 
