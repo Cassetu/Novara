@@ -230,8 +230,9 @@ async function loadUserData() {
         ud.mastery          = ud.mastery          || {};
         ud.practiceSettings = ud.practiceSettings || {};
         ud.onboarded = ud.onboarded || false;
+        ud.pacedMode = ud.pacedMode || { active: false, currentCourseId: null, startDate: 0, lastCompletedDate: 0, currentLessonIndex: 0, pendingTargetedPractice: false };
     } else {
-        ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {}, onboarded: false };
+        ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {}, onboarded: false, pacedMode: { active: false, currentCourseId: null, startDate: 0, lastCompletedDate: "", currentLessonIndex: 0, pendingTargetedPractice: false } };
         await window.setDoc(ref, ud);
     }
     console.log("user data loaded", currentUser.uid);
@@ -345,8 +346,14 @@ navHub?.addEventListener("click", async e => {
 navSettings?.addEventListener("click", e => {
     e.stopPropagation();
     closeAllDropdowns();
+    if ($("settings-paced-mode")) $("settings-paced-mode").checked = ud.pacedMode.active;
     switchView("view-settings");
     setActiveNavBtn(null);
+});
+
+$('settings-paced-mode')?.addEventListener("change", async e => {
+    ud.pacedMode.active = e.target.checked;
+    await saveField("pacedMode", ud.pacedMode);
 });
 
 navSignout?.addEventListener("click", e => {
@@ -375,7 +382,7 @@ wipeConfirmInput?.addEventListener("input", e => {
 });
 
 execWipeBtn?.addEventListener("click", async () => {
-    const blank = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {} };
+    const blank = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {}, pacedMode: { active: false, currentCourseId: null, startDate: 0, lastCompletedDate: "", currentLessonIndex: 0, pendingTargetedPractice: false } };
     await window.setDoc(window.doc(window.db, "users", currentUser.uid), blank);
     ud = blank;
     wipeConfirmInput.value = "";
