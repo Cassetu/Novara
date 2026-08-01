@@ -1,25 +1,5 @@
 [
   {
-    "id": "html-mastery",
-    "type": "bundle",
-    "title": "HTML: Beginner to Master",
-    "author": ["Claude AI"],
-    "category": "engineering",
-    "difficulty": "beginner",
-    "description": "Everything about HTML from the ground up. Document structure, text and media, forms, semantic markup, and accessibility across five focused courses.",
-    "courses": [
-      { "id": "html-fundamentals",  "title": "Fundamentals",   "file": "data/html-mastery/fundamentals.json" },
-      { "id": "html-text-media",    "title": "Text and Media",  "file": "data/html-mastery/text-and-media.json" },
-      { "id": "html-forms",         "title": "Forms",           "file": "data/html-mastery/forms.json" },
-      { "id": "html-semantic",      "title": "Semantic HTML",   "file": "data/html-mastery/semantic.json" },
-      { "id": "html-accessibility", "title": "Accessibility",   "file": "data/html-mastery/accessibility.json" },
-      { "id": "html-email", "title": "Emails",   "file": "data/html-mastery/html-email.json" },
-      { "id": "html-seo", "title": "HTML SEO",   "file": "data/html-mastery/html-seo.json" },
-      { "id": "html-tables", "title": "Tables",   "file": "data/html-mastery/tables.json" },
-      { "id": "html-metadata", "title": "Metadata and Heads",   "file": "data/html-mastery/metadata.json" }
-    ]
-  },
-  {
     "id": "godot-core",
     "title": "Godot 4: Game Development",
     "author": ["Claude AI"],
@@ -36,37 +16,6 @@
     "file": "data/economics-core.json"
   },
   {
-    "id": "conlang-mythology-track",
-    "type": "bundle",
-    "title": "Language and Mythology",
-    "author": ["Claude AI"],
-    "category": "other",
-    "difficulty": "intermediate",
-    "description": "Invent realistic languages and deep mythologies using the same tools real linguists and mythographers use. Five focused courses covering sound systems, grammar, writing, world mythology, and divine storytelling.",
-    "courses": [
-      {
-        "id": "phonology-and-sound",
-        "title": "Phonology",
-        "file": "data/conlang-mythology/phonology-and-sound.json"
-      },
-      {
-        "id": "grammar-and-structure",
-        "title": "Grammar",
-        "file": "data/conlang-mythology/grammar-and-structure.json"
-      },
-      {
-        "id": "writing-systems",
-        "title": "Writing Systems",
-        "file": "data/conlang-mythology/writing-systems.json"
-      },
-      {
-        "id": "comparative-mythology",
-        "title": "Comparative Mythology",
-        "file": "data/conlang-mythology/comparative-mythology.json"
-      }
-    ]
-  },
-  {
     "id": "test-lessons",
     "title": "Test Lessons",
     "author": ["Cassetu"],
@@ -77,31 +26,5 @@
     "difficulty": "beginner",
     "description": "A place to test new lessons",
     "file": "data/cooking/fundamentals.json"
-  },
-  {
-    "id": "architecture-bundle",
-    "title": "Architecture",
-    "author": ["Claude AI"],
-    "type": "bundle",
-    "description": "A complete introduction to architecture. How buildings stand up, why they look the way they do, and how architects design with light, site, and climate.",
-    "category": "design",
-    "difficulty": "beginner",
-    "courses": [
-      {
-        "id": "arch-101",
-        "title": "Foundations of Architecture",
-        "file": "data/architecture/arch-101.json"
-      },
-      {
-        "id": "arch-201",
-        "title": "Architectural Styles and Movements",
-        "file": "data/architecture/arch-201.json"
-      },
-      {
-        "id": "arch-301",
-        "title": "Space, Site, and Environmental Design",
-        "file": "data/architecture/arch-301.json"
-      }
-    ]
   }
 ]
