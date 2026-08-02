@@ -489,14 +489,14 @@ body.lesson-active #app-topbar { pointer-events: none; opacity: 0.7; }
     color: var(--text-dim);
     flex-shrink: 0;
 }
+.rating-container { position:relative; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .rating-display { display: flex; gap: 4px; flex-shrink: 0; }
-.rating-dot {
-    width: 7px;
-    height: 7px;
-    border: 2px solid var(--border);
-    background-color: transparent;
+.padlock-icon {
+    position:absolute ;
+    width: 20px;
+    height:20px;
+    z-index: 10;
 }
-.rating-dot.filled { background-color: var(--accent); border-color: var(--accent); }
 #view-lesson {
     height: auto;
     display: block;

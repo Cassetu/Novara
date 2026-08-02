@@ -1025,10 +1025,15 @@ function buildSectionCard(section, data, courseId) {
         const row = document.createElement("div");
         row.className = "lesson-row";
         if (isLocked) row.style.opacity = "0.4";
+
+        const padlockHtml = isLocked ? `<img src="assets/icon/padlock.svg" class="padlock-icon" alt="Locked">` : "";
         row.innerHTML = `
-            <div class="lesson-title" style="display:flex; align-items:center;">${lesson.title} ${isLocked ? `<img src="assets/icon/padlock.svg" style="width:14px;height:14px;margin-left:8px;" alt="Locked">` : ""}</div>
+            <div class="lesson-title" style="display:flex; align-items:center;">${lesson.title}</div>
             ${typeLabel ? `<span class="lesson-type-tag">${typeLabel}</span>` : ""}
-            <div class="rating-display">${dotsHtml}</div>
+            <div class="rating-container">
+                <div class="rating-display">${dotsHtml}</div>
+                ${padlockHtml}
+            </div>
         `;
 
         row.onclick = () => {
