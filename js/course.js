@@ -1006,8 +1006,8 @@ function buildSectionCard(section, data, courseId) {
         let dotsHtml = "";
         if (mastered) {
             dotsHtml = `
-                <div style="width: 32px; height: 16px; background: var(--accent); display: flex; align-items: center; justify-content: center; border: 1px solid var(--accent);">
-                    <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: var(--surface, #ffffff);">
+                <div style="width: 16px; height: 16px; background: var(--accent-orange);border: 2px solid var(--text-main); display: flex; align-items: center; justify-content: center; border-radius:5px ;">
+                    <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: var(--surface, #ffffff);">
                         <path d="M2 16 L4 5 L9 10 L12 3 L15 10 L20 5 L22 16 Z" />
                     </svg>
                 </div>
