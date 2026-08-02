@@ -1720,6 +1720,9 @@ function collectQuestions(data, settings) {
         if (l.type === "project") return;
         const id = l.id || l.title.replace(/\s+/g, "-").toLowerCase();
 
+        const isCompleted = (ud.scores[id] > 0) || ud.mastery[id];
+        if (!isCompleted) return;
+
         if (l.type === "fill_blank" && s.fill_blank) {
             l.questions?.forEach((q, i) => out.push({ ...q, globalId: `${id}-q${i}`, parentLessonId: id, _lessonType: "fill_blank" }));
         } else if (l.type === "spot_bug" && s.spot_bug) {
@@ -1791,7 +1794,7 @@ async function compileStandardPractice() {
         return ratio < 0.6;
     }).length;
 
-    const sessionLen = weakCount >= 8 ? 20 : weakCount >= 4 ? 15 : 10;
+    const sessionLen = Math.min(allEnrolled.length, Math.max(3, weakCount >= 8 ? 20 : weakCount >= 4 ? 15 : 10));
 
     activeCD = { id: "global" };
     activeCourseRef = null;
