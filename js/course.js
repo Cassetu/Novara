@@ -1760,11 +1760,7 @@ async function compileMasterTest() {
 }
 
 async function compileStandardPractice() {
-    const dataMap = await fetchBundleData(entry);
-    const firstKey = Object.keys(dataMap)[0];
-    activeCD = dataMap[firstKey];
-    activeCD.id = firstKey;
-
+    const globalSettings = ud.practiceSettings["global"] || getDefaultPracticeSettings();
     const allEnrolled = [];
     for (const entryId of ud.enrolled) {
         const e = catalogData.find(c => c.id === entryId);
