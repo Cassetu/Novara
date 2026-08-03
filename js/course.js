@@ -118,10 +118,10 @@ function startOnboarding() {
     document.body.appendChild(onboardingOverlay);
 
     const steps = [
-        { selector: ".course-card", text: "Welcome to Novara! Each card here represents a rigorous curriculum packed with lessons, challenges, and sims." },
-        { selector: ".b-enroll-btn", text: "Ready to start building? Go ahead and click 'Enroll' on any course card to add it to your active workspace!", interaction: true },
-        { selector: "#user-avatar-btn", text: "Need extra drilling? Head into your user menu to access the Hub anytime for survival practice modes and complete offline documentation.", openMenu: true, blockClick: true },
-        { selector: "#nav-active-btn", text: "Your active curriculums live right here in this dropdown menu. You can track your progress or jump straight back in!", openActive: true, blockClick: true }
+        { selector: ".course-card", text: "Welcome to Novara. I'm Bob. Each card here is a full curriculum with lessons, challenges, and simulations." },
+        { selector: ".b-enroll-btn", text: "When you're ready, click 'Enroll' on a card to put it into your active selection.", interaction: true },
+        { selector: "#user-avatar-btn", text: "If you want extra practice, open your profile menu to hit the Hub for survival drills and docs.", openMenu: true, blockClick: true },
+        { selector: "#nav-active-btn", text: "Your active curriculums stay right up here in this menu so you can drop back in anytime.", openActive: true, blockClick: true }
     ];
 
     let cur = 0;
@@ -1053,9 +1053,9 @@ function buildSectionCard(section, data, courseId) {
                         name: "Mayor Bob",
                         imageSrc: "assets/img/minibit/advisor_mayor.png",
                         texts: [
-                            `Welcome back! It looks like you've been away for ${paced.absenceDays} days.`,
-                            "Memory decays over time, so we need to do a quick review before moving forward.",
-                            "Pass this quick recall check, and today's lesson will unlock!"
+                            `Well, look who's back. Log says you've been out for ${paced.absenceDays} days.`,
+                            "Stuff gets rusty if you don't use it, so let's run a quick refresher.",
+                            "Clear this recall check and today's lesson is all yours."
                         ],
                         onComplete: () => {
                             overlay.remove();
@@ -1089,8 +1089,8 @@ function buildSectionCard(section, data, courseId) {
                         name: "Mayor Bob",
                         imageSrc: "assets/img/minibit/advisor_mayor.png",
                         texts: [
-                            "You have reached a weekly milestone! Time for your Module Exam.",
-                            "You must score at least 80% to prove your mastery and unlock the next block of lessons."
+                            "Alright, milestone check. Time for your weekly Module Exam.",
+                            "Score 80% or higher to show you've got this down, and we'll head on to the next lessons."
                         ],
                         onComplete: () => {
                             overlay.remove();
