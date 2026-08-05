@@ -1475,3 +1475,52 @@ button:disabled {
     padding: 2px 6px;
     text-transform:uppercase;
 }
+.hub-empty-state {text-align:center;padding:60px 0; }
+.hub-empty-text {
+    color:var(--text-dim);
+    font-family: monospace;
+    margin-top:20px;
+    font-size:13px;
+    letter-spacing:2px;
+}
+.hub-banner {
+    background:var(--surface);
+    border: 3px solid var(--border);
+    box-shadow:5px 5px 0px var(--border);
+    padding:20px;
+    font-family: monospace;
+    text-align:center;
+    margin-bottom:30px;
+}
+.hub-banner-label {
+    font-size: 11px
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color:var(--text-dim);
+    margin-bottom: 6px;
+}
+.hub-banner-timer {
+    font-size:28px;
+    font-weight: 900;
+    color:var(--accent);
+}
+.hub-banner-title {
+    font-size:14px;
+    font-weight:bold;
+    color: var(--text-main);
+}
+.hub-banner-desc {
+    font-size: 12px;
+    color:var(--text-dim);
+    margin-top:4px;
+}
+.practice-card-sub {font-size:14px; color: var(--text-dim);}
+.practice-card-record {
+    font-size: 12px;
+    color:#ff4444;
+    margin-top:-5px;
+}
+.practice-btn-surv {
+    color:#ff4444;
+    border-color: #ff4444;
+}

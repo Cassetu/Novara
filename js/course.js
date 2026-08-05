@@ -1657,21 +1657,21 @@ async function buildPracticePanel() {
 
     if (!ud.enrolled.length) {
         content.innerHTML = `
-            <div style="text-align:center;padding:60px 0;">
-                <img src="assets/abstract/abstract2.svg" alt="abstract empty"/ width="25%" height="25%">
-                <p style="color:var(--text-dim);font-family:monospace;margin-top:20px;font-size:13px;letter-spacing:2px;">No Curriculums Active.</p>
+            <div class="hub-empty-state">
+                <img src="assets/abstract/abstract2.svg" alt="abstract empty" width="25%" height="25%">
+                <p class="hub-empty-text">No Curriculums Active.</p>
             </div>
         `;
         return;
     }
 
     const banner = document.createElement("div");
-    banner.style.cssText = "background:var(--surface);border:3px solid var(--border); box-shadow:5px 5px 0px var(--border);padding:20px;margin-bottom:30px;font-family:monospace;text-align:center;";
+    banner.className = "hub-banner";
 
     if (ud.pacedMode?.active) {
         banner.innerHTML = `
-            <div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim);margin-bottom:6px;">Lessons Renew In</div>
-            <div id="paced-countdown" style="font-size:28px;font-weight:900;color:var(--accent);">Calculating...</div>
+            <div class="hub-banner-label">Lessons Renew In</div>
+            <div id="paced-countdown" class="hub-banner-timer">Calculating...</div>
         `;
         content.appendChild(banner);
 
@@ -1685,16 +1685,14 @@ async function buildPracticePanel() {
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
             const el = document.getElementById("paced-countdown");
-            if (el) {
-                el.textContent = `${hours}h ${minutes}m ${seconds}s`;
-            }
+            if (el) el.textContent = `${hours}h ${minutes}m ${seconds}s`;
         }
         updateCountdown();
         setInterval(updateCountdown, 1000);
     } else {
         banner.innerHTML = `
-            <div style="font-size:14px;font-weight:bold;color:var(--text-main);">For Paced Mode Users</div>
-            <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Enable Paced Mode in settings to unlock daily lesson locks and midnight renewal countdowns.</div>
+            <div class="hub-banner-title">For Paced Mode Users</div>
+            <div class="hub-banner-desc">Enable Paced Mode in settings to unlock daily lesson locks and midnight renewal countdowns.</div>
         `;
         content.appendChild(banner);
     }
@@ -1709,8 +1707,8 @@ async function buildPracticePanel() {
     const card = document.createElement("div");
     card.innerHTML = `
         <h3>Practice Hub</h3>
-        <p style="font-size:14px;color:var(--text-dim);">All Enrolled Curriculums Combined</p>
-        <p style="font-size:12px;color:#ff4444;margin-top:-5px;font-weight:bold;">Highest Survival Record: ${maxSurvival}</p>
+        <p class="practice-card-sub">All Enrolled Curriculums Combined</p>
+        <p class="practice-card-record">Highest Survival Record: ${maxSurvival}</p>
         <div class="practice-settings">
             <div class="practice-settings-title">Include question types</div>
             <label><input type="checkbox" class="ps-check" data-type="mcq" ${globalSettings.mcq ? "checked" : ""}> Multiple Choice</label>
@@ -1736,7 +1734,7 @@ async function buildPracticePanel() {
 
     const sur = document.createElement("button");
     sur.innerText = "survival";
-    sur.style.cssText = "color:#ff4444;border-color:#ff4444;";
+    sur.className = "practice-btn-surv";
     sur.onclick = () => compileSurvivalPractice();
 
     grp.append(std, sur);
@@ -1749,7 +1747,7 @@ async function buildDocsPanel() {
     content.innerHTML = "";
 
     if (!ud.enrolled.length) {
-        content.innerHTML = "<p style='color:var(--text-dim)'>no curriculums active.</p>";
+        content.innerHTML = "<p class='hub-empty-text' style='margin-top:0;'>no curriculums active.</p>";
         return;
     }
 
