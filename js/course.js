@@ -680,10 +680,7 @@ function showConfirmDialog(message, onConfirm) {
     errorBox.innerText = message;
 
     const btnContainer = document.createElement("div");
-    btnContainer.style.display = "flex";
-    btnContainer.style.gap = "10px";
-    btnContainer.style.marginTop = "15px";
-    btnContainer.style.justifyContent = "center";
+    btnContainer.className = "dialog-btn-container";
 
     const errorBtn = document.createElement("button");
     errorBtn.innerText = "OK";

@@ -1524,3 +1524,9 @@ button:disabled {
     color:#ff4444;
     border-color: #ff4444;
 }
+.dialog-btn-container {
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+    justify-content:center;
+}
