@@ -458,6 +458,8 @@ async function getCourseProgress(entryId) {
     let earned = 0, total = 0;
 
     const collect = (data) => {
+        if (!data || !data.sections) return;
+
         data.sections.forEach(sec => sec.lessons.forEach(l => {
             if (l.type === "project") return;
             const id = l.id || (l.title || "").replace(/\s+/g, "-").toLowerCase();
