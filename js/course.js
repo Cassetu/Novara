@@ -898,19 +898,182 @@ async function openSyllabus(courseRef, dataArg, parentEntry) {
         meta.querySelector("#projects-btn")?.addEventListener("click", () => openProject(projectLesson, parentEntry || courseRef));
     }
 
-    const grid = document.createElement("div");
-    grid.className = "syllabus-sections-grid";
+    const masterDetailContainer = document.createElement("div");
+    masterDetailContainer.className = "syllabus-master-detail";
 
-    data.sections.forEach(section => {
-        grid.appendChild(buildSectionCard(section, data, courseRef.id));
+    const sidebar = document.createElement("div");
+    sidebar.className = "syllabus-sidebar";
+
+    const contentStage = document.createElement("div");
+    contentStage.className = "syllabus-content-stage";
+
+    let firstSectionBtn = null;
+
+    data.sections.forEach((section, index) => {
+        const lessons = section.lessons.filter(l => l.type !== "project");
+        const totalLessons = lessons.length;
+        let completed = 0;
+        lessons.forEach(l => {
+            const id = l.id || (l.title || "").replace(/\s+/g, "-").toLowerCase();
+            if ((ud.scores[id] || 0) > 0) completed++;
+        });
+
+        const secBtn = document.createElement("div");
+        secBtn.className = "syllabus-section-btn";
+        secBtn.style.cssText = "padding:14px 16px;border:3px solid var(--border);background:var(--surface);cursor:pointer;display:flex;flex-direction:column;gap:6px;box-shadow:3px 3px 0px var(--border);transition:transform 0.1s,box-shadow 0.1s;";
+        secBtn.innerHTML = `
+            <div style="font-size:12px;font-weight:900;text-transform:uppercase;color:var(--text-main);">${section.title}</div>
+            <div style="font-size:11px;color:var(--text-dim);font-family:monospace;display:flex;justify-content:space-between;"><span>${completed}/${totalLessons} lessons</span><span>&#9658;</span></div>
+        `;
+
+        secBtn.onclick = () => {
+            sidebar.querySelectorAll(".syllabus-section-btn").forEach(b => {
+                b.style.background = "var(--surface)";
+                b.style.boxShadow = "3px 3px 0px var(--border)";
+            });
+            secBtn.style.background = "var(--accent)";
+            secBtn.style.boxShadow = "3px 3px 0px var(--border)";
+            renderSectionLessons(section, data, courseRef.id, contentStage);
+        };
+
+        if (index === 0) firstSectionBtn = secBtn;
+        sidebar.appendChild(secBtn);
     });
 
-    viewSyllabus.appendChild(grid);
+    masterDetailContainer.appendChild(sidebar);
+    masterDetailContainer.appendChild(contentStage);
+    viewSyllabus.appendChild(masterDetailContainer);
+
+    if (data.sections.length > 0) {
+        firstSectionBtn?.click();
+    }
 
     setTimeout(() => {
         viewSyllabus.querySelectorAll(".progress-animator")
             .forEach(b => b.style.width = b.dataset.target);
     }, 50);
+}
+
+function renderSectionLessons(section, data, courseId, contentStage) {
+    contentStage.innerHTML = "";
+    const paced = getCoursePacedState(data, courseId);
+    const lessons = section.lessons.filter(l => l.type !== "project");
+    const totalLessons = lessons.length;
+    let completed = 0;
+    lessons.forEach(l => {
+        const id = l.id || (l.title || "").replace(/\s+/g, "-").toLowerCase();
+        if ((ud.scores[id] || 0) > 0) completed++;
+    });
+
+    const header = document.createElement("div");
+    header.style.cssText = "margin-bottom:20px;border-bottom:3px solid var(--border);padding-bottom:12px;";
+    header.innerHTML = `<h2>${section.title}</h2><p style="font-size:12px;color:var(--text-dim);font-family:monospace;margin:0;">${completed}/${totalLessons} lessons completed</p>`;
+    contentStage.appendChild(header);
+
+    const listWrap = document.createElement("div");
+    listWrap.style.cssText = "display:flex;flex-direction:column;gap:10px;";
+
+    lessons.forEach(lesson => {
+        const id = lesson.id || (lesson.title || "").replace(/\s+/g, "-").toLowerCase();
+        lesson.id = id;
+        lesson.questions?.forEach((q, i) => q.globalId = `${id}-q${i}`);
+
+        const score = ud.scores?.[id] || 0;
+        const mastered = ud.mastery?.[id];
+        const maxScore = isBinaryLesson(lesson) ? 1 : 4;
+        const pct = (score / maxScore) * 100;
+        let isLocked = false;
+        if (paced.active) {
+            const done = score > 0 || mastered;
+            if (!done && (id !== paced.nextId || paced.lockedToday)) isLocked = true;
+        }
+        let dotsHtml = "";
+        if (mastered) {
+            dotsHtml = `<div style="width:16px;height:16px;background:var(--accent-orange);border:2px solid var(--text-main);display:flex;align-items:center;justify-content:center;border-radius:5px;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:var(--surface,#ffffff);"><path d="M2 16 L4 5 L9 10 L12 3 L15 10 L20 5 L22 16 Z"/></svg></div>`;
+        } else {
+            dotsHtml = `<div style="width:16px;height:16px;background:transparent;border:2px solid var(--text-main);position:relative;overflow:hidden;border-radius:5px;"><div style="position:absolute;left:0;bottom:0;right:0;height:${pct}%;background:var(--accent);transition:height 0.3s ease;"></div></div>`;
+        }
+
+        const typeLabel = (lesson.type && lesson.type !== "document") ? lesson.type.replace(/_/g, " ") : "";
+        const row = document.createElement("div");
+        row.className = "lesson-row";
+        if (isLocked) row.style.opacity = "0.4";
+
+        const padlockHtml = isLocked ? `<img src="assets/icon/padlock.svg" class="padlock-icon" alt="Locked">` : "";
+        row.innerHTML = `<div class="lesson-title" style="display:flex;align-items:center;">${lesson.title}</div>${typeLabel ? `<span class="lesson-type-tag">${typeLabel}</span>` : ""}<div class="rating-container"><div class="rating-display">${dotsHtml}</div>${padlockHtml}</div>`;
+
+        row.onclick = () => {
+            if (isLocked) return;
+            if (!activeCD || activeCD.id !== courseId) {
+                activeCD = data;
+                activeCD.id = courseId;
+                activeBundleCourseId = courseId;
+            }
+            if (paced.active && paced.absenceDays > 0 && id === paced.nextId) {
+                const reviewQuiz = generateAbsenceReview(courseId, data, paced.absenceDays);
+                if (reviewQuiz) {
+                    const overlay = document.createElement("div");
+                    overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;";
+                    document.body.appendChild(overlay);
+                    const dialogue = createDialogueBox({
+                        name: "Mayor Bob",
+                        imageSrc: "assets/img/minibit/advisor_mayor.png",
+                        texts: [
+                            `Well, look who's back. Log says you've been out for ${paced.absenceDays} days.`,
+                            "Stuff gets rusty if you don't use it, so let's run a quick refresher.",
+                            "Clear this recall check and today's lesson is all yours."
+                        ],
+                        onComplete: () => {
+                            overlay.remove();
+                            startLesson(reviewQuiz);
+                        }
+                    });
+                    overlay.appendChild(dialogue);
+                    return;
+                }
+            }
+
+            let completedCount = 0;
+            let targetIsCheckpoint = false;
+            data.sections.forEach(s => s.lessons.forEach(l => {
+                if (l.type === "project") return;
+                const lid = l.id || (l.title || "").replace(/\s+/g, "-").toLowerCase();
+                const done = (ud.scores[lid] > 0) || ud.mastery[lid];
+                if (done) completedCount++;
+                if (lid === id && completedCount > 0 && completedCount % 7 === 0) {
+                    targetIsCheckpoint = true;
+                }
+            }));
+
+            if (paced.active && targetIsCheckpoint && !(ud.scores[id] > 0 || ud.mastery[id])) {
+                const exam = generateModuleExam(courseId, data);
+                if (exam) {
+                    const overlay = document.createElement("div");
+                    overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;";
+                    document.body.appendChild(overlay);
+                    const dialogue = createDialogueBox({
+                        name: "Mayor Bob",
+                        imageSrc: "assets/img/minibit/advisor_mayor.png",
+                        texts: [
+                            "Alright, milestone check. Time for your weekly Module Exam.",
+                            "Score 80% or higher to show you've got this down, and we'll head on to the next lessons."
+                        ],
+                        onComplete: () => {
+                            overlay.remove();
+                            startLesson(exam);
+                        }
+                    });
+                    overlay.appendChild(dialogue);
+                    return;
+                }
+            }
+
+            startLesson(lesson);
+        };
+
+        listWrap.appendChild(row);
+    });
+    contentStage.appendChild(listWrap);
 }
 
 function getCoursePacedState(data, courseId) {
