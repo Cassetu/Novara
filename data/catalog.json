@@ -1,13 +1,5 @@
 [
   {
-    "id": "godot-core",
-    "title": "Godot 4: Game Development",
-    "author": ["Claude AI"],
-    "category": "gamedev",
-    "description": "Nodes, scenes, GDScript, signals, physics, UI, and game architecture. Build real games *Generated*",
-    "file": "data/godot-core.json"
-  },
-  {
     "id": "economics-core",
     "title": "Economics",
     "author": ["Claude AI"],
