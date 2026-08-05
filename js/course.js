@@ -913,7 +913,7 @@ async function openSyllabus(courseRef, dataArg, parentEntry) {
         `;
 
         secBtn.onclick = () => {
-            sidebar.querySelectorAll(".syllabus-section-btn").forEach(b => b.classList.remove("active"});
+            sidebar.querySelectorAll(".syllabus-section-btn").forEach(b => b.classList.remove("active"));
             secBtn.classList.add("active");
             renderSectionLessons(section, data, courseRef.id, contentStage);
         };
