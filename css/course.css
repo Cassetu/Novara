@@ -1335,3 +1335,143 @@ button:disabled {
 .syllabus-sidebar{width:100%;min-width:100%;max-height:400px;}
 .syllabus-content-stage{min-height:400px;}
 }
+.syllabus-section-btn {
+    padding:14px 16px;
+    border: 3px solid var(--border);
+    background:var(--surface);
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    gap: 6px;
+    box-shadow:3px 3px 0px var(--border);
+    transition:transform 0.1s, box-shadow 0.1s;
+}
+.syllabus-section-btn.active { background:var(--accent);}
+.syllabus-section-title {
+    font-size:12px;
+    font-weight:900;
+    text-transform: uppercase;
+    color: var(--text-main);
+}
+.syllabus-section-meta {
+    font-size:11px;
+    color:var(--text-dim);
+    font-family: monospace;
+    display:flex;
+    justify-content: space-between;
+}
+.syllabus-stage-header {
+    margin-bottom:20px;
+    color:var(--text-dim);
+    font-family: monospace;
+    margin:0;
+}
+.syllabus-lesson-list {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+.details-backdrop {
+    position: fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:10000;
+}
+.details-modal {
+    background:var(--surface);
+    border: 4px solid var(--border);
+    box-shadow: 8px 8px 0px var (--accent);
+    width:100%;
+    font-family: monospace;
+    max-height:90vh;
+    overflow-y:auto;
+    padding: 30px;
+}
+.details-title {
+    margin-top:0;
+    border-bottom:2px dashed var(--border);
+    padding-bottom:10px;
+}
+.details-meta-text { margin: 8px 0; }
+.details-meta-list { margin: 8px 0 0 20px;padding:0;}
+.details-meta-list li { margin-bottom: 4px; }
+.details-desc-box {
+    margin:20px 0;
+    padding:15px;
+    background: rgba(0,0,0,0.03);
+    border-left: 4px solid var(--accent);
+}
+.details-desc-label {
+    display: block;
+    margin-bottom:8px;
+    text-transform:uppercase;
+    font-size:11px;
+    letter-spacing:1px;
+    color: var(--text-dim);
+}
+.details-desc-text { line-height:1.5;font-size:14px;}
+.details-close-btn {
+    margin-top:20px;
+    width:100%;
+    font-weight:bold;
+    padding:12px;
+    background: transparent;
+    border:2px solid var(--border);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing:1px;
+}
+.card-top-content { flex-grow:1; min-height:75px;}
+.card-title-clamp {
+    margin-bottom:8px;
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+}
+.card-bundle-tag {
+    font-size:10px;
+    color:var(--accent);
+    font-weight:900;
+    letter-spacing:1px;
+    margin-bottom:4px;
+    text-transform: uppercase;
+}
+.card-prog-wrapper { margin-top: auto;}
+.card-prog-text {
+    font-size:12px;
+    margin-top:6px;
+    margin-bottom:15px;
+    text-align: right;
+}
+.card-action-wrap {display: flex;flex-direction:column;margin-top: auto; }
+.card-btn-group { display:flex; gap:10px;}
+.card-btn-cont {
+    flex:2;
+    border-color:var(--text-dim);
+    color: var(--text-dim);
+}
+.card-details-btn {
+    margin-top:2px;
+    background:transparent;
+    border:none;
+    font-family: monospace;
+    font-size:11px;
+    box-shadow: none;
+    font-weight:bold;
+    color:var(--text-dim);
+    text-decoration: underline;
+    cursor:pointer;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    padding:10px 52px 4px 6px;
+}
+.card-footer-badge {
+    font-size:10px;
+    padding: 2px 6px;
+    text-transform:uppercase;
+}

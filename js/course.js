@@ -494,9 +494,9 @@ function showCourseDetails(entry) {
     let sources = "None";
     if (entry.sources) {
         if (Array.isArray(entry.sources)) {
-            sources = "<ul style='margin:8px 0 0 20px;padding: 0;'>";
+            sources = "<ul class='details-meta-list'>";
             entry.sources.forEach(source => {
-                sources += `<li style="margin-bottom:4px;">${source}</li>`;
+                sources += `<li>${source}</li>`;
             });
             sources += "</ul>";
         } else {
@@ -506,36 +506,26 @@ function showCourseDetails(entry) {
 
     const overlay = document.createElement("div");
     overlay.id = "detailsOverlay";
+    overlay.className = "details-backdrop";
 
     overlay.innerHTML = `
-        <div style="background:var(--surface);border:4px solid var(--border);box-shadow:8px 8px 0 var(--accent);max-width:550px;width:100%;padding:30px;font-family:monospace; max-height: 90vh; overflow-y: auto;">
-            <h2 style="margin-top:0; border-bottom: 2px dashed var(--border); padding-bottom: 10px;">${entry.title} Details</h2>
-            <p style="margin: 8px 0;"><b>Author:</b> ${Array.isArray(entry.author) ? entry.author.join(", ") : entry.author || "Unknown"}</p>
-            <p style="margin: 8px 0;"><b>Published:</b> ${entry.published || "Unknown"}</p>
-            <p style="margin: 8px 0;"><b>Last Updated:</b> ${entry.updated || "Unknown"}</p>
+        <div class="details-modal">
+            <h2 class="details-title">${entry.title} Details</h2>
+            <p class="details-meta-text"><b>Author:</b> ${Array.isArray(entry.author) ? entry.author.join(", ") : entry.author || "Unknown"}</p>
+            <p class="details-meta-text"><b>Published:</b> ${entry.published || "Unknown"}</p>
+            <p class="details-meta-text"><b>Last Updated:</b> ${entry.updated || "Unknown"}</p>
 
-            <div style="margin: 20px 0; padding: 15px; background: rgba(0,0,0,0.03); border-left: 4px solid var(--accent);">
-                <b style="display:block; margin-bottom: 8px; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: var(--text-dim);">Description</b>
-                <span style="line-height: 1.5; font-size: 14px;">${entry.description || "No description provided."}</span>
+            <div class="details-desc-box">
+                <b class="details-desc-label">Description</b>
+                <span class="details-desc-text">${entry.description || "No description provided."}</span>
             </div>
 
-            <div style="margin-left:0px;">
+            <div>
                 <b>Sources:</b>
                 ${sources}
             </div>
-            <button id="closeDetailsBtn" style="margin-top:20px; width: 100%; padding: 12px; font-weight: bold; background: transparent; border: 2px solid var(--border); cursor: pointer; text-transform: uppercase; letter-spacing: 1px;">Close</button>
+            <button id="closeDetailsBtn" class="details-close-btn">Close</button>
         </div>
-    `;
-
-    overlay.style.cssText = `
-        position:fixed;
-        inset:0;
-        background:rgba(0,0,0,.6);
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        padding:20px;
-        z-index:10000;
     `;
 
     document.body.appendChild(overlay);
@@ -562,38 +552,35 @@ async function renderExplorer() {
         card.className = "course-card";
         card.dataset.category = entry.category || "";
         card.dataset.difficulty = entry.difficulty || "";
-        card.style.cssText = "display:flex;flex-direction:column;";
-
-        const diffBadge = entry.difficulty
-            ? `<span class="diff-badge ${entry.difficulty}">${entry.difficulty}</span>` : "";
 
         const pct = await getCourseProgress(entry.id);
         const barColor = enrolled ? "var(--accent)" : "var(--accent-orange)";
+
         const progressHtml = `
-            <div class="course-progress-wrapper" style="margin-top: auto;">
+            <div class="course-progress-wrapper card-prog-wrapper">
                 <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%;background:${barColor};"></div>
             </div>
-            <p style="font-size:12px;color:${barColor};margin-top:6px;margin-bottom:15px;text-align:right;">${pct}% complete</p>
+            <p class="card-prog-text" style="color:${barColor};">${pct}% complete</p>
         `;
 
         card.innerHTML = `
-            <div style="flex-grow: 1; min-height: 75px;">
-                <h3 style="margin-bottom:8px; display: -webkit-box;-webkit-line-clamp:3; -webkit-box-orient: vertical;overflow:hidden;">${entry.title}</h3>
-                ${isBundle(entry) ? `<p style="font-size:10px;color:var(--accent);font-weight:900;letter-spacing:1px;margin-bottom:4px;text-transform:uppercase;">Bundle &bull; ${entry.courses.length} courses</p>` : ""}
+            <div class="card-top-content">
+                <h3 class="card-title-clamp">${entry.title}</h3>
+                ${isBundle(entry) ? `<p class="card-bundle-tag">Bundle &bull; ${entry.courses.length} courses</p>` : ""}
             </div>
             ${progressHtml}
         `;
 
         const actionWrapper = document.createElement("div");
-        actionWrapper.style.cssText = "display: flex; flex-direction:column; margin-top: auto;";
+        actionWrapper.className = "card-action-wrap";
 
         const btnGroup = document.createElement("div");
-        btnGroup.style.cssText = "display:flex;gap:10px;";
+        btnGroup.className = "card-btn-group";
 
         if (enrolled) {
             const cont = document.createElement("button");
             cont.innerText = "Continue";
-            cont.style.cssText = "flex:2;border-color:var(--text-dim);color:var(--text-dim);";
+            cont.className = "card-btn-cont";
             cont.onclick = () => openCurriculumHome(entry);
 
             const drop = document.createElement("button");
@@ -612,18 +599,16 @@ async function renderExplorer() {
         }
 
         const footerRow = document.createElement("div");
-        footerRow.style.cssText = "";
 
         const detailsBtn = document.createElement("button");
         detailsBtn.innerText = "Details";
-        detailsBtn.style.cssText = "margin-top: 2px; background: transparent;border:none;font-family:monospace;font-size: 11px;box-shadow:none;width:10px; font-weight: bold;color: var(--text-dim); text-decoration:underline;cursor:pointer; text-transform:uppercase;letter-spacing: 1px;padding:10px 52px 4px 6px";
+        detailsBtn.className = "card-details-btn";
         detailsBtn.onclick = () => showCourseDetails(entry);
         footerRow.appendChild(detailsBtn);
 
         if(entry.difficulty){
             const badge = document.createElement("span");
-            badge.className = `diff-badge ${entry.difficulty}`;
-            badge.style.cssText = "font-size:10px;padding:2px 6px;text-transform:uppercase;";
+            badge.className = `diff-badge ${entry.difficulty} card-footer-badge`;
             badge.innerText = entry.difficulty;
             footerRow.appendChild(badge);
         }
@@ -920,19 +905,14 @@ async function openSyllabus(courseRef, dataArg, parentEntry) {
 
         const secBtn = document.createElement("div");
         secBtn.className = "syllabus-section-btn";
-        secBtn.style.cssText = "padding:14px 16px;border:3px solid var(--border);background:var(--surface);cursor:pointer;display:flex;flex-direction:column;gap:6px;box-shadow:3px 3px 0px var(--border);transition:transform 0.1s,box-shadow 0.1s;";
         secBtn.innerHTML = `
-            <div style="font-size:12px;font-weight:900;text-transform:uppercase;color:var(--text-main);">${section.title}</div>
-            <div style="font-size:11px;color:var(--text-dim);font-family:monospace;display:flex;justify-content:space-between;"><span>${completed}/${totalLessons} lessons</span><span>&#9658;</span></div>
+            <div class="syllabus-section-title">${section.title}</div>
+            <div class="syllabus-section-meta"><span>${completed}/${totalLessons} lessons</span><span>&#9658;</span></div>
         `;
 
         secBtn.onclick = () => {
-            sidebar.querySelectorAll(".syllabus-section-btn").forEach(b => {
-                b.style.background = "var(--surface)";
-                b.style.boxShadow = "3px 3px 0px var(--border)";
-            });
-            secBtn.style.background = "var(--accent)";
-            secBtn.style.boxShadow = "3px 3px 0px var(--border)";
+            sidebar.querySelectorAll(".syllabus-section-btn").forEach(b => b.classList.remove("active"});
+            secBtn.classList.add("active");
             renderSectionLessons(section, data, courseRef.id, contentStage);
         };
 
@@ -966,12 +946,12 @@ function renderSectionLessons(section, data, courseId, contentStage) {
     });
 
     const header = document.createElement("div");
-    header.style.cssText = "margin-bottom:20px;border-bottom:3px solid var(--border);padding-bottom:12px;";
-    header.innerHTML = `<h2>${section.title}</h2><p style="font-size:12px;color:var(--text-dim);font-family:monospace;margin:0;">${completed}/${totalLessons} lessons completed</p>`;
+    header.className = "syllabus-stage-header";
+    header.innerHTML = `<h2>${section.title}</h2><p class="syllabus-stage-meta">${completed}/${totalLessons} lessons completed</p>`;
     contentStage.appendChild(header);
 
     const listWrap = document.createElement("div");
-    listWrap.style.cssText = "display:flex;flex-direction:column;gap:10px;";
+    listWrap.className = "syllabus-lesson-list";
 
     lessons.forEach(lesson => {
         const id = lesson.id || (lesson.title || "").replace(/\s+/g, "-").toLowerCase();
