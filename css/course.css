@@ -784,6 +784,7 @@ button:disabled {
     margin-bottom: 20px;
 }
 .b-enroll-btn {
+    flex: 1;
     background-color: var(--border) !important;
     color: var(--surface) !important;
     border: 2px solid var(--border) !important;
@@ -1620,3 +1621,42 @@ button:disabled {
 .course-home-card.card-project {border-color: var(--accent);}
 .course-home-card.card-masters { border-color: var(--accent); box-shadow: 5px 5px 0px var(--accent);}
 .course-home-meta-spaced { margin-top: 8px;}
+.rating-dot-mastered {
+    width:16px;
+    height: 16px;
+    background:var(--accent-orange);
+    border:2px solid var(--text-main);
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+.rating-dot-mastered svg {
+    width: 16px;
+    height:16px;
+    fill:var(--surface);
+}
+.rating-dot-prog-bg {
+    width: 16px;
+    height: 16px;
+    background: transparent;
+    border: 2px solid var(--text-main);
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.rating-dot-prog-fill {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: var(--accent);
+    transition: height 0.3s ease;
+}
+.lesson-row.locked { opacity: 0.4;}
+.lesson-title-flex {display:flex; align-items: center;}
+.details-sources-text {margin-top: 8px;}
+.hub-empty-text.no-margin { margin-top: 0; }
+.survival-record-text {color: #ff4444; font-size: 16px; display:block; margin-top: 10px;}
+.public-signin-btn { font-size: 11px; padding: 6px 14px;width:100%;}
+.wipe-btn-ready { background-color:#ff4444 !important;color:var(--void) !important;}

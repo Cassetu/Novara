@@ -392,8 +392,7 @@ reqWipeBtn?.addEventListener("click", () => {
 wipeConfirmInput?.addEventListener("input", e => {
     const ok = e.target.value === "PURGE";
     execWipeBtn.disabled = !ok;
-    execWipeBtn.style.backgroundColor = ok ? "#ff4444" : "transparent";
-    execWipeBtn.style.color = ok ? "var(--void)" : "#ff4444";
+    execWipeBtn.classList.toggle("wipe-btn-ready", ok);
 });
 
 execWipeBtn?.addEventListener("click", async () => {
@@ -402,7 +401,7 @@ execWipeBtn?.addEventListener("click", async () => {
     ud = blank;
     wipeConfirmInput.value = "";
     execWipeBtn.disabled = true;
-    execWipeBtn.style.cssText = "background-color:transparent;color:#ff4444;";
+    execWipeBtn.classList.remove("wipe-btn-ready");
     wipeAuthBlock.style.display = "none";
     reqWipeBtn.style.display = "inline-block";
     updateActiveCountBadge();
@@ -506,7 +505,7 @@ function showCourseDetails(entry) {
             });
             sources += "</ul>";
         } else {
-            sources = `<div style="margin-top: 8px;">${entry.sources}</div>`;
+            sources = `<div class="details-sources-text">${entry.sources}</div>`;
         }
     }
 
@@ -599,7 +598,6 @@ async function renderExplorer() {
             const enroll = document.createElement("button");
             enroll.innerText = "Enroll";
             enroll.className = "b-enroll-btn";
-            enroll.style.flex = "1";
             enroll.onclick = () => enrollInCourse(entry);
             btnGroup.appendChild(enroll);
         }
