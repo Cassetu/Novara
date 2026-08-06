@@ -1,9 +1,9 @@
 
 
-<h1 align="center"><img src="assets/img/brand/favicon.png" alt="favicon" width="34"> NOVARA - A Gateway To Learning </h1>
+<h1 align="center"><img src="assets/img/brand/favicon.png" alt="favicon" width="34"> NOVARA - Learning with you in mind :) </h1>
 
-#### A free learning website with curriculums and courses on a wide variety of subjects, designed to be accessible to everyone.
-[![Work time](https://hackatime.hackclub.com/api/v1/badge/U0B7KLS4R9R/Cassetu/Novara)](https://hackatime-badge.hackclub.com)
+#### A free learning website with curriculums and courses on a wide variety of subjects.
+[![Work time](https://hackatime.hackclub.com/api/v1/badge/U0B7KLS4R9R/Cassetu/Novara?color=77BBA2)](https://hackatime-badge.hackclub.com)
 
 ![homepage.png](assets/readme/homepage.png)
 
@@ -22,7 +22,7 @@
 
 ## Website Usage
 
-Simply go to [cassetu.github.io/Novara](https://cassetu.github.io/Novara) and start learning! Users will be asked to sign in with Google or use email verification to create an account. This is to allow users to save their progress and access it across devices. We do not use this information for any other purpose.
+Simply go to [cassetu.github.io/Novara](https://cassetu.github.io/Novara) and start learning! Users will be asked to sign in with Google or use email verification to create an account. This is to allow users to save their progress and access it across devices. We do not use this information for any other purpose, Read the privacy policy or email me if you are worried.
 
 ![sign-in.png](assets/readme/sign-in.png)
 
@@ -38,9 +38,9 @@ Visit About page: [cassetu.github.io/Novara/html/about.html](https://cassetu.git
 Privacy Policy: [cassetu.github.io/Novara/html/privacy.html](https://cassetu.github.io/Novara/html/privacy.html)
 
 ## Features
-*   **Focused Learning:** Enrollment is limited to a maximum of 3 curriculums at a time to encourage focus and prevent overwhelm.
-*   **Structured Content:** Curriculums contain courses, and courses contain modular lessons.
-*   **Knowledge Checks:** Built-in quizzes to test your knowledge at the end of courses.
+*   **Focused Learning:** Enrollment is limited to a maximum of 3 curriculums at a time to encourage focus and prevent overwhelm. (subject to change)
+*   **Structured Content:** Curriculums contain courses, and courses contain lessons.
+*   **Paced Mode:** Toggleable setting to limit users to one lesson each day, and a test at the end of the week.
 *   **Progress Tracking:** Visual indicators to show completed lessons and remaining coursework.
 
 ![ex-course.png](assets/readme/ex-course.png)
@@ -49,7 +49,7 @@ Privacy Policy: [cassetu.github.io/Novara/html/privacy.html](https://cassetu.git
 *   **Frontend:** HTML5, CSS3, JavaScript
 *   **Backend/Auth:** Firebase Auth / Google Sign-In
 *   **Hosting:** GitHub Pages
-*   **AI Content Generation:** Claude.ai (for course content generation)
+*   **AI Content Generation:** Claude.ai (for course content generation, getting removed :D )
 
 ## Reporting Issues & Support
 Create an issue on our [GitHub repository](https://github.com/Cassetu/Novara/issues) or email us at **cassetunium@gmail.com** (Responses take 3-5 business days). Please include:
@@ -57,7 +57,7 @@ Create an issue on our [GitHub repository](https://github.com/Cassetu/Novara/iss
 *   Clear steps to reproduce the bug.
 *   Relevant screenshots or console error messages.
 
-## AI USAGE DISCLAIMER
+## AI USAGE DISCLAIMER (WILL BE REMOVED FOR RELEASE)
 
 AI is used in the generation of our courses. We have not yet received assistance from subject-matter experts in developing our curricula.
 
