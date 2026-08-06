@@ -5,20 +5,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const appView = document.getElementById("app-view");
     const viewPublicCourses = document.getElementById("view-public-courses");
 
-    const btnLandingCourses = document.getElementById("btn-landing-courses");
-    const btnLandingSignin = document.getElementById("btn-landing-signin");
     const btnBackLanding = document.getElementById("btn-back-landing");
-    const heroCta = document.querySelector(".hero-cta");
     const messageBox = document.getElementById("auth-status");
-
-    if (btnLandingSignin) {
-        btnLandingSignin.addEventListener("click", (e) => {
-            e.preventDefault();
-            history.pushState({}, "", "?view=signin");
-            viewLanding.style.display = "none";
-            authView.style.display = "block";
-        });
-    }
 
     const openPublicCatalog = (e) => {
         if (e) e.preventDefault();
@@ -27,8 +15,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         viewPublicCourses.style.display = "block";
     };
 
-    if (btnLandingCourses) btnLandingCourses.addEventListener("click", openPublicCatalog);
-    if (heroCta) heroCta.addEventListener("click", openPublicCatalog);
+    const openSignIn = (e) => {
+        if (e) e.preventDefault();
+        history.pushState({}, "", "?view=signin");
+        viewLanding.style.display = "none";
+        authView.style.display = "block";
+    };
+
+    document.querySelectorAll(".landing-explore-trigger").forEach(btn => btn.addEventListener("click", openPublicCatalog));
+    document.querySelectorAll(".landing-signin-trigger").forEach(btn => btn.addEventListener("click", openSignIn));
 
     if (btnBackLanding) {
         btnBackLanding.addEventListener("click", (e) => {
