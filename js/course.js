@@ -306,10 +306,7 @@ async function populateActiveDropdown() {
         const pct = await getCourseProgress(entry.id);
 
         const item = document.createElement("div");
-        item.className = "tb-dd-item";
-        item.style.flexDirection = "column";
-        item.style.alignItems = "flex-start";
-        item.style.gap = "6px";
+        item.className = "tb-dd-item tb-dd-course-item";
         item.innerHTML = `
             <div class="tb-dd-inner">
                 <div class="tb-dd-title">${entry.title}</div>
@@ -748,11 +745,11 @@ async function openCurriculumHome(entry) {
     const meta = document.createElement("div");
     meta.className = "syllabus-meta";
     meta.innerHTML = `
-        <h1>${entry.title}${isBundle(entry) ? ` <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">Bundle</span>` : ""}</h1>
-        <div class="course-progress-wrapper" style="margin-top:16px;">
+        <h1>${entry.title}${isBundle(entry) ? ` <span class="curriculum-bundle-tag">Bundle</span>` : ""}</h1>
+        <div class="course-progress-wrapper curriculum-prog-wrap">
             <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
         </div>
-        <div style="font-size:12px;color:var(--accent);font-weight:700;text-align:right;margin-top:4px;">${pct}% complete</div>
+        <div class="curriculum-prog-text">${pct}% complete</div>
     `;
     viewSyllabus.appendChild(meta);
 
@@ -811,22 +808,20 @@ async function openCurriculumHome(entry) {
         const projectLesson = findProjectLesson(data);
         if (projectLesson) {
             const projCard = document.createElement("div");
-            projCard.className = "course-home-card";
-            projCard.style.borderColor = "var(--accent)";
+            projCard.className = "course-home-card card-project";
             projCard.innerHTML = `
                 <div class="course-home-title">Projects</div>
-                <div class="course-home-meta" style="margin-top:8px;">Hands-on project workspace</div>
+                <div class="course-home-meta course-home-meta-spaced">Hands-on project workspace</div>
             `;
             projCard.addEventListener("click", () => openProject(projectLesson, entry));
             grid.appendChild(projCard);
         }
 
         const masterCard = document.createElement("div");
-        masterCard.className = "course-home-card";
-        masterCard.style.cssText = "border-color:var(--border);box-shadow:5px 5px 0px var(--accent);";
+        masterCard.className = "course-home-card card-master";
         masterCard.innerHTML = `
             <div class="course-home-title">Curriculum Test</div>
-            <div class="course-home-meta" style="margin-top:8px;">Full course exam</div>
+            <div class="course-home-meta course-home-meta-spaced">Full course exam</div>
         `;
         masterCard.addEventListener("click", async () => {
             activeCD = data;
@@ -870,17 +865,17 @@ async function openSyllabus(courseRef, dataArg, parentEntry) {
     const meta = document.createElement("div");
     meta.className = "syllabus-meta";
     meta.innerHTML = `
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div class="curriculum-header-flex">
             <h1>${courseRef.title || courseRef.name}</h1>
-            <div style="display:flex;gap:10px;">
-                ${projectLesson ? `<button id="projects-btn" style="font-size:12px;padding:8px 16px;">Projects</button>` : ""}
-                <button id="master-test-btn" style="font-size:12px;padding:8px 16px;background:var(--accent);color:#fff;border-color:var(--accent);">Curriculum Test</button>
+            <div class="curriculum-header-actions">
+                ${projectLesson ? `<button id="projects-btn" class="curriculum-action-btn">Projects</button>` : ""}
+                <button id="master-test-btn" class="curriculum-action-btn curriculum-test-btn">Curriculum Test</button>
             </div>
         </div>
-        <div class="course-progress-wrapper" style="margin-top:16px;">
+        <div class="course-progress-wrapper curriculum-prog-wrap">
             <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
         </div>
-        <div style="font-size:12px;color:var(--accent);font-weight:700;text-align:right;margin-top:4px;">${pct}% complete</div>
+        <div class="curriculum-prog-text">${pct}% complete</div>
     `;
     viewSyllabus.appendChild(meta);
 
