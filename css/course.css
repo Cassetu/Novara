@@ -1562,3 +1562,38 @@ button:disabled {
     box-shadow: 4px 4px 0px var(--border);
     cursor: pointer;
 }
+.view-loading-state {
+    text-align: center;
+    padding: 60px;
+    color: var(--text-dim);
+    font-family: monospace;
+}
+.lesson-complete-wrap {text-align: center;}
+.lesson-complete-text {line-height:1.5;}
+.lesson-complete-rating {
+    color: var(--accent);
+    font-size: 24px;
+    margin-top:20px;
+}
+.lesson-complete-btn {margin-top: 40px; }
+.onboarding-backdrop { position: fixed; inset:0; background: rgba(0,0,0,0.4); z-index: 9999; pointer-events: none;}
+.onboarding-highlight { position: relative !important;z-index: 10000 !important;}
+.dialogue-backdrop {
+    position:fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.dialogue-box-fixed {
+    position: fixed;
+    z-index:10001;
+    pointer-events: auto;
+}
+.tb-btn-return {
+    font-weight: bold;
+    color: var(--text-dim) !important;
+}
+.avatar-disabled { pointer-events: none !important; cursor: default !important; opacity: 0.5;}

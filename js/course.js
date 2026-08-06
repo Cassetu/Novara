@@ -114,7 +114,7 @@ function startOnboarding() {
     }
     const onboardingOverlay = document.createElement("div");
     onboardingOverlay.id = "onboardingOverlay";
-    onboardingOverlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:9999;pointer-events:none;";
+    onboardingOverlay.className = "onboarding-backdrop";
     document.body.appendChild(onboardingOverlay);
 
     const steps = [
@@ -126,9 +126,12 @@ function startOnboarding() {
 
     let cur = 0;
     let lastTarget = null;
+    let lastHighlightEl = null;
 
     function renderStep() {
-        if (lastTarget) { lastTarget.style.position = ""; lastTarget.style.zIndex = ""; lastTarget.style.pointerEvents = ""; }
+        if (lastHighlightEl) lastHighlightEl.classList.remove("onboarding-highlight");
+        if (lastTarget) lastTarget.style.pointerEvents = "";
+
         if (cur >= steps.length) {
             closeAllDropdowns();
             const activeOverlay = document.getElementById("onboardingOverlay");
@@ -137,6 +140,7 @@ function startOnboarding() {
             saveField("onboarded", true);
             return;
         }
+
         const step = steps[cur];
         if (step.openMenu && userDropdown) {
             closeAllDropdowns();
@@ -146,16 +150,20 @@ function startOnboarding() {
             populateActiveDropdown();
             activeDropdown.classList.add("open");
         }
+
         const target = document.querySelector(step.selector);
         lastTarget = target;
         if (!target) { cur++; renderStep(); return; }
+
         const rect = target.getBoundingClientRect();
         onboardingOverlay.innerHTML = "";
+
         const highlightEl = step.openMenu || step.openActive ? target.closest(".tb-dropdown-wrap") || target : target;
-        highlightEl.style.position = "relative";
-        highlightEl.style.zIndex = "10000";
+        highlightEl.classList.add("onboarding-highlight");
+        lastHighlightEl = highlightEl;
 
         target.style.pointerEvents = step.blockClick ? "none" : "auto";
+
         const dialogueBox = createDialogueBox({
             name: "Mayor Bob",
             imageSrc: "assets/img/minibit/advisor_mayor.png",
@@ -167,12 +175,11 @@ function startOnboarding() {
             }
         });
 
-        dialogueBox.style.position = "fixed";
+        dialogueBox.className = "dialogue-box-fixed";
         dialogueBox.style.top = Math.min(rect.bottom + 40, window.innerHeight - 200) + "px";
         dialogueBox.style.left = Math.max(20, Math.min(rect.left, window.innerWidth - 440)) + "px";
-        dialogueBox.style.zIndex = "10001";
-        dialogueBox.style.pointerEvents = "auto";
         onboardingOverlay.appendChild(dialogueBox);
+
         if (step.interaction) {
             target.addEventListener("click", () => {
                 closeAllDropdowns();
@@ -732,7 +739,7 @@ async function openCurriculumHome(entry) {
     activeCurriculumEntry = entry;
     switchView("view-syllabus");
     setActiveNavBtn(null);
-    viewSyllabus.innerHTML = `<div style="text-align:center;padding:60px;color:var(--text-dim);font-family:monospace;">loading...</div>`;
+    viewSyllabus.innerHTML = `<div class="view-loading-state">loading...</div>`;
 
     const pct = await getCourseProgress(entry.id);
 
@@ -842,7 +849,7 @@ async function openSyllabus(courseRef, dataArg, parentEntry) {
     activeCourseRef = courseRef;
     switchView("view-syllabus");
     setActiveNavBtn(null);
-    viewSyllabus.innerHTML = `<div style="text-align:center;padding:60px;color:var(--text-dim);font-family:monospace;">loading...</div>`;
+    viewSyllabus.innerHTML = `<div class="view-loading-state">loading...</div>`;
 
     const data = dataArg || await fetchCourseData(courseRef);
     activeCD = data;
@@ -992,7 +999,7 @@ function renderSectionLessons(section, data, courseId, contentStage) {
                 const reviewQuiz = generateAbsenceReview(courseId, data, paced.absenceDays);
                 if (reviewQuiz) {
                     const overlay = document.createElement("div");
-                    overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;";
+                    overlay.className = "dialogue-backdrop";
                     document.body.appendChild(overlay);
                     const dialogue = createDialogueBox({
                         name: "Mayor Bob",
@@ -1028,7 +1035,7 @@ function renderSectionLessons(section, data, courseId, contentStage) {
                 const exam = generateModuleExam(courseId, data);
                 if (exam) {
                     const overlay = document.createElement("div");
-                    overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:center;justify-content:center;";
+                    overlay.className = "dialogue-backdrop";
                     document.body.appendChild(overlay);
                     const dialogue = createDialogueBox({
                         name: "Mayor Bob",
@@ -1332,9 +1339,7 @@ function startLesson(lesson) {
     if ($("nav-tools-btn")) $("nav-tools-btn").style.display = "none";
 
     if ($("user-avatar-btn")) {
-        $("user-avatar-btn").style.pointerEvents = "none";
-        $("user-avatar-btn").style.cursor = "default";
-        $("user-avatar-btn").style.opacity = "0.5";
+        $("user-avatar-btn").classList.add("avatar-disabled");
     }
 
     const topNavBtn = $("nav-explorer");
@@ -1343,8 +1348,7 @@ function startLesson(lesson) {
     if (topNavBtn) {
         originalText = topNavBtn.innerText;
         topNavBtn.innerText = "← Return";
-        topNavBtn.style.fontWeight = "bold";
-        topNavBtn.style.color = "var(--text-dim, #0a0a0a)";
+        topNavBtn.classList.add("tb-btn-return");
 
         window.activeTopbarGate = (e) => {
             e.preventDefault();
@@ -1361,7 +1365,7 @@ function startLesson(lesson) {
         };
 
         topNavBtn.addEventListener("click", window.activeTopbarGate, true);
-    }
+        }
 
     const analytics = activeCD ? (ud.analytics[activeCD.id] || {}) : {};
     const onUpdate = async a => {
@@ -1390,26 +1394,22 @@ function startLesson(lesson) {
 }
 
 function resetTopBarLayout() {
-    const topNavBtn = $("nav-explorer")
+    const topNavBtn = $("nav-explorer");
     if (topNavBtn) {
         topNavBtn.innerText = "Explore";
-        topNavBtn.style.fontWeight = "";
-        topNavBtn.style.color = "";
+        topNavBtn.classList.remove("tb-btn-return");
         topNavBtn.onclick = null;
         if (window.activeTopbarGate) {
             topNavBtn.removeEventListener("click", window.activeTopbarGate, true);
             window.activeTopbarGate = null;
         }
-
     }
 
     if ($("nav-active-btn")) $("nav-active-btn").style.display = "";
     if ($("nav-tools-btn")) $("nav-tools-btn").style.display = "";
 
     if ($("user-avatar-btn")) {
-        $("user-avatar-btn").style.pointerEvents = "auto";
-        $("user-avatar-btn").style.cursor = "pointer";
-        $("user-avatar-btn").style.opacity = "1";
+        $("user-avatar-btn").classList.remove("avatar-disabled");
     }
 }
 
@@ -1421,11 +1421,11 @@ async function finishFillBlank(correctCount, total) {
         : correctCount > 0             ? 1 : 0;
 
     viewLesson.innerHTML = `
-        <div class="lesson-workspace" style="text-align:center;">
+        <div class="lesson-workspace lesson-complete-wrap">
             <h2>Complete</h2>
-            <p style="line-height:1.5;">accuracy: ${correctCount} / ${total}</p>
-            <p style="color:var(--accent);font-size:24px;margin-top:20px;">rating: ${score} / 4</p>
-            <button id="return-btn" style="margin-top:40px;">Return</button>
+            <p class="lesson-complete-text">accuracy: ${correctCount} / ${total}</p>
+            <p class="lesson-complete-rating">rating: ${score} / 4</p>
+            <button id="return-btn" class="lesson-complete-btn">Return</button>
         </div>
     `;
 
@@ -1452,11 +1452,11 @@ async function finishSpotBug(correct) {
     const score = correct ? 1 : 0;
 
     viewLesson.innerHTML = `
-        <div class="lesson-workspace" style="text-align:center;">
+        <div class="lesson-workspace lesson-complete-wrap">
             <h2>Complete</h2>
-            <p style="line-height:1.5;">${correct ? "Bug found." : "Missed it."}</p>
-            <p style="color:var(--accent);font-size:24px;margin-top:20px;">rating: ${score} / 1</p>
-            <button id="return-btn" style="margin-top:40px;">Return</button>
+            <p class="lesson-complete-text">${correct ? "Bug found." : "Missed it."}</p>
+            <p class="lesson-complete-rating">rating: ${score} / 1</p>
+            <button id="return-btn" class="lesson-complete-btn">Return</button>
         </div>
     `;
 
@@ -1597,11 +1597,11 @@ async function finishLesson() {
     }
 
     viewLesson.innerHTML = `
-        <div class="lesson-workspace" style="text-align:center;">
+        <div class="lesson-workspace lesson-complete-wrap">
             <h2>Complete</h2>
-            <p style="line-height:1.5;">${accuracyText}</p>
-            <p style="color:var(--accent);font-size:24px;margin-top:20px;">${ratingText}</p>
-            <button id="return-btn" style="margin-top:40px;">Return</button>
+            <p class="lesson-complete-text">${accuracyText}</p>
+            <p class="lesson-complete-rating">${ratingText}</p>
+            <button id="return-btn" class="lesson-complete-btn">Return</button>
         </div>
     `;
     $("return-btn").onclick = () => {
