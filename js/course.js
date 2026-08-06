@@ -434,11 +434,11 @@ async function fetchCourseData(meta) {
 function show404() {
     switchView("view-explorer");
     viewExplorer.innerHTML = `
-        <div style="text-align:center;padding:80px 0;">
-            <img src="assets/abstract/abstract2.svg" width="25%" height="25%" alt="">
-            <p style="font-size:48px;font-weight:900;letter-spacing:-2px;margin-top:24px;">404</p>
-            <p style="color:var(--text-dim);font-family:monospace;margin-top:8px;letter-spacing:2px;">Page Not Found.</p>
-            <button onclick="navExplorer.click()" style="margin-top:32px;">Return Home</button>
+        <div class="not-found-container">
+            <img src="assets/abstract/abstract2.svg" class="not-found-image" alt="">
+            <p class="not-found-code">404</p>
+            <p class="not-found-text">Page Not Found.</p>
+            <button onclick="navExplorer.click()" class="not-found-btn">Return Home</button>
         </div>
     `;
 }
@@ -1267,8 +1267,8 @@ function openProject(projectLesson, entry) {
     resetTopBarLayout();
     const backBtn = document.createElement("button");
     backBtn.id = "lesson-back-btn";
+    backBtn.className = "lesson-back-fixed-btn";
     backBtn.innerText = "Return";
-    backBtn.style.cssText = "position:fixed;top:70px;left:24px;z-index:999;background:var(--surface);color:var(--text-main);border:2px solid var(--border);padding:10px 16px;font-size:12px;letter-spacing:2px;box-shadow:4px 4px 0px var(--border);cursor:pointer;";
     document.body.appendChild(backBtn);
     backBtn.onclick = () => {
         backBtn.remove();
