@@ -3,7 +3,7 @@
 <h1 align="center"><img src="assets/img/brand/favicon.png" alt="favicon" width="34"> NOVARA - Learning with you in mind :) </h1>
 
 #### A free learning website with curriculums and courses on a wide variety of subjects.
-[![Work time](https://hackatime.hackclub.com/api/v1/badge/U0B7KLS4R9R/Cassetu/Novara)](https://hackatime-badge.hackclub.com)
+[![Work time](https://hackatime.hackclub.com/api/v1/badge/U0B7KLS4R9R/Cassetu/Novara?color=77BBA2)](https://hackatime-badge.hackclub.com)
 
 ![homepage.png](assets/readme/homepage.png)
 
