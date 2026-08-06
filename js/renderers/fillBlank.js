@@ -9,7 +9,6 @@ function escapeHtml(str) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#39;");
 }
-
 function renderFillBlank(lessonData, onFinish) {
     const view = document.getElementById("view-lesson");
     let idx = 0;
