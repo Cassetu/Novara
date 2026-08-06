@@ -5,7 +5,7 @@
 #### A free learning website with curriculums and courses on a wide variety of subjects.
 [![Work time](https://hackatime.hackclub.com/api/v1/badge/U0B7KLS4R9R/Cassetu/Novara?color=77BBA2)](https://hackatime-badge.hackclub.com)
 
-![homepage.png](assets/readme/homepage.png)
+![hero.png](assets/readme/hero.png)
 
 ***
 
@@ -28,8 +28,8 @@ Simply go to [cassetu.github.io/Novara](https://cassetu.github.io/Novara) and st
 
 Learning takes the form in curriculums that the user can enroll in. Each user is limited to a maximum of 3 enrolled curriculums at a time to encourage focus and prevent overwhelm. Each curriculum contains multiple courses, and each course contains multiple lessons. Users can track their progress through the curriculum and courses, and can also take quizzes to test their knowledge.
 
-![ex-curriculum.png](assets/readme/ex-curriculum.png)
-![ex-fillblank.png](assets/readme/ex-fillblank.png)
+![Example Image](assets/readme/course.png)
+![Example Image](assets/readme/document.png)
  
 View journal/changelog page: [cassetu.github.io/Novara/html/journal.html](https://cassetu.github.io/Novara/html/journal.html)
 
@@ -43,7 +43,7 @@ Privacy Policy: [cassetu.github.io/Novara/html/privacy.html](https://cassetu.git
 *   **Paced Mode:** Toggleable setting to limit users to one lesson each day, and a test at the end of the week.
 *   **Progress Tracking:** Visual indicators to show completed lessons and remaining coursework.
 
-![ex-course.png](assets/readme/ex-course.png)
+![Example Image](assets/readme/course.png)
 
 ## Tech Stack
 *   **Frontend:** HTML5, CSS3, JavaScript
