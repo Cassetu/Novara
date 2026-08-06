@@ -1,0 +1,54 @@
+body.privacy-page {margin:0; background-color: #fff;}
+.privacy-wrapper {
+    background-color: #fff;
+    color: #0a0a0a;
+    min-height: 100vh;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    padding: 4vw;
+    box-sizing: border-box;
+}
+.privacy-logo-link {
+    text-decoration: none;
+    color: inherit;
+}
+.privacy-nav-signin { margin-left:40px; }
+.policy-body {
+    max-width:680px;
+    margin: 80px auto 0;
+    padding-bottom: 120px;
+}
+.policy-heading {
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: -3px;
+    text-transform: uppercase;
+    line-height: 0.9;
+    margin-bottom: 12px;
+}
+.policy-subheading {
+    font-size: 13px;
+    font-family: monospace;
+    color: #666;
+    letter-spacing: 2px;
+    margin-bottom: 60px;
+    border-bottom: 2px solid #0a0a0a;
+    padding-bottom: 20px;
+}
+.section {margin-bottom: 64px; padding-bottom: 64px; border-bottom: 1px solid #e0e0e0;}
+.section:last-child { border-bottom:none;}
+.section-title {
+    font-size: 24px;
+    font-weight:900;
+    letter-spacing:-1px;
+    text-transform: uppercase;
+    margin-bottom:16px;
+    line-height: 1.1;
+}
+.section-body {
+    font-family: monospace;
+    font-size: 14px;
+    line-height:1.9;
+    color:#333;
+}
+.section-body p { margin-bottom: 14px;}
+.section-body p:last-child { margin-bottom: 0;}
