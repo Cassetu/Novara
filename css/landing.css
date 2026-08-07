@@ -130,6 +130,7 @@
     margin: 0;
 }
 
+.landing-badge-text { margin: 0;font-family: monospace;color: var(--text-main);font-size: 14px;}
 .hackatime-badge-link img { display: block;height: 22px; }
 
 .landing-btn-primary, .landing-btn-secondary {
