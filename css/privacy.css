@@ -4,16 +4,10 @@ body.privacy-page {margin:0; background-color: #fff;}
     color: #0a0a0a;
     min-height: 100vh;
     font-family: 'Space Grotesk', system-ui, sans-serif;
-    padding: 4vw;
     box-sizing: border-box;
 }
-.privacy-logo-link {
-    text-decoration: none;
-    color: inherit;
-}
-.privacy-nav-signin { margin-left:40px; }
 .policy-body {
-    max-width:680px;
+    max-width:1000px;
     margin: 80px auto 0;
     padding-bottom: 120px;
 }
@@ -30,11 +24,11 @@ body.privacy-page {margin:0; background-color: #fff;}
     font-family: monospace;
     color: #666;
     letter-spacing: 2px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
     border-bottom: 2px solid #0a0a0a;
     padding-bottom: 20px;
 }
-.section {margin-bottom: 64px; padding-bottom: 64px; border-bottom: 1px solid #e0e0e0;}
+.section {margin-bottom: 34px; padding-bottom: 34px; border-bottom: 1px solid #e0e0e0;}
 .section:last-child { border-bottom:none;}
 .section-title {
     font-size: 24px;

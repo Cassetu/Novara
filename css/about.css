@@ -4,9 +4,9 @@ body.no-margin { margin:0;}
     display: flex;
     flex-direction:column;
     align-items: center;
-    padding:8vh 4vw 10vh;
+    padding:8vh 0vw 10vh;
 }
-.about-col {width: 100%; max-width:640px;}
+.about-col {width: 100%; max-width:1000px;}
 .about-back {
     display: inline-block;
     font-family: monospace;
@@ -71,7 +71,7 @@ body.no-margin { margin:0;}
     width:100%;
     height: 620px;
     object-fit:cover;
-    object-position:center 70%;
+    object-position:center 80%;
     filter: grayscale(0.65) contrast(1.05);
 }
 .about-caption {
