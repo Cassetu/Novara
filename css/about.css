@@ -87,12 +87,4 @@ body.no-margin { margin:0;}
     justify-content: space-between;
     align-items:center;
 }
-.landing-logo-link {
-    text-decoration: none;
-    color:inherit;
-    display: flex;
-    align-items:center;
-}
-.landing-nav-active { border-bottom: 2px solid #77BBA2; }
-.landing-nav-signin { margin-left:40px;}
 .about-back-foot {margin-bottom: 0; }
