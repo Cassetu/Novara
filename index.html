@@ -59,8 +59,8 @@
         </nav>
     </header>
     <main class="landing-main">
-        <h1 class="landing-title">Active Recall &amp; Reinforcement Learning</h1>
-        <p class="landing-desc">Novara is a lightweight self-study platform built solo to prioritize proper learning over profit, and provide everything necessary without the worries of a budget, slow decisions or shareholders.</p>
+        <h1 class="landing-title">Welcome to Novara!</h1>
+        <p class="landing-desc">Our Goal: Build a library of curriculums so users can get the same learning opportunities of school.</p>
         <hr class="landing-divider">
         <div class="landing-grid">
             <div class="landing-col">
@@ -81,27 +81,39 @@
     <footer class="landing-footer">Built by me, for you. View code repositories on <a href="https://github.com/Cassetu/Novara" target="_blank">GitHub</a>.</footer>
 </div>
 
-<div id="view-public-courses" class="view-layer" style="display: none;max-width: 100%; margin: 0 auto;">
-    <button href="?" id="btn-back-landing" style="background: transparent; border: none; font-weight: bold; cursor: pointer; margin-bottom: 40px; font-size: 14px; letter-spacing: 2px;">← RETURN</button>
-    <h1 style="font-size: 48px; font-weight: 900; letter-spacing: -2px; margin-bottom: 10px; text-transform: uppercase;text-align:center">Courses</h1>
-    <div id="mayor-chat"></div>
-    <p style="margin:15px;font-size:11px;font-family:monospace;color:#888888;text-align:center;">
-        <a href="html/privacy.html" style="color:#888888;">Privacy Policy</a>
-    </p>
-    <div class="filters-row" id="public-filters">
-        <button class="filter-btn active" data-pfilter="all">All</button>
-        <button class="filter-btn" data-pfilter="engineering">Engineering</button>
-        <button class="filter-btn" data-pfilter="gamedev">Game Dev</button>
-        <button class="filter-btn" data-pfilter="data">Data</button>
-        <button class="filter-btn" data-pfilter="design">Design</button>
-        <span style="margin-left:auto;display:flex;gap:20px;">
-            <button class="filter-btn active" data-pdifficulty="all">All</button>
-            <button class="filter-btn" data-pdifficulty="beginner">Beginner</button>
-            <button class="filter-btn" data-pdifficulty="intermediate">Intermediate</button>
-            <button class="filter-btn" data-pdifficulty="advanced">Advanced</button>
-        </span>
-    </div>
-    <div id="public-catalog-grid" class="catalog-grid"></div>
+<div id="view-public-courses" style="display: none;">
+    <header class="landing-header">
+        <a href="index.html" id="btn-back-landing" class="landing-brand">
+            <img src="assets/img/brand/favicon.png" alt="Novara" class="landing-logo">
+            <span class="landing-wordmark">NOVARA</span>
+        </a>
+        <nav class="landing-nav">
+            <span class="landing-nav-current">Courses</span>
+            <a href="https://github.com/Cassetu/Novara/commits" target="_blank">Journal</a>
+            <a href="html/about.html">About</a>
+            <a href="html/privacy.html">Privacy</a>
+            <a href="?view=signin" class="landing-nav-signin landing-signin-trigger">Sign In</a>
+        </nav>
+    </header>
+    <main class="public-courses-main">
+        <h1 class="landing-title">Courses</h1>
+        <p class="landing-desc">Browse every curriculum Novara currently hosts. Sign in to enroll and track progress.</p>
+        <div id="mayor-chat"></div>
+        <div class="filters-row" id="public-filters">
+            <button class="filter-btn active" data-pfilter="all">All</button>
+            <button class="filter-btn" data-pfilter="engineering">Engineering</button>
+            <button class="filter-btn" data-pfilter="gamedev">Game Dev</button>
+            <button class="filter-btn" data-pfilter="data">Data</button>
+            <button class="filter-btn" data-pfilter="design">Design</button>
+            <span style="margin-left:auto;display:flex;gap:20px;">
+                <button class="filter-btn active" data-pdifficulty="all">All</button>
+                <button class="filter-btn" data-pdifficulty="beginner">Beginner</button>
+                <button class="filter-btn" data-pdifficulty="intermediate">Intermediate</button>
+                <button class="filter-btn" data-pdifficulty="advanced">Advanced</button>
+            </span>
+        </div>
+        <div id="public-catalog-grid" class="catalog-grid"></div>
+    </main>
 </div>
 
 <div id="view-auth" class="view-layer" style="display: none; max-width: 420px; margin: 100px auto; text-align: center; font-family: 'Space Grotesk', system-ui, sans-serif; color: #0a0a0a; background: #ffffff; padding: 40px; border: 4px solid #0a0a0a; box-shadow: 12px 12px 0px #77BBA2; box-sizing: border-box;">

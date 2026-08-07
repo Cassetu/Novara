@@ -1948,7 +1948,6 @@ document.addEventListener("keydown", e => {
     const viewLanding = $("view-landing");
     const viewPublic  = $("view-public-courses");
     const viewAuth    = $("view-auth");
-    const heroCta     = document.querySelector(".hero-cta");
     const pubGrid     = $("public-catalog-grid");
 
     let pubCategory   = "all";
@@ -1965,7 +1964,6 @@ document.addEventListener("keydown", e => {
     }
 
     if (btnCourses) btnCourses.addEventListener("click", openPublic);
-    if (heroCta)    heroCta.addEventListener("click", openPublic);
 
     if (btnBack) {
         btnBack.addEventListener("click", (e) => {
@@ -2005,7 +2003,7 @@ document.addEventListener("keydown", e => {
                 <span class="public-card-meta">${lessonsNote} &bull; ${entry.category}</span>
                 <p>${entry.description}</p>
                 <div class="public-card-footer">
-                    <button class="public-signin-trigger" style="font-size:11px;padding:6px 14px;width:100%">Sign in to enroll</button>
+                    <button class="public-signin-trigger public-signin-btn">Sign in to enroll</button>
                 </div>
             `;
 
