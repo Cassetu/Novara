@@ -59,16 +59,16 @@ Create an issue on our [GitHub repository](https://github.com/Cassetu/Novara/iss
 
 ## AI USAGE DISCLAIMER (WILL BE REMOVED FOR RELEASE)
 
-AI is used in the generation of our courses. We have not yet received assistance from subject-matter experts in developing our curricula.
+AI is used in the generation of our courses. I have not yet received assistance from subject-matter experts in developing our curricula.
 
 To maintain quality, the AI is guided by strict instructions designed to reduce low-quality content ("slop lessons") and encourage materials that engage students in critical thinking and active learning.
 
-Despite these safeguards, mistakes and errors may still occur. If you find an issue, please report it by emailing: **cassetunium@gmail.com** (Responses take 3-5 business days).
+Despite these safeguards, mistakes and errors may still occur. If you find an issue, please report it to me by emailing: **cassetunium@gmail.com** (Responses take 3-5 business days).
 
-Thank you for helping us improve.
+Thank you for helping Novara improve.
 
 ## Contributing
-We currently aren't accepting contributions, but we appreciate your interest! If you have suggestions or feedback, please reach out to us at **cassetunium@gmail.com**
+We currently aren't accepting contributions, but I appreciate your interest! If you have suggestions or feedback, please reach out to me at **cassetunium@gmail.com**
 
 ## License
 
