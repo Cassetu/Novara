@@ -79,28 +79,66 @@ window.firebaseAuth.onAuthStateChanged(async user => {
 
 window.addEventListener("popstate", routeFromURL);
 
-authGoogleBtn.addEventListener("click", async () => {
-    try {
-        await window.signInWithPopup(window.firebaseAuth, new window.GoogleAuthProvider());
-    } catch (e) {
-        setAuthStatus("Google sign-in failed: " + e.message, "#ff4444");
-    }
+const privacyBackdrop = $("privacy-confirm-backdrop");
+const privacyCheckbox = $("privacy-confirm-checkbox");
+const privacyContinueBtn = $("privacy-confirm-continue");
+const privacyCancelBtn = $("privacy-confirm-cancel");
+let pendingAuthAction = null;
+
+function openPrivacyConfirm(action) {
+    pendingAuthAction = action;
+    privacyCheckbox.checked = false;
+    privacyContinueBtn.disabled = true;
+    privacyBackdrop.classList.add("open");
+}
+
+function closePrivacyConfirm() {
+    privacyBackdrop.classList.remove("open");
+    pendingAuthAction = null;
+}
+
+privacyCheckbox.addEventListener("change", () => {
+    privacyContinueBtn.disabled = !privacyCheckbox.checked;
 });
 
-authMagicBtn.addEventListener("click", async () => {
+privacyCancelBtn.addEventListener("click", closePrivacyConfirm);
+
+privacyBackdrop.addEventListener("click", e => {
+    if (e.target === privacyBackdrop) closePrivacyConfirm();
+});
+
+privacyContinueBtn.addEventListener("click", () => {
+    const action = pendingAuthAction;
+    closePrivacyConfirm();
+    if (action) action();
+});
+
+authGoogleBtn.addEventListener("click", () => {
+    openPrivacyConfirm(async () => {
+        try {
+            await window.signInWithPopup(window.firebaseAuth, new window.GoogleAuthProvider());
+        } catch (e) {
+            setAuthStatus("Google sign-in failed: " + e.message, "#ff4444");
+        }
+    });
+});
+
+authMagicBtn.addEventListener("click", () => {
     const email = authEmailInput.value.trim();
     if (!email) { setAuthStatus("Email required.", "#ff4444"); return; }
-    setAuthStatus("Sending link...", "var(--text-dim)");
-    try {
-        await window.sendSignInLinkToEmail(window.firebaseAuth, email, {
-            url: window.location.origin + window.location.pathname,
-            handleCodeInApp: true
-        });
-        window.localStorage.setItem("emailForSignIn", email);
-        setAuthStatus("Link sent. Check your inbox.", "var(--accent)");
-    } catch (e) {
-        setAuthStatus("Failed: " + e.message, "#ff4444");
-    }
+    openPrivacyConfirm(async () => {
+        setAuthStatus("Sending link...", "var(--text-dim)");
+        try {
+            await window.sendSignInLinkToEmail(window.firebaseAuth, email, {
+                url: window.location.origin + window.location.pathname,
+                handleCodeInApp: true
+            });
+            window.localStorage.setItem("emailForSignIn", email);
+            setAuthStatus("Link sent. Check your inbox.", "var(--accent)");
+        } catch (e) {
+            setAuthStatus("Failed: " + e.message, "#ff4444");
+        }
+    });
 });
 
 function setAuthStatus(msg, color) {

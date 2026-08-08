@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Novara</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/course.css">
     <link rel="stylesheet" href="css/landing.css">
-    <link rel="stylesheet" href="css/godot.css">
     <link rel="icon" type="image/png" href="assets/img/brand/favicon.png">
     <script>
         (function() {
@@ -115,32 +113,61 @@
     </main>
 </div>
 
-<div id="view-auth" class="view-layer" style="display: none; max-width: 420px; margin: 100px auto; text-align: center; font-family: 'Space Grotesk', system-ui, sans-serif; color: #0a0a0a; background: #ffffff; padding: 40px; border: 4px solid #0a0a0a; box-shadow: 12px 12px 0px #77BBA2; box-sizing: border-box;">
-    <a href="index.html">
-        <img src="assets/img/brand/favicon.png" alt="Novara" style="width: 40px; margin-bottom: 20px;">
-    </a>
-    <h2 style="font-size: 28px; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; margin-bottom: 30px;">NOVARA SIGN-IN</h2>
-    <button id="auth-google-btn" style="width: 100%; padding: 15px; font-weight: bold; background-color: #ffffff; color: #0a0a0a; border: 2px solid #0a0a0a; display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; box-shadow: 4px 4px 0px #0a0a0a;">
-        <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-        </svg>
-        CONTINUE WITH GOOGLE
-    </button>
-    <div style="margin-top: 40px; border-top: 2px dashed #0a0a0a; padding-top: 30px;">
-        <p style="font-size: 12px; font-family: monospace; font-weight: bold; letter-spacing: 1px; margin-bottom: 15px;">OR USE EMAIL</p>
-        <input type="email" id="auth-email-input" placeholder="ENTER EMAIL ADDRESS" spellcheck="false"
-               style="width: 100%; padding: 12px; background: #ffffff; color: #0a0a0a; border: 2px solid #0a0a0a; outline: none; margin-bottom: 15px; font-family: monospace; font-size: 14px; box-sizing: border-box;">
-        <button id="auth-magic-btn" style="width: 100%; padding: 12px; font-weight: bold; background-color: #0a0a0a; color: #ffffff; border: 2px solid #0a0a0a; cursor: pointer; box-shadow: 4px 4px 0px #77BBA2;">
-            SEND LINK ↗
-        </button>
+<div id="view-auth" style="display:none;">
+    <header class="landing-header">
+        <a href="index.html" class="landing-brand">
+            <img src="assets/img/brand/favicon.png" alt="Novara" class="landing-logo">
+            <span class="landing-wordmark">NOVARA</span>
+        </a>
+        <nav class="landing-nav">
+            <a href="?view=courses" class="landing-explore-trigger">Courses</a>
+            <a href="https://github.com/Cassetu/Novara/commits" target="_blank">Journal</a>
+            <a href="html/about.html">About</a>
+            <a href="html/privacy.html">Privacy</a>
+            <span class="landing-nav-current">Sign In</span>
+        </nav>
+    </header>
+    <main class="auth-main">
+        <div class="auth-box">
+            <a href="index.html" class="auth-logo-link">
+                <img src="assets/img/brand/favicon.png" alt="Novara" class="auth-logo">
+            </a>
+            <h2 class="auth-heading">Novara Sign-In</h2>
+            <button id="auth-google-btn" class="auth-google-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Continue with Google
+            </button>
+            <div class="auth-divider-block">
+                <p class="auth-divider-label">Or Use Email</p>
+                <input type="email" id="auth-email-input" class="auth-email-input" placeholder="Enter email address" spellcheck="false">
+                <button id="auth-magic-btn" class="auth-magic-btn">Send Link ↗</button>
+            </div>
+            <p id="auth-status" class="auth-status"></p>
+            <p class="auth-privacy-line">
+                <a href="html/privacy.html" class="auth-privacy-link">Privacy Policy</a>
+            </p>
+        </div>
+    </main>
+</div>
+
+<div id="privacy-confirm-backdrop" class="privacy-confirm-backdrop">
+    <div class="privacy-confirm-modal">
+        <h3 class="privacy-confirm-title">Before You Sign In</h3>
+        <p class="privacy-confirm-text">Please confirm you've read and agree to our <a href="html/privacy.html" target="_blank" class="privacy-confirm-link">Privacy Policy</a>.</p>
+        <label class="privacy-confirm-checkbox-row">
+            <input type="checkbox" id="privacy-confirm-checkbox" class="privacy-confirm-checkbox">
+            <span>I agree to the Privacy Policy</span>
+        </label>
+        <div class="privacy-confirm-actions">
+            <button id="privacy-confirm-cancel" class="landing-btn-secondary">Cancel</button>
+            <button id="privacy-confirm-continue" class="landing-btn-primary" disabled>Continue</button>
+        </div>
     </div>
-    <p id="auth-status" style="margin-top: 20px; font-size: 14px; font-weight: bold; font-family: monospace;"></p>
-    <p style="margin-top:20px;font-size:11px;font-family:monospace;color:#888888;">
-        <a href="html/privacy.html" style="color:#888888;">Privacy Policy</a>
-    </p>
 </div>
 
 <div id="app-view" style="display: none; flex-direction: column; height: 100vh; width: 100vw; overflow: hidden;">
@@ -221,11 +248,11 @@
             <div id="catalog-grid" class="catalog-grid"></div>
         </div>
 
-        <div id="view-syllabus" class="view-layer" style="display: none; padding: 40px; max-width: 1800px; margin: 0 auto;"></div>
+        <div id="view-syllabus" class="view-layer" style="display: none; width: 100vw; margin: 0 auto;"></div>
 
-        <div id="view-lesson" class="view-layer" style="display: none;"></div>
+        <div id="view-lesson" class="view-layer" style="display: none; width: 100vw;"></div>
 
-        <div id="view-settings" class="view-layer" style="display: none; padding: 40px; max-width: 1800px; margin: 0 auto;">
+        <div id="view-settings" class="view-layer" style="display: none; width: 100vw; margin: 0 auto;">
             <h2>System Settings</h2>
             <div class="settings-section" style="margin-top: 30px; margin-bottom: 50px;">
                 <p style="color: var(--text-main); margin-bottom: 20px; font-size: 14px; font-weight: bold;">If you're reading this... Have a nice day! :)</p>
