@@ -912,25 +912,25 @@ async function openSyllabus(courseRef, dataArg, parentEntry) {
 
     viewSyllabus.innerHTML = "";
 
+    const masterDetailContainer = document.createElement("div");
+    masterDetailContainer.className = "syllabus-master-detail";
+
+    const sidebar = document.createElement("div");
+    sidebar.className = "syllabus-sidebar";
+
     const returnBtn = document.createElement("button");
     returnBtn.id = "syllabus-return-btn";
-    returnBtn.innerText = "Return to Curriculum Home";
+    returnBtn.innerText = "← Return";
     returnBtn.addEventListener("click", () => openCurriculumHome(parentEntry || courseRef));
-    viewSyllabus.appendChild(returnBtn);
+    sidebar.appendChild(returnBtn);
 
     if (projectLesson) {
         const topActions = document.createElement("div");
         topActions.className = "curriculum-header-actions syllabus-top-actions";
         topActions.innerHTML = `<button id="projects-btn" class="curriculum-action-btn">Projects</button>`;
         topActions.querySelector("#projects-btn").addEventListener("click", () => openProject(projectLesson, parentEntry || courseRef));
-        viewSyllabus.appendChild(topActions);
+        sidebar.appendChild(topActions);
     }
-
-    const masterDetailContainer = document.createElement("div");
-    masterDetailContainer.className = "syllabus-master-detail";
-
-    const sidebar = document.createElement("div");
-    sidebar.className = "syllabus-sidebar";
 
     const sidebarInfo = document.createElement("div");
     sidebarInfo.className = "syllabus-sidebar-info";
