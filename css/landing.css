@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&display=swap');
 
 #view-about {
-    background-color:var(--bg);
+    background-color: var(--bg);
     color: var(--text-main);
     font-family: 'Space Grotesk', system-ui, sans-serif;
     box-sizing: border-box;
@@ -93,7 +93,7 @@
 .landing-divider {
     border: none;
     border-top: 1px solid #d8d8d8;
-    margin: 40px 0;
+    margin: 20px 0;
 }
 
 .landing-grid {
@@ -130,8 +130,9 @@
     margin: 0;
 }
 
-.landing-badge-text { margin: 0;font-family: monospace;color: var(--text-main);font-size: 14px;}
-.hackatime-badge-link img { display: block;height: 22px; }
+.landing-badge-text { margin: 0;font-family: monospace;color: var(--text-main);font-size: 14px;line-height: 1.7;}
+
+.hackatime-badge-link img { display: inline-block;height: 22px;vertical-align: middle; }
 
 .landing-btn-primary, .landing-btn-secondary {
     width: 100%;
@@ -162,11 +163,13 @@
 
 .landing-btn-secondary:hover { background-color: #e2e2e2; }
 
+.landing-trust-btn{display:block;text-decoration:none;text-transform:uppercase;letter-spacing:1px;}
+
 .landing-footer {
     font-family: monospace;
     font-size: 12px;
     color: var(--text-dim);
-    padding: 0 40px 40px;
+    padding: 0 40px 20px;
 }
 
 .landing-footer a {
