@@ -3,7 +3,6 @@ import { renderDocument } from "./renderers/document.js";
 import { renderQuestion, initQuestionState, getQuestionStats } from "./renderers/question.js";
 import { renderChallenge } from "./renderers/challenge.js";
 import { renderCodeFix } from "./renderers/codeFix.js";
-import { renderGodotScene } from "./renderers/godotScene.js";
 import { renderFillBlank } from "./renderers/fillBlank.js";
 import { renderSpotBug } from "./renderers/spotBug.js";
 import { renderProject } from "./renderers/project.js";
