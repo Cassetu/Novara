@@ -1340,6 +1340,8 @@ button:disabled {
     transition:border-color 0.15s;
 }
 .syllabus-section-btn.active { background:var(--accent);border-color:var(--accent);}
+.syllabus-test-btn {border-color: var(--accent); }
+.syllabus-test-btn .syllabus-section-title { color: var(--accent);}
 .syllabus-section-title {
     font-size:12px;
     font-weight:900;
@@ -1353,6 +1355,25 @@ button:disabled {
     display:flex;
     justify-content: space-between;
 }
+.syllabus-sidebar-info { padding-bottom:12px;border-bottom:1px solid #dddddd;}
+.syllabus-sidebar-course-title {
+    font-size:16px;
+    font-weight:900;
+    letter-spacing:-0.5px;
+    text-transform: uppercase;
+    margin-bottom:10px;
+}
+.syllabus-desc-link {
+    display:inline-block;
+    margin-top:10px;
+    font-family: monospace;
+    font-size:11px;
+    color:var(--text-dim);
+    text-decoration: underline;
+    cursor: pointer;
+}
+.syllabus-desc-link:hover { color: var(--text-main); }
+.syllabus-top-actions { display:flex;justify-content: flex-end;margin-bottom:16px; }
 .syllabus-stage-header {
     margin-bottom:20px;
     color:var(--text-dim);
@@ -1600,16 +1621,8 @@ button:disabled {
     text-align:right;
     margin-top:4px;
 }
-.curriculum-header-flex {
-    display:flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-}
 .curriculum-header-actions { display: flex; gap: 10px;}
 .curriculum-action-btn { font-size:12px; padding:8px 16px;}
-.curriculum-test-btn {background: var(--accent); color:#fff;border-color: var(--accent);}
 .course-home-card.card-project {border-color: var(--accent);}
 .course-home-card.card-masters { border-color: var(--accent); box-shadow:none;}
 .course-home-meta-spaced { margin-top: 8px;}

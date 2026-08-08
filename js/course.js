@@ -529,6 +529,27 @@ async function getCourseProgress(entryId) {
 let activeCategory = "all";
 let activeDifficulty = "all";
 
+function showCourseDescription(courseRef) {
+    const old = document.getElementById("descOverlay");
+    if (old) old.remove();
+    const overlay = document.createElement("div");
+    overlay.id = "descOverlay";
+    overlay.className = "details-backdrop";
+
+    overlay.innerHTML = `
+        <div class="details-modal">
+            <h2 class="details-title">${courseRef.title || courseRef.name} Description</h2>
+            <div class="details-desc-box">
+                <span class="details-desc-text">${courseRef.description || "No description provided."}</span>
+            </div>
+            <button id="closeDescBtn" class="details-close-btn">Close</button>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+    document.getElementById("closeDescBtn").onclick = () => overlay.remove();
+    overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+}
+
 function showCourseDetails(entry) {
     const old = document.getElementById("detailsOverlay");
     if (old) old.remove();
@@ -897,26 +918,12 @@ async function openSyllabus(courseRef, dataArg, parentEntry) {
     returnBtn.addEventListener("click", () => openCurriculumHome(parentEntry || courseRef));
     viewSyllabus.appendChild(returnBtn);
 
-    const meta = document.createElement("div");
-    meta.className = "syllabus-meta";
-    meta.innerHTML = `
-        <div class="curriculum-header-flex">
-            <h1>${courseRef.title || courseRef.name}</h1>
-            <div class="curriculum-header-actions">
-                ${projectLesson ? `<button id="projects-btn" class="curriculum-action-btn">Projects</button>` : ""}
-                <button id="master-test-btn" class="curriculum-action-btn curriculum-test-btn">Curriculum Test</button>
-            </div>
-        </div>
-        <div class="course-progress-wrapper curriculum-prog-wrap">
-            <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
-        </div>
-        <div class="curriculum-prog-text">${pct}% complete</div>
-    `;
-    viewSyllabus.appendChild(meta);
-
-    meta.querySelector("#master-test-btn")?.addEventListener("click", compileMasterTest);
     if (projectLesson) {
-        meta.querySelector("#projects-btn")?.addEventListener("click", () => openProject(projectLesson, parentEntry || courseRef));
+        const topActions = document.createElement("div");
+        topActions.className = "curriculum-header-actions syllabus-top-actions";
+        topActions.innerHTML = `<button id="projects-btn" class="curriculum-action-btn">Projects</button>`;
+        topActions.querySelector("#projects-btn").addEventListener("click", () => openProject(projectLesson, parentEntry || courseRef));
+        viewSyllabus.appendChild(topActions);
     }
 
     const masterDetailContainer = document.createElement("div");
@@ -924,6 +931,19 @@ async function openSyllabus(courseRef, dataArg, parentEntry) {
 
     const sidebar = document.createElement("div");
     sidebar.className = "syllabus-sidebar";
+
+    const sidebarInfo = document.createElement("div");
+    sidebarInfo.className = "syllabus-sidebar-info";
+    sidebarInfo.innerHTML = `
+        <div class="syllabus-sidebar-course-title">${courseRef.title || courseRef.name}</div>
+        <div class="course-progress-wrapper">
+            <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
+        </div>
+        <div class="curriculum-prog-text">${pct}% complete</div>
+        <span class="syllabus-desc-link">Course Description</span>
+    `;
+    sidebarInfo.querySelector(".syllabus-desc-link").addEventListener("click", () => showCourseDescription(courseRef));
+    sidebar.appendChild(sidebarInfo);
 
     const contentStage = document.createElement("div");
     contentStage.className = "syllabus-content-stage";
@@ -955,6 +975,15 @@ async function openSyllabus(courseRef, dataArg, parentEntry) {
         if (index === 0) firstSectionBtn = secBtn;
         sidebar.appendChild(secBtn);
     });
+
+    const testBtn = document.createElement("div");
+    testBtn.className = "syllabus-section-btn syllabus-test-btn";
+    testBtn.innerHTML = `
+        <div class="syllabus-section-title">Course Test</div>
+        <div class="syllabus-section-meta"><span>Full Exam</span><span>&#9658;</span></div>
+    `;
+    testBtn.onclick = compileMasterTest;
+    sidebar.appendChild(testBtn);
 
     masterDetailContainer.appendChild(sidebar);
     masterDetailContainer.appendChild(contentStage);
