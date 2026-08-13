@@ -33,19 +33,65 @@ Is the theory that explains how people behave in relationships by using cost-ben
 - Various unhealthy traits in potential Dates and Mates:
 ![img_1.png - Libretexts.Org](img_1.png)
 > Perera, Ayesh. "Halo Effect In Psychology: Definition and Examples." Simply Psychology, 27 July 2026, https://www.simplypsychology.org/halo-effect.html. Accessed 11 Aug. 2026.
-
+>
 > “The Role of Familiarity in Attraction.” Psychology Today, 2022, https://www.psychologytoday.com/us/blog/between-you-and-me/202203/the-role-of-familiarity-in-attraction. Accessed 12 Aug. 2026.
-
+>
 > Bornstein, Robert F. (1989). "Exposure and affect: Overview and meta-analysis of research, 1968-1987". Psychological Bulletin. 106 (2): 265–289. doi:10.1037/0033-2909.106.2.265. Accessed 12 Aug. 2026.
-
+>
 > Zajonc, Robert B. (1968). "Attitudinal Effects Of Mere Exposure" (PDF). Journal of Personality and Social Psychology. 9 (2, Pt.2): 1–27. doi:10.1037/h0025848. ISSN 1939-1315. Accessed 12 Aug. 2026.
-
+>
 > Festinger, L., Schachter, S., Back, K., (1950). The Spatial Ecology of Group Formation, in L. Festinger, S. Schachter, & K. Back (eds.), Social Pressure in Informal Groups. MIT Press. Accessed 12 Aug. 2026.
-
+>
 > Physical attractiveness and marital choice. (1972). Journal of Personality and Social Psychology, 22(1), 8-12; Who will marry whom? Theories and research in marital choice. (1976). New York; Springer. Accessed 12 Aug. 2026.
-
+>
 > Wikipedia Contributors. “Mere-Exposure Effect.” Wikipedia, Wikimedia Foundation, 28 Mar. 2019, https://en.wikipedia.org/wiki/Mere-exposure_effect. Accessed 12 Aug. 2026.
-
+>
 > Wikipedia Contributors. “Social Exchange Theory.” Wikipedia, Wikimedia Foundation, 27 Mar. 2019, https://en.wikipedia.org/wiki/Social_exchange_theory. Accessed 12 Aug. 2026.
-
+>
 >“Welcome To Zscaler Directory Authentication.” Libretexts.Org, 2026, https://socialsci.libretexts.org/Bookshelves/Sociology/Marriage_and_Family/Intimate_Relationships_and_Families/05%3A_Dating_and_Mate_Selection/5.01%3A_Theories_of_Mate_Selection. Accessed 12 Aug. 2026.
+
+## Stage Models & Communication
+### Knapp’s Relationship Model
+Mark Knapp and Anita Vangelisti (2009) looked at how relationships come together, how they are maintained, and how they come apart. They divided relationships into 10 stages.
+This list shows a specific order, but they are not always experienced in such linear way.
+
+| 	Process             | 	Stage                                                                                    |
+|----------------------|-------------------------------------------------------------------------------------------|
+| 	  *Coming Together* | - Initiating<br/>- Experimenting<br/>- Intensifying<br/>- Integrating<br/>- Bonding       |
+| 	  *Coming Apart*    | - Differentiating<br/>- Circumscribing<br/>- Stagnating<br/>- Avoiding<br/>- Terminating	 |
+
+Knapp and Vangelisti's (2009) model separates two distinct phases: coming together and coming apart.
+### *Coming Together*
+#### Initiating
+When we encounter a new person, we decide if we want to put in the energy and initiative to make contact or start a conversation. Initiation can come in many forms, either through a smile, a conversation, etc.
+#### Experimenting
+At this stage, you are considering if you want to continue the relationship and get to know the other person. Where you start to learn about the person on a deeper, more personal level. Interactions tend to be casual, with reciprocal questions to find common ground or shared interests, aka experimenting.
+#### Intensifying
+Once you decide to continue the relationship, we typically move into the intensifying stage. During this stage, both parties share more personal and intimate information about themselves. Conversations become more serious, and interactions more meaningful and deep.
+#### Integrating
+In this stage, they let others know they are dating exclusively, and friends are more likely to invite both people over for dinners or events rather than one or the other.
+#### Bonding
+The final stage is known as bonding, where people reveal their relationship to the world, such as a formal engagement, wedding ceremony, or social media post.
+### *Coming Apart*
+#### Differentiating
+This is a process of disengaging. This is where communication is used to purposefully divide the relationship.
+#### Circumscribing
+To circumscribe means to limit something. When people circumscribe in a relationship. Communication decreases and subjects become restricted as individuals verbally close themselves off from each other. In the form of silence or passive-aggressive behaviour.
+#### Stagnating
+When a relationship has stagnated, it feels like it has come to a halt. In some cases, verbal communication slows and is often avoided and the relationship feels strained.
+#### Avoiding
+In the avoidance stage, people stay out of each other's physical space. And when that actual physical avoidance cannot take place, people will simply avoid each other while they're together and treat the other as if they don't exist. Both parties will separate from one another physically, emotionally, and mentally.
+#### Terminating
+There are many reasons why a relationship may terminate. It can result from outside circumstances, such as geographic separation or internal factors, such as changing values or personalities. Termination may occur through the exchange of verbal or nonverbal messages. One example of nonverbal termination is called ghosting, where one person disappears unexpectedly and never communicates with the other again. Death is also a cause of terminating.
+### Social Penetration Theory
+Relationships evolve from superficial interactions to intimate bonds through expansion of communication boundaries. Social Penetration Theory describes this progression as the "onion metaphor" in regard to the layers of personality.
+- *Breadth:* The broad variety of topics discussed within a relationship.
+- *Depth:* The degree of intimacy or privacy involved in the shared information.
+Early-stage interaction remain high breadth and very low depth. As trust increases, the vulnerability of deeper layers becomes a tool for strengthening theemotional connection between individuals.
+> Weidner, Eric, et al. “10.4: Relationship Stages.” Social Sci LibreTexts, 8 Mar. 2022, https://socialsci.libretexts.org/Bookshelves/Communication/Interpersonal_Communication/Interpersonal_Communication%3A_Context_and_Connection-OERI/10%3A_Building_and_Maintaining_Relationships/10.04%3A_Relationship_Stages. Accessed 13 Aug. 2026.
+>
+> “6.1: Foundations of Relationships.” Social Sci LibreTexts, 14 July 2020, https://socialsci.libretexts.org/Courses/College_of_the_Canyons/COMS_246%3A_Interpersonal_Communication_(Leonard)/6%3A_Communication_in_Relationships/6.1%3A_Foundations_of_Relationships. Accessed 13 Aug. 2026.
+>
+> Mark L. Knapp and Anita L. Vangelisti, Interpersonal Communication and Human Relationships (Boston, MA: Pearson, 2009) Accessed 13 Aug. 2026.
+> 
+> Goulder, Will. “A-Level Psychology Relationship Revision for Paper 3 | Simply Psychology.” Simplypsychology.Org, 2019, https://www.simplypsychology.org/a-level-relationships.html. Accessed 13 Aug. 2026.
