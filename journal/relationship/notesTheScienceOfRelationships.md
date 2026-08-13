@@ -88,6 +88,52 @@ Relationships evolve from superficial interactions to intimate bonds through exp
 - *Breadth:* The broad variety of topics discussed within a relationship.
 - *Depth:* The degree of intimacy or privacy involved in the shared information.
 Early-stage interaction remain high breadth and very low depth. As trust increases, the vulnerability of deeper layers becomes a tool for strengthening theemotional connection between individuals.
+#### Principle of Reciprocity
+Attraction depends heavily upon the "norm of reciprocity" aka an equitable exchange of personal information. Without the balance, there can exist power vacuums or feelings of insecurity. Stable bonds require a "tit-for-tat" pattern of vulnerability.
+#### Social Appropriateness
+The impact of disclosure is mediated by how the recipient perceives the sender's motivations. Sharing a secret because they view another as uniquely trustworthy increases attraction, but "indiscriminate disclosure" leads to a decrease in liking. 
+
+Appropriateness also dictates the success of a disclosure. Sharing extremely intimate details too early violates social norms. Oversharing in this case can be perceived as emotional instability or poor social judgement. Effective self-disclosure follows a gradual pace that matches the current level of commitment.
+#### Sprecher and Hendrick (2004) - Relationship Quality
+Investigated the relationship between self-disclosure and relationship satisfaction among heterosexual dating couples.
+- **Method:** A longitudinal study was conducted with 101 dating couples. Participants were asked to complete self-report scales measuring levels of disclosure, satisfaction, and commitment
+- **Result:** Strong positive correlations were found between self-disclosure and measures of love and commitment. Showing that self-disclosure is a robust predictor of relationship stability and emotional satisfaction.
+#### Tang et al. (2013) - Cultural Variations in Disclosure
+Examined cultural differences in self-disclosure patterns between individualist and collectivist societies.
+- **Method:** Literature reviews and cross-cultural surveys were utilized to compare participants from the USA and China. Responses regarding sexual self-disclosure and relationship satisfaction were analyzed.
+- **Result:** US participants disclosed significantly more sexual thoughts and feelings than Chinese participants. In China, higher relationship satisfaction was often associated with low levels of self-disclosure. This shows that the link between self-disclosure and satisfaction is not universal, cultural norms dictate the "best" level of openness within a romantic bond.
+#### ***Critical Evaluation***
+Research on self-disclosure often faces the "direction of causality" problem. Many studies are correlational rather than experimental. In the way that disclosure might cause attraction, it is equally possible that existing attraction causes people to disclose more. And the data relies heavily on self-report data. Which leads to social desirability bias, distorting the reports.
+### Evolutionary Explanation for Physical Attractiveness
+From an evolutionary perspective, physical features we find appealing are due to signals of reproductive success and genetic fitness.
+#### The Handicapping Principle (Zahavi, 1975)
+Aimed to explain why animals develop cumbersome traits that seem to hinder survival.
+- **Method:** Observations of diverse species, such as peacocks. Used to analyze trait selection.
+- **Result:** Superior males were discovered to maintain costly physical traits that proved vigor to mates. High-quality individuals can affort to "waste" energy on beauty, signaling genetic strength.
+#### Cross-Cultural Mate Preferences (Buss, 1989)
+Researched many diverse human populations to find universal trends in mate selection.
+- **Method:** Over 10,000 participants from 37 different cultures were surveyed regarding preffered partner traits.
+- **Result:** Men universally valued physical appearance more than women did in every culture studied. Whereas women valued cues to resource acquisition more highly than males. Showing that evolutionary pressures regarding fertility and resources are consistent across the global human population.
+### Johari Window
+The Johari window is a useful tool in examining self-disclosure in relationships. It examines what information we have about ourselves, as well as the information others know about us.
+![Johari Window](img_2.png)
+#### Open Self
+The Open Self represents the parts of ourselves we know well and share with others. Items such as your name, hobbies, likes, and dislikes.
+#### Closed Self
+The Closed Self represents the part of ourselves we know well, but we choose to keep secret or not tell others. 
+#### Blind Self
+The Blind Self represents the parts of ourselves that other people know well, yet we are unaware of this information about ourselves.
+#### Unknown Self
+The Unknown Self represents the parts of ourselves that no one knows. Sometimes this information is buried deep into our subconscious, due to trauma or childhood events.
+### Uncertainty Reduction Theory (URT)
+URT states that we pursue knowledge about others in order to reduce or resolve anxiety associated with the unknown. According to URT, humans use three basic strategies: passive, active, and interactive.
+#### Passive Strategy
+This refers to observing someone from afar.
+#### Active Strategy
+This involves getting information about the person from a secondary source, generally a friend, family member, or co-worker.
+#### Interactive Strategy
+This focuses on the direct exchange of information with the other person.
+
 > Weidner, Eric, et al. “10.4: Relationship Stages.” Social Sci LibreTexts, 8 Mar. 2022, https://socialsci.libretexts.org/Bookshelves/Communication/Interpersonal_Communication/Interpersonal_Communication%3A_Context_and_Connection-OERI/10%3A_Building_and_Maintaining_Relationships/10.04%3A_Relationship_Stages. Accessed 13 Aug. 2026.
 >
 > “6.1: Foundations of Relationships.” Social Sci LibreTexts, 14 July 2020, https://socialsci.libretexts.org/Courses/College_of_the_Canyons/COMS_246%3A_Interpersonal_Communication_(Leonard)/6%3A_Communication_in_Relationships/6.1%3A_Foundations_of_Relationships. Accessed 13 Aug. 2026.
@@ -95,3 +141,20 @@ Early-stage interaction remain high breadth and very low depth. As trust increas
 > Mark L. Knapp and Anita L. Vangelisti, Interpersonal Communication and Human Relationships (Boston, MA: Pearson, 2009) Accessed 13 Aug. 2026.
 > 
 > Goulder, Will. “A-Level Psychology Relationship Revision for Paper 3 | Simply Psychology.” Simplypsychology.Org, 2019, https://www.simplypsychology.org/a-level-relationships.html. Accessed 13 Aug. 2026.
+> 
+> Altman, I., Taylor, D. A., & Actman, I. (1973). Social penetration: The development of interpersonal relationships (2nd ed.). New York: Holt, Rinehart and Winston. Accessed 13 Aug. 2026.
+> 
+> Anderson, C., Keltner, D., & John, O. P. (2003). Emotional convergence between people over time. Journal of Personality and Social Psychology, 84(5), 1054–1068. doi:10.1037/0022-3514.84.5.1054 Accessed 13 Aug. 2026.
+>
+> Aron, A., Melinat, E., Aron, E. N., Vallone, R. D., & Bator, R. J. (1997). The experimental generation of interpersonal closeness: A procedure and some preliminary findings. Personality and Social Psychology Bulletin, 23(4), 363–377. doi:10.1177/0146167297234003 Accessed 13 Aug. 2026.
+>
+> Buss, D. M. (1989). Sex differences in human mate preferences: Evolutionary hypotheses tested in 37 cultures. Behavioral and Brain Sciences, 12(01), 1. doi:10.1017/s0140525x00023992 Accessed 13 Aug. 2026.
+> 
+> “7.4: Self-Disclosure and Interpersonal Communication.” Social Sci LibreTexts, 2 July 2019, https://socialsci.libretexts.org/Under_Construction/Purgatory/Survey_of_Human_Communication/07%3A_Interpersonal_Communication_Processes/7.4%3A_Self-Disclosure_and_Interpersonal_Communication. Accessed 13 Aug. 2026.
+> 
+> “6.1: Foundations of Relationships.” Social Sci LibreTexts, 14 July 2020, https://socialsci.libretexts.org/Courses/College_of_the_Canyons/COMS_246%3A_Interpersonal_Communication_(Leonard)/6%3A_Communication_in_Relationships/6.1%3A_Foundations_of_Relationships. Accessed 13 Aug. 2026.
+> 
+> “2.5: Social Penetration Theory.” Social Sci LibreTexts, 15 May 2020, https://socialsci.libretexts.org/Courses/College_of_the_Canyons/COMS_120%3A_Small_Group_Communication_(Osborne)/02%3A_Reading_Group_Development/2.05%3A_Social_Penetration_Theory. Accessed 13 Aug. 2026.
+ 
+# Personal Curriculum Notes
+- [ ] Note to self: Make questions where a small excerpt of a relationship is shown, and the user is tasked with categorizing it. (Specifically for [Johari Window](https://socialsci.libretexts.org/Bookshelves/Communication/Interpersonal_Communication/Interpersonal_Communication%3A_Context_and_Connection-OERI/10%3A_Building_and_Maintaining_Relationships/10.05%3A_The_Role_of_Self-Disclosure#:~:text=and%20culture%3F-,Johari%20Window,-The%20Johari%20window), Knapp's Relationship Model)
