@@ -55,10 +55,10 @@ Is the theory that explains how people behave in relationships by using cost-ben
 Mark Knapp and Anita Vangelisti (2009) looked at how relationships come together, how they are maintained, and how they come apart. They divided relationships into 10 stages.
 This list shows a specific order, but they are not always experienced in such linear way.
 
-| 	Process             | 	Stage                                                                                    |
-|----------------------|-------------------------------------------------------------------------------------------|
-| 	  *Coming Together* | - Initiating<br/>- Experimenting<br/>- Intensifying<br/>- Integrating<br/>- Bonding       |
-| 	  *Coming Apart*    | - Differentiating<br/>- Circumscribing<br/>- Stagnating<br/>- Avoiding<br/>- Terminating	 |
+| 	Process             | 	Stage                                                                                   |
+|----------------------|------------------------------------------------------------------------------------------|
+| 	  *Coming Together* | - Initiating<br/>- Experimenting<br/>- Intensifying<br/>- Integrating<br/>- Bonding      |
+| 	  *Coming Apart*    | - Differentiating<br/>- Circumscribing<br/>- Stagnating<br/>- Avoiding<br/>- Terminating |
 
 Knapp and Vangelisti's (2009) model separates two distinct phases: coming together and coming apart.
 ### *Coming Together*
@@ -133,7 +133,6 @@ This refers to observing someone from afar.
 This involves getting information about the person from a secondary source, generally a friend, family member, or co-worker.
 #### Interactive Strategy
 This focuses on the direct exchange of information with the other person.
-
 > Weidner, Eric, et al. “10.4: Relationship Stages.” Social Sci LibreTexts, 8 Mar. 2022, https://socialsci.libretexts.org/Bookshelves/Communication/Interpersonal_Communication/Interpersonal_Communication%3A_Context_and_Connection-OERI/10%3A_Building_and_Maintaining_Relationships/10.04%3A_Relationship_Stages. Accessed 13 Aug. 2026.
 >
 > “6.1: Foundations of Relationships.” Social Sci LibreTexts, 14 July 2020, https://socialsci.libretexts.org/Courses/College_of_the_Canyons/COMS_246%3A_Interpersonal_Communication_(Leonard)/6%3A_Communication_in_Relationships/6.1%3A_Foundations_of_Relationships. Accessed 13 Aug. 2026.
@@ -155,6 +154,53 @@ This focuses on the direct exchange of information with the other person.
 > “6.1: Foundations of Relationships.” Social Sci LibreTexts, 14 July 2020, https://socialsci.libretexts.org/Courses/College_of_the_Canyons/COMS_246%3A_Interpersonal_Communication_(Leonard)/6%3A_Communication_in_Relationships/6.1%3A_Foundations_of_Relationships. Accessed 13 Aug. 2026.
 > 
 > “2.5: Social Penetration Theory.” Social Sci LibreTexts, 15 May 2020, https://socialsci.libretexts.org/Courses/College_of_the_Canyons/COMS_120%3A_Small_Group_Communication_(Osborne)/02%3A_Reading_Group_Development/2.05%3A_Social_Penetration_Theory. Accessed 13 Aug. 2026.
- 
+## Attachment, Love & Social Dynamics
+### John Bowlby’s Attachment Theory
+This emphasizes the importance of early emotional bonds between a child and their caregivers.
+- Children are born with a biological, evolutionary drive to form emotional bonds with others.
+- **Monotropy:** A child forms a primary attachment to one main figure that is qualitatively distance and more important than all other subsequent relationships.
+- The first 2.5 years of life is the crucial window to develop a bond, otherwise it may result in permanent difficulties later on.
+- Prolonged separation from the primary caregiver can result in significant long-term cognitive, social, and emotional challenges for the child.
+- Develops a mental framework to guide social relationships.
+### Evolutionary Theory of Attachment
+Bowlby was greatly influenced by ethological research, primarily Lorenz's (1935) work on imprinting. Lorenz showed that young ducklings imprint on the first moving figure they see, an adaptation that promotes their survival. Bowlby (1969, 1988) recognized parallels in human infants, arguing that attachment behaviors evolved because babies who stayed close to a responsive caregiver were more likely to survive.
+### Ethology and the Evolutionary Basis of Attachment
+Infants rely on caregivers for protection, comfort, and security. Parents, especially mothers, are driven to respond sensitively to their infants' signals. This process ensures that children's needs are met and caregiver remains aware of potential threats. Bowlby (1969)described the many attachment behaviors as instinctive (e.g., crying, clinging, etc.) Activating when proximity to the caregiver is threatened. He further noted that fear of strangers is also an innate survival mechanism.
+### Secure Base
+A secure base is simultaneously a role the caregiver plays and an internalized feeling of security within the child. Emphasizing the caregiver as the anchor of security that lets the child explore. A child with a secure attachment uses their caregiver as the point of safety, so they can confidently return to the caregiver if faced with danger or distress.
+
+#### How it works:
+- When a caregiver is consistently responsive and sensitive to a child's needs, the child develops a sense of trust and security.
+- The security allows the child to venture and explore, knowing that return to a safe haven exists.
+- The availability of the caregiver fosters the child's independence and confidence.
+- Returning to a familiar, comforting figure replenishes the child's emotional balance, so each cycle of exploration grows the child's confidence and sense of mastery.
+### Beyond Infancy: Adolescence and Adulthood
+- **Adolescence:** Teens benefit from knowing help and advice are available for major decisions or emotional struggles.
+- **Adult Partnerships:** Romantic partners often adopt secure-base functions for one another, offering emotional and practical support to benefit each person.
+- **Clinical/Therapeutic:** Therapists act as temporary attachment figures, providing a secure base that lets clients explore painful memories and gradually reorganize their internal working models.
+![Circle of Security - BioRender.com](img_3.png)
+### Maternal Deprivation Hypothesis
+Bowlby suggests that continual attachment disruption between the infant and primary caregiver leads to significant long-term harm. This hypothesis is founded on the idea of monotropy. These are the primary effects initially believed to be permanent and irreversible:
+- Delinquency
+- Reduced intelligence
+- Increased aggression
+- Depression
+- Affectionless psychopathy, Characterized by a lack of concern for others, lack of guilt, and inability to form meaningful relationships.
+### Bowlby 44 Thieves
+Bowlbly studied 44 adolescent juvenile delinquents in a child guidance clinic. Aimed to investigate the long-term effects of maternal deprivation on people to see whether delinquents have suffered deprivation.
+- **Method:** 1936-1939, Bowlbly selected a sample of 88 children from his work clinic. 44 of them were juvenile thieves (31 boys and 13 girls) who had been referred to him because of their theft. Another 44 were selected (34 boys and 10 girls) to act as the control group. Upon arrival, each child had their IQ tested by a psychologist who assessed their emotional attitudes toward the tests. The two groups were matched for age and IQ. The child and their parents were interviewed to record details of the child's early life (e.g., periods of separation, affectionless psychopathy) by Bowlbly, a psychologist, and a social worker. All 3 made separate reports.
+- **Results:** Bowlby found that 14 children from the thief group were identified as affectionless psychopaths. Of these, 12 had experienced prolonged separation of more than six month from their mothers in their first two years of life. In contrast, only 5 of the 30 children not classified as affectionless psychopaths had experienced separations. Out of 44 children in the control group, only two experienced prolonged separations, and none were affectionless psychopaths. This supported the maternal deprivation hypothesis
+- **Limitations:** Bowlby's evidence asked participants to recall past separation, which risks inaccurate memories. Rutter (1972) pointed out that Bowlby's conclusions confused correlation with causation; other factors could have been involved. Many of the 44 theives had been moved around repeatedly during childhood, and likely never formed an attachment. Rutter (1972) argued that this meant they suffered from privation rather than deprivation. There are also issues of researcher bias.
+
+Cautious of these issues, Bowlby, Robertson, and Mary Ainsworth began a follow-up study on whether long-term hospitalized preschoolers later developed conduct issues. They accessed 60 such children aged 6-13 and controls, they found more emotional apathy, withdrawal, and poor self-control contrary to criminality and original maternal deprivation predictions. The outcomes proved far more varied than Bowbly's theory had predicted, and the improved prospective method exposed the limits of his earlier retrospective approach. Bowlby himself later admitted that his theory of conduct problems may have been incorrect.
+
+### Short-Term Separation
+John Bowlby later spent two years working alongside a social worker, James Robertson (1952). They found three progressive stages of distress in children experiencing maternal separation.
+1. Protest, including cries, screams and clings lasting from hours to days.
+2. Despair, the protest fades into a calmer, unhappy withdrawal. Refusing comfort from others and experiencing uninterest of their surroundings.
+3. Detachment, the child re-engages with other people while suppressing all feelings. They may look happy on the surface, but frequently ignore their parent's visits and no longer reacts when she leaves. Robertson termed denial, but Bowlby called detachment.
+#### A Two-Year-Old Goes to Hospital
+Doctors saw the despair phase as adjustment, but Bowlby felt it showed distress's harm. To demonstrate, Robertson filmed two-year-old Laura's distress when hospitalized for eight days for minor surgery in “A Two-Year-Old Goes to Hospital” (1952). It Captured her severe distress resulting from maternal separation and the unfamiliar hospital setting. Laura's behaviors directly mirrored Bowlby and Robertson's three-phase separation response. Disproving the assumption that children easily adapt to hospital environments, and instead highlighting the emotional toll of physical separation.
+> McLeod, Saul. “John Bowlby’s Attachment Theory.” Simply Psychology, 20 Apr. 2025, https://www.simplypsychology.org/bowlby.html. Accessed 14 Aug. 2026.
 # Personal Curriculum Notes
 - [ ] Note to self: Make questions where a small excerpt of a relationship is shown, and the user is tasked with categorizing it. (Specifically for [Johari Window](https://socialsci.libretexts.org/Bookshelves/Communication/Interpersonal_Communication/Interpersonal_Communication%3A_Context_and_Connection-OERI/10%3A_Building_and_Maintaining_Relationships/10.05%3A_The_Role_of_Self-Disclosure#:~:text=and%20culture%3F-,Johari%20Window,-The%20Johari%20window), Knapp's Relationship Model)
