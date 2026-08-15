@@ -201,6 +201,103 @@ John Bowlby later spent two years working alongside a social worker, James Rober
 3. Detachment, the child re-engages with other people while suppressing all feelings. They may look happy on the surface, but frequently ignore their parent's visits and no longer reacts when she leaves. Robertson termed denial, but Bowlby called detachment.
 #### A Two-Year-Old Goes to Hospital
 Doctors saw the despair phase as adjustment, but Bowlby felt it showed distress's harm. To demonstrate, Robertson filmed two-year-old Laura's distress when hospitalized for eight days for minor surgery in “A Two-Year-Old Goes to Hospital” (1952). It Captured her severe distress resulting from maternal separation and the unfamiliar hospital setting. Laura's behaviors directly mirrored Bowlby and Robertson's three-phase separation response. Disproving the assumption that children easily adapt to hospital environments, and instead highlighting the emotional toll of physical separation.
+### Internal Working Model (IWM)
+Bowlby proposed that early infant-caregiver interactions form a permanent cognitive template.
+#### The Three Core Pillars
+The IWM is a subconscious cognitive framework built on three interconnected beliefs.
+- **Model of Self:** "Am I valuable, competent, and worthy of love?" (Determined by how much the caregiver validated their needs).
+- **Model of Others:** "Are other people reliable, trustworthy, and likely to help me?" (Determined by the caregiver's consistency).
+- **Model of Interaction:** "How do I successfully get my needs met?" (Determined by what worked in childhood)
+
+### Adult Attachment Styles (Secure vs. Insecure)
+#### Two Dimensions of Attachment
+Adult attachment is measured on two scales: Anxiety and Avoidance. These dimensions create four distinct profiles: Secure (L/L), Anxious(H/L), Avoidant(L/H), and Disorganized(H/H).
+#### Secure Attachment
+- Trust, stability, and a balance of intimacy and autonomy.
+- Positive view of self and others.
+- Relationship Behavior: Open communication, comfortable with emotional closeness, and adaptive conflict resolution. They don't panic when their partner needs space, nor do they pull away when their partner needs support.
+#### Anxious Attachment
+- Fear of abandonment and a constant need for reassurance.
+- Negative view of self but positive view of others.
+- Relationship Behavior: Overly dependent. Uses "protest behaviors" to get attention when they feel their partner pulling away.
+#### Avoidant Attachment
+- Emotional distancing and fierce self-reliance as a protective measure.
+- Positive view of self but negative view of others.
+- Relationship Behavior: Suppresses their emotional needs and struggle to communicate feelings. Uses "deactivating strategies" when someone gets too close
+#### Disorganized Attachment
+- Chaotic "push-pull" dynamic, often rooted in past trauma or highly inconsistent childhood caregiving.
+- Fluctuating view of self and negative/mixed view of others.
+- Relationship Behavior: Crave intimacy, but are terrified of it. Resulting in erratic behavior, seeking closeness one moment and aggressively pushing their partner away the next.
+
+![Attachment Styles - Simply psychology.org](img_4.png)
+
+### Sternberg's Triangular Theory of Love
+#### The Three Core Components
+According to Robert Sternberg, love is not a single emotion, but a combination of three distinct, foundational elements:
+- **Intimacy:** The emotions, involving closeness, vulnerability and deep connection. (Builds slowly over time).
+- **Passion:** The physical drive, involving romance, physical attraction, and sexual arousal (Peaks quickly and levels off).
+- **Commitment:** The cognitive choice, involving the initial decision to love someone and the long-term dedication to maintain that bond (Remains stable over time).
+#### 8 Types of Love
+1. Nonlove: The absence of all three components.
+2. Friendship: Intimacy.
+3. Infatuation: Passion.
+4. Empty Love: Commitment
+5. Romantic Love: Passion and Intimacy.
+6. Companionate Love: Intimacy and Commitment.
+7. Fatuous Love: Passion and Commitment.
+8. Consummate Love: The ideal, healthy romantic relationship with all three components present.
+#### Limitations
+Sternberg's model is fundamentally a cognitive model exclusive on the internal, psychological states of the two individuals involved. It does not factor in the influence, behaviors, or external pressures.
+
+The theory is limited in scope, and may not be as solid when applied to further less structured human relationships.
+
+The model is also rooted in a Western, individualistic understanding of love and marriage.
+
+And a broader criticism, theories of love face inherent methodological challenges. Such as scientifically measuring and analyzing complex, deeply subjective feelings like passion and intimacy. Unlike studies of initial attraction where researchers can easily manipulate variables, researchers cannot assign people to be in long-term "lover" conditions.
+### Social Exchange Theory (SET)
+People unconsciously apply economic principles to their relationships. We are driven to maximize our rewards and minimize our costs. Maintaining relationships when the rewards outweigh the costs, and abandoned otherwise. Rewards and costs are highly subjective.
+#### Four Stages of Relationship Development
+According to Thibaut and Kelley, relationships evolve through an economic process:
+1. Sampling (Evaluate potential costs and benefits)
+2. Bargaining (Exchange costs and benefits to find a balanced dynamic)
+3. Commitment (Stabilization)
+4. Institutionalization (The couple settle down.)
+#### The Two Levels of Comparison
+People don't just calculate profit, but rather have two internal benchmarks.
+- Comparison Level: "What do I deserve?" This is based on past relationship experiences, self-esteem, and social/media conditioning.
+- Comparison Level for Alternatives: "Could I do better elsewhere?" Weigh your current relationship against the potential profit of being single or being with someone else.
+#### Strengths & Limitations
+- **Strengths:** SET explains why people stay in objectivly bad or abusive relationships, such as a low Comparison Level, or low Camparison Level for Alternatives. Longitudinal studies (e.g., Rusbult, 1983) show that relationship commitment is highly predicted by evaluating satisfaction, investments, and alternatives.
+- **Limitations:** SET assumes people just want to maximize their own profit. However, research (e.g., Hatfield, 1989) shows that over-benefits often feel guilty and uncomfortable, Humans actually seek fairness and more than just raw profit. It also reduces human love to a selfish, cold calculation. It struggles to explain pure altruism or people willingly making massive sacrifices for a partner without expecting an immediate "return on investment."
+
 > McLeod, Saul. “John Bowlby’s Attachment Theory.” Simply Psychology, 20 Apr. 2025, https://www.simplypsychology.org/bowlby.html. Accessed 14 Aug. 2026.
+> 
+> Drescher, Anna. “Insecure vs. Secure Attachment in Relationships.” Simply Psychology, 5 July 2023, https://www.simplypsychology.org/insecure-vs-secure-attachment-in-relationships.html. Accessed 15 Aug. 2026.
+> 
+> Candel, O.S. & Turliuc, M.N. (2019). Insecure attachment and relationship satisfaction: A meta-analysis of actor and partner associations. Personality and Individual Differences, 147: 190-199. Accessed 15 Aug. 2026.
+> 
+> Candel, O. S., and M. N. Turliuc. "Insecure Attachment and Relationship Satisfaction: A Meta-Analysis of Actor and Partner Associations." Personality and Individual Differences, vol. 147, 2019, pp. 190–199. https://doi.org/10.1016/j.paid.2019.04.037. Accessed 15 Aug. 2026.
+>
+>Olufowote, R. A. D., et al. "How Can I Become More Secure? A Grounded Theory of Earning Secure Attachment." Journal of Marital and Family Therapy, vol. 46, no. 3, 2020, pp. 489–506. https://doi.org/10.1111/jmft.12409. Accessed 15 Aug. 2026.
+>
+>Schachner, D. A., et al. "Adult Attachment Theory, Psychodynamics, and Couple Relationships." Attachment Processes in Couple and Family Therapy, edited by Susan M. Johnson and Valerie E. Whiffen, Guilford Press, 2003, pp. 18–42. Accessed 15 Aug. 2026.
+>
+>Sheinbaum, T., et al. "Attachment Style Predicts Affect, Cognitive Appraisals, and Social Functioning in Daily Life." Frontiers in Psychology, vol. 6, 2015, p. 296. https://doi.org/10.3389/fpsyg.2015.00296. Accessed 15 Aug. 2026.
+>
+>Simpson, J. A., and W. S. Rholes. "Adult Attachment, Stress, and Romantic Relationships." Current Opinion in Psychology, vol. 13, 2017, pp. 19–24. https://doi.org/10.1016/j.copsyc.2016.04.006. Accessed 15 Aug. 2026.
+> 
+> Myers, Eleanor. “Sternberg’s Triangular Theory and the 8 Types of Love.” SimplyPsychology, 6 Dec. 2023, https://www.simplypsychology.org/types-of-love-we-experience.html. Accessed 15 Aug. 2026.
+> 
+> Deverich, S. "Love Unveiled: Teenage Love within the Context of Sternberg’s Triangular Theory of Love." Intuition, vol. 5, 2009, pp. 21–25. Accessed 15 Aug. 2026.
+>
+> Lemieux, R., and J. L. Hale. "Intimacy, Passion, and Commitment in Young Romantic Relationships: Successfully Measuring the Triangular Theory of Love." Psychological Reports, vol. 85, no. 2, 1999, pp. 497–503. Accessed 15 Aug. 2026.
+>
+> Lemieux, R., and J. L. Hale. "Intimacy, Passion, and Commitment among Married Individuals: Further Testing of the Triangular Theory of Love." Psychological Reports, vol. 87, no. 3, 2000, pp. 941–948. Accessed 15 Aug. 2026.
+>
+> Sternberg, R. J. "A Triangular Theory of Love." Psychological Review, vol. 93, no. 2, 1986, p. 119. Accessed 15 Aug. 2026.
+>
+> Sternberg, R. J. "Liking versus Loving: A Comparative Evaluation of Theories." Psychological Bulletin, vol. 102, no. 3, 1987, p. 331. Accessed 15 Aug. 2026.
+> 
+> Nickerson, Charlotte. “Social Exchange Theory - Simply Psychology.” Www.Simplypsychology.Org, 25 Oct. 2023, https://www.simplypsychology.org/what-is-social-exchange-theory.html. Accessed 15 Aug. 2026.
 # Personal Curriculum Notes
-- [ ] Note to self: Make questions where a small excerpt of a relationship is shown, and the user is tasked with categorizing it. (Specifically for [Johari Window](https://socialsci.libretexts.org/Bookshelves/Communication/Interpersonal_Communication/Interpersonal_Communication%3A_Context_and_Connection-OERI/10%3A_Building_and_Maintaining_Relationships/10.05%3A_The_Role_of_Self-Disclosure#:~:text=and%20culture%3F-,Johari%20Window,-The%20Johari%20window), Knapp's Relationship Model)
+- [ ] Make questions where a small excerpt of a relationship is shown, and the user is tasked with categorizing it. (Specifically for [Johari Window](https://socialsci.libretexts.org/Bookshelves/Communication/Interpersonal_Communication/Interpersonal_Communication%3A_Context_and_Connection-OERI/10%3A_Building_and_Maintaining_Relationships/10.05%3A_The_Role_of_Self-Disclosure#:~:text=and%20culture%3F-,Johari%20Window,-The%20Johari%20window), Knapp's Relationship Model, 8 Types of Love)
