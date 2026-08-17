@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Code Detector</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="icon" type="image/png" href="../assets/img/brand/favicon.png">
+    <style>
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+        .spinner { animation: spin 1s linear infinite; display: inline-block; }
+        .pulse-text { animation: pulse 1.5s ease-in-out infinite; }
+    </style>
+</head>
+<body>
+<h2 class="sr-only">AI code detector, paste a GitHub repo URL to analyze commit history and content for signs of AI generation</h2>
+<div style="position: relative; max-width: 800px; margin: 0 auto; padding: 1.5rem 0 0; font-family: system-ui, -apple-system, sans-serif;">
+    <div style="position: absolute; right: 100%; top: 1.5rem; margin-right: 2rem; width: 260px; padding: 1rem; background: var(--color-background-secondary, #f4f4f5); border: 0.5px solid var(--color-border-tertiary, #e4e4e7); border-radius: 8px; font-size: 12px; line-height: 1.5; color: var(--color-text-secondary, #71717a);">
+        <div style="font-weight: 600; margin-bottom: 0.25rem; color: var(--color-text-primary, #09090b);">Disclaimer</div>
+        Used Gemini as a tool to assist in under 30% of this detector. As well as reformatting the code to improve readability. (Expect code formatting to be highly consistent.)<br><br>20-30% result can mean small AI assistance to none, only confirm a project is entirely made by ai if the % is over 85%.
+    </div>
+
+    <div style="position: absolute; left: 100%; top: 1.5rem; margin-left: 2rem; width: 260px; display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="padding: 1rem; background: var(--color-background-secondary, #f4f4f5); border: 0.5px solid var(--color-border-tertiary, #e4e4e7); border-radius: 8px; font-size: 12px; line-height: 1.5; color: var(--color-text-secondary, #71717a);">
+            <div style="font-weight: 600; margin-bottom: 0.25rem; color: var(--color-text-primary, #09090b);">Disclaimer</div>
+            While the analysis provides high-confidence signals, it should not be the sole basis for high-stakes decisions. I recommend using these results as a starting point for further human review, logic walkthroughs, or verbal explanation of the code structure.
+        </div>
+        <div style="padding: 1rem; background: var(--color-background-secondary, #f4f4f5); border: 0.5px solid var(--color-border-tertiary, #e4e4e7); border-radius: 8px; font-size: 12px; line-height: 1.5; color: var(--color-text-secondary, #71717a);">
+            <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text-primary, #09090b);">How to get your auth token for 5000 requests per hour:</div>
+            <ol style="margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.35rem;">
+                <li>Go to <a href="https://github.com/settings/profile" target="_blank" rel="noopener" style="color: inherit; word-break: break-all;">https://github.com/settings/profile</a></li>
+                <li>Select Credentials at <a href="https://github.com/settings/credentials" target="_blank" rel="noopener" style="color: inherit; word-break: break-all;">https://github.com/settings/credentials</a></li>
+                <li>Select Personal Access Tokens at <a href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener" style="color: inherit; word-break: break-all;">https://github.com/settings/personal-access-tokens</a></li>
+                <li>Generate new token at <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color: inherit; word-break: break-all;">https://github.com/settings/personal-access-tokens/new</a></li>
+                <li>Give random name.</li>
+                <li>Select All Repositories under Repository access.</li>
+                <li>Add permissions for Metadata and Content.</li>
+                <li>Generate token, copy paste and save elsewhere safe.</li>
+            </ol>
+        </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:1.5rem;">
+        <div style="display:flex; gap:8px;">
+            <input id="repo-input" type="text" placeholder="https://github.com/user/repo" style="flex:1; font-family: monospace; font-size:13px; padding: 0.5rem;" />
+            <button id="scan-btn" onclick="runScan()" style="white-space:nowrap; padding: 0 1.25rem; cursor: pointer;">Scan repo ↗</button>
+        </div>
+        <input id="token-input" type="password" placeholder="GitHub Personal Access Token (optional, for higher rate limits)" style="font-family: monospace; font-size:12px; padding: 0.4rem 0.5rem;" />
+    </div>
+    <div id="error-msg" style="display:none; color:var(--color-text-danger, #d9381e); font-size:13px; margin-bottom:1rem;"></div>
+
+    <div id="loading" style="display:none; text-align:center; padding:2rem 1rem; background:var(--color-background-secondary, #f4f4f5); border-radius:8px; border:0.5px solid var(--color-border-tertiary, #e4e4e7); margin-bottom:1.5rem;">
+        <div style="font-size:28px; color:var(--color-text-secondary, #71717a); margin-bottom:0.5rem;"><i class="ti ti-loader-2 spinner" aria-hidden="true"></i></div>
+        <div id="loading-status" class="pulse-text" style="font-size:14px; font-weight:500; color:var(--color-text-primary, #09090b); margin-bottom:0.25rem;">Scanning repository...</div>
+        <div id="loading-detail" style="font-size:12px; color:var(--color-text-secondary, #71717a);">Fetching complete commit history...</div>
+    </div>
+
+    <div id="results" style="display:none;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:10px; margin-bottom:1.5rem;">
+            <div style="background:var(--color-background-secondary, #f4f4f5); border-radius:8px; padding:1rem; text-align:center; display:flex; flex-direction:column; align-items:center;">
+                <div style="font-size:12px; color:var(--color-text-secondary, #71717a); margin-bottom:4px;">Overall risk</div>
+                <div id="stat-risk" style="font-size:20px; font-weight:600; margin-bottom:8px;">—</div>
+                <div style="position:relative; width:70px; height:70px;">
+                    <svg width="70" height="70" viewBox="0 0 36 36" style="transform: rotate(-90deg);">
+                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e4e4e7" stroke-width="3.8"/>
+                        <path id="pie-segment" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#dc2626" stroke-dasharray="0, 100" stroke-width="3.8" stroke-linecap="round"/>
+                    </svg>
+                    <div id="pie-text" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:var(--color-text-primary, #09090b);">0%</div>
+                </div>
+                <div style="font-size:10px; color:var(--color-text-secondary, #71717a); margin-top:4px;">Likely AI</div>
+            </div>
+            <div style="background:var(--color-background-secondary, #f4f4f5); border-radius:8px; padding:1rem; text-align:center;">
+                <div style="font-size:12px; color:var(--color-text-secondary, #71717a); margin-bottom:4px;">Commits</div>
+                <div id="stat-commits" style="font-size:22px; font-weight:500;">—</div>
+            </div>
+            <div style="background:var(--color-background-secondary, #f4f4f5); border-radius:8px; padding:1rem; text-align:center;">
+                <div style="font-size:12px; color:var(--color-text-secondary, #71717a); margin-bottom:4px;">Days active</div>
+                <div id="stat-days" style="font-size:22px; font-weight:500;">—</div>
+            </div>
+            <div style="background:var(--color-background-secondary, #f4f4f5); border-radius:8px; padding:1rem; text-align:center;">
+                <div style="font-size:12px; color:var(--color-text-secondary, #71717a); margin-bottom:4px;">Est. typing time (70 wpm)</div>
+                <div id="stat-typing-time" style="font-size:22px; font-weight:500;">—</div>
+            </div>
+            <div style="background:var(--color-background-secondary, #f4f4f5); border-radius:8px; padding:1rem; text-align:center;">
+                <div style="font-size:12px; color:var(--color-text-secondary, #71717a); margin-bottom:4px;">Flags found</div>
+                <div id="stat-flags" style="font-size:22px; font-weight:500;">—</div>
+            </div>
+        </div>
+        <div id="flag-list" style="display:flex; flex-direction:column; gap:8px; margin-bottom:1.5rem;"></div>
+        <div style="border-top:0.5px solid var(--color-border-tertiary, #e4e4e7); padding-top:1rem; margin-bottom:1.5rem;">
+            <div style="font-size:12px; color:var(--color-text-secondary, #71717a); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.05em;">Commit history</div>
+            <div id="commit-list" style="display:flex; flex-direction:column; gap:6px; max-height:450px; overflow-y:auto;"></div>
+        </div>
+        <div style="border-top:0.5px solid var(--color-border-tertiary, #e4e4e7); padding-top:1rem;">
+            <div style="font-size:12px; color:var(--color-text-secondary, #71717a); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.05em;">Suspicious code comments &amp; AI tags</div>
+            <div id="comment-matches" style="display:flex; flex-direction:column; gap:8px; max-height:300px; overflow-y:auto;"></div>
+        </div>
+    </div>
+</div>
+<script>
+    const AI_SIGNATURE_PATTERNS = [
+      { name: "Bolt.new signature comments", regex: /generated by bolt|built with bolt|bolt\.new/gi },
+      { name: "Cursor AI signature", regex: /generated by cursor|cursor ai/gi },
+      { name: "StackBlitz / WebContainer metadata", regex: /\.stackblitz|containerboot/gi },
+      { name: "v0 / Shadcn structural boilerplate", regex: /@\/components\/ui\//g }
+    ];
+    const AI_STRUCTURAL_PATTERNS = [
+      { name: "Duplicate / Stacked Tailwind background classes", regex: /bg-[a-z]+-\d+\s+.*bg-[a-z]+-\d+/g },
+      { name: "Standard AI mock arrays", regex: /const\s+(?:items|data|users|cards|features)\s*=\s*\[\s*\{\s*id:\s*1/gi },
+      { name: "Unused boilerplate sub-components", regex: /export\s+function\s+[A-Z][a-zA-Z0-9]+Description\b/g },
+      { name: "Repetitive function signatures / AST patterns", regex: /(?:function|const)\s+[a-zA-Z0-9_]+\s*=\s*\((?:req,\s*res|e|event)\)\s*=>\s*\{\s*try\s*\{/gi }
+    ];
+    const AI_VERBOSE_COMMENT_PATTERNS = [
+      { name: "Decorative ASCII box/divider header (AI signature)", regex: /(\/\*|\/\/|<!--)\s*([═─=-]{2,})/g },
+      { name: "AI Section Divider Comment", regex: /(\/\*|\/\/)\s*[═─=-]{2,}\s*.*?\s*[═─=-]{2,}\s*(\*\/)?/gi },
+      { name: "AI Design/Spec Annotations", regex: /(\/\*|\/\/|<!--)[\s\S]*?\b(Design|Base|Rules|Architecture):\s*.*?\n/gi },
+      { name: "Generic placeholder comment", regex: /(\/\/|<!--|\/\*)\s*(example|sample|insert|your code here|todo: implement)\b/gi },
+      { name: "Over-descriptive block header", regex: /(\/\/|<!--|\/\*)\s*(={3,}|-{3,}|section:|helper functions|state management|event handlers)/gi },
+      { name: "Self-explanatory code restatement", regex: /\/\/\s*(initialize|render|return|import|export|function to|handle click|set state|the host always|seed them as|so both sides|keep crossing|releasing this|catch flying)\b/gi },
+      { name: "AI multi-line descriptive narrative", regex: /(?:\/\/[^\n]*\n){2,}(?:[^\n]*lower shelf|[^\n]*flying CPUs|[^\n]*same loop|[^\n]*platform edge)/gi },
+      { name: "AI JSDoc block overview", regex: /\/\*\*[\s\S]*?(?:headless|tuning loop|determinism|side effects|architecture|overview|<p>|topology is|thread-safety:|\{@link|true exactly once|cadence in ticks|returns the completed|when this mask)[\s\S]*?\*\//gi },
+      { name: "Em dash in code/comment (AI typography indicator)", regex: /—/g }
+    ];
+    const AI_DESIGN_PATTERNS = [
+      {
+        name: "AI Modern Dark Mode Palette Signature",
+        regex: /(#09090b|#010103|#0a0a0a|#0c0a09|#030712)\b/gi
+      },
+      {
+        name: "AI Glow/Glassmorphism Backdrop Combo",
+        regex: /(backdrop-blur-(?:md|lg|xl)\s+.*bg-white\/(?:5|10)|shadow-\[0_0_\d+px_rgba\()/gi
+      },
+      {
+        name: "AI Gradient Accent Badge/Border",
+        regex: /bg-gradient-to-[rtrbl]+\s+from-[a-z]+-\d+\s+via-[a-z]+-\d+\s+to-[a-z]+-\d+/gi
+      },
+      {
+        name: "Shadcn / v0 Component Wrapper Density",
+        regex: /<(?:Card|Dialog|Sheet|HoverCard|Accordion)(?:Header|Title|Description|Content|Footer)\b/g
+      }
+    ];
+    const AI_CO_AUTHOR_PATTERN = /Co-authored-by:\s*(?:Claude|ChatGPT|GPT|Copilot|Cursor|Anthropic|OpenAI)\b.*/gi;
+
+    function checkUltraConsistentStyles(contents) {
+      let matchedPatterns = 0;
+      const paddingMatches = contents.match(/(?:padding|margin)\s*:\s*\d+(?:px|rem)/gi) || [];
+      const radiusMatches = contents.match(/border-radius\s*:\s*\d+(?:px|rem)/gi) || [];
+      const tailwindMatches = contents.match(/(?:p|m|gap|rounded)-(?:1|2|3|4|6|8)\b/gi) || [];
+
+      const counts = {};
+      [...paddingMatches, ...radiusMatches, ...tailwindMatches].forEach(m => {
+        const key = m.toLowerCase();
+        counts[key] = (counts[key] || 0) + 1;
+      });
+
+      for (let key in counts) {
+        if (counts[key] >= 15) {
+          matchedPatterns++;
+        }
+      }
+      return matchedPatterns;
+    }
+
+    function checkVerboseSelfDocumentingIdentifiers(contents, filePath) {
+      const verboseItems = [];
+      const lines = contents.split('\n');
+
+      lines.forEach((line, index) => {
+        let match;
+        const lineRegex = /(?:const|let|var|function|async\s+function|def)\s+([a-zA-Z0-9_]+)/g;
+        while ((match = lineRegex.exec(line)) !== null) {
+          const name = match[1];
+          const isCamelOrPascal = /[a-z]+[A-Z]/.test(name);
+          const uppercaseCount = (name.match(/[A-Z]/g) || []).length;
+          const underscoreCount = (name.match(/_/g) || []).length;
+
+          if (name.length >= 24 || (isCamelOrPascal && uppercaseCount >= 3) || underscoreCount >= 3) {
+            verboseItems.push({
+              filePath: filePath,
+              lineNumber: index + 1,
+              lineContent: line.trim(),
+              patternName: `Verbose Identifier: ${name}`
+            });
+          }
+        }
+      });
+
+      return verboseItems;
+    }
+
+    function getFileExtension(filePath) {
+      const parts = filePath.split('.');
+      return parts.length > 1 ? parts.pop().toLowerCase() : '';
+    }
+
+    function extractAllCodeComments(contents, filePath) {
+      const commentItems = [];
+      const lines = contents.split('\n');
+      const ext = getFileExtension(filePath);
+
+      let inBlockComment = false;
+      let blockStartLine = 0;
+      let blockBuffer = [];
+
+      lines.forEach((line, index) => {
+        const trimmed = line.trim();
+
+        if (!inBlockComment && (trimmed.startsWith('/*') || trimmed.startsWith('<!--'))) {
+          inBlockComment = true;
+          blockStartLine = index + 1;
+          blockBuffer = [trimmed];
+          if (trimmed.endsWith('*/') || trimmed.endsWith('-->')) {
+            inBlockComment = false;
+            commentItems.push({
+              filePath: filePath,
+              lineNumber: blockStartLine,
+              lineContent: blockBuffer.join('\n'),
+              patternName: 'Code Comment (Block)'
+            });
+          }
+        } else if (inBlockComment) {
+          blockBuffer.push(trimmed);
+          if (trimmed.endsWith('*/') || trimmed.endsWith('-->')) {
+            inBlockComment = false;
+            commentItems.push({
+              filePath: filePath,
+              lineNumber: blockStartLine === (index + 1) ? `${blockStartLine}` : `${blockStartLine}-${index + 1}`,
+              lineContent: blockBuffer.join('\n'),
+              patternName: 'Code Comment (Block)'
+            });
+          }
+        } else if (trimmed.startsWith('//')) {
+          commentItems.push({
+            filePath: filePath,
+            lineNumber: index + 1,
+            lineContent: trimmed,
+            patternName: 'Code Comment (Inline)'
+          });
+        } else if (trimmed.startsWith('#')) {
+          const isHashCommentLang = ['py', 'gd', 'sh', 'bash', 'yaml', 'yml', 'rb', 'pl', 'r'].includes(ext);
+          if (isHashCommentLang && !trimmed.startsWith('#!')) {
+            commentItems.push({
+              filePath: filePath,
+              lineNumber: index + 1,
+              lineContent: trimmed,
+              patternName: 'Code Comment (Hash)'
+            });
+          }
+        }
+      });
+
+      return commentItems;
+    }
+
+    function calculateASTComplexityMetrics(contents, sampleFilesMap) {
+      let totalCommentBlocks = 0;
+      let commentChars = 0;
+      let totalChars = contents.length;
+      let functionCount = 0;
+
+      let inline = 0, block = 0, html = 0, hash = 0;
+
+      for (const [filePath, fileContent] of Object.entries(sampleFilesMap)) {
+        const ext = getFileExtension(filePath);
+        const comments = extractAllCodeComments(fileContent, filePath);
+        totalCommentBlocks += comments.length;
+
+        comments.forEach(c => {
+          commentChars += c.lineContent.length;
+          if (c.patternName.includes('Inline')) inline++;
+          else if (c.patternName.includes('Block')) {
+            if (c.lineContent.startsWith('<!--')) html++;
+            else block++;
+          }
+          else if (c.patternName.includes('Hash')) hash++;
+        });
+
+        const fnMatches = fileContent.match(/function\s+[a-zA-Z0-9_]+\s*\(|\([\s\S]*?\)\s*=>\s*\{|def\s+[a-zA-Z0-9_]+\s*\(/g) || [];
+        functionCount += fnMatches.length;
+      }
+
+      const commentDensity = totalChars > 0 ? (commentChars / totalChars) : 0;
+
+      return {
+        functionCount: functionCount,
+        commentDensity: commentDensity,
+        totalCommentBlocks: totalCommentBlocks,
+        commentCounts: {
+          inline: inline,
+          block: block,
+          html: html,
+          hash: hash
+        }
+      };
+    }
+
+    function getHeaders() {
+      const token = document.getElementById('token-input').value.trim();
+      const headers = {};
+      if (token) headers['Authorization'] = `token ${token}`;
+      return headers;
+    }
+    function parseRepoUrl(url) {
+      const m = url.match(/github\.com\/([^\/]+)\/([^\/\s?#]+)/);
+      if (!m) return null;
+      return { owner: m[1], repo: m[2].replace(/\.git$/, '') };
+    }
+    function setError(msg) {
+      const el = document.getElementById('error-msg');
+      el.textContent = msg;
+      el.style.display = msg ? 'block' : 'none';
+    }
+    function updateLoadingStatus(status, detail) {
+      document.getElementById('loading-status').textContent = status;
+      document.getElementById('loading-detail').textContent = detail;
+    }
+    function riskColor(level) {
+      if (level === 'High') return 'var(--color-text-danger, #d9381e)';
+      if (level === 'Medium') return 'var(--color-text-warning, #d97706)';
+      return 'var(--color-text-success, #15803d)';
+    }
+    function flagBadge(severity) {
+      const colors = {
+        high: 'background:var(--color-background-danger, #fee2e2);color:var(--color-text-danger, #dc2626)',
+        medium: 'background:var(--color-background-warning, #fef3c7);color:var(--color-text-warning, #d97706)',
+        low: 'background:var(--color-background-success, #dcfce7);color:var(--color-text-success, #15803d)',
+      };
+      return colors[severity] || colors.low;
+    }
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function formatTypingTime(minutes) {
+      if (minutes < 1) return "< 1m";
+      if (minutes < 60) return `${Math.round(minutes)}m`;
+      const hours = Math.floor(minutes / 60);
+      const remainingMins = Math.round(minutes % 60);
+      return `${hours}h ${remainingMins}m`;
+    }
+    async function fetchAllCommits(owner, repo) {
+      let allCommits = [];
+      let page = 1;
+      while (true) {
+        updateLoadingStatus('Fetching commit history...', `Loaded ${allCommits.length} commits so far (Page ${page})`);
+        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=100&page=${page}`, { headers: getHeaders() });
+        if (!res.ok) break;
+        const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0) break;
+        allCommits = allCommits.concat(data);
+        if (data.length < 100) break;
+        page++;
+      }
+      return allCommits;
+    }
+    async function fetchAllFiles(owner, repo, sha) {
+      const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${sha}?recursive=1`, { headers: getHeaders() });
+      if (!res.ok) return [];
+      const data = await res.json();
+      return (data.tree || []).filter(f =>
+        f.type === 'blob' &&
+        /\.(html|css|jsx?|tsx?|vue|svelte|java|py|gd|sh|bash|yaml|yml|rb|pl|r|md|markdown)$/i.test(f.path) &&
+        !/(node_modules|package-lock\.json|yarn\.lock)/i.test(f.path) &&
+        !/(^|\/)addons\//i.test(f.path)
+      );
+    }
+    async function fetchFileContent(owner, repo, path) {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`, { headers: getHeaders() });
+        if (!res.ok) return '';
+        const data = await res.json();
+        if (data.encoding === 'base64') return atob(data.content.replace(/\n/g, ''));
+        return '';
+      } catch { return ''; }
+    }
+    async function fetchCommitDetails(owner, repo, sha) {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits/${sha}`, { headers: getHeaders() });
+        if (!res.ok) return { additions: 0, deletions: 0, total: 0 };
+        const data = await res.json();
+        return {
+          additions: data.stats?.additions || 0,
+          deletions: data.stats?.deletions || 0,
+          total: data.stats?.total || 0
+        };
+      } catch { return { additions: 0, deletions: 0, total: 0 }; }
+    }
+    async function runScan() {
+      const url = document.getElementById('repo-input').value.trim();
+      setError('');
+      document.getElementById('results').style.display = 'none';
+      const parsed = parseRepoUrl(url);
+      if (!parsed) { setError('Enter a valid GitHub repo URL.'); return; }
+
+      document.getElementById('loading').style.display = 'block';
+      document.getElementById('scan-btn').disabled = true;
+      updateLoadingStatus('Initializing scan...', 'Connecting to GitHub API');
+
+      const { owner, repo } = parsed;
+      const flags = [];
+      try {
+        const repoRes = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers: getHeaders() });
+        if (!repoRes.ok) throw new Error('Repo not found, private, rate limited, or invalid token.');
+        const repoData = await repoRes.json();
+
+        const commits = await fetchAllCommits(owner, repo);
+        if (!commits.length) throw new Error('No commits found in repository.');
+
+        const totalCommits = commits.length;
+        const dates = commits.map(c => new Date(c.commit.author.date));
+        const earliest = new Date(Math.min(...dates));
+        const latest = new Date(Math.max(...dates));
+        const daysActive = Math.max(1, Math.round((latest - earliest) / 86400000));
+
+        updateLoadingStatus('Analyzing commit velocity & diffs...', `Processing ${totalCommits} total commits`);
+        const sampleSize = Math.min(commits.length, 25);
+        const commitsToSample = commits.slice(0, sampleSize);
+        const commitDetailsPromises = commitsToSample.map(c => fetchCommitDetails(owner, repo, c.sha));
+        const commitDetails = await Promise.all(commitDetailsPromises);
+
+        const commitStatsMap = {};
+        commitDetails.forEach((detail, index) => {
+          commitStatsMap[commitsToSample[index].sha] = detail;
+        });
+
+        const sampleAdditions = commitDetails.reduce((acc, curr) => acc + curr.additions, 0);
+        const avgAdditionsPerCommit = sampleAdditions / (commitsToSample.length || 1);
+        const estimatedTotalLinesAdded = Math.round(avgAdditionsPerCommit * totalCommits);
+        const estimatedTotalChars = estimatedTotalLinesAdded * 35;
+        const typingTimeMinutes = estimatedTotalChars / 350;
+        const totalRepoActiveMinutes = daysActive * 24 * 60;
+
+        let highVelocityDiffs = 0;
+        let maxLinesInShortWindow = 0;
+        for (let i = 0; i < commitsToSample.length - 1; i++) {
+          const currentCommit = commitsToSample[i];
+          const previousCommit = commitsToSample[i + 1];
+          const currentDate = new Date(currentCommit.commit.author.date);
+          const previousDate = new Date(previousCommit.commit.author.date);
+          const timeDiffSeconds = Math.abs(currentDate - previousDate) / 1000;
+
+          const stats = commitStatsMap[currentCommit.sha] || { total: 0 };
+          const linesAffected = stats.total;
+
+          if (linesAffected >= 3000 && timeDiffSeconds <= 300) {
+            highVelocityDiffs++;
+            if (linesAffected > maxLinesInShortWindow) maxLinesInShortWindow = linesAffected;
+          } else if (linesAffected >= 1000 && timeDiffSeconds <= 60) {
+            highVelocityDiffs++;
+            if (linesAffected > maxLinesInShortWindow) maxLinesInShortWindow = linesAffected;
+          }
+        }
+
+        if (highVelocityDiffs > 0) {
+          flags.push({
+            severity: 'high',
+            icon: 'ti-bolt',
+            text: 'Extreme code volume generated in short interval',
+            detail: `Detected ${highVelocityDiffs} instance(s) where up to ${maxLinesInShortWindow.toLocaleString()} lines were affected within 1 to 5 minutes of a previous commit.`
+          });
+        }
+
+        let coAuthoredHits = [];
+        commits.forEach(c => {
+          const fullMsg = c.commit.message || '';
+          const matches = fullMsg.match(AI_CO_AUTHOR_PATTERN);
+          if (matches) {
+            matches.forEach(m => {
+              coAuthoredHits.push({
+                sha: c.sha.substring(0, 7),
+                message: c.commit.message.split('\n')[0],
+                tag: m.trim()
+              });
+            });
+          }
+        });
+
+        if (coAuthoredHits.length > 0) {
+          flags.push({
+            severity: 'high',
+            icon: 'ti-user-bot',
+            text: 'AI co-author tags found in commit history',
+            detail: `Detected ${coAuthoredHits.length} commit(s) explicitly tagged with AI co-authors (e.g. "${coAuthoredHits[0].tag}").`
+          });
+        }
+        if (typingTimeMinutes > totalRepoActiveMinutes && totalCommits > 1) {
+          flags.push({
+            severity: 'high',
+            icon: 'ti-keyboard',
+            text: 'Typing velocity physically impossible for a single human',
+            detail: `The codebase contains roughly ${estimatedTotalLinesAdded.toLocaleString()} lines added. Typing this continuously at 70 WPM would require ${formatTypingTime(typingTimeMinutes)}, exceeding the entire ${daysActive}-day age of the repository.`
+          });
+        }
+        if (totalCommits === 1) {
+          flags.push({ severity: 'high', icon: 'ti-git-commit', text: 'Single commit repository', detail: 'Entire project code dropped at once with no iterative changes.' });
+        } else if (totalCommits <= 3 && daysActive <= 1) {
+          flags.push({ severity: 'medium', icon: 'ti-git-commit', text: `Low commit density (${totalCommits} commits within ${daysActive} day)`, detail: 'Suggests high-volume codebase generation with limited human cycles.' });
+        }
+        if (totalCommits > 3) {
+          let intervals = [];
+          for (let i = 0; i < dates.length - 1; i++) {
+            intervals.push(Math.abs(dates[i] - dates[i+1]) / 1000);
+          }
+          const burstIntervals = intervals.filter(v => v < 1800);
+          if (burstIntervals.length > 2) {
+            const burstAvg = burstIntervals.reduce((a,b)=>a+b, 0) / burstIntervals.length;
+            const variance = burstIntervals.reduce((a,b) => a + Math.pow(b - burstAvg, 2), 0) / burstIntervals.length;
+            const stdDeviation = Math.sqrt(variance);
+            if (burstAvg < 60 && stdDeviation < 15) {
+              flags.push({ severity: 'high', icon: 'ti-alarm-clock', text: 'Mechanical commit pacing detected', detail: `Sub-minute updates with an impossibly stable delivery cadence (±${Math.round(stdDeviation)}s).` });
+            }
+          }
+        }
+        const uniqueMessages = new Set(commits.map(c => c.commit.message.split('\n')[0].trim()));
+        const textIdentityRatio = uniqueMessages.size / totalCommits;
+        if (textIdentityRatio < 0.4 && totalCommits > 4) {
+          flags.push({ severity: 'high', icon: 'ti-message', text: 'High repetition in commit taxonomy', detail: 'The repository cycles through identical automated text structures across updates.' });
+        }
+
+        updateLoadingStatus('Scanning file contents...', 'Analyzing codebase & README for AI signatures');
+        const defaultBranch = repoData.default_branch || 'main';
+        const files = await fetchAllFiles(owner, repo, defaultBranch);
+        const sampleFiles = files
+          .sort((a, b) => {
+            const aScore = /(readme|app|src|pages|components)/i.test(a.path) ? 0 : 1;
+            const bScore = /(readme|app|src|pages|components)/i.test(b.path) ? 0 : 1;
+            return aScore - bScore;
+          })
+          .slice(0, 35);
+
+        let signatureHits = [], structuralHits = [], designHits = [];
+        const suspiciousCommentLines = [];
+        const allExtractedComments = [];
+        const allExtractedVerboseIdentifiers = [];
+        const sampleFilesContentMap = {};
+        let emDashHits = 0;
+        let asciiHeaderHits = 0;
+        let combinedStyleContent = '';
+
+        for (let idx = 0; idx < sampleFiles.length; idx++) {
+          const file = sampleFiles[idx];
+          updateLoadingStatus('Scanning file contents...', `Examining ${idx + 1} of ${sampleFiles.length}: ${file.path}`);
+          if (/(config|tailwind|postcss|next\.config)/i.test(file.path)) continue;
+          const content = await fetchFileContent(owner, repo, file.path);
+          if (!content) continue;
+
+          sampleFilesContentMap[file.path] = content;
+          combinedStyleContent += ' ' + content;
+
+          const fileComments = extractAllCodeComments(content, file.path);
+          allExtractedComments.push(...fileComments);
+
+          const fileVerboseVars = checkVerboseSelfDocumentingIdentifiers(content, file.path);
+          allExtractedVerboseIdentifiers.push(...fileVerboseVars);
+
+          AI_DESIGN_PATTERNS.forEach(pattern => {
+            if (pattern.regex.test(content)) {
+              designHits.push(pattern.name);
+            }
+            pattern.regex.lastIndex = 0;
+          });
+
+          AI_SIGNATURE_PATTERNS.forEach(p => { if (p.regex.test(content)) signatureHits.push(p.name); p.regex.lastIndex = 0; });
+          AI_STRUCTURAL_PATTERNS.forEach(p => { if (p.regex.test(content)) structuralHits.push(p.name); p.regex.lastIndex = 0; });
+
+          AI_VERBOSE_COMMENT_PATTERNS.forEach(p => {
+            if (p.regex.test(content)) {
+              const match = content.match(p.regex);
+              if (match) {
+                match.forEach(m => {
+                  if (p.name.includes("Em dash")) emDashHits++;
+                  if (p.name.includes("Decorative ASCII box")) asciiHeaderHits++;
+                  suspiciousCommentLines.push({
+                    filePath: file.path,
+                    lineNumber: 'Block',
+                    lineContent: m.trim(),
+                    patternName: p.name
+                  });
+                });
+              }
+            }
+            p.regex.lastIndex = 0;
+          });
+
+          const lines = content.split('\n');
+          lines.forEach((line, index) => {
+            AI_VERBOSE_COMMENT_PATTERNS.forEach(p => {
+              if (!p.regex.multiline && p.regex.test(line)) {
+                if (p.name.includes("Em dash")) emDashHits++;
+                if (p.name.includes("Decorative ASCII box")) asciiHeaderHits++;
+                suspiciousCommentLines.push({
+                  filePath: file.path,
+                  lineNumber: index + 1,
+                  lineContent: line.trim(),
+                  patternName: p.name
+                });
+              }
+              p.regex.lastIndex = 0;
+            });
+          });
+        }
+
+        if (emDashHits > 0) {
+          flags.push({
+            severity: 'low',
+            icon: 'ti-typography',
+            text: 'Em dashes (—) detected in code or documentation',
+            detail: `Found ${emDashHits} em dash character(s) across scanned files/README. Em dashes are heavily favored by LLM prose generators.`
+          });
+        }
+
+        if (asciiHeaderHits > 0) {
+          flags.push({
+            severity: 'medium',
+            icon: 'ti-layout-board',
+            text: 'Decorative ASCII box/banner comments detected',
+            detail: `Found ${asciiHeaderHits} decorative comment banner(s) with double-line or padded box styling commonly generated by LLMs.`
+          });
+        }
+
+        if (allExtractedVerboseIdentifiers.length >= 3) {
+          flags.push({
+            severity: 'low',
+            icon: 'ti-id',
+            text: 'Verbose self-documenting naming patterns detected',
+            detail: `Found ${allExtractedVerboseIdentifiers.length} ultra-descriptive identifier(s) (e.g., "${allExtractedVerboseIdentifiers.slice(0, 2).map(v => v.patternName.replace('Verbose Identifier: ', '')).join('", "')}"), a common LLM code framing pattern.`
+          });
+        }
+
+        const astMetrics = calculateASTComplexityMetrics(combinedStyleContent, sampleFilesContentMap);
+        if (astMetrics.totalCommentBlocks >= 30 || astMetrics.commentDensity > 0.20) {
+          const detailParts = [];
+          if (astMetrics.commentCounts.inline > 0) detailParts.push(`${astMetrics.commentCounts.inline} '//'`);
+          if (astMetrics.commentCounts.block > 0) detailParts.push(`${astMetrics.commentCounts.block} '/* */'`);
+          if (astMetrics.commentCounts.html > 0) detailParts.push(`${astMetrics.commentCounts.html} '<!-- -->'`);
+          if (astMetrics.commentCounts.hash > 0) detailParts.push(`${astMetrics.commentCounts.hash} '#'`);
+
+          flags.push({
+            severity: 'high',
+            icon: 'ti-message-code',
+            text: 'Abnormally high volume of code comments',
+            detail: `Found ${astMetrics.totalCommentBlocks} total comment blocks (${detailParts.join(', ')}), accounting for ${(astMetrics.commentDensity * 100).toFixed(1)}% of total code volume.`
+          });
+        }
+
+        const consistentStyleHits = checkUltraConsistentStyles(combinedStyleContent);
+        if (consistentStyleHits > 0) {
+          flags.push({ severity: 'medium', icon: 'ti-palette', text: 'Hyper-consistent repetitive styling patterns', detail: 'Detected highly uniform spacing, margin, or corner-radius values repeated uniformly across components.' });
+        }
+
+        const uniqueSignatures = [...new Set(signatureHits)];
+        const uniqueStructures = [...new Set(structuralHits)];
+        if (uniqueSignatures.length > 0) {
+          flags.push({ severity: 'high', icon: 'ti-robot', text: 'Direct AI environment signature matched', detail: uniqueSignatures.join(', ') });
+        }
+        if (uniqueStructures.length > 0) {
+          flags.push({ severity: 'medium', icon: 'ti-code', text: 'Generative file structures & AST patterns detected', detail: uniqueStructures.join(', ') });
+        }
+        if (suspiciousCommentLines.length >= 1) {
+          flags.push({ severity: 'medium', icon: 'ti-message-code', text: 'Verbose/redundant AI comment style detected', detail: `Found ${suspiciousCommentLines.length} suspicious comment pattern(s) across scanned files.` });
+        }
+        const uniqueDesignHits = [...new Set(designHits)];
+        if (uniqueDesignHits.length >= 2) {
+          flags.push({
+            severity: 'medium',
+            icon: 'ti-layout',
+            text: 'Distinctive AI UI design patterns matched',
+            detail: uniqueDesignHits.join(', ')
+          });
+        }
+
+        const totalFlags = flags.length;
+        const highFlags = flags.filter(f => f.severity === 'high').length;
+        let riskLevel = 'Low';
+        if (highFlags >= 2 || totalFlags >= 4) riskLevel = 'High';
+        else if (highFlags >= 1 || totalFlags >= 2) riskLevel = 'Medium';
+
+        let aiPercentage = 10;
+        aiPercentage += highFlags * 30;
+        aiPercentage += (totalFlags - highFlags) * 12;
+        if (coAuthoredHits.length > 0) aiPercentage += 25;
+        if (aiPercentage > 98) aiPercentage = 98;
+        if (totalFlags === 0) aiPercentage = 5;
+
+        const segmentColor = riskLevel === 'High' ? '#dc2626' : (riskLevel === 'Medium' ? '#d97706' : '#15803d');
+        const pieSegment = document.getElementById('pie-segment');
+        pieSegment.setAttribute('stroke-dasharray', `${aiPercentage}, 100`);
+        pieSegment.setAttribute('stroke', segmentColor);
+
+        document.getElementById('pie-text').textContent = `${aiPercentage}%`;
+        document.getElementById('stat-risk').textContent = riskLevel;
+        document.getElementById('stat-risk').style.color = riskColor(riskLevel);
+        document.getElementById('stat-commits').textContent = totalCommits;
+        document.getElementById('stat-days').textContent = daysActive;
+        document.getElementById('stat-typing-time').textContent = formatTypingTime(typingTimeMinutes);
+        document.getElementById('stat-flags').textContent = totalFlags;
+
+        const flagList = document.getElementById('flag-list');
+        flagList.innerHTML = '';
+        if (flags.length === 0) {
+          flagList.innerHTML = '<div style="font-size:14px; color:var(--color-text-success, #15803d); padding:0.5rem 0;"><i class="ti ti-circle-check" style="font-size:16px; vertical-align:-2px; margin-right:6px;" aria-hidden="true"></i>No distinctive automated generation patterns detected</div>';
+        } else {
+          flags.forEach(f => {
+            flagList.innerHTML += `
+            <div style="background:var(--color-background-primary, #ffffff); border:0.5px solid var(--color-border-tertiary, #e4e4e7); border-radius:8px; padding:0.75rem 1rem; display:flex; gap:12px; align-items:flex-start;">
+              <i class="ti ${f.icon}" style="font-size:18px; margin-top:1px; flex-shrink:0; color:${f.severity==='high'?'var(--color-text-danger, #dc2626)':(f.severity==='medium'?'var(--color-text-warning, #d97706)':'var(--color-text-secondary, #71717a)')}" aria-hidden="true"></i>
+              <div>
+                <div style="font-size:14px; font-weight:500;">${f.text}</div>
+                <div style="font-size:12px; color:var(--color-text-secondary, #71717a); margin-top:2px;">${f.detail}</div>
+              </div>
+              <span style="margin-left:auto; font-size:11px; padding:2px 8px; border-radius:8px; flex-shrink:0; ${flagBadge(f.severity)}">${f.severity}</span>
+            </div>`;
+          });
+        }
+
+        const commitList = document.getElementById('commit-list');
+        commitList.innerHTML = '';
+        commits.forEach((c, i) => {
+          const msg = c.commit.message.split('\n')[0].trim();
+          const date = new Date(c.commit.author.date).toLocaleDateString();
+          const hasCoAuthor = AI_CO_AUTHOR_PATTERN.test(c.commit.message);
+          AI_CO_AUTHOR_PATTERN.lastIndex = 0;
+
+          let hasDiffAnomaly = false;
+          let diffInfo = '';
+          if (i < commits.length - 1) {
+            const curDate = new Date(c.commit.author.date);
+            const prevDate = new Date(commits[i + 1].commit.author.date);
+            const diffSec = Math.abs(curDate - prevDate) / 1000;
+            const stats = commitStatsMap[c.sha];
+            if (stats && stats.total >= 1000 && diffSec <= 300) {
+              hasDiffAnomaly = true;
+              diffInfo = ` (+${stats.additions}/-${stats.deletions} in ${Math.round(diffSec)}s)`;
+            }
+          }
+
+          const isSuspect = textIdentityRatio < 0.4 || hasCoAuthor || hasDiffAnomaly;
+          commitList.innerHTML += `
+          <div style="display:flex; gap:10px; align-items:baseline; font-size:13px; padding:4px 0; border-bottom:0.5px solid var(--color-border-tertiary, #e4e4e7);">
+            <span style="color:var(--color-text-tertiary, #a1a1aa); min-width:80px; flex-shrink:0;">${date}</span>
+            <span style="color:${isSuspect?'var(--color-text-warning, #d97706)':'var(--color-text-primary, #09090b)'}; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;">${escapeHtml(msg)}${escapeHtml(diffInfo)}</span>
+            ${isSuspect ? '<i class="ti ti-alert-triangle" style="font-size:14px; color:var(--color-text-warning, #d97706); flex-shrink:0;" aria-hidden="true"></i>' : ''}
+          </div>`;
+        });
+
+        const commentMatchesContainer = document.getElementById('comment-matches');
+        commentMatchesContainer.innerHTML = '';
+        const totalInspectionMatches = [
+          ...coAuthoredHits.map(h => ({
+            filePath: `Commit ${h.sha}`,
+            lineNumber: 'Commit Metadata',
+            lineContent: h.tag,
+            patternName: 'AI Co-Author Signature'
+          })),
+          ...suspiciousCommentLines,
+          ...allExtractedVerboseIdentifiers,
+          ...allExtractedComments
+        ];
+
+        const seenInspectionKeys = new Set();
+        const uniqueInspectionMatches = totalInspectionMatches.filter(item => {
+          const key = `${item.filePath}:${item.lineNumber}:${item.lineContent}`;
+          if (seenInspectionKeys.has(key)) return false;
+          seenInspectionKeys.add(key);
+          return true;
+        });
+
+        if (uniqueInspectionMatches.length === 0) {
+          commentMatchesContainer.innerHTML = '<div style="font-size:13px; color:var(--color-text-secondary, #71717a); padding:0.25rem 0;">No comments, verbose function names, or suspicious tags detected.</div>';
+        } else {
+          uniqueInspectionMatches.forEach(item => {
+            commentMatchesContainer.innerHTML += `
+            <div style="background:var(--color-background-primary, #ffffff); border:0.5px solid var(--color-border-tertiary, #e4e4e7); border-radius:6px; padding:0.5rem 0.75rem; font-family:monospace; font-size:12px;">
+              <div style="color:var(--color-text-secondary, #71717a); font-size:11px; margin-bottom:4px; display:flex; justify-between; align-items:center;">
+                <span><strong>${escapeHtml(item.filePath)}</strong> (${item.lineNumber === 'Block' || item.lineNumber === 'Commit Metadata' ? escapeHtml(item.lineNumber) : 'line ' + item.lineNumber})</span>
+                <span style="margin-left:auto; color:var(--color-text-warning, #d97706); font-family:system-ui;">${escapeHtml(item.patternName)}</span>
+              </div>
+              <div style="color:var(--color-text-primary, #09090b); background:var(--color-background-secondary, #f4f4f5); padding:4px 8px; border-radius:4px; overflow-x:auto; white-space:pre-wrap;">${escapeHtml(item.lineContent)}</div>
+            </div>`;
+          });
+        }
+        document.getElementById('results').style.display = 'block';
+      } catch (err) {
+        setError(err.message || 'Failed to analyze repository data.');
+      } finally {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('scan-btn').disabled = false;
+      }
+    }
+    document.getElementById('repo-input').addEventListener('keydown', e => { if (e.key === 'Enter') runScan(); });
+</script>
+</body>
+</html>
