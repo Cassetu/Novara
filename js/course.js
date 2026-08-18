@@ -1441,7 +1441,6 @@ function startLesson(lesson) {
         renderDocument(activeLessonData, next);
     } else if (t === "challenge")  renderChallenge(activeLessonData, () => finishLesson());
     else if (t === "code_fix")     renderCodeFix(activeLessonData, () => finishLesson());
-    else if (t === "godot_scene")  renderGodotScene(activeLessonData, () => finishLesson());
     else if (t === "fill_blank")   renderFillBlank(activeLessonData, (c, tot) => finishFillBlank(c, tot));
     else if (t === "spot_bug")     renderSpotBug(activeLessonData, (c) => finishSpotBug(c));
     else if (t === "cooking_sim") renderCookingSim(activeLessonData, () => finishLesson());

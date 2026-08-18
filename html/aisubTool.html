@@ -141,7 +141,7 @@
     ];
     const AI_CO_AUTHOR_PATTERN = /Co-authored-by:\s*(?:Claude|ChatGPT|GPT|Copilot|Cursor|Anthropic|OpenAI)\b.*/gi;
 
-    function checkUltraConsistentStyles(contents) {
+    function checkConsistency(contents) {
       let matchedPatterns = 0;
       const paddingMatches = contents.match(/(?:padding|margin)\s*:\s*\d+(?:px|rem)/gi) || [];
       const radiusMatches = contents.match(/border-radius\s*:\s*\d+(?:px|rem)/gi) || [];
@@ -642,7 +642,7 @@
           });
         }
 
-        const consistentStyleHits = checkUltraConsistentStyles(combinedStyleContent);
+        const consistentStyleHits = checkConsistency(combinedStyleContent);
         if (consistentStyleHits > 0) {
           flags.push({ severity: 'medium', icon: 'ti-palette', text: 'Hyper-consistent repetitive styling patterns', detail: 'Detected highly uniform spacing, margin, or corner-radius values repeated uniformly across components.' });
         }
