@@ -2,7 +2,7 @@
   "name": "Multiple Choice Question",
   "icon": "assets/icon/pen.svg",
   "blocks": [
-    { "type": "heading", "level": 2, "text": "Title"},
+    { "type": "heading", "level": 2, "text": "Level 2 Title"},
     { "type": "text", "content": "Example Paragraph Goes Here" },
     {
       "id": "mcq1",
