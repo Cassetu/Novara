@@ -463,7 +463,7 @@ function isBundle(entry) { return entry.type === "bundle"; }
 
 async function fetchCourseData(meta) {
     try {
-        const res = await fetch(meta.file);
+        const res = await fetch(meta.indexFile);
         if (!res.ok) throw new Error();
         return res.json();
     } catch {
@@ -486,7 +486,7 @@ function show404() {
 async function fetchBundleData(entry) {
     if (!isBundle(entry)) return { [entry.id]: await fetchCourseData(entry) };
     const results = {};
-    for (const c of entry.courses) {
+    for (const c of entry.indexFile) {
         results[c.id] = await fetchCourseData(c);
     }
     return results;
@@ -514,7 +514,7 @@ async function getCourseProgress(entryId) {
     };
 
     if (isBundle(entry)) {
-        for (const c of entry.courses) {
+        for (const c of entry.indexFile) {
             const data = await fetchCourseData(c);
             collect(data);
         }
@@ -629,7 +629,7 @@ async function renderExplorer() {
         card.innerHTML = `
             <div class="card-top-content">
                 <h3 class="card-title-clamp">${entry.title}</h3>
-                ${isBundle(entry) ? `<p class="card-bundle-tag">Bundle &bull; ${entry.courses.length} courses</p>` : ""}
+                ${isBundle(entry) ? `<p class="card-bundle-tag">Bundle &bull; ${entry.indexFile.length} courses</p>` : ""}
             </div>
             ${progressHtml}
         `;
@@ -698,7 +698,7 @@ async function enrollInCourse(entry) {
     await saveField("enrolled", ud.enrolled);
 
     if (navigator.serviceWorker?.controller) {
-        const files = isBundle(entry) ? entry.courses.map(c => c.file) : [entry.file];
+        const files = isBundle(entry) ? entry.indexFile.map(c => c.file) : [entry.indexFile];
         files.forEach(f => {
             navigator.serviceWorker.controller.postMessage({ type: "CACHE_COURSE", url: f });
         });
@@ -813,7 +813,7 @@ async function openCurriculumHome(entry) {
         const grid = document.createElement("div");
         grid.className = "syllabus-sections-grid";
 
-        for (const courseRef of entry.courses) {
+        for (const courseRef of entry.indexFile) {
             const data = await fetchCourseData(courseRef);
             let e2 = 0, t2 = 0;
             data.sections.forEach(sec => sec.lessons.forEach(l => {
@@ -2059,7 +2059,7 @@ document.addEventListener("keydown", e => {
             const card = document.createElement("div");
             card.className = "public-course-card";
 
-            const lessonsNote = isBundle(entry) ? `${entry.courses.length} courses` : "Full curriculum";
+            const lessonsNote = isBundle(entry) ? `${entry.indexFile.length} courses` : "Full curriculum";
             const diffBadge = entry.difficulty
                 ? `<span class="diff-badge ${entry.difficulty}">${entry.difficulty}</span>` : "";
 

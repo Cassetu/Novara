@@ -1,22 +1,7 @@
 [
   {
-    "id": "economics-core",
-    "title": "Economics",
-    "author": ["Claude AI"],
-    "category": "other",
-    "description": "Supply and demand, market structures, fiscal policy *Generated*",
-    "file": "data/economics-core.json"
-  },
-  {
     "id": "test-lessons",
     "title": "Test Lessons",
-    "author": ["Cassetu"],
-    "published": "07-29-2026",
-    "updated": "07-29-2026",
-    "sources": ["Nothing Yet","Nothing Yet"],
-    "category": "other",
-    "difficulty": "beginner",
-    "description": "A place to test new lessons",
-    "file": "data/cooking/fundamentals.json"
+    "indexFile": "data/testing/index.json"
   }
 ]

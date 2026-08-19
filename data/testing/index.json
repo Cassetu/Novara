@@ -1,0 +1,30 @@
+{
+  "id": "test-lessons",
+  "title": "Test Lessons",
+  "author": ["Cassetu"],
+  "published": "07-29-2026",
+  "updated": "08-18-2026",
+  "sources": ["None"],
+  "category": "other",
+  "difficulty": "beginner",
+  "description": "Testing for developers",
+  "courses": [
+    {
+      "id": "test-course",
+      "title": "Test Course",
+      "sections": [
+        {
+          "title": "Section 1.0",
+          "lessons": [
+            {
+              "id": "mcq-1",
+              "title": "Multiple Choice Question",
+              "type": "mcq",
+              "path": "data/testing/test-course/section-1-0/mcq-1.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
