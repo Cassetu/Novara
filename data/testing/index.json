@@ -17,10 +17,22 @@
           "title": "Section 1.0",
           "lessons": [
             {
+              "id": "document-1",
+              "title": "Document",
+              "type": "document",
+              "path": "data/testing/test-course/section-1-0/1-document.json"
+            },
+            {
               "id": "mcq-1",
               "title": "Multiple Choice Question",
               "type": "mcq",
-              "path": "data/testing/test-course/section-1-0/mcq-1.json"
+              "path": "data/testing/test-course/section-1-0/1-mcq.json"
+            },
+            {
+              "id": "card-sort-1",
+              "title": "Card Sort",
+              "type": "card-sort",
+              "path": "data/testing/test-course/section-1-0/1-card-sort.json"
             }
           ]
         }
