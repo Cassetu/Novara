@@ -461,7 +461,7 @@ async function loadCatalog() {
 
 function isBundle(entry) { return entry.type === "bundle"; }
 
-async function fetchCourseData(meta) {
+async function loadIndex(meta) {
     try {
         const res = await fetch(meta.indexFile);
         if (!res.ok) throw new Error();
@@ -483,46 +483,31 @@ function show404() {
     `;
 }
 
-async function fetchBundleData(entry) {
-    if (!isBundle(entry)) return { [entry.id]: await fetchCourseData(entry) };
-    const results = {};
-    for (const c of entry.indexFile) {
-        results[c.id] = await fetchCourseData(c);
-    }
-    return results;
-}
-
 async function getCourseProgress(entryId) {
     const entry = catalogData.find(c => c.id === entryId);
     if (!entry) return 0;
     let earned = 0, total = 0;
 
     const collect = (data) => {
-        if (!data || !data.sections) return;
+        if (!data || !data.courses) return;
 
-        data.sections.forEach(sec => sec.lessons.forEach(l => {
-            if (l.type === "project") return;
-            const id = l.id || (l.title || "").replace(/\s+/g, "-").toLowerCase();
-            const max = isBinaryLesson(l) ? 1 : 4;
-            total += max;
-            if (ud.mastery[id]) {
-                earned += max;
-            } else {
-                earned += Math.min(ud.scores[id] || 0, max);
-            }
-        }));
+        data.courses.forEach(courses => {
+            courses.sections.forEach(sec => sec.lessons.forEach(l => {
+                if (l.type === "project") return;
+                const id = l.id || (l.title || "").replace(/\s+/g, "-").toLowerCase();
+                const max = isBinaryLesson(l) ? 1 : 4;
+                total += max;
+                if (ud.mastery[id]) {
+                    earned += max;
+                } else {
+                    earned += Math.min(ud.scores[id] || 0, max);
+                }
+            }));
+        });
     };
 
-    if (isBundle(entry)) {
-        for (const c of entry.indexFile) {
-            const data = await fetchCourseData(c);
-            collect(data);
-        }
-    } else {
-        const data = await fetchCourseData(entry);
-        collect(data);
-    }
-
+    const data = await loadIndex(entry);
+    collect(data);
     return total === 0 ? 0 : Math.round((earned / total) * 100);
 }
 
@@ -814,7 +799,7 @@ async function openCurriculumHome(entry) {
         grid.className = "syllabus-sections-grid";
 
         for (const courseRef of entry.indexFile) {
-            const data = await fetchCourseData(courseRef);
+            const data = await loadIndex(courseRef);
             let e2 = 0, t2 = 0;
             data.sections.forEach(sec => sec.lessons.forEach(l => {
                 if (l.type === "project") return;
@@ -841,7 +826,7 @@ async function openCurriculumHome(entry) {
 
         viewSyllabus.appendChild(grid);
     } else {
-        const data = await fetchCourseData(entry);
+        const data = await loadIndex(entry);
         const grid = document.createElement("div");
         grid.className = "syllabus-sections-grid";
 
@@ -902,7 +887,7 @@ async function openSyllabus(courseRef, dataArg, parentEntry) {
     setActiveNavBtn(null);
     viewSyllabus.innerHTML = `<div class="view-loading-state">loading...</div>`;
 
-    const data = dataArg || await fetchCourseData(courseRef);
+    const data = dataArg || await loadIndex(courseRef);
     activeCD = data;
     activeCD.id = courseRef.id;
     activeBundleCourseId = courseRef.id;
