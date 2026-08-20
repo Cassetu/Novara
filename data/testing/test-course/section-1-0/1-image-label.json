@@ -1,0 +1,37 @@
+{
+  "name": "Image Label",
+  "icon": "assets/icon/click.svg",
+  "blocks": [
+    { "type": "heading", "level": 2, "text": "Level 2 Title"},
+    { "type": "text", "content": "Example Paragraph Goes Here" },
+    {
+      "id": "imgLabel1",
+      "type": "imageLabel",
+      "src": "assets/img/other/brutalist-img.png",
+      "alt": "Alt Text",
+      "points": [
+        {
+          "id": "point1",
+          "x": 22.5,
+          "y": 60.0,
+          "options": [
+            { "id": "a", "text": "Option A", "correct": true, "feedback": "Feedback" },
+            { "id": "b", "text": "Option B", "correct": false }
+          ]
+        },
+        {
+          "id": "point2",
+          "x": 70.0,
+          "y": 15.0,
+          "options": [
+            { "id": "a", "text": "Option A", "correct": true },
+            { "id": "b", "text": "Option B", "correct": false, "feedback": "Feedback" }
+          ]
+        }
+      ],
+      "correctFeedback": "All labels correct.",
+      "incorrectFeedback": "One or more labels are wrong."
+    },
+    { "id": "submit1", "type": "submit", "targets": ["imgLabel1"] }
+  ]
+}

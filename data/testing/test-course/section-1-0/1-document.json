@@ -1,0 +1,12 @@
+{
+  "name": "Document",
+  "icon": "assets/icon/book.svg",
+  "blocks": [
+    { "type": "heading", "level": 2, "text": "Level 2 Title"},
+    { "type": "text", "content": "Example Paragraph Goes Here" },
+    { "type": "image", "src": "assets/img/other/brutalist-img.png", "alt": "Description", "caption": "Caption" },
+    { "type": "heading", "level": 3, "text": "Level 3 Title"},
+    { "type": "text", "content": "Example Paragraph Goes Here" },
+    { "id": "submit1", "type": "submit", "targets": [] }
+  ]
+}

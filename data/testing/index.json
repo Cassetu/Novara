@@ -33,6 +33,12 @@
               "title": "Card Sort",
               "type": "card-sort",
               "path": "data/testing/test-course/section-1-0/1-card-sort.json"
+            },
+            {
+              "id": "image-label-1",
+              "title": "Image Label",
+              "type": "image-label",
+              "path": "data/testing/test-course/section-1-0/1-image-label.json"
             }
           ]
         }
