@@ -1803,12 +1803,12 @@ async function buildDocsPanel() {
         titleEl.textContent = entry.title;
         group.appendChild(titleEl);
 
-        const dataMap = await fetchBundleData(entry);
+        const dataMap = await loadIndex(entry);
 
-        for (const [courseId, data] of Object.entries(dataMap)) {
-            data.sections.forEach(sec => {
-                sec.lessons.forEach(lesson => {
-                    if (lesson.type !== "document" || !lesson.content) return;
+        dataMap.courses.forEach(course => {
+            course.sections.forEach(section => {
+                section.lessons.forEach(lesson => {
+                    if (lesson.type !== "document") return;
                     const id = lesson.id || lesson.title.replace(/\s+/g, "-").toLowerCase();
                     lesson.id = id;
 
@@ -1816,17 +1816,17 @@ async function buildDocsPanel() {
                     row.className = "docs-lesson-row";
                     row.innerHTML = `
                         <span class="docs-lesson-title">${lesson.title}</span>
-                        <span class="docs-lesson-meta">${sec.title}</span>
+                        <span class="docs-lesson-meta">${section.title}</span>
                     `;
                     row.onclick = () => {
-                        activeCD = data;
-                        activeCD.id = courseId;
+                        activeCD = course;
+                        activeCD.id = course.id;
                         startLesson(Object.assign({}, lesson, { questions: [] }));
                     };
                     group.appendChild(row);
                 });
             });
-        }
+        });
 
         content.appendChild(group);
     }
