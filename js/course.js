@@ -780,13 +780,14 @@ async function openCurriculumHome(entry) {
     viewSyllabus.innerHTML = `<div class="view-loading-state">loading...</div>`;
 
     const pct = await getCourseProgress(entry.id);
+    const data = await loadIndex(entry);
 
     viewSyllabus.innerHTML = "";
 
     const meta = document.createElement("div");
     meta.className = "syllabus-meta";
     meta.innerHTML = `
-        <h1>${entry.title}${isBundle(entry) ? ` <span class="curriculum-bundle-tag">Bundle</span>` : ""}</h1>
+        <h1>${entry.title}${data.courses.length > 1 ? ` <span class="curriculum-bundle-tag">Bundle</span>` : ""}</h1>
         <div class="course-progress-wrapper curriculum-prog-wrap">
             <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
         </div>
@@ -794,8 +795,8 @@ async function openCurriculumHome(entry) {
     `;
     viewSyllabus.appendChild(meta);
 
-    const data = await loadIndex(entry);
-    if (isBundle(entry)) {
+
+    if (data.courses.length > 1) {
         const grid = document.createElement("div");
         grid.className = "syllabus-sections-grid";
 
