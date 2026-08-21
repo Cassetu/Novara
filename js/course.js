@@ -799,10 +799,9 @@ async function openCurriculumHome(entry) {
         const grid = document.createElement("div");
         grid.className = "syllabus-sections-grid";
 
-        for (const courseRef of entry.indexFile) {
-            const data = await loadIndex(courseRef);
+        for (const course of data.courses) {
             let e2 = 0, t2 = 0;
-            data.sections.forEach(sec => sec.lessons.forEach(l => {
+            course.sections.forEach(sec => sec.lessons.forEach(l => {
                 if (l.type === "project") return;
                 const id = l.id || l.title.replace(/\s+/g, "-").toLowerCase();
                 const max = isBinaryLesson(l) ? 1 : 4;
@@ -814,14 +813,14 @@ async function openCurriculumHome(entry) {
             const courseCard = document.createElement("div");
             courseCard.className = "course-home-card";
             courseCard.innerHTML = `
-                <div class="course-home-title">${courseRef.title}</div>
+                <div class="course-home-title">${course.title}</div>
                 <div class="course-home-pct">${cPct}%</div>
                 <div class="course-progress-wrapper" style="margin-top:8px;">
                     <div class="course-progress-fill progress-animator" data-target="${cPct}%" style="width:0%"></div>
                 </div>
-                <div class="course-home-meta">${data.sections.length} sections</div>
+                <div class="course-home-meta">${course.sections.length} sections</div>
             `;
-            courseCard.addEventListener("click", () => openSyllabus(courseRef, data, entry));
+            courseCard.addEventListener("click", () => openSyllabus(course, data, entry));
             grid.appendChild(courseCard);
         }
 
@@ -830,8 +829,8 @@ async function openCurriculumHome(entry) {
         const grid = document.createElement("div");
         grid.className = "syllabus-sections-grid";
 
-        const sectionCount = data.sections.length;
-        const lessonCount = data.sections.reduce((sum, s) => sum + s.lessons.filter(l => l.type !== "project").length, 0);
+        const sectionCount = data.courses[0].sections.length;
+        const lessonCount = data.courses[0].sections.reduce((sum, s) => sum + s.lessons.filter(l => l.type !== "project").length, 0);
 
         const onlyCard = document.createElement("div");
         onlyCard.className = "course-home-card";
