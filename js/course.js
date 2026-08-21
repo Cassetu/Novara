@@ -843,7 +843,7 @@ async function openCurriculumHome(entry) {
             </div>
             <div class="course-home-meta">${sectionCount} sections &bull; ${lessonCount} lessons</div>
         `;
-        onlyCard.addEventListener("click", () => openSyllabus(entry, data, entry));
+        onlyCard.addEventListener("click", () => openSyllabus(data.courses[0], data, entry));
         grid.appendChild(onlyCard);
 
         const projectLesson = findProjectLesson(data);
@@ -880,19 +880,19 @@ async function openCurriculumHome(entry) {
     }, 50);
 }
 
-async function openSyllabus(courseRef, dataArg, parentEntry) {
-    history.pushState({}, "", `?view=syllabus&id=${courseRef.id}&parentId=${parentEntry?.id || ""}`);
-    activeCourseRef = courseRef;
+async function openSyllabus(courseId, dataArg, parentEntry) {
+    history.pushState({}, "", `?view=syllabus&id=${courseId}&parentId=${parentEntry?.id || ""}`);
     switchView("view-syllabus");
     setActiveNavBtn(null);
     viewSyllabus.innerHTML = `<div class="view-loading-state">loading...</div>`;
 
-    const data = dataArg || await loadIndex(courseRef);
-    activeCD = data;
-    activeCD.id = courseRef.id;
-    activeBundleCourseId = courseRef.id;
+    const data = dataArg || await loadIndex(parentEntry);
+    activeCD = data.courses.find(c => c.id === courseId);
+    activeCourseRef = activeCD;
+    activeCD.id = courseId;
+    activeBundleCourseId = courseId;
 
-    const pct = await getCourseProgress(parentEntry?.id || courseRef.id);
+    const pct = await getCourseProgress(parentEntry?.id || courseId);
     const projectLesson = findProjectLesson(data);
 
     viewSyllabus.innerHTML = "";
