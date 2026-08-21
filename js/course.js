@@ -906,28 +906,28 @@ async function openSyllabus(courseId, dataArg, parentEntry) {
     const returnBtn = document.createElement("button");
     returnBtn.id = "syllabus-return-btn";
     returnBtn.innerText = "← Return";
-    returnBtn.addEventListener("click", () => openCurriculumHome(parentEntry || courseRef));
+    returnBtn.addEventListener("click", () => openCurriculumHome(parentEntry));
     sidebar.appendChild(returnBtn);
 
     if (projectLesson) {
         const topActions = document.createElement("div");
         topActions.className = "curriculum-header-actions syllabus-top-actions";
         topActions.innerHTML = `<button id="projects-btn" class="curriculum-action-btn">Projects</button>`;
-        topActions.querySelector("#projects-btn").addEventListener("click", () => openProject(projectLesson, parentEntry || courseRef));
+        topActions.querySelector("#projects-btn").addEventListener("click", () => openProject(projectLesson, parentEntry));
         sidebar.appendChild(topActions);
     }
 
     const sidebarInfo = document.createElement("div");
     sidebarInfo.className = "syllabus-sidebar-info";
     sidebarInfo.innerHTML = `
-        <div class="syllabus-sidebar-course-title">${courseRef.title || courseRef.name}</div>
+        <div class="syllabus-sidebar-course-title">${activeCD.title}</div>
         <div class="course-progress-wrapper">
             <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%"></div>
         </div>
         <div class="curriculum-prog-text">${pct}% complete</div>
         <span class="syllabus-desc-link">Course Description</span>
     `;
-    sidebarInfo.querySelector(".syllabus-desc-link").addEventListener("click", () => showCourseDescription(courseRef));
+    sidebarInfo.querySelector(".syllabus-desc-link").addEventListener("click", () => showCourseDescription(activeCD));
     sidebar.appendChild(sidebarInfo);
 
     const contentStage = document.createElement("div");
@@ -935,7 +935,7 @@ async function openSyllabus(courseId, dataArg, parentEntry) {
 
     let firstSectionBtn = null;
 
-    data.sections.forEach((section, index) => {
+    activeCD.sections.forEach((section, index) => {
         const lessons = section.lessons.filter(l => l.type !== "project");
         const totalLessons = lessons.length;
         let completed = 0;
@@ -954,7 +954,7 @@ async function openSyllabus(courseId, dataArg, parentEntry) {
         secBtn.onclick = () => {
             sidebar.querySelectorAll(".syllabus-section-btn").forEach(b => b.classList.remove("active"));
             secBtn.classList.add("active");
-            renderSectionLessons(section, data, courseRef.id, contentStage);
+            renderSectionLessons(section, data, courseId, contentStage);
         };
 
         if (index === 0) firstSectionBtn = secBtn;
@@ -974,7 +974,7 @@ async function openSyllabus(courseId, dataArg, parentEntry) {
     masterDetailContainer.appendChild(contentStage);
     viewSyllabus.appendChild(masterDetailContainer);
 
-    if (data.sections.length > 0) {
+    if (activeCD.sections.length > 0) {
         firstSectionBtn?.click();
     }
 
