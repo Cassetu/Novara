@@ -794,6 +794,7 @@ async function openCurriculumHome(entry) {
     `;
     viewSyllabus.appendChild(meta);
 
+    const data = await loadIndex(entry);
     if (isBundle(entry)) {
         const grid = document.createElement("div");
         grid.className = "syllabus-sections-grid";
@@ -826,7 +827,6 @@ async function openCurriculumHome(entry) {
 
         viewSyllabus.appendChild(grid);
     } else {
-        const data = await loadIndex(entry);
         const grid = document.createElement("div");
         grid.className = "syllabus-sections-grid";
 
