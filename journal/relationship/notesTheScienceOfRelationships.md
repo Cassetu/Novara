@@ -1,5 +1,12 @@
 <h1><img src="../../assets/img/brand/favicon.png" alt="favicon" width="34"> NOVARA NOTES - The Science of Relationships</h1>
 
+**Written Entirely by Human Hands**, Watch the Timelapses:
+* [1.4](https://lapse.hackclub.com/timelapse/PppFJPZGUgEp)
+* [1.3](https://lapse.hackclub.com/timelapse/YqlfYCCx08j7)
+* [1.2](https://lapse.hackclub.com/timelapse/ir_E9ROtKHUr)
+* [1.1](https://lapse.hackclub.com/timelapse/1LwshB7x8AEr)
+* [1.0](https://lapse.hackclub.com/timelapse/cPdZpEF6u5YJ)
+
 ## Human Attraction & Opportunity
 ### Halo Effect
 “Halo” is a religious concept depicted as a circle of light above the head of a holy saint or person. Much like how an observer of these paintings forms favorable judgments about the people in them, one obvious trait of a person leads an observer to draw a broader conclusion about that person. It could come as rating attractive individuals to also be generous, or a friendly person to be trustworthy, intelligent or capable. This also works in the opposite way, where one negative attribute may induce further negative predisposition toward that person's other aspects, known as the horn effect.
