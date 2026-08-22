@@ -261,9 +261,8 @@ async function routeFromURL() {
         if (entry) openCurriculumHome(entry);
         else navExplorer.click();
     } else if (view === "syllabus") {
-        const entry = catalogData.find(c => c.id === id);
         const parent = catalogData.find(c => c.id === parentId);
-        if (entry) openSyllabus(entry, null, parent || entry);
+        if (parent) openSyllabus(id, null, parent);
         else navExplorer.click();
     } else {
         navExplorer.click();
@@ -1324,13 +1323,13 @@ function openProject(projectLesson, entry) {
     backBtn.onclick = () => {
         backBtn.remove();
         document.body.classList.remove("lesson-active");
-        openSyllabus(entry, null, activeCurriculumEntry || entry);
+        openSyllabus(activeBundleCourseId, null, activeCurriculumEntry || entry);
     };
 
     renderProject(projectLesson, entry.id, ud, saveField, () => {
         backBtn.remove();
         document.body.classList.remove("lesson-active");
-        openSyllabus(entry, null, activeCurriculumEntry || entry);
+        openSyllabus(activeBundleCourseId, null, activeCurriculumEntry || entry);
     });
 }
 
@@ -1368,13 +1367,14 @@ function runMixedPractice(lessonData, analytics, onUpdate) {
     }
 }
 
-function startLesson(lesson) {
-    activeLessonData = JSON.parse(JSON.stringify(lesson));
+async function startLesson(lesson) {
+    const res = await fetch(lesson.path);
+    activeLessonData = await res.json();
 
-    if (activeLessonData.questions?.length && activeLessonData.type !== "practice_standard") {
+/*    if (activeLessonData.questions?.length && activeLessonData.type !== "practice_standard") {
         activeLessonData.questions = shuffleArray(activeLessonData.questions);
         if (activeLessonData.questionCount) activeLessonData.questions = activeLessonData.questions.slice(0, activeLessonData.questionCount);
-    }
+    }*/
 
     initQuestionState();
     switchView("view-lesson");
@@ -1401,7 +1401,7 @@ function startLesson(lesson) {
                 resetTopBarLayout();
 
                 if (activeCourseRef) {
-                    openSyllabus(activeCourseRef, null, activeCurriculumEntry || activeCourseRef);
+                    openSyllabus(activeBundleCourseId, null, activeCurriculumEntry);
                 } else {
                     switchView("view-explorer");
                 }
@@ -1483,7 +1483,7 @@ async function finishFillBlank(correctCount, total) {
 
     $("return-btn").onclick = () => {
         if (activeCourseRef) {
-            openSyllabus(activeCourseRef, null, activeCurriculumEntry || activeCourseRef);
+            openSyllabus(activeBundleCourseId, null, activeCurriculumEntry);
         } else {
             navExplorer.click();
         }
@@ -1514,7 +1514,7 @@ async function finishSpotBug(correct) {
 
     $("return-btn").onclick = () => {
         if (activeCourseRef) {
-            openSyllabus(activeCourseRef, null, activeCurriculumEntry || activeCourseRef);
+            openSyllabus(activeBundleCourseId, null, activeCurriculumEntry);
         } else {
             navExplorer.click();
         }
@@ -1651,7 +1651,7 @@ async function finishLesson() {
         if (t === "practice_standard" || t === "practice_survival") {
             navHub.click();
         } else if (activeCourseRef) {
-            openSyllabus(activeCourseRef, null, activeCurriculumEntry || activeCourseRef);
+            openSyllabus(activeBundleCourseId, null, activeCurriculumEntry);
         } else {
             navExplorer.click();
         }
