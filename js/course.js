@@ -954,7 +954,7 @@ async function openSyllabus(courseId, dataArg, parentEntry) {
         secBtn.onclick = () => {
             sidebar.querySelectorAll(".syllabus-section-btn").forEach(b => b.classList.remove("active"));
             secBtn.classList.add("active");
-            renderSectionLessons(section, data, courseId, contentStage);
+            renderSectionLessons(section, activeCD, courseId, contentStage);
         };
 
         if (index === 0) firstSectionBtn = secBtn;
