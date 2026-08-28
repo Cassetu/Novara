@@ -1,7 +1,7 @@
 <h1><img src="../../assets/img/brand/favicon.png" alt="favicon" width="34"> NOVARA NOTES - The Science of Logical Reasoning</h1>
 
 **Written Entirely by Human Hands**, Watch the Timelapses:
-* [1.0]()
+* 1.0 (Recording system failed sorry guys)
 
 ## Jerome Bruner Theory of Cognitive Development
 Bruner's Theory shows how knowledge is built through experiences. Arguing that culture and language drive this growth. Information here is presented through Bruner's theory and arguments. 
