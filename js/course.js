@@ -601,7 +601,7 @@ async function renderExplorer() {
         const pct = await getCourseProgress(entry.id);
         const barColor = enrolled ? "var(--accent)" : "var(--accent-orange)";
 
-        const data = await LoadIndex(entry);
+        const data = await loadIndex(entry);
         const progressHtml = `
             <div class="course-progress-wrapper card-prog-wrapper">
                 <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%;background:${barColor};"></div>
@@ -679,7 +679,7 @@ async function enrollInCourse(entry) {
     }
     ud.enrolled.push(entry.id);
     await saveField("enrolled", ud.enrolled);
-    const data = await LoadIndex(entry);
+    const data = await loadIndex(entry);
     const lessonPaths = getLessonPaths(data);
 
     if (navigator.serviceWorker?.controller) {
