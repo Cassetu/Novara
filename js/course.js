@@ -458,8 +458,6 @@ async function loadCatalog() {
     catalogData = await res.json();
 }
 
-function isBundle(entry) { return entry.type === "bundle"; }
-
 async function loadIndex(meta) {
     try {
         const res = await fetch(meta.indexFile);
@@ -603,6 +601,7 @@ async function renderExplorer() {
         const pct = await getCourseProgress(entry.id);
         const barColor = enrolled ? "var(--accent)" : "var(--accent-orange)";
 
+        const data = await LoadIndex(entry);
         const progressHtml = `
             <div class="course-progress-wrapper card-prog-wrapper">
                 <div class="course-progress-fill progress-animator" data-target="${pct}%" style="width:0%;background:${barColor};"></div>
@@ -613,7 +612,7 @@ async function renderExplorer() {
         card.innerHTML = `
             <div class="card-top-content">
                 <h3 class="card-title-clamp">${entry.title}</h3>
-                ${isBundle(entry) ? `<p class="card-bundle-tag">Bundle &bull; ${entry.indexFile.length} courses</p>` : ""}
+                ${data.courses.length > 1 ? `<p class="card-bundle-tag">Bundle &bull; ${data.courses.length} courses</p>` : ""}
             </div>
             ${progressHtml}
         `;
@@ -680,9 +679,11 @@ async function enrollInCourse(entry) {
     }
     ud.enrolled.push(entry.id);
     await saveField("enrolled", ud.enrolled);
+    const data = await LoadIndex(entry);
+    const lessonPaths = getLessonPaths(data);
 
     if (navigator.serviceWorker?.controller) {
-        const files = isBundle(entry) ? entry.indexFile.map(c => c.file) : [entry.indexFile];
+        const files = [entry.indexFile, ...lessonPaths];
         files.forEach(f => {
             navigator.serviceWorker.controller.postMessage({ type: "CACHE_COURSE", url: f });
         });
@@ -690,6 +691,16 @@ async function enrollInCourse(entry) {
 
     updateActiveCountBadge();
     await renderExplorer();
+}
+
+function getLessonPaths(data) {
+    const paths = [];
+    data.courses.forEach(course => {
+        course.sections.forEach(sec => sec.lessons.forEach(l => {
+            paths.push(l.path);
+        }));
+    });
+    return paths;
 }
 
 function showError(message) {
@@ -2044,7 +2055,7 @@ document.addEventListener("keydown", e => {
             const card = document.createElement("div");
             card.className = "public-course-card";
 
-            const lessonsNote = isBundle(entry) ? `${entry.indexFile.length} courses` : "Full curriculum";
+            const lessonsNote = "Full curriculum";
             const diffBadge = entry.difficulty
                 ? `<span class="diff-badge ${entry.difficulty}">${entry.difficulty}</span>` : "";
 
