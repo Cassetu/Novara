@@ -1866,14 +1866,14 @@ function collectQuestions(data, settings) {
 }
 
 async function getAllQuestionsForEntry(entry, settings) {
-    const dataMap = await fetchBundleData(entry);
+    const data = await loadIndex(entry);
     const all = [];
-    for (const [courseId, data] of Object.entries(dataMap)) {
-        collectQuestions(data, settings).forEach(q => {
-            q._courseId = courseId;
-            all.push(q);
-        });
-    }
+    data.courses.forEach(course => {
+        collectQuestions(course, settings).forEach(q => {
+          q._courseId = course.id;
+          all.push(q);
+      });
+    });
     return all;
 }
 
