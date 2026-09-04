@@ -1422,25 +1422,17 @@ async function startLesson(lesson) {
         topNavBtn.addEventListener("click", window.activeTopbarGate, true);
         }
 
-    const analytics = activeCD ? (ud.analytics[activeCD.id] || {}) : {};
-    const onUpdate = async a => {
-        if (!activeCD) return;
-        ud.analytics[activeCD.id] = a;
-        await saveField("analytics", ud.analytics);
-    };
-
-    const t = activeLessonData.type;
     renderBlocks(activeLessonData.blocks)
 }
 
 function renderBlocks(blocks) {
     blocks.forEach(block => {
-       if (block.type == "heading") renderHeadingBlock();
-       else if (block.type == "text") renderTextBlock();
-       else if (block.type == "image") renderImageBlock();
-       else if (block.type == "multipleChoice") renderMultipleChoiceBlock();
-       else if (block.type == "imageLabel") renderImageLabelBlock();
-       else if (block.type == "submit") renderSubmitBlock();
+       if (block.type == "heading") renderHeadingBlock(block);
+       else if (block.type == "text") renderTextBlock(block);
+       else if (block.type == "image") renderImageBlock(block);
+       else if (block.type == "multipleChoice") renderMultipleChoiceBlock(block);
+       else if (block.type == "imageLabel") renderImageLabelBlock(block);
+       else if (block.type == "submit") renderSubmitBlock(block);
     });
 }
 
