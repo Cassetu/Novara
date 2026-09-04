@@ -1430,21 +1430,18 @@ async function startLesson(lesson) {
     };
 
     const t = activeLessonData.type;
-    if (t === "document") {
-        const next = activeLessonData.questions?.length
-            ? () => renderQuestion(activeLessonData, analytics, onUpdate, () => finishLesson())
-            : () => finishLesson();
-        renderDocument(activeLessonData, next);
-    } else if (t === "challenge")  renderChallenge(activeLessonData, () => finishLesson());
-    else if (t === "code_fix")     renderCodeFix(activeLessonData, () => finishLesson());
-    else if (t === "fill_blank")   renderFillBlank(activeLessonData, (c, tot) => finishFillBlank(c, tot));
-    else if (t === "spot_bug")     renderSpotBug(activeLessonData, (c) => finishSpotBug(c));
-    else if (t === "cooking_sim") renderCookingSim(activeLessonData, () => finishLesson());
-    else if (t === "architecture_sim") renderArchitectureSim(activeLessonData, () => finishLesson());
-    else if (t === "practice_standard" || t === "practice_survival") {
-        runMixedPractice(activeLessonData, analytics, onUpdate);
-    }
-    else renderQuestion(activeLessonData, analytics, onUpdate, () => finishLesson());
+    renderBlocks(activeLessonData.blocks)
+}
+
+function renderBlocks(blocks) {
+    blocks.forEach(block => {
+       if (block.type == "heading") renderHeadingBlock();
+       else if (block.type == "text") renderTextBlock();
+       else if (block.type == "image") renderImageBlock();
+       else if (block.type == "multipleChoice") renderMultipleChoiceBlock();
+       else if (block.type == "imageLabel") renderImageLabelBlock();
+       else if (block.type == "submit") renderSubmitBlock();
+    });
 }
 
 function resetTopBarLayout() {
