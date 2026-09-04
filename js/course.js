@@ -1426,6 +1426,7 @@ async function startLesson(lesson) {
 }
 
 function renderBlocks(blocks) {
+    viewLesson.innerHTML = "";
     blocks.forEach(block => {
        if (block.type == "heading") renderHeadingBlock(block);
        else if (block.type == "text") renderTextBlock(block);
@@ -1434,6 +1435,36 @@ function renderBlocks(blocks) {
        else if (block.type == "imageLabel") renderImageLabelBlock(block);
        else if (block.type == "submit") renderSubmitBlock(block);
     });
+}
+
+function renderHeadingBlock(block) {
+    const lessonContent = document.createElement("h" + block.level);
+    lessonContent.textContent = block.text;
+    viewLesson.appendChild(lessonContent);
+}
+
+function renderTextBlock(block) {
+    const lessonContent = document.createElement("p");
+    lessonContent.textContent = block.content;
+    viewLesson.appendChild(lessonContent);
+}
+
+function renderImageBlock(block) {
+    const lessonContent = document.createElement("div");
+    const img = document.createElement("img");
+    lessonContent.appendChild(img);
+    img.src = block.src;
+    img.alt = block.alt;
+    if (block.caption) {
+        const caption = document.createElement("p");
+        caption.textContent = block.caption;
+        lessonContent.appendChild(caption);
+    }
+    viewLesson.appendChild(lessonContent);
+}
+
+function renderMultipleChoiceBlock(block) {
+
 }
 
 function resetTopBarLayout() {
