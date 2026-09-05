@@ -1514,6 +1514,42 @@ function renderImageLabelBlock(block) {
     viewLesson.appendChild(lessonContent);
 }
 
+function renderSubmitBlock(block) {
+    const lessonContent = document.createElement("button");
+    lessonContent.textContent = "Submit"
+    viewLesson.appendChild(lessonContent);
+    lessonContent.onclick = () => {
+        if (block.targets.length === 0) {
+            console.log("mark complete");
+        } else {
+            let isCorrect;
+            block.targets.forEach(targetId => {
+                const targetBlock = findBlockById(targetId);
+                if (targetBlock.type === "multipleChoice") {
+                    if (!targetBlock.allowMultiple) {
+                        const correct = targetBlock.options.find(o => o.correct);
+                        isCorrect = correct.id === activeBlockAnswers[targetBlock.id];
+                    } else {
+                        const correctIds = targetBlock.options.filter(o => o.correct).map(o => o.id);
+                        const selected = activeBlockAnswers[targetBlock.id] || [];
+                        isCorrect = selected.length === correctIds.length && selected.every(id => correctIds.includes(id));
+                    }
+                } else if (targetBlock.type === "imageLabel") {
+                    isCorrect = targetBlock.points.every(point => {
+                        const correct = point.options.find(o => o.correct);
+                        return correct.id === activeBlockAnswers[targetBlock.id]?.[point.id];
+                    });
+                }
+            })
+        }
+    }
+}
+
+function findBlockById(id) {
+    const block = activeLessonData.blocks.find(b => b.id === id);
+    return block;
+}
+
 function resetTopBarLayout() {
     const topNavBtn = $("nav-explorer");
     if (topNavBtn) {
