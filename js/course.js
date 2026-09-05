@@ -834,7 +834,7 @@ async function openCurriculumHome(entry) {
                 </div>
                 <div class="course-home-meta">${course.sections.length} sections</div>
             `;
-            courseCard.addEventListener("click", () => openSyllabus(course, data, entry));
+            courseCard.addEventListener("click", () => openSyllabus(course.id, data, entry));
             grid.appendChild(courseCard);
         }
 
@@ -856,7 +856,7 @@ async function openCurriculumHome(entry) {
             </div>
             <div class="course-home-meta">${sectionCount} sections &bull; ${lessonCount} lessons</div>
         `;
-        onlyCard.addEventListener("click", () => openSyllabus(data.courses[0], data, entry));
+        onlyCard.addEventListener("click", () => openSyllabus(data.courses[0].id, data, entry));
         grid.appendChild(onlyCard);
 
         const projectLesson = findProjectLesson(data);
@@ -878,7 +878,7 @@ async function openCurriculumHome(entry) {
             <div class="course-home-meta course-home-meta-spaced">Full course exam</div>
         `;
         masterCard.addEventListener("click", async () => {
-            activeCD = data;
+            activeCD = data.courses[0];
             activeCD.id = entry.id;
             compileMasterTest();
         });
