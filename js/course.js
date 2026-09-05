@@ -1524,11 +1524,12 @@ function renderSubmitBlock(block) {
         } else {
             let allCorrect = true;
             block.targets.forEach(targetId => {
+                let isCorrect;
                 const targetBlock = findBlockById(targetId);
                 if (targetBlock.type === "multipleChoice") {
                     if (!targetBlock.allowMultiple) {
                         const correct = targetBlock.options.find(o => o.correct);
-                        const isCorrect = correct.id === activeBlockAnswers[targetBlock.id];
+                        isCorrect = correct.id === activeBlockAnswers[targetBlock.id];
                         if (!isCorrect) allCorrect = false;
                     } else {
                         const correctIds = targetBlock.options.filter(o => o.correct).map(o => o.id);
@@ -1537,12 +1538,15 @@ function renderSubmitBlock(block) {
                         if (!isCorrect) allCorrect = false;
                     }
                 } else if (targetBlock.type === "imageLabel") {
-                    const isCorrect = targetBlock.points.every(point => {
+                    isCorrect = targetBlock.points.every(point => {
                         const correct = point.options.find(o => o.correct);
                         return correct.id === activeBlockAnswers[targetBlock.id]?.[point.id];
                     });
                     if (!isCorrect) allCorrect = false;
                 }
+                const feedback = document.createElement("p");
+                feedback.textContent = isCorrect ? targetBlock.correctFeedback : targetBlock.incorrectFeedback;
+                viewLesson.appendChild(feedback);
             })
         }
     }
