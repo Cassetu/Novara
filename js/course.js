@@ -775,9 +775,11 @@ async function unenrollFromCourse(entry) {
 }
 
 function findProjectLesson(data) {
-    for (const sec of data.sections) {
-        for (const l of sec.lessons) {
-            if (l.type === "project") return l;
+    for (const course of data.courses) {
+        for (const sec of course.sections) {
+            for (const l of sec.lessons) {
+                if (l.type === "project") return l;
+            }
         }
     }
     return null;
