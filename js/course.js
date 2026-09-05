@@ -1519,6 +1519,7 @@ function renderSubmitBlock(block) {
     lessonContent.textContent = "Submit"
     viewLesson.appendChild(lessonContent);
     lessonContent.onclick = () => {
+        viewLesson.querySelectorAll(".block-feedback").forEach(el => el.remove());
         if (block.targets.length === 0) {
             console.log("mark complete");
         } else {
@@ -1545,6 +1546,7 @@ function renderSubmitBlock(block) {
                     if (!isCorrect) allCorrect = false;
                 }
                 const feedback = document.createElement("p");
+                feedback.className = "block-feedback";
                 feedback.textContent = isCorrect ? targetBlock.correctFeedback : targetBlock.incorrectFeedback;
                 viewLesson.appendChild(feedback);
             })
