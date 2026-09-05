@@ -1487,6 +1487,33 @@ function renderMultipleChoiceBlock(block) {
     viewLesson.appendChild(lessonContent);
 }
 
+function renderImageLabelBlock(block) {
+    const lessonContent = document.createElement("div");
+    const img = document.createElement("img");
+    lessonContent.appendChild(img);
+    lessonContent.className = "image-label-div";
+    img.src = block.src;
+    img.alt = block.alt;
+    block.points.forEach(point => {
+        const marker = document.createElement("select");
+        point.options.forEach(option => {
+            const optionPt = document.createElement("option");
+            optionPt.value = option.id
+            optionPt.textContent = option.text;
+            marker.appendChild(optionPt);
+        });
+        marker.style.left = point.x + "%"
+        marker.style.top = point.y + "%"
+        marker.className = "image-label-pt"
+        marker.onchange = () => {
+            activeBlockAnswers[block.id] = activeBlockAnswers[block.id] || {};
+            activeBlockAnswers[block.id][point.id] = marker.value;
+        };
+        lessonContent.appendChild(marker);
+    });
+    viewLesson.appendChild(lessonContent);
+}
+
 function resetTopBarLayout() {
     const topNavBtn = $("nav-explorer");
     if (topNavBtn) {
