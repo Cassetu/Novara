@@ -14,6 +14,7 @@ let currentUser = null;
 let ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {} };
 let catalogData = [];
 let activeCD = null;
+let activeBlockAnswers = {};
 let activeLessonData = null;
 let activeBundleCourseId = null;
 let activeCurriculumEntry = null;
@@ -1381,6 +1382,7 @@ function runMixedPractice(lessonData, analytics, onUpdate) {
 async function startLesson(lesson) {
     const res = await fetch(lesson.path);
     activeLessonData = await res.json();
+    activeBlockAnswers == {};
 
 /*    if (activeLessonData.questions?.length && activeLessonData.type !== "practice_standard") {
         activeLessonData.questions = shuffleArray(activeLessonData.questions);
@@ -1464,7 +1466,25 @@ function renderImageBlock(block) {
 }
 
 function renderMultipleChoiceBlock(block) {
-
+    const lessonContent = document.createElement("div");
+    block.options.forEach(option => {
+        const button = document.createElement("button");
+        button.textContent = option.text;
+        button.onclick = () => {
+            if (block.allowMultiple) {
+                if (!Array.isArray(activeBlockAnswers[block.id])) activeBlockAnswers[block.id] = [];
+                if (activeBlockAnswers[block.id].includes(option.id)) {
+                    activeBlockAnswers[block.id] = activeBlockAnswers[block.id].filter(id => id !== option.id);
+                } else {
+                    activeBlockAnswers[block.id].push(option.id);
+                }
+            } else {
+                activeBlockAnswers[block.id] = option.id;
+            }
+        };
+        lessonContent.appendChild(button);
+    });
+    viewLesson.appendChild(lessonContent);
 }
 
 function resetTopBarLayout() {
