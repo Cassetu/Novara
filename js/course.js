@@ -1522,23 +1522,26 @@ function renderSubmitBlock(block) {
         if (block.targets.length === 0) {
             console.log("mark complete");
         } else {
-            let isCorrect;
+            let allCorrect = true;
             block.targets.forEach(targetId => {
                 const targetBlock = findBlockById(targetId);
                 if (targetBlock.type === "multipleChoice") {
                     if (!targetBlock.allowMultiple) {
                         const correct = targetBlock.options.find(o => o.correct);
-                        isCorrect = correct.id === activeBlockAnswers[targetBlock.id];
+                        const isCorrect = correct.id === activeBlockAnswers[targetBlock.id];
+                        if (!isCorrect) allCorrect = false;
                     } else {
                         const correctIds = targetBlock.options.filter(o => o.correct).map(o => o.id);
                         const selected = activeBlockAnswers[targetBlock.id] || [];
                         isCorrect = selected.length === correctIds.length && selected.every(id => correctIds.includes(id));
+                        if (!isCorrect) allCorrect = false;
                     }
                 } else if (targetBlock.type === "imageLabel") {
-                    isCorrect = targetBlock.points.every(point => {
+                    const isCorrect = targetBlock.points.every(point => {
                         const correct = point.options.find(o => o.correct);
                         return correct.id === activeBlockAnswers[targetBlock.id]?.[point.id];
                     });
+                    if (!isCorrect) allCorrect = false;
                 }
             })
         }
