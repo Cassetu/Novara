@@ -1384,6 +1384,7 @@ function runMixedPractice(lessonData, analytics, onUpdate) {
 async function startLesson(lesson) {
     const res = await fetch(lesson.path);
     activeLessonData = await res.json();
+    activeLessonData.id = lesson.id;
     activeBlockAnswers == {};
 
 /*    if (activeLessonData.questions?.length && activeLessonData.type !== "practice_standard") {
@@ -1520,24 +1521,30 @@ function renderSubmitBlock(block) {
     const lessonContent = document.createElement("button");
     lessonContent.textContent = "Submit"
     viewLesson.appendChild(lessonContent);
-    lessonContent.onclick = () => {
+    lessonContent.onclick = async () => {
         viewLesson.querySelectorAll(".block-feedback").forEach(el => el.remove());
         if (block.targets.length === 0) {
-            console.log("mark complete");
+            ud.scores[activeLessonData.id] = 1
+            await saveField("scores", ud.scores)
         } else {
             let allCorrect = true;
             block.targets.forEach(targetId => {
                 let isCorrect;
+                let feedbackText;
                 const targetBlock = findBlockById(targetId);
                 if (targetBlock.type === "multipleChoice") {
                     if (!targetBlock.allowMultiple) {
                         const correct = targetBlock.options.find(o => o.correct);
                         isCorrect = correct.id === activeBlockAnswers[targetBlock.id];
+                        const selectedOption = targetBlock.options.find(o => o.id === activeBlockAnswers[targetBlock.id])
+                        if (selectedOption.feedback) feedbackText = selectedOption.feedback
+                        else feedbackText = isCorrect ? targetBlock.correctFeedback : targetBlock.incorrectFeedback;
                         if (!isCorrect) allCorrect = false;
                     } else {
                         const correctIds = targetBlock.options.filter(o => o.correct).map(o => o.id);
                         const selected = activeBlockAnswers[targetBlock.id] || [];
                         isCorrect = selected.length === correctIds.length && selected.every(id => correctIds.includes(id));
+                        feedbackText = isCorrect ? targetBlock.correctFeedback : targetBlock.incorrectFeedback;
                         if (!isCorrect) allCorrect = false;
                     }
                 } else if (targetBlock.type === "imageLabel") {
@@ -1545,11 +1552,12 @@ function renderSubmitBlock(block) {
                         const correct = point.options.find(o => o.correct);
                         return correct.id === activeBlockAnswers[targetBlock.id]?.[point.id];
                     });
+                    feedbackText = isCorrect ? targetBlock.correctFeedback : targetBlock.incorrectFeedback;
                     if (!isCorrect) allCorrect = false;
                 }
                 const feedback = document.createElement("p");
                 feedback.className = "block-feedback";
-                feedback.textContent = isCorrect ? targetBlock.correctFeedback : targetBlock.incorrectFeedback;
+                feedback.textContent = feedbackText;
                 viewLesson.appendChild(feedback);
             })
         }
