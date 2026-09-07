@@ -1385,7 +1385,7 @@ async function startLesson(lesson) {
     const res = await fetch(lesson.path);
     activeLessonData = await res.json();
     activeLessonData.id = lesson.id;
-    activeBlockAnswers == {};
+    activeBlockAnswers = {};
 
 /*    if (activeLessonData.questions?.length && activeLessonData.type !== "practice_standard") {
         activeLessonData.questions = shuffleArray(activeLessonData.questions);
