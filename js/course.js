@@ -1560,6 +1560,14 @@ function renderSubmitBlock(block) {
                 feedback.textContent = feedbackText;
                 viewLesson.appendChild(feedback);
             })
+            if (allCorrect) {
+            ud.scores[activeLessonData.id] = 4;
+            ud.mastery[activeLessonData.id] = true;
+            await saveField("scores", ud.scores);
+            await saveField("mastery", ud.mastery);
+            } else {
+
+            }
         }
     }
 }
