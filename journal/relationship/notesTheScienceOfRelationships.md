@@ -39,23 +39,18 @@ Is the theory that explains how people behave in relationships by using cost-ben
 - Marriage Squeeze: Demographic imbalance in the number of males to females among marrying ages.
 - Various unhealthy traits in potential Dates and Mates:
 ![img_1.png - Libretexts.Org](img_1.png)
+```
 > Perera, Ayesh. "Halo Effect In Psychology: Definition and Examples." Simply Psychology, 27 July 2026, https://www.simplypsychology.org/halo-effect.html. Accessed 11 Aug. 2026.
->
 > “The Role of Familiarity in Attraction.” Psychology Today, 2022, https://www.psychologytoday.com/us/blog/between-you-and-me/202203/the-role-of-familiarity-in-attraction. Accessed 12 Aug. 2026.
->
 > Bornstein, Robert F. (1989). "Exposure and affect: Overview and meta-analysis of research, 1968-1987". Psychological Bulletin. 106 (2): 265–289. doi:10.1037/0033-2909.106.2.265. Accessed 12 Aug. 2026.
->
 > Zajonc, Robert B. (1968). "Attitudinal Effects Of Mere Exposure" (PDF). Journal of Personality and Social Psychology. 9 (2, Pt.2): 1–27. doi:10.1037/h0025848. ISSN 1939-1315. Accessed 12 Aug. 2026.
->
 > Festinger, L., Schachter, S., Back, K., (1950). The Spatial Ecology of Group Formation, in L. Festinger, S. Schachter, & K. Back (eds.), Social Pressure in Informal Groups. MIT Press. Accessed 12 Aug. 2026.
->
 > Physical attractiveness and marital choice. (1972). Journal of Personality and Social Psychology, 22(1), 8-12; Who will marry whom? Theories and research in marital choice. (1976). New York; Springer. Accessed 12 Aug. 2026.
->
 > Wikipedia Contributors. “Mere-Exposure Effect.” Wikipedia, Wikimedia Foundation, 28 Mar. 2019, https://en.wikipedia.org/wiki/Mere-exposure_effect. Accessed 12 Aug. 2026.
->
 > Wikipedia Contributors. “Social Exchange Theory.” Wikipedia, Wikimedia Foundation, 27 Mar. 2019, https://en.wikipedia.org/wiki/Social_exchange_theory. Accessed 12 Aug. 2026.
->
 >“Welcome To Zscaler Directory Authentication.” Libretexts.Org, 2026, https://socialsci.libretexts.org/Bookshelves/Sociology/Marriage_and_Family/Intimate_Relationships_and_Families/05%3A_Dating_and_Mate_Selection/5.01%3A_Theories_of_Mate_Selection. Accessed 12 Aug. 2026.
+```
+---
 
 ## Stage Models & Communication
 ### Knapp’s Relationship Model
@@ -140,27 +135,20 @@ This refers to observing someone from afar.
 This involves getting information about the person from a secondary source, generally a friend, family member, or co-worker.
 #### Interactive Strategy
 This focuses on the direct exchange of information with the other person.
+```
 > Weidner, Eric, et al. “10.4: Relationship Stages.” Social Sci LibreTexts, 8 Mar. 2022, https://socialsci.libretexts.org/Bookshelves/Communication/Interpersonal_Communication/Interpersonal_Communication%3A_Context_and_Connection-OERI/10%3A_Building_and_Maintaining_Relationships/10.04%3A_Relationship_Stages. Accessed 13 Aug. 2026.
->
 > “6.1: Foundations of Relationships.” Social Sci LibreTexts, 14 July 2020, https://socialsci.libretexts.org/Courses/College_of_the_Canyons/COMS_246%3A_Interpersonal_Communication_(Leonard)/6%3A_Communication_in_Relationships/6.1%3A_Foundations_of_Relationships. Accessed 13 Aug. 2026.
->
 > Mark L. Knapp and Anita L. Vangelisti, Interpersonal Communication and Human Relationships (Boston, MA: Pearson, 2009) Accessed 13 Aug. 2026.
-> 
 > Goulder, Will. “A-Level Psychology Relationship Revision for Paper 3 | Simply Psychology.” Simplypsychology.Org, 2019, https://www.simplypsychology.org/a-level-relationships.html. Accessed 13 Aug. 2026.
-> 
 > Altman, I., Taylor, D. A., & Actman, I. (1973). Social penetration: The development of interpersonal relationships (2nd ed.). New York: Holt, Rinehart and Winston. Accessed 13 Aug. 2026.
-> 
 > Anderson, C., Keltner, D., & John, O. P. (2003). Emotional convergence between people over time. Journal of Personality and Social Psychology, 84(5), 1054–1068. doi:10.1037/0022-3514.84.5.1054 Accessed 13 Aug. 2026.
->
 > Aron, A., Melinat, E., Aron, E. N., Vallone, R. D., & Bator, R. J. (1997). The experimental generation of interpersonal closeness: A procedure and some preliminary findings. Personality and Social Psychology Bulletin, 23(4), 363–377. doi:10.1177/0146167297234003 Accessed 13 Aug. 2026.
->
 > Buss, D. M. (1989). Sex differences in human mate preferences: Evolutionary hypotheses tested in 37 cultures. Behavioral and Brain Sciences, 12(01), 1. doi:10.1017/s0140525x00023992 Accessed 13 Aug. 2026.
-> 
 > “7.4: Self-Disclosure and Interpersonal Communication.” Social Sci LibreTexts, 2 July 2019, https://socialsci.libretexts.org/Under_Construction/Purgatory/Survey_of_Human_Communication/07%3A_Interpersonal_Communication_Processes/7.4%3A_Self-Disclosure_and_Interpersonal_Communication. Accessed 13 Aug. 2026.
-> 
 > “6.1: Foundations of Relationships.” Social Sci LibreTexts, 14 July 2020, https://socialsci.libretexts.org/Courses/College_of_the_Canyons/COMS_246%3A_Interpersonal_Communication_(Leonard)/6%3A_Communication_in_Relationships/6.1%3A_Foundations_of_Relationships. Accessed 13 Aug. 2026.
-> 
 > “2.5: Social Penetration Theory.” Social Sci LibreTexts, 15 May 2020, https://socialsci.libretexts.org/Courses/College_of_the_Canyons/COMS_120%3A_Small_Group_Communication_(Osborne)/02%3A_Reading_Group_Development/2.05%3A_Social_Penetration_Theory. Accessed 13 Aug. 2026.
+```
+---
 ## Attachment, Love & Social Dynamics
 ### John Bowlby’s Attachment Theory
 This emphasizes the importance of early emotional bonds between a child and their caregivers.
@@ -276,35 +264,23 @@ People don't just calculate profit, but rather have two internal benchmarks.
 #### Strengths & Limitations
 - **Strengths:** SET explains why people stay in objectivly bad or abusive relationships, such as a low Comparison Level, or low Camparison Level for Alternatives. Longitudinal studies (e.g., Rusbult, 1983) show that relationship commitment is highly predicted by evaluating satisfaction, investments, and alternatives.
 - **Limitations:** SET assumes people just want to maximize their own profit. However, research (e.g., Hatfield, 1989) shows that over-benefits often feel guilty and uncomfortable, Humans actually seek fairness and more than just raw profit. It also reduces human love to a selfish, cold calculation. It struggles to explain pure altruism or people willingly making massive sacrifices for a partner without expecting an immediate "return on investment."
-
+```
 > McLeod, Saul. “John Bowlby’s Attachment Theory.” Simply Psychology, 20 Apr. 2025, https://www.simplypsychology.org/bowlby.html. Accessed 14 Aug. 2026.
-> 
 > Drescher, Anna. “Insecure vs. Secure Attachment in Relationships.” Simply Psychology, 5 July 2023, https://www.simplypsychology.org/insecure-vs-secure-attachment-in-relationships.html. Accessed 15 Aug. 2026.
-> 
 > Candel, O.S. & Turliuc, M.N. (2019). Insecure attachment and relationship satisfaction: A meta-analysis of actor and partner associations. Personality and Individual Differences, 147: 190-199. Accessed 15 Aug. 2026.
-> 
 > Candel, O. S., and M. N. Turliuc. "Insecure Attachment and Relationship Satisfaction: A Meta-Analysis of Actor and Partner Associations." Personality and Individual Differences, vol. 147, 2019, pp. 190–199. https://doi.org/10.1016/j.paid.2019.04.037. Accessed 15 Aug. 2026.
->
->Olufowote, R. A. D., et al. "How Can I Become More Secure? A Grounded Theory of Earning Secure Attachment." Journal of Marital and Family Therapy, vol. 46, no. 3, 2020, pp. 489–506. https://doi.org/10.1111/jmft.12409. Accessed 15 Aug. 2026.
->
->Schachner, D. A., et al. "Adult Attachment Theory, Psychodynamics, and Couple Relationships." Attachment Processes in Couple and Family Therapy, edited by Susan M. Johnson and Valerie E. Whiffen, Guilford Press, 2003, pp. 18–42. Accessed 15 Aug. 2026.
->
->Sheinbaum, T., et al. "Attachment Style Predicts Affect, Cognitive Appraisals, and Social Functioning in Daily Life." Frontiers in Psychology, vol. 6, 2015, p. 296. https://doi.org/10.3389/fpsyg.2015.00296. Accessed 15 Aug. 2026.
->
->Simpson, J. A., and W. S. Rholes. "Adult Attachment, Stress, and Romantic Relationships." Current Opinion in Psychology, vol. 13, 2017, pp. 19–24. https://doi.org/10.1016/j.copsyc.2016.04.006. Accessed 15 Aug. 2026.
-> 
+> Olufowote, R. A. D., et al. "How Can I Become More Secure? A Grounded Theory of Earning Secure Attachment." Journal of Marital and Family Therapy, vol. 46, no. 3, 2020, pp. 489–506. https://doi.org/10.1111/jmft.12409. Accessed 15 Aug. 2026.
+> Schachner, D. A., et al. "Adult Attachment Theory, Psychodynamics, and Couple Relationships." Attachment Processes in Couple and Family Therapy, edited by Susan M. Johnson and Valerie E. Whiffen, Guilford Press, 2003, pp. 18–42. Accessed 15 Aug. 2026.
+> Sheinbaum, T., et al. "Attachment Style Predicts Affect, Cognitive Appraisals, and Social Functioning in Daily Life." Frontiers in Psychology, vol. 6, 2015, p. 296. https://doi.org/10.3389/fpsyg.2015.00296. Accessed 15 Aug. 2026.
+> Simpson, J. A., and W. S. Rholes. "Adult Attachment, Stress, and Romantic Relationships." Current Opinion in Psychology, vol. 13, 2017, pp. 19–24. https://doi.org/10.1016/j.copsyc.2016.04.006. Accessed 15 Aug. 2026.
 > Myers, Eleanor. “Sternberg’s Triangular Theory and the 8 Types of Love.” SimplyPsychology, 6 Dec. 2023, https://www.simplypsychology.org/types-of-love-we-experience.html. Accessed 15 Aug. 2026.
-> 
 > Deverich, S. "Love Unveiled: Teenage Love within the Context of Sternberg’s Triangular Theory of Love." Intuition, vol. 5, 2009, pp. 21–25. Accessed 15 Aug. 2026.
->
 > Lemieux, R., and J. L. Hale. "Intimacy, Passion, and Commitment in Young Romantic Relationships: Successfully Measuring the Triangular Theory of Love." Psychological Reports, vol. 85, no. 2, 1999, pp. 497–503. Accessed 15 Aug. 2026.
->
 > Lemieux, R., and J. L. Hale. "Intimacy, Passion, and Commitment among Married Individuals: Further Testing of the Triangular Theory of Love." Psychological Reports, vol. 87, no. 3, 2000, pp. 941–948. Accessed 15 Aug. 2026.
->
 > Sternberg, R. J. "A Triangular Theory of Love." Psychological Review, vol. 93, no. 2, 1986, p. 119. Accessed 15 Aug. 2026.
->
 > Sternberg, R. J. "Liking versus Loving: A Comparative Evaluation of Theories." Psychological Bulletin, vol. 102, no. 3, 1987, p. 331. Accessed 15 Aug. 2026.
-> 
 > Nickerson, Charlotte. “Social Exchange Theory - Simply Psychology.” Www.Simplypsychology.Org, 25 Oct. 2023, https://www.simplypsychology.org/what-is-social-exchange-theory.html. Accessed 15 Aug. 2026.
+```
+---
 # Personal Curriculum Notes
 - [ ] Make questions where a small excerpt of a relationship is shown, and the user is tasked with categorizing it. (Specifically for [Johari Window](https://socialsci.libretexts.org/Bookshelves/Communication/Interpersonal_Communication/Interpersonal_Communication%3A_Context_and_Connection-OERI/10%3A_Building_and_Maintaining_Relationships/10.05%3A_The_Role_of_Self-Disclosure#:~:text=and%20culture%3F-,Johari%20Window,-The%20Johari%20window), Knapp's Relationship Model, 8 Types of Love)

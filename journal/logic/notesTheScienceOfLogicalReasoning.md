@@ -68,11 +68,53 @@ Bruner believes that education should build the capacity for **symbolic thinking
   * Language claim is overstated.
   * High demand for teachers. Contingent scaffolding requires continuously diagnosing each learner’s progress (Wood et al., 1976; van de Pol et al., 2010) Which is difficult in whole-class teaching and mostly uneven when applied.
 
+```
 > McLeod, Saul. “Jerome Bruner’s Theory of Learning and Cognitive Development.” Simply Psychology, 2024, https://www.simplypsychology.org/bruner.html. Accessed 27 Aug. 2026.
-> 
 > Lazonder, A. W., & Harmsen, R. (2016). Meta-analysis of inquiry-based learning: Effects of guidance. Review of Educational Research, 86(3), 681–718. 
-> 
 > Kirschner, P. A., Sweller, J., & Clark, R. E. (2006). Why minimal guidance during instruction does not work: An analysis of the failure of constructivist, discovery, problem-based, experiential, and inquiry-based teaching. Educational Psychologist, 41(2), 75–86.
-> 
 > Mayer, R. E. (2004). Should there be a three-strikes rule against pure discovery learning? The case for guided methods of instruction. American Psychologist, 59(1), 14–19.
+```
 
+## Deductive vs. Inductive Arguments
+
+* **Arguments** are a combination of reasoning and evidence.
+> ###### Example
+> Brother and sister, Sydney and Harrison are arguing about whose turn it is to clean their bathroom. Harrison tells Sydney she should do it because she is a girl and girls are better at cleaning. Sydney responds that being a girl has nothing to do with whose turn it is. She reminds Harrison that according to their work chart, they are responsible for cleaning the bathroom on alternate weeks. She tells him she cleaned the bathroom last week; therefore, it is his turn this week. Harrison, still unconvinced, refuses to take responsibility for the chore. Sydney then points to the work chart and shows him where it specifically says it is his turn this week. Defeated, Harrison digs out the cleaning supplies.
+
+* **Deductive reasoning** refers to an argument in which the truth of its premises guarantees the truth of its conclusions.
+  * It must be impossible for the premises to be true and the conclusion to be false. Failure to do so results in a logical fallacy
+  * **Syllogism:** Major Premise -> Minor Premise -> Conclusion
+    * Can have more than the basic three.
+    * Thanks to Aristotle.
+> ###### Example
+> 1. All men are mortal.
+> 2. Socrates is a man.
+> 3. Therefore, Socrates is mortal.
+> ---
+> 1. Girls are better at cleaning bathrooms
+> 2. Sydney is a girl
+> 3. Sydney should clean the bathroom.
+* **Inductive reasoning** is where the truth of its propositions lends support to the conclusion.
+  * Does not have one defined format.
+> ###### Example
+> 1. Bathroom cleaning responsibilities alternate weekly according to the work chart.
+> 2. Sydney cleaned the bathroom last week.
+> 3. The chart indicates it is Harrison’s turn to clean the bathroom this week.
+> 4. Therefore, Harrison should clean the bathroom.
+
+  *A few observations and much reasoning lead to error; many observations and a little reasoning to truth. ~ Alexis Carrel*
+
+### Consider
+ After the 9/11 attacks on the World Trade Center, variations of the following arguments:
+1. The terrorists were Muslim (or Arab or Middle Eastern).
+2. The terrorists hated America.
+3. Therefore, all Muslims (or Arabs or Middle Easterners) hate America.
+
+Beyond being a scary example of hyperbolic rhetoric, we can all probably think of at least one counter example to disprove the conclusion. So sometimes in the heat of emotion, passion or bias, rational can become irrational.
+```
+> “6.3: Logic and the Role of Arguments.” Social Sci LibreTexts, 14 Oct. 2018, https://socialsci.libretexts.org/Bookshelves/Communication/Public_Speaking/Public_Speaking_(The_Public_Speaking_Project)/06%3A_Critical_Thinking_and_Reasoning/6.03%3A_Logic_and_the_Role_of_Arguments. Accessed 7 Sept. 2026.
+```
+
+---
+
+## Structuring Truth & Formal Reasoning
