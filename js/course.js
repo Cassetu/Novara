@@ -1366,6 +1366,22 @@ function renderSubmitBlock(block) {
     lessonContent.textContent = "Submit"
     viewLesson.appendChild(lessonContent);
     lessonContent.onclick = async () => {
+        const unanswered = block.targets.some(id => {
+            const targetBlock = findBlockById(id);
+            if (targetBlock.type === "multipleChoice" && !targetBlock.allowMultiple) {
+                return activeBlockAnswers[id] === undefined;
+            } else if (targetBlock.type === "multipleChoice" && targetBlock.allowMultiple) {
+                return !activeBlockAnswers[id] || activeBlockAnswers[id].length === 0
+            } else if (targetBlock.type === "imageLabel") {
+                return targetBlock.points.some(point => activeBlockAnswers[id]?.[point.id] === undefined)
+            }
+        });
+        if (unanswered) {
+            const uaFeedback = document.createElement("p");
+            uaFeedback.textContent = "Please answer all questions before submitting,"
+            viewLesson.appendChild(uaFeedback);
+            return;
+        }
         viewLesson.querySelectorAll(".block-feedback").forEach(el => el.remove());
         if (block.targets.length === 0) {
             ud.scores[activeLessonData.id] = 1
