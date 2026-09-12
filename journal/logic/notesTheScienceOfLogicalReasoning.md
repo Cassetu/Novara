@@ -79,7 +79,7 @@ Bruner believes that education should build the capacity for **symbolic thinking
 
 * **Arguments** are a combination of reasoning and evidence.
 > ###### Example
-> Brother and sister, Sydney and Harrison are arguing about whose turn it is to clean their bathroom. Harrison tells Sydney she should do it because she is a girl and girls are better at cleaning. Sydney responds that being a girl has nothing to do with whose turn it is. She reminds Harrison that according to their work chart, they are responsible for cleaning the bathroom on alternate weeks. She tells him she cleaned the bathroom last week; therefore, it is his turn this week. Harrison, still unconvinced, refuses to take responsibility for the chore. Sydney then points to the work chart and shows him where it specifically says it is his turn this week. Defeated, Harrison digs out the cleaning supplies.
+> Brother and sister, Sydney and Harrison are arguing about whose turn it’s to clean their bathroom. Harrison tells Sydney she should do it because she’s a girl and girls are better at cleaning. Sydney responds that being a girl has nothing to do with whose turn it is. She reminds Harrison that according to their work chart, they’re responsible for cleaning the bathroom on alternate weeks. She tells him she cleaned the bathroom last week; therefore, it’s his turn this week. Harrison, still unconvinced, refuses to take responsibility for the chore. Sydney then points to the work chart and shows him where it specifically says it’s his turn this week. Defeated, Harrison digs out the cleaning supplies.
 
 * **Deductive reasoning** refers to an argument in which the truth of its premises guarantees the truth of its conclusions.
   * It must be impossible for the premises to be true and the conclusion to be false. Failure to do so results in a logical fallacy
@@ -95,11 +95,11 @@ Bruner believes that education should build the capacity for **symbolic thinking
 > 2. Sydney is a girl
 > 3. Sydney should clean the bathroom.
 * **Inductive reasoning** is where the truth of its propositions lends support to the conclusion.
-  * Does not have one defined format.
+  * Doesn’t have one defined format.
 > ###### Example
 > 1. Bathroom cleaning responsibilities alternate weekly according to the work chart.
 > 2. Sydney cleaned the bathroom last week.
-> 3. The chart indicates it is Harrison’s turn to clean the bathroom this week.
+> 3. The chart indicates it’s Harrison’s turn to clean the bathroom this week.
 > 4. Therefore, Harrison should clean the bathroom.
 
   *A few observations and much reasoning lead to error; many observations and a little reasoning to truth. ~ Alexis Carrel*
@@ -117,4 +117,23 @@ Beyond being a scary example of hyperbolic rhetoric, we can all probably think o
 
 ---
 
-## Structuring Truth & Formal Reasoning
+## What’s Logic?
+Logic is the study of how ideas reasonably fit together. When you apply logic, you must be concerned with analyzing ideas and arguments by using reason and rational thinking, not emotions or mysticism or belief.
+
+An important use of logic is composing and evaluating arguments.
+
+### Informal vs. Formal Logic
+**Formal logic** is the formal study of logic, aka math/philosophy/computer science. Used to eliminate any imprecision or lack or objectivity in evaluating arguments. Logicians have devised a number of formal techniques that reach that goal. (e.g., truth tables, venn diagrams, proofs, syllogisms, and formulae). Branches of formal logic include propositional, categorical, and first order logics.
+
+**Informal Logic** is the logic applied outside formal study and is most often used in college, business, and life. The core study of logic inspired the idea that the methods might be harnessed to understand and improve real-life contexts of thinking, reasoning, and argument. Informal logic is the attempt to build a logic suited to this purpose.
+
+### Importance of Logic
+
+Your life is a long parade of choices. To make good, if not best, choices, you often only have one tool: an argument. You weight the reasons for and against each alternative and choose one. Thus, the ability to evaluate arguments is an ability useful in everything that you'll do throughout work, personal life, and your deepest introspections. 
+
+
+```
+> Libretexts. “3.3: What Is Logic?” Humanities LibreTexts, Libretexts, 30 June 2019, https://human.libretexts.org/Bookshelves/Composition/Introductory_Composition/Let’s_Get_Writing_(Browning_DeVries_Boylan_Kurtz_and_Burton)/03%3A_Argument/3.03%3A_What_is_Logic. Accessed 12 Sept. 2026.
+```
+
+## Logical Fallacies
