@@ -19,6 +19,8 @@ let activeLessonData = null;
 let activeBundleCourseId = null;
 let activeCurriculumEntry = null;
 let activeCourseRef = null;
+let activeSection;
+let activeLessonStage;
 
 const $ = id => document.getElementById(id);
 
@@ -1111,7 +1113,7 @@ function renderSectionLessons(section, data, courseId, contentStage) {
                 }
             }
 
-            startLesson(lesson);
+            startLesson(lesson, section);
         };
 
         listWrap.appendChild(row);
@@ -1226,16 +1228,12 @@ function runMixedPractice(lessonData, analytics, onUpdate) {
     }
 }
 
-async function startLesson(lesson) {
+async function startLesson(lesson, section) {
     const res = await fetch(lesson.path);
     activeLessonData = await res.json();
     activeLessonData.id = lesson.id;
+    activeSection = section;
     activeBlockAnswers = {};
-
-/*    if (activeLessonData.questions?.length && activeLessonData.type !== "practice_standard") {
-        activeLessonData.questions = shuffleArray(activeLessonData.questions);
-        if (activeLessonData.questionCount) activeLessonData.questions = activeLessonData.questions.slice(0, activeLessonData.questionCount);
-    }*/
 
     switchView("view-lesson");
 
@@ -1271,11 +1269,25 @@ async function startLesson(lesson) {
         topNavBtn.addEventListener("click", window.activeTopbarGate, true);
         }
 
+    viewLesson.innerHTML = "";
+    const sidebarDiv = document.createElement("div");
+    activeLessonStage = document.createElement("div")
+    viewLesson.appendChild(sidebarDiv);
+    viewLesson.appendChild(activeLessonStage);
+    activeSection.lessons.forEach(l => {
+        const row = document.createElement("div");
+        row.textContent = l.title;
+        row.onclick = () => {
+            showConfirmDialog("Leave this lesson? Progress will be lost.", () => {
+                startLesson(l, activeSection);
+            });
+        };
+        sidebarDiv.appendChild(row);
+    });
     renderBlocks(activeLessonData.blocks)
 }
 
 function renderBlocks(blocks) {
-    viewLesson.innerHTML = "";
     blocks.forEach(block => {
        if (block.type == "heading") renderHeadingBlock(block);
        else if (block.type == "text") renderTextBlock(block);
@@ -1289,13 +1301,13 @@ function renderBlocks(blocks) {
 function renderHeadingBlock(block) {
     const lessonContent = document.createElement("h" + block.level);
     lessonContent.textContent = block.text;
-    viewLesson.appendChild(lessonContent);
+    activeLessonStage.appendChild(lessonContent);
 }
 
 function renderTextBlock(block) {
     const lessonContent = document.createElement("p");
     lessonContent.textContent = block.content;
-    viewLesson.appendChild(lessonContent);
+    activeLessonStage.appendChild(lessonContent);
 }
 
 function renderImageBlock(block) {
@@ -1309,7 +1321,7 @@ function renderImageBlock(block) {
         caption.textContent = block.caption;
         lessonContent.appendChild(caption);
     }
-    viewLesson.appendChild(lessonContent);
+    activeLessonStage.appendChild(lessonContent);
 }
 
 function renderMultipleChoiceBlock(block) {
@@ -1334,7 +1346,7 @@ function renderMultipleChoiceBlock(block) {
         };
         lessonContent.appendChild(button);
     });
-    viewLesson.appendChild(lessonContent);
+    activeLessonStage.appendChild(lessonContent);
 }
 
 function renderImageLabelBlock(block) {
@@ -1361,13 +1373,13 @@ function renderImageLabelBlock(block) {
         };
         lessonContent.appendChild(marker);
     });
-    viewLesson.appendChild(lessonContent);
+    activeLessonStage.appendChild(lessonContent);
 }
 
 function renderSubmitBlock(block) {
     const lessonContent = document.createElement("button");
     lessonContent.textContent = "Submit"
-    viewLesson.appendChild(lessonContent);
+    activeLessonStage.appendChild(lessonContent);
     lessonContent.onclick = async () => {
         const unanswered = block.targets.some(id => {
             const targetBlock = findBlockById(id);
@@ -1382,10 +1394,10 @@ function renderSubmitBlock(block) {
         if (unanswered) {
             const uaFeedback = document.createElement("p");
             uaFeedback.textContent = "Please answer all questions before submitting,"
-            viewLesson.appendChild(uaFeedback);
+            activeLessonStage.appendChild(uaFeedback);
             return;
         }
-        viewLesson.querySelectorAll(".block-feedback").forEach(el => el.remove());
+        activeLessonStage.querySelectorAll(".block-feedback").forEach(el => el.remove());
         if (block.targets.length === 0) {
             ud.scores[activeLessonData.id] = 1
             await saveField("scores", ud.scores)
@@ -1421,7 +1433,7 @@ function renderSubmitBlock(block) {
                 const feedback = document.createElement("p");
                 feedback.className = "block-feedback";
                 feedback.textContent = feedbackText;
-                viewLesson.appendChild(feedback);
+                activeLessonStage.appendChild(feedback);
             })
             if (allCorrect) {
             ud.scores[activeLessonData.id] = 4;
