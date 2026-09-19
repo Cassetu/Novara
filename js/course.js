@@ -1839,7 +1839,7 @@ async function buildDocsPanel() {
                     row.onclick = () => {
                         activeCD = course;
                         activeCD.id = course.id;
-                        startLesson(Object.assign({}, lesson, { questions: [] }));
+                        startLesson(Object.assign({}, lesson, { questions: [] }), section);
                     };
                     group.appendChild(row);
                 });
