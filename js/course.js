@@ -1289,6 +1289,7 @@ async function startLesson(lesson, section) {
         activeSection.lessons.forEach(l => {
             const row = document.createElement("div");
             row.className = "syllabus-section-btn";
+            if (l.id === lesson.id) row.classList.add("active");
             const title = document.createElement("div");
             title.className = "syllabus-section-title";
             title.textContent = l.title
@@ -1298,10 +1299,12 @@ async function startLesson(lesson, section) {
             meta.className = "syllabus-section-meta";
             meta.style.justifyContent = 'right';
             row.appendChild(meta);
-            row.onclick = () => {
-                showConfirmDialog("Leave this lesson? Progress will be lost.", () => {
-                    startLesson(l, activeSection);
-                });
+            if (l.id !== lesson.id) {
+                row.onclick = () => {
+                    showConfirmDialog("Leave this lesson? Progress will be lost.", () => {
+                        startLesson(l, activeSection);
+                    });
+                };
             };
             sidebarDiv.appendChild(row);
         });
