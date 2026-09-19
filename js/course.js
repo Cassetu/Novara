@@ -1319,6 +1319,7 @@ function renderMultipleChoiceBlock(block) {
         button.textContent = option.text;
         button.onclick = () => {
             if (block.allowMultiple) {
+                button.classList.toggle("b-option-selected");
                 if (!Array.isArray(activeBlockAnswers[block.id])) activeBlockAnswers[block.id] = [];
                 if (activeBlockAnswers[block.id].includes(option.id)) {
                     activeBlockAnswers[block.id] = activeBlockAnswers[block.id].filter(id => id !== option.id);
@@ -1327,6 +1328,8 @@ function renderMultipleChoiceBlock(block) {
                 }
             } else {
                 activeBlockAnswers[block.id] = option.id;
+                lessonContent.querySelectorAll("button").forEach(b => b.classList.remove("b-option-selected"));
+                button.classList.add("b-option-selected");
             }
         };
         lessonContent.appendChild(button);

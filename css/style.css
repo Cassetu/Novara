@@ -1679,3 +1679,4 @@ button:disabled {
 .public-signin-btn:hover{background-color:#1e1e1e;}
 .public-signin-btn:active{transform:none !important;}
 .wipe-btn-ready { background-color:#ff4444 !important;color:var(--void) !important;}
+.b-option-selected { background-color: var(--accent); color: white; border-color: var(--accent); }
