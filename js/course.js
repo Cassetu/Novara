@@ -1273,12 +1273,29 @@ async function startLesson(lesson, section) {
 
     viewLesson.innerHTML = "";
     activeLessonStage = document.createElement("div")
+    activeLessonStage.className = "syllabus-content-stage";
     if (section) {
         const sidebarDiv = document.createElement("div");
+        sidebarDiv.className = "syllabus-sidebar";
         viewLesson.appendChild(sidebarDiv);
+        const header = document.createElement("div");
+        header.className = "syllabus-sidebar-info";
+        const headerTitle = document.createElement("div");
+        headerTitle.className = "syllabus-sidebar-course-title";
+        headerTitle.textContent = section.title;
+        header.appendChild(headerTitle);
+        sidebarDiv.appendChild(header);
         activeSection.lessons.forEach(l => {
             const row = document.createElement("div");
-            row.textContent = l.title;
+            row.className = "syllabus-section-btn";
+            const title = document.createElement("div");
+            title.className = "syllabus-section-title";
+            title.textContent = l.title
+            row.appendChild(title);
+            const meta = document.createElement("div");
+            meta.textContent = "▶";
+            meta.className = "syllabus-section-meta";
+            row.appendChild(meta);
             row.onclick = () => {
                 showConfirmDialog("Leave this lesson? Progress will be lost.", () => {
                     startLesson(l, activeSection);

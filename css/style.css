@@ -490,11 +490,16 @@ body.lesson-active #app-topbar { pointer-events: none; opacity: 0.7; }
     z-index: 10;
 }
 #view-lesson {
-    height: auto;
-    display: block;
+    height: calc(100vh - var(--topbar-h));
+    display: flex;
+    gap: 0;
+    min-height: 500px;
     overflow: visible;
     box-sizing: border-box;
     max-width: 100%;
+}
+@media (max-width: 900px) {
+    #view-lesson { flex-direction: column; height: auto; }
 }
 .lesson-workspace {
     max-width: 760px;
