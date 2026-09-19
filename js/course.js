@@ -465,9 +465,10 @@ async function loadIndex(meta) {
     try {
         const res = await fetch(meta.indexFile);
         if (!res.ok) throw new Error();
-        return res.json();
+        return await res.json();
     } catch {
         show404();
+        return;
     }
 }
 
