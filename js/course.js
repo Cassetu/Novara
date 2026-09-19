@@ -1230,6 +1230,7 @@ function runMixedPractice(lessonData, analytics, onUpdate) {
 }
 
 async function startLesson(lesson, section) {
+    console.log(lesson.path);
     const res = await fetch(lesson.path);
     activeLessonData = await res.json();
     activeLessonData.id = lesson.id;
