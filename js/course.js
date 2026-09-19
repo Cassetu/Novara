@@ -1272,20 +1272,22 @@ async function startLesson(lesson, section) {
         }
 
     viewLesson.innerHTML = "";
-    const sidebarDiv = document.createElement("div");
     activeLessonStage = document.createElement("div")
-    viewLesson.appendChild(sidebarDiv);
+    if (section) {
+        const sidebarDiv = document.createElement("div");
+        viewLesson.appendChild(sidebarDiv);
+        activeSection.lessons.forEach(l => {
+            const row = document.createElement("div");
+            row.textContent = l.title;
+            row.onclick = () => {
+                showConfirmDialog("Leave this lesson? Progress will be lost.", () => {
+                    startLesson(l, activeSection);
+                });
+            };
+            sidebarDiv.appendChild(row);
+        });
+    }
     viewLesson.appendChild(activeLessonStage);
-    activeSection.lessons.forEach(l => {
-        const row = document.createElement("div");
-        row.textContent = l.title;
-        row.onclick = () => {
-            showConfirmDialog("Leave this lesson? Progress will be lost.", () => {
-                startLesson(l, activeSection);
-            });
-        };
-        sidebarDiv.appendChild(row);
-    });
     renderBlocks(activeLessonData.blocks)
 }
 
