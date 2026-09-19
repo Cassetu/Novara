@@ -497,6 +497,7 @@ body.lesson-active #app-topbar { pointer-events: none; opacity: 0.7; }
     overflow: visible;
     box-sizing: border-box;
     max-width: 100%;
+    padding:0px;
 }
 @media (max-width: 900px) {
     #view-lesson { flex-direction: column; height: auto; }

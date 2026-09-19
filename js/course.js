@@ -1238,6 +1238,7 @@ async function startLesson(lesson, section) {
     activeBlockAnswers = {};
 
     switchView("view-lesson");
+    viewLesson.style.display = "flex";
 
     if ($("nav-active-btn")) $("nav-active-btn").style.display = "none";
     if ($("nav-tools-btn")) $("nav-tools-btn").style.display = "none";
