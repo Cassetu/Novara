@@ -1294,8 +1294,9 @@ async function startLesson(lesson, section) {
             title.textContent = l.title
             row.appendChild(title);
             const meta = document.createElement("div");
-            meta.textContent = "▶";
+            meta.textContent = "\u25BA";
             meta.className = "syllabus-section-meta";
+            meta.style.justifyContent = 'right';
             row.appendChild(meta);
             row.onclick = () => {
                 showConfirmDialog("Leave this lesson? Progress will be lost.", () => {
