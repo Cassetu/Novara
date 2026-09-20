@@ -10,7 +10,7 @@ const firebaseConfig = {
   projectId: "novara-1",
   storageBucket: "novara-1.firebasestorage.app",
   messagingSenderId: "1044016221037",
-  appId: "1:1044016221037:web:c5b58e5eb427007bd86864"
+  appId: "1:1044016221037:web:c5b58e5eb427007bd86864",
   measurementId: "G-HML9QRXSC3"
 };
 
