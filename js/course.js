@@ -1,13 +1,5 @@
 import { parseCode, shuffleArray } from "./utils/parse.js";
-import { renderDocument } from "./renderers/document.js";
-import { renderQuestion, initQuestionState, getQuestionStats } from "./renderers/question.js";
-import { renderChallenge } from "./renderers/challenge.js";
-import { renderCodeFix } from "./renderers/codeFix.js";
-import { renderFillBlank } from "./renderers/fillBlank.js";
-import { renderSpotBug } from "./renderers/spotBug.js";
 import { renderProject } from "./renderers/project.js";
-import { renderCookingSim } from "./renderers/cookingSim.js";
-import { renderArchitectureSim } from "./renderers/architectureSim.js";
 import { createDialogueBox } from "./utils/dialogueBox.js";
 
 let currentUser = null;
@@ -1193,40 +1185,6 @@ function openProject(projectLesson, entry) {
         document.body.classList.remove("lesson-active");
         openSyllabus(activeBundleCourseId, null, activeCurriculumEntry || entry);
     });
-}
-
-function runMixedPractice(lessonData, analytics, onUpdate) {
-    const allQ = lessonData.questions;
-    const spotBugs = allQ.filter(q => q._lessonType === "spot_bug" && q._lessonRef);
-    const mcqQ     = allQ.filter(q => q._lessonType !== "spot_bug");
-
-    let sbIdx = 0;
-
-    function runNextSpotBug() {
-        if (sbIdx >= spotBugs.length) {
-            runMcq();
-            return;
-        }
-        const stub = spotBugs[sbIdx];
-        sbIdx++;
-        const lessonCopy = Object.assign({}, stub._lessonRef);
-        renderSpotBug(lessonCopy, () => runNextSpotBug());
-    }
-
-    function runMcq() {
-        if (!mcqQ.length) {
-            finishLesson();
-            return;
-        }
-        const mcqLesson = Object.assign({}, lessonData, { questions: mcqQ });
-        renderQuestion(mcqLesson, analytics, onUpdate, () => finishLesson());
-    }
-
-    if (spotBugs.length) {
-        runNextSpotBug();
-    } else {
-        runMcq();
-    }
 }
 
 async function startLesson(lesson, section) {
