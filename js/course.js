@@ -440,7 +440,8 @@ execWipeBtn?.addEventListener("click", async () => {
     navExplorer.click();
 });
 
-function switchView(id) {
+function switchView(id, title) {
+    document.title = title ? title + " - Novara" : "Novara";
     [viewExplorer, viewSyllabus, viewLesson, viewSettings, viewHub]
         .forEach(v => v.style.display = "none");
     $(id).style.display = "block";
@@ -783,7 +784,7 @@ function findProjectLesson(data) {
 async function openCurriculumHome(entry) {
     history.pushState({}, "", `?view=curriculum-home&id=${entry.id}`);
     activeCurriculumEntry = entry;
-    switchView("view-syllabus");
+    switchView("view-syllabus", entry.title);
     setActiveNavBtn(null);
     viewSyllabus.innerHTML = `<div class="view-loading-state">loading...</div>`;
 
@@ -890,7 +891,6 @@ async function openCurriculumHome(entry) {
 
 async function openSyllabus(courseId, dataArg, parentEntry) {
     history.pushState({}, "", `?view=syllabus&id=${courseId}&parentId=${parentEntry?.id || ""}`);
-    switchView("view-syllabus");
     setActiveNavBtn(null);
     viewSyllabus.innerHTML = `<div class="view-loading-state">loading...</div>`;
 
@@ -899,6 +899,8 @@ async function openSyllabus(courseId, dataArg, parentEntry) {
     activeCourseRef = activeCD;
     activeCD.id = courseId;
     activeBundleCourseId = courseId;
+
+    switchView("view-syllabus", activeCD.title);
 
     const pct = await getCourseProgress(parentEntry?.id || courseId);
     const projectLesson = findProjectLesson(data);
@@ -1195,7 +1197,7 @@ async function startLesson(lesson, section) {
     activeSection = section;
     activeBlockAnswers = {};
 
-    switchView("view-lesson");
+    switchView("view-lesson", lesson.title);
     viewLesson.style.display = "flex";
 
     if ($("nav-active-btn")) $("nav-active-btn").style.display = "none";
