@@ -40,7 +40,7 @@
     <script>
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", () => {
-                navigator.serviceWorker.register("/sw.js").catch(e => console.warn("sw failed", e));
+                navigator.serviceWorker.register("/js/sw.js").catch(e => console.warn("sw failed", e));
             });
         }
     </script>
