@@ -1,30 +1,20 @@
-const CACHE = "novara-v1";
+const CACHE = "novara-v2";
 
 const STATIC = [
     "/",
     "/index.html",
-    "/style.css",
-    "/css/course.css",
+    "/css/style.css",
+    "/css/about.css",
+    "/css/privacy.css",
     "/css/landing.css",
-    "/css/godot.css",
-    "/css/themes.css",
-    "/app.js",
-    "/firebase-config.js",
+    "/js/app.js",
+    "/js/firebase-config.js",
     "/js/course.js",
     "/js/utils/parse.js",
     "/js/utils/sound.js",
     "/js/utils/lineNumbers.js",
-    "/js/renderers/document.js",
-    "/js/renderers/question.js",
-    "/js/renderers/challenge.js",
-    "/js/renderers/codeFix.js",
-    "/js/renderers/fillBlank.js",
-    "/js/renderers/spotBug.js",
     "/js/renderers/project.js",
-    "/js/renderers/godotScene.js",
     "/data/catalog.json",
-    "/js/renderers/cookingSim.js",
-    "/js/sims/heatControl.js"
 ];
 
 const SKIP_CACHE = [
