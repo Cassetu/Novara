@@ -1386,6 +1386,9 @@ function renderImageLabelBlock(block) {
         const pWrapper = document.createElement("div");
         const marker = document.createElement("select");
         marker.className = "image-label-select";
+        const blank = document.createElement("option");
+        blank.textContent = "";
+        marker.appendChild(blank);
         const dot = document.createElement("button");
         dot.className = "image-label-dot";
         dot.onclick = () => { pWrapper.classList.add("expanded"); };
