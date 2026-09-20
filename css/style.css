@@ -1699,7 +1699,8 @@ button:disabled {
     border:1px solid black;
     cursor:pointer;
 }
-.image-label-div { position: relative; display:inline-block;max-width:100%; }
+.image-label-div { position: relative; display:block;max-width:500px; width:100%; margin: 0 auto; }
+.image-label-div img { max-width: 100%; height: auto;display: block;}
 .block-feedback {
     font-family:monospace;
     font-size: 13px;
@@ -1722,3 +1723,5 @@ button:disabled {
     border: 1px solid black;
     box-shadow: 4px 4px 0px var(--border);
 }
+.image-block-div {max-width: 500px;width:100%; margin: 0 auto;}
+.image-block-div img { max-width: 100%;height:auto; display: block; }

@@ -1338,6 +1338,7 @@ function renderTextBlock(block) {
 
 function renderImageBlock(block) {
     const lessonContent = document.createElement("div");
+    lessonContent.className = "image-block-div";
     const img = document.createElement("img");
     lessonContent.appendChild(img);
     img.src = block.src;
