@@ -1686,3 +1686,7 @@ button:disabled {
 .public-signin-btn:active{transform:none !important;}
 .wipe-btn-ready { background-color:#ff4444 !important;color:var(--void) !important;}
 .b-option-selected { background-color: var(--accent); color: white; border-color: var(--accent); }
+.image-label-select { display: none; }
+.image-label-pt.expanded .image-label-dot { display: none; }
+.image-label-pt.expanded .image-label-select { display: block; }
+.image-label-collapse-btn { position: absolute; right: 10px ; bottom: 10px ; }

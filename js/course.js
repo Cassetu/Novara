@@ -1383,22 +1383,35 @@ function renderImageLabelBlock(block) {
     img.src = block.src;
     img.alt = block.alt;
     block.points.forEach(point => {
+        const pWrapper = document.createElement("div");
         const marker = document.createElement("select");
+        marker.className = "image-label-select";
+        const dot = document.createElement("button");
+        dot.className = "image-label-dot";
+        dot.onclick = () => { pWrapper.classList.add("expanded"); };
         point.options.forEach(option => {
             const optionPt = document.createElement("option");
             optionPt.value = option.id
             optionPt.textContent = option.text;
             marker.appendChild(optionPt);
         });
-        marker.style.left = point.x + "%"
-        marker.style.top = point.y + "%"
-        marker.className = "image-label-pt"
+        pWrapper.style.left = point.x + "%"
+        pWrapper.style.top = point.y + "%"
+        pWrapper.className = "image-label-pt"
         marker.onchange = () => {
             activeBlockAnswers[block.id] = activeBlockAnswers[block.id] || {};
             activeBlockAnswers[block.id][point.id] = marker.value;
         };
-        lessonContent.appendChild(marker);
+        pWrapper.appendChild(dot);
+        pWrapper.appendChild(marker);
+        lessonContent.appendChild(pWrapper);
     });
+    const colBtn = document.createElement("button");
+    colBtn.className = "image-label-collapse-btn";
+    colBtn.onclick = () => {
+        lessonContent.querySelectorAll(".image-label-pt").forEach(pt => pt.classList.remove("expanded"));
+    }
+    lessonContent.appendChild(colBtn);
     activeLessonStage.appendChild(lessonContent);
 }
 
