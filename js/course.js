@@ -1415,6 +1415,8 @@ function renderImageLabelBlock(block) {
     colBtn.textContent = "Reset Selections"
     colBtn.onclick = () => {
         lessonContent.querySelectorAll(".image-label-pt").forEach(pt => pt.classList.remove("expanded"));
+        lessonContent.querySelectorAll(".image-label-select").forEach(sel => sel.value = "");
+        if (activeBlockAnswers[block.id]) activeBlockAnswers[block.id] = {};
     }
     lessonContent.appendChild(colBtn);
     activeLessonStage.appendChild(lessonContent);
@@ -1437,7 +1439,7 @@ function renderSubmitBlock(block) {
         });
         if (unanswered) {
             const uaFeedback = document.createElement("p");
-            uaFeedback.textContent = "Please answer all questions before submitting,"
+            uaFeedback.textContent = "Please answer all questions before submitting."
             uaFeedback.className = "block-feedback";
             activeLessonStage.appendChild(uaFeedback);
             return;
