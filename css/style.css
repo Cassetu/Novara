@@ -1687,6 +1687,38 @@ button:disabled {
 .wipe-btn-ready { background-color:#ff4444 !important;color:var(--void) !important;}
 .b-option-selected { background-color: var(--accent); color: white; border-color: var(--accent); }
 .image-label-select { display: none; }
+.image-label-pt { position: absolute; transform: translate(-50%, -50%);}
 .image-label-pt.expanded .image-label-dot { display: none; }
 .image-label-pt.expanded .image-label-select { display: block; }
-.image-label-collapse-btn { position: absolute; right: 10px ; bottom: 10px ; }
+.image-label-collapse-btn {
+    position:absolute;
+    right:10px;
+    bottom:10px;
+    padding: 6px 10px;
+    background: white;
+    border:1px solid black;
+    cursor:pointer;
+}
+.image-label-div { position: relative; display:inline-block;max-width:100%; }
+.block-feedback {
+    font-family:monospace;
+    font-size: 13px;
+    line-height:1.6;
+    color:var(--text-dim);
+    margin-top: 8px;
+    padding:8px 0;
+}
+.image-label-dot {
+    width:26px;
+    padding: 4px;
+    height: 26px !important;
+    background:white;
+    border: 1px solid black;
+    cursor:pointer;
+}
+.image-label-select {
+    min-width: 140px;
+    padding: 4px;
+    border: 1px solid black;
+    box-shadow: 4px 4px 0px var(--border);
+}

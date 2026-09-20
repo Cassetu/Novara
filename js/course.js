@@ -1408,6 +1408,7 @@ function renderImageLabelBlock(block) {
     });
     const colBtn = document.createElement("button");
     colBtn.className = "image-label-collapse-btn";
+    colBtn.textContent = "Reset Selections"
     colBtn.onclick = () => {
         lessonContent.querySelectorAll(".image-label-pt").forEach(pt => pt.classList.remove("expanded"));
     }
@@ -1433,6 +1434,7 @@ function renderSubmitBlock(block) {
         if (unanswered) {
             const uaFeedback = document.createElement("p");
             uaFeedback.textContent = "Please answer all questions before submitting,"
+            uaFeedback.className = "block-feedback";
             activeLessonStage.appendChild(uaFeedback);
             return;
         }
