@@ -1281,7 +1281,7 @@ button:disabled {
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--surface);
-    border: 4px solid var(--border);
+    border: 2px solid var(--border);
     box-shadow: 8px 8px 0px var(--border);
     font-family: 'Space Grotesk', system-ui, sans-serif;
     padding: 40px;
