@@ -1,0 +1,24 @@
+HOW TO GIT
+----------
+
+Small reminder for me
+
+SAVING PROGRESS WHILE YOU WORK
+------------------------------
+Select files, commit message, commit, and push.
+
+READY FOR LIVE
+--------------
+
+git checkout master
+git merge work-in-progress
+git push origin master
+
+Then return back into the working branch
+
+git checkout work-in-progress
+
+SEE WHAT BRANCH UR ON
+---------------------
+
+git branch
