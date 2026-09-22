@@ -21,8 +21,8 @@ catalogData.forEach(entry => {
             <meta name="description" content="${entry.description}">
             <meta property="og:title" content="${entry.title}">
             <meta property="og:description" content="${entry.description}">
-            <meta property="og:url" content="https://novaraedu.org/curriculum/${entry.id}">
-            <link rel="canonical" href="https://novaraedu.org/curriculum/${entry.id}">
+            <meta property="og:url" content="https://novaraedu.org/curriculum/${entry.id}/">
+            <link rel="canonical" href="https://novaraedu.org/curriculum/${entry.id}/">
             <link rel="stylesheet" href="/css/style.css">
             <link rel="stylesheet" href="/css/landing.css">
         </head>
