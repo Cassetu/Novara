@@ -16,6 +16,8 @@ const STATIC = [
     "/js/utils/lineNumbers.js",
     "/js/renderers/project.js",
     "/data/catalog.json",
+    "/html/about.html",
+    "/html/privacy.html"
 ];
 
 const SKIP_CACHE = [
