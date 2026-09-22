@@ -2087,6 +2087,24 @@ document.addEventListener("keydown", e => {
 
             pubGrid.appendChild(card);
         });
+
+        const courseSchema = catalogData.map(entry => ({
+            "@context": "https://schema.org",
+            "@type": "Course",
+            "name": entry.title,
+            "description": entry.description,
+            "provider": {
+                "@type": "Organization",
+                "name": "Novara",
+                "sameAs": "https://novaraedu.org"
+            }
+        }))
+        document.getElementById("course-schema")?.remove();
+        const schemaScript = document.createElement("script");
+        schemaScript.id = "course-schema";
+        schemaScript.type = "application/ld+json";
+        schemaScript.textContent = JSON.stringify(courseSchema);
+        document.head.appendChild(schemaScript);
     }
 
     document.querySelectorAll("[data-pfilter]").forEach(btn => {
