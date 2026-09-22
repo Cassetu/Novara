@@ -2072,7 +2072,7 @@ document.addEventListener("keydown", e => {
                 ? `<span class="diff-badge ${entry.difficulty}">${entry.difficulty}</span>` : "";
 
             card.innerHTML = `
-                <h3>${entry.title} ${diffBadge}</h3>
+                <h3><a href="/curriculum/${entry.id}/" class="public-card-title-link">${entry.title}</a> ${diffBadge}</h3>
                 <span class="public-card-meta">${lessonsNote} &bull; ${entry.category}</span>
                 <p>${entry.description}</p>
                 <div class="public-card-footer">

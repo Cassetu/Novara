@@ -1725,3 +1725,4 @@ button:disabled {
 }
 .image-block-div {max-width: 500px;width:100%; margin: 0 auto;}
 .image-block-div img { max-width: 100%;height:auto; display: block; }
+.public-card-title-link { font-size:25px; font-style: italic;  }

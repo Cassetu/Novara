@@ -36,3 +36,21 @@ catalogData.forEach(entry => {
 
     fs.writeFileSync(`${folderPath}/index.html`, html);
 });
+
+const staticUrls = [
+    "https://novaraedu.org/",
+    "https://novaraedu.org/html/about.html",
+    "https://novaraedu.org/html/privacy.html"
+];
+
+const curriculumUrls = catalogData.map(entry =>
+    `https://novaraedu.org/curriculum/${entry.id}/`
+);
+
+const allUrls = [...staticUrls, ...curriculumUrls];
+const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${allUrls.map(url => `  <url>\n    <loc>${url}</loc>\n  </url>`).join("\n")}
+</urlset>`;
+
+fs.writeFileSync("sitemap.xml", sitemapXml);
