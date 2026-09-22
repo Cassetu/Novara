@@ -1,0 +1,29 @@
+name: Generate Curriculum Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run generator script
+        run: node scripts/gen-curriculum-pg.js
+
+      - name: Commit generated pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add curriculum/
+          git commit -m "Auto-generate curriculum pages" || echo "No changes to commit"
+          git push
