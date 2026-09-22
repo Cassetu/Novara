@@ -1,0 +1,21 @@
+{
+  "name": "novara",
+  "version": "1.0.0",
+  "description": "<h1 align=\"center\"><img src=\"assets/img/brand/favicon.png\" alt=\"favicon\" width=\"34\"> NOVARA - Learning with you in mind :) </h1>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cassetu/Novara.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Cassetu/Novara/issues"
+  },
+  "homepage": "https://github.com/Cassetu/Novara#readme"
+}
