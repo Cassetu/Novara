@@ -12,6 +12,7 @@ const STATIC = [
     "/js/course.js",
     "/js/utils/parse.js",
     "/js/utils/sound.js",
+    "/js/utils/dialogueBox.js",
     "/js/utils/lineNumbers.js",
     "/js/renderers/project.js",
     "/data/catalog.json",
