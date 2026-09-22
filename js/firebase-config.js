@@ -16,6 +16,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+self.FIREBASE_APPCHECK_DEBUG_TOKEN = location.hostname === "localhost";
+//TODO: BE CAREFUL WITH DEBUG TOKEN!!!
 const appCheck = initializeAppCheck(app, {
   provider: new ReCaptchaEnterpriseProvider("6LdvSsYtAAAAAEGwZp95ajStW3YMPzQiBL9UI9g1"),
   isTokenAutoRefreshEnabled: true
