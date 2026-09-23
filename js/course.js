@@ -282,6 +282,7 @@ async function loadUserData() {
     } else {
         ud = { enrolled: [], scores: {}, analytics: {}, survivalScores: {}, projectProgress: {}, mastery: {}, practiceSettings: {}, onboarded: false, pacedMode: { active: false }, pacedProgress: {} };
         await window.setDoc(ref, ud);
+        await window.setDoc(window.doc(window.db, "stats", "global"), { userCount: window.increment(1) }, { merge: true });
     }
     console.log("user data loaded", currentUser.uid);
 }
