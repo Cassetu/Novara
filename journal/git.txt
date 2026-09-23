@@ -18,6 +18,10 @@ Then return back into the working branch
 
 git checkout work-in-progress
 
+Or to copy master to work-in-progress
+
+git merge --no-commit master
+
 SEE WHAT BRANCH UR ON
 ---------------------
 
