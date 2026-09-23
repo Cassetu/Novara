@@ -11,7 +11,7 @@ READY FOR LIVE
 --------------
 
 git checkout master
-git merge work-in-progress
+git merge --no-commit work-in-progress
 git push origin master
 
 Then return back into the working branch
