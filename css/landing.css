@@ -394,6 +394,29 @@
     height: 360px;
     object-fit: cover;
 }
+.landing-stats {
+    display: flex;
+    gap: 60px;
+    padding: 36px 0;
+    border-bottom: 2px solid #0a0a0a;
+    margin-bottom: 36px;
+}
+.landing-stat { display:flex; flex-direction:column;gap: 4px;}
+.landing-stat-number {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+.landing-stat-label {
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
 @media (max-width: 720px) {
     .landing-hero {
         flex-direction: column;
@@ -401,6 +424,10 @@
     }
     .landing-hero-figure img {
         height: 240px;
+    }
+    .landing-stats {
+        gap: 32px;
+        flex-wrap:wrap;
     }
     .landing-grid { grid-template-columns: 1fr; gap: 36px; }
 }

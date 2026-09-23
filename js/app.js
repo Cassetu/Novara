@@ -63,6 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 authView.style.display = "block";
             } else {
                 viewLanding.style.display = "flex";
+                window.loadStats();
             }
         }
     });

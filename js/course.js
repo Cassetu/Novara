@@ -362,6 +362,30 @@ async function populateActiveDropdown() {
     }, 30);
 }
 
+async function loadStats() {
+    const catalogRes = await fetch("data/catalog.json");
+    const catalog = await catalogRes.json();
+    const curriculumCount = catalog.length;
+    const statsSnap = await window.getDoc(window.doc(window.db, "stats", "global"));
+    const userCount = statsSnap.exists() ? statsSnap.data().userCount : 0;
+    document.getElementById("stat-curriculums").dataset.target = curriculumCount;
+    document.getElementById("stat-users").dataset.target = userCount;
+    animateStatsNum(document.getElementById("stat-curriculums"));
+    animateStatsNum(document.getElementById("stat-users"));
+}
+window.loadStats = loadStats;
+function animateStatsNum(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const duration = 800;
+    const startTime = performance.now();
+    function step(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        el.textContent = Math.round(progress * target);
+        if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+}
+
 function updateActiveCountBadge() {
     if (!activeCountBadge) return;
     const n = ud.enrolled.length;
