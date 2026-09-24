@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             } else {
                 viewLanding.style.display = "flex";
                 window.loadStats();
+                window.landingAudienceTabs();
             }
         }
     });

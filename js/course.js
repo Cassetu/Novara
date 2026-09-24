@@ -374,7 +374,6 @@ async function loadStats() {
     animateStatsNum(document.getElementById("stat-curriculums"));
     animateStatsNum(document.getElementById("stat-users"));
 }
-window.loadStats = loadStats;
 function animateStatsNum(el) {
     const target = parseInt(el.dataset.target, 10);
     const duration = 800;
@@ -386,7 +385,18 @@ function animateStatsNum(el) {
     }
     requestAnimationFrame(step);
 }
-
+function landingAudienceTabs() {
+    document.querySelectorAll(".landing-audience-tab").forEach(tab => {
+        tab.onclick = () => {
+            document.querySelectorAll(".landing-audience-tab").forEach(b => b.classList.remove("active"));
+            document.querySelectorAll(".landing-audience-panel").forEach(b => b.classList.remove("active"));
+            tab.classList.add("active");
+            document.querySelector(`[data-audience-panel="${tab.dataset.audience}"]`).classList.add("active");
+        };
+    });
+}
+window.loadStats = loadStats;
+window.landingAudienceTabs = landingAudienceTabs;
 function updateActiveCountBadge() {
     if (!activeCountBadge) return;
     const n = ud.enrolled.length;
