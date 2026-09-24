@@ -78,24 +78,18 @@
             <a href="?view=signin" id="btn-landing-signin" class="landing-nav-signin landing-signin-trigger">Sign In</a>
         </nav>
     </header>
-    <main class="landing-main">
-        <div class="landing-hero">
-            <div class="landing-hero-text">
-                <span class="landing-kicker">Novara Curriculum Hub</span>
-                <h1 class="landing-title">Welcome to Novara!</h1>
-                <p class="landing-desc">Our Goal: Build a library of curriculums so users can get the same learning opportunities of school, with more ways to learn than reading and note-taking, and at no cost to the users.</p>
-                <div class="landing-hero-actions">
-                    <button class="landing-btn-primary landing-explore-trigger"><span class="landing-btn-arrow">→</span>Browse Course Catalog</button>
-                    <button class="landing-btn-secondary landing-signin-trigger">Sign In with Google or Email</button>
-                </div>
-            </div>
-            <div class="landing-hero-figure">
-                <img src="assets/img/hero-mountains.jpg" alt="Misty mountain landscape">
+    <div class="landing-hero landing-hero-full">
+        <div class="landing-hero-text">
+            <span class="landing-kicker">Novara Curriculum Hub</span>
+            <h1 class="landing-title">Welcome to Novara!</h1>
+            <p class="landing-desc">Our Goal: Build a library of curriculums so users can get the same learning opportunities of school, with more ways to learn than reading and note-taking, and at no cost to the users.</p>
+            <div class="landing-hero-actions">
+                <button class="landing-btn-primary landing-explore-trigger"><span class="landing-btn-arrow">→</span>Browse Course Catalog</button>
+                <button class="landing-btn-secondary landing-signin-trigger">Sign In with Google or Email</button>
             </div>
         </div>
-
-        <hr class="landing-divider">
-
+    </div>
+    <main class="landing-main">
         <div class="landing-stats">
             <div class="landing-stat">
                 <span class="landing-stat-number" data-target="0" id="stat-curriculums">0</span>
@@ -106,6 +100,23 @@
                 <span class="landing-stat-label">Learners</span>
             </div>
         </div>
+        <hr class="landing-divider">
+
+        <div class="landing-grid">
+            <div class="landing-col">
+                <span class="landing-label">Why did I build Novara?</span>
+                <p class="landing-status-text">I had always aspired to learn and understand much, if not a lot, of the world. But there simply isn't a place where you can easily access lots of information easily, as well as having various questions and simulations to interact with that data. Especially not for free. That's what Novara is for!</p>
+                <p class="landing-badge-text">Time Spent: <a href="https://hackatime-badge.hackclub.com" target="_blank" class="hackatime-badge-link"><img src="https://hackatime.hackclub.com/api/v1/badge/U0B7KLS4R9R/Cassetu/Novara?color=77BBA2" alt="Hackatime work time"></a></p>
+            </div>
+            <div class="landing-col">
+                <span class="landing-label">Trust &amp; Transparency</span>
+                <a href="html/privacy.html" class="landing-btn-secondary landing-trust-btn">Why You Can Trust Us</a>
+            </div>
+        </div>
+
+        <hr class="landing-divider">
+    </main>
+    <div class="landing-audience-full">
         <div class="landing-audience">
             <div class="landing-audience-tabs">
                 <button class="landing-audience-tab active" data-audience="student">Students</button>
@@ -139,20 +150,7 @@
                 <p class="landing-desc">Family/parent progress-viewing tools aren't built yet; right now learners use Novara directly.</p>
             </div>
         </div>
-        <div class="landing-grid">
-            <div class="landing-col">
-                <span class="landing-label">Why did I build Novara?</span>
-                <p class="landing-status-text">I had always aspired to learn and understand much, if not a lot, of the world. But there simply isn't a place where you can easily access lots of information easily, as well as having various questions and simulations to interact with that data. Especially not for free. That's what Novara is for!</p>
-                <p class="landing-badge-text">Time Spent: <a href="https://hackatime-badge.hackclub.com" target="_blank" class="hackatime-badge-link"><img src="https://hackatime.hackclub.com/api/v1/badge/U0B7KLS4R9R/Cassetu/Novara?color=77BBA2" alt="Hackatime work time"></a></p>
-            </div>
-            <div class="landing-col">
-                <span class="landing-label">Trust &amp; Transparency</span>
-                <a href="html/privacy.html" class="landing-btn-secondary landing-trust-btn">Why You Can Trust Us</a>
-            </div>
-        </div>
-
-        <hr class="landing-divider">
-    </main>
+    </div>
     <footer class="landing-footer">Built by me, for you. View code repositories on <a href="https://github.com/Cassetu/Novara" target="_blank">GitHub</a>. No Generative AI was used in the programming or writing of this website.</footer>
 </div>
 
