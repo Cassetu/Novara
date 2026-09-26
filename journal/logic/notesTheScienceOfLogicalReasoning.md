@@ -2,6 +2,9 @@
 
 **Written Entirely by Human Hands**, Watch the Timelapses:
 * 1.0 (Recording system failed sorry guys)
+* [2.0](https://lapse.hackclub.com/timelapse/YEkoCbzGMEMc)
+* [3.0](https://lapse.hackclub.com/timelapse/KKG7VXfncSla)
+* [4.0](https://lapse.hackclub.com/timelapse/3QyxGmPWl3KL)
 
 ## Jerome Bruner Theory of Cognitive Development
 Bruner's Theory shows how knowledge is built through experiences. Arguing that culture and language drive this growth. Information here is presented through Bruner's theory and arguments. 
