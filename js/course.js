@@ -1077,7 +1077,7 @@ function renderSectionLessons(section, data, courseId, contentStage) {
         const padlockHtml = isLocked ? `<img src="assets/icon/padlock.svg" class="padlock-icon" alt="Locked">` : "";
         row.innerHTML = `<div class="lesson-title" style="display:flex;align-items:center;">${lesson.title}</div>${typeLabel ? `<span class="lesson-type-tag">${typeLabel}</span>` : ""}<div class="rating-container"><div class="rating-display">${dotsHtml}</div>${padlockHtml}</div>`;
 
-        row.onclick = () => {
+        row.onclick = async () => {
             if (isLocked) return;
             if (!activeCD || activeCD.id !== courseId) {
                 activeCD = data;
@@ -1085,7 +1085,7 @@ function renderSectionLessons(section, data, courseId, contentStage) {
                 activeBundleCourseId = courseId;
             }
             if (paced.active && paced.absenceDays > 0 && id === paced.nextId) {
-                const reviewQuiz = generateAbsenceReview(courseId, data, paced.absenceDays);
+                const reviewQuiz = await generateAbsenceReview(courseId, data, paced.absenceDays);
                 if (reviewQuiz) {
                     const overlay = document.createElement("div");
                     overlay.className = "dialogue-backdrop";
@@ -1121,7 +1121,7 @@ function renderSectionLessons(section, data, courseId, contentStage) {
             }));
 
             if (paced.active && targetIsCheckpoint && !(ud.scores[id] > 0 || ud.mastery[id])) {
-                const exam = generateModuleExam(courseId, data);
+                const exam = await generateModuleExam(courseId, data);
                 if (exam) {
                     const overlay = document.createElement("div");
                     overlay.className = "dialogue-backdrop";
@@ -1185,20 +1185,14 @@ function getCoursePacedState(data, courseId) {
     };
 }
 
-function generateAbsenceReview(courseId, data, absenceDays) {
-    const allQ = collectQuestions(data, { mcq: true, fill_blank: true, spot_bug: true });
-    const pool = allQ.filter(q => ud.scores[q.parentLessonId] > 0 || ud.mastery[q.parentLessonId]);
+async function generateAbsenceReview(courseId, data, absenceDays) {
+    const allQ = await collectQuestions(data, { mcq: true, fill_blank: true, spot_bug: true });
+    const pool = allQ.filter(q => ud.scores[q.sourceLessonId] > 0 || ud.mastery[q.sourceLessonId]);
     if (pool.length === 0) return null;
 
     const qCount = Math.min(9, (absenceDays - 1) * 3);
-    return {
-        id: "absence-review",
-        courseId: courseId,
-        title: "Absence Review",
-        type: "practice_standard",
-        isAbsenceReview: true,
-        questions: shuffleArray(pool).slice(0, qCount)
-    };
+    const blocks = buildQuizBlocks(shuffleArray(pool).slice(0, qCount));
+    return { id: "absence-review", name: "Absence Review", isAbsenceReview: true, blocks: blocks };
 }
 
 function openProject(projectLesson, entry) {
@@ -1721,17 +1715,11 @@ async function finishLesson() {
     };
 }
 
-function generateModuleExam(courseId, data) {
-    const allQ = collectQuestions(data, { mcq: true, fill_blank: true, spot_bug: true });
+async function generateModuleExam(courseId, data) {
+    const allQ = await collectQuestions(data, getDefaultPracticeSettings());
     if (allQ.length === 0) return null;
-    return {
-        id: `module-exam-${courseId}`,
-        courseId: courseId,
-        title: "Weekly Module Exam",
-        type: "master_test",
-        isModuleExam: true,
-        questions: shuffleArray(allQ).slice(0, 10)
-    };
+    const blocks = buildQuizBlocks(shuffleArray(allQ).slice(0, 10));
+    return { id: `module-exam-${courseId}`, name: "Weekly Module Exam", isModuleExam: true, blocks: blocks };
 }
 
 function getDefaultPracticeSettings() {
@@ -1949,17 +1937,17 @@ function buildQuizBlocks(entries) {
 
 async function compileMasterTest() {
     if (!activeCD) return;
-    const all = collectQuestions(activeCD, getDefaultPracticeSettings());
+    const all = await collectQuestions(activeCD, getDefaultPracticeSettings());
     if (!all.length) {
         showError("No Questions Available!");
         return;
     }
+    const selected = shuffleArray(all).slice(0, 15);
+    const blocks = buildQuizBlocks(selected);
     startLesson({
         id: "master-test",
-        courseId: activeCD.id,
-        title: "Curriculum Master Test",
-        type: "master_test",
-        questions: shuffleArray(all).slice(0, 15)
+        name: "Curriculum Master Test",
+        blocks: blocks
     });
 }
 
@@ -2000,12 +1988,8 @@ async function compileStandardPractice() {
     activeCD = { id: "global" };
     activeCourseRef = null;
 
-    startLesson({
-        id: "practice-standard",
-        title: "Standard Practice",
-        type: "practice_standard",
-        questions: shuffleArray(allEnrolled.slice(0, sessionLen))
-    });
+    const blocks = buildQuizBlocks(allEnrolled.slice(0, sessionLen));
+    startLesson({ id: "practice-standard", name: "Standard Practice", blocks: blocks });
 }
 
 async function compileSurvivalPractice() {
@@ -2027,13 +2011,8 @@ async function compileSurvivalPractice() {
     activeCD = { id: "global" };
     activeCourseRef = null;
 
-    startLesson({
-        id: "practice-survival",
-        courseId: "global",
-        title: "Survival",
-        type: "practice_survival",
-        questions: shuffleArray(allEnrolled)
-    });
+    const blocks = buildQuizBlocks(allEnrolled);
+    startLesson({ id: "practice-survival", name: "Survival", blocks: blocks });
 }
 
 searchBar?.addEventListener("input", e => {
