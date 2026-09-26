@@ -1225,10 +1225,15 @@ function openProject(projectLesson, entry) {
 }
 
 async function startLesson(lesson, section) {
+    if (lesson.blocks) {
+        activeLessonData = lesson;
+    } else {
+        const res = await fetch(lesson.path);
+        activeLessonData = await res.json();
+        activeLessonData.id = lesson.id;
+    }
     console.log(lesson.path);
-    const res = await fetch(lesson.path);
-    activeLessonData = await res.json();
-    activeLessonData.id = lesson.id;
+    //TODO: REMOVE LOG IF UNNEEDED
     activeSection = section;
     activeBlockAnswers = {};
 
@@ -1890,37 +1895,43 @@ async function buildDocsPanel() {
     }
 }
 
-function collectQuestions(data, settings) {
+async function collectQuestions(data, settings) {
     const out = [];
-    const s = settings || getDefaultPracticeSettings();
+    const completedLessons = [];
 
     data.sections.forEach(sec => sec.lessons.forEach(l => {
         if (l.type === "project") return;
         const id = l.id || l.title.replace(/\s+/g, "-").toLowerCase();
-
         const isCompleted = (ud.scores[id] > 0) || ud.mastery[id];
-        if (!isCompleted) return;
-
-        if (l.type === "fill_blank" && s.fill_blank) {
-            l.questions?.forEach((q, i) => out.push({ ...q, globalId: `${id}-q${i}`, parentLessonId: id, _lessonType: "fill_blank" }));
-        } else if (l.type === "spot_bug" && s.spot_bug) {
-            out.push({ q: l.title, options: [], answer: 0, globalId: id, parentLessonId: id, _lessonType: "spot_bug", _lessonRef: l });
-        } else if (l.questions?.length && s.mcq) {
-            l.questions.forEach((q, i) => out.push({ ...q, globalId: `${id}-q${i}`, parentLessonId: id }));
-        }
+        if (isCompleted) completedLessons.push(l);
     }));
+    const fetchedContents = await Promise.all(
+        completedLessons.map(l => fetch(l.path).then(res => res.json()))
+    );
+    completedLessons.forEach((l, i) => {
+        const content = fetchedContents[i];
+        content.blocks.forEach(block => {
+            if(block.type !== "multipleChoice") return;
+            out.push({
+                block: block,
+                sourceLessonId: l.id,
+                sourceLessonTitle: l.title
+            });
+        });
+    });
     return out;
 }
 
 async function getAllQuestionsForEntry(entry, settings) {
     const data = await loadIndex(entry);
     const all = [];
-    data.courses.forEach(course => {
-        collectQuestions(course, settings).forEach(q => {
-          q._courseId = course.id;
-          all.push(q);
-      });
-    });
+    for (const course of data.courses) {
+        const questions = await collectQuestions(course, settings);
+        questions.forEach(q => {
+            q._courseId = course.id;
+            all.push(q);
+        });
+    };
     return all;
 }
 

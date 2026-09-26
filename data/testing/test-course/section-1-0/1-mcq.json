@@ -8,6 +8,7 @@
       "id": "mcq1",
       "type": "multipleChoice",
       "allowMultiple": false,
+      "question:": "Which option is correct?",
       "options": [
         { "id": "a", "text": "Option A", "correct": true, "feedback": "Example Correct Feedback" },
         { "id": "b", "text": "Option B", "correct": false, "feedback": "Example Incorrect Feedback" },
