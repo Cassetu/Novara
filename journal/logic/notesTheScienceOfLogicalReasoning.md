@@ -137,3 +137,56 @@ Your life is a long parade of choices. To make good, if not best, choices, you o
 ```
 
 ## Logical Fallacies
+Logical Fallacies are mistakes in reasoning.
+### False Analogy
+When two things are compared without enough key similarities to be compared fairly. Both things being compared need to be essentially similar.
+### False Cause
+When one thing causes another, but there isn't a logical connection between the two.
+### Slippery Slope
+When is a type of false cause which assumes that taking a first step will lead to subsequent events that cannot be prevented. This type of reasoning fails to look at alternative causes or factors that could prevent/alter the subsequent events.
+### Hasty Generalization
+When a generalization is made with few examples.
+> ###### Example
+>*Premise: Mark Zuckerberg dropped out of college, invented Facebook, and made billions of dollars.*
+> 
+> *Premise: Bill Gates dropped out of college, started Microsoft, and made billions of dollars.*
+>
+> *Conclusion: Dropping out of college leads to great financial success.*
+> 
+> *Secondary conclusion: A college degree is unnecessary to great financial success.*
+### Straw Man
+When you show only the weaker side of an opponent's argument in order to gain an advantage. Can occur through misinterpreting or taking a small part of the opponent's position, then blow it out of proportion and make it major.
+> ###### Example
+> Ridicule, taking statements out of context, or misquoting.
+### Post hoc ergo propter hoc / Historical Fallacy
+Latin for "After the fact, therefore because of the fact." When you use a progression in time as the reason for causation, nothing else.
+### Argument from Silence
+When someone tries to prove something from nothing. 
+> ###### Example
+> "He owns five mansions, I know this because nobody ever told me he doesn't have five mansions."
+### Statistical Fallacies
+1. **Small Sample:** An argument made from too few examples, basically a hasty generalization. (e.g., Since these 3 people all enjoy ice cream, everyone enjoys ice cream.)
+2. **Unrepresentative Sample:** A conclusion made from people who do not represent, or resemble, the ones whom the conclusion is being applied. (e.g., all students at my school do not have a car, therefore no one in school has a car.)
+3. **Appeal to Popularity:** When you use sources that are knowledgeable, experienced, and credible. But not all are credible. Some have knowledge about one field, but not the other. (e.g., A person with a Nobel Prize in economics is not qualified to talk about medicine.)
+### Non Sequitur
+Latin for "it does not follow." When there is no connection between the conclusion and the premises. (e.g., I need a raise because fruit costs went up.)
+### False Dilemma
+When you are given only two options, and more than two options exist. (e.g., Vote for Person A or see our nation destroyed.)
+### Appeal to Tradition
+When a traditional practice is the only reason for continuing a policy. (e.g, We've always done it this way.)
+### Bandwagon / Appeal to Majority
+When something is good, correct, or desirable because it is popular. (e.g., Everyone is doing it.)
+### Red Herring
+When a diversion or irrelevant point is brought up to distract someone off the subject of the argument.
+### Ad Hominem
+Latin for "argument to the man." When a person connects a real or perceived flaw in a person's character or behavior to an issue that they support. (e.g., Climate change is not true. It is supported by advocates such as Congressman Jones, and we all know that Congressman Jones was convicted of fraud last year.)
+### Ad Misericordium
+Latin for "appeal to pity." When an emotional appeal is used to cover up facts or lack of evidence. (e.g., A nonprofit begging for donations by wrenching your heartstrings, using emotion cover up how much of the donations actually go to the "cause.")
+### Plain Folks
+When a person tries to become more like the "common man", in order to divert from real issues. Most commonly in advertising and politics.
+### Guilt by Association
+When two things bare any relationship at all, they are comparable.
+
+```
+> “14.4: Logical Fallacies.” Social Sci LibreTexts, 8 June 2019, https://socialsci.libretexts.org/Bookshelves/Communication/Public_Speaking/Exploring_Public_Speaking_3e_(Barton_and_Tucker)/14%3A_Logical_Reasoning/14.04%3A_Logical_Fallacies. Accessed 26 Sept. 2026.
+```
