@@ -1935,6 +1935,18 @@ async function getAllQuestionsForEntry(entry, settings) {
     return all;
 }
 
+function buildQuizBlocks(entries) {
+    const blocks = [];
+    entries.forEach(entry => {
+        const blockId = `${entry.sourceLessonId}-mcq`;
+        blocks.push({type: "heading", level: 3, text: entry.sourceLessonTitle });
+        const mcqBlock = { ...entry.block, id: blockId };
+        blocks.push(mcqBlock);
+        blocks.push({ id: `${blockId}-submit`, type: "submit", targets: [blockId] });
+    });
+    return blocks;
+}
+
 async function compileMasterTest() {
     if (!activeCD) return;
     const all = collectQuestions(activeCD, getDefaultPracticeSettings());
