@@ -346,7 +346,7 @@
     min-height: 480px;
     display: flex;
     align-items: center;
-    background-image: linear-gradient(rgba(10,10,10,0.55), rgba(10,10,10,0.55)), url("/assets/img/hero-mountains.jpg");
+    background-image: linear-gradient(rgba(10,10,10,0.55), rgba(10,10,10,0.55)), url("/assets/img/nature/hero-mountains.jpg");
     background-size: cover;
     background-position: center;
     box-sizing: border-box;
