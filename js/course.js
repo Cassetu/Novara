@@ -1441,6 +1441,7 @@ function renderSubmitBlock(block) {
             await saveField("scores", ud.scores)
         } else {
             let allCorrect = true;
+            let correctCount = 0;
             block.targets.forEach(targetId => {
                 let isCorrect;
                 let feedbackText;
@@ -1453,12 +1454,14 @@ function renderSubmitBlock(block) {
                         if (selectedOption.feedback) feedbackText = selectedOption.feedback
                         else feedbackText = isCorrect ? targetBlock.correctFeedback : targetBlock.incorrectFeedback;
                         if (!isCorrect) allCorrect = false;
+                        if (isCorrect) correctCount++;
                     } else {
                         const correctIds = targetBlock.options.filter(o => o.correct).map(o => o.id);
                         const selected = activeBlockAnswers[targetBlock.id] || [];
                         isCorrect = selected.length === correctIds.length && selected.every(id => correctIds.includes(id));
                         feedbackText = isCorrect ? targetBlock.correctFeedback : targetBlock.incorrectFeedback;
                         if (!isCorrect) allCorrect = false;
+                        if (isCorrect) correctCount++;
                     }
                 } else if (targetBlock.type === "imageLabel") {
                     isCorrect = targetBlock.points.every(point => {
@@ -1467,6 +1470,7 @@ function renderSubmitBlock(block) {
                     });
                     feedbackText = isCorrect ? targetBlock.correctFeedback : targetBlock.incorrectFeedback;
                     if (!isCorrect) allCorrect = false;
+                    if (isCorrect) correctCount++;
                 }
                 const feedback = document.createElement("p");
                 feedback.className = "block-feedback";
