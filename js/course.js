@@ -1417,7 +1417,13 @@ function renderSubmitBlock(block) {
     const lessonContent = document.createElement("button");
     lessonContent.textContent = "Submit"
     activeLessonStage.appendChild(lessonContent);
+    let stage = "submit";
+    let finalScore = { correct: 0, total: 0 };
     lessonContent.onclick = async () => {
+        if (stage === "complete") {
+            console.log("end screen")
+            return;
+        }
         const unanswered = block.targets.some(id => {
             const targetBlock = findBlockById(id);
             if (targetBlock.type === "multipleChoice" && !targetBlock.allowMultiple) {
@@ -1436,12 +1442,14 @@ function renderSubmitBlock(block) {
             return;
         }
         activeLessonStage.querySelectorAll(".block-feedback").forEach(el => el.remove());
+        activeLessonStage.scrollIntoView({ behavior: "smooth"});
         if (block.targets.length === 0) {
             ud.scores[activeLessonData.id] = 1
+            finalScore = { correct: 1, total: 1 };
             await saveField("scores", ud.scores)
         } else {
-            let allCorrect = true;
             let correctCount = 0;
+            let allCorrect = true;
             block.targets.forEach(targetId => {
                 let isCorrect;
                 let feedbackText;
@@ -1485,7 +1493,10 @@ function renderSubmitBlock(block) {
             } else {
 
             }
+            finalScore = { correct: correctCount, total: block.targets.length };
         }
+        stage = "complete";
+        lessonContent.textContent = "Complete";
     }
 }
 
