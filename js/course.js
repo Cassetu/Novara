@@ -13,6 +13,7 @@ let activeCurriculumEntry = null;
 let activeCourseRef = null;
 let activeSection;
 let activeLessonStage;
+let lessonComplete = false;
 
 const $ = id => document.getElementById(id);
 
@@ -45,9 +46,13 @@ const wipeConfirmInput = $("wipe-confirm-input");
 const execWipeBtn      = $("execute-wipe-btn");
 
 const BINARY_TYPES = ["challenge", "code_fix", "godot_scene", "spot_bug", "project", "cooking_sim"];
-
 const isBinaryLesson = l => BINARY_TYPES.includes(l.type) || l.type === "document";
-
+const NATURE_IMAGES = [
+    "adam-kool.jpg", "anton-lecock.jpg", "cassie-boca.jpg", "daniel-jacob.jpg",
+    "derek-thomson.jpg", "erol-ahmed.jpg", "fernando-strabuli.jpg", "hero-mountains.jpg",
+    "matthew-smith.jpg", "nils-lindner.jpg", "raul-ling.jpg", "sonaal-bangera.jpg",
+    "sophia-simoes.jpg", "weronika.jpg"
+];
 const navToolsBtn = document.getElementById("nav-tools-btn");
 const toolsDropdown = document.getElementById("tools-dropdown");
 
@@ -136,6 +141,11 @@ authMagicBtn.addEventListener("click", () => {
 function setAuthStatus(msg, color) {
     authStatus.innerText = msg;
     authStatus.style.color = color;
+}
+function pickRNatureImage() {
+    const filename = NATURE_IMAGES[Math.floor(Math.random() * NATURE_IMAGES.length)];
+    const name = filename.replace(".jpg", "").split("-").map(w => w[0].toUpperCase + w.slice(1)).join(" ");
+    return { path: `/assets/img/nature/${filename}`, credit: name };
 }
 function startOnboarding() {
     if (document.getElementById("onboardingOverlay")) {
@@ -1222,11 +1232,13 @@ async function startLesson(lesson, section) {
         const res = await fetch(lesson.path);
         activeLessonData = await res.json();
         activeLessonData.id = lesson.id;
+        activeLessonData.path = lesson.path;
     }
     console.log(lesson.path);
     //TODO: REMOVE LOG IF UNNEEDED
     activeSection = section;
     activeBlockAnswers = {};
+    lessonComplete = false;
 
     switchView("view-lesson", lesson.title);
     viewLesson.style.display = "flex";
@@ -1249,19 +1261,28 @@ async function startLesson(lesson, section) {
         window.activeTopbarGate = (e) => {
             e.preventDefault();
             e.stopPropagation();
-            showConfirmDialog("Return? Progress on this lesson will not be saved.", () => {
+            if (lessonComplete) {
                 resetTopBarLayout();
-
                 if (activeCourseRef) {
                     openSyllabus(activeBundleCourseId, null, activeCurriculumEntry);
                 } else {
                     switchView("view-explorer");
                 }
-            });
+            } else {
+                showConfirmDialog("Return? Progress on this lesson will not be saved.", () => {
+                    resetTopBarLayout();
+
+                    if (activeCourseRef) {
+                        openSyllabus(activeBundleCourseId, null, activeCurriculumEntry);
+                    } else {
+                        switchView("view-explorer");
+                    }
+                });
+            }
         };
 
         topNavBtn.addEventListener("click", window.activeTopbarGate, true);
-        }
+    }
 
     viewLesson.innerHTML = "";
     activeLessonStage = document.createElement("div")
@@ -1292,9 +1313,13 @@ async function startLesson(lesson, section) {
             row.appendChild(meta);
             if (l.id !== lesson.id) {
                 row.onclick = () => {
-                    showConfirmDialog("Leave this lesson? Progress will be lost.", () => {
+                    if (lessonComplete) {
                         startLesson(l, activeSection);
-                    });
+                    } else {
+                        showConfirmDialog("Leave this lesson? Progress will be lost.", () => {
+                            startLesson(l, activeSection);
+                        });
+                    }
                 };
             };
             sidebarDiv.appendChild(row);
@@ -1421,7 +1446,7 @@ function renderSubmitBlock(block) {
     let finalScore = { correct: 0, total: 0 };
     lessonContent.onclick = async () => {
         if (stage === "complete") {
-            console.log("end screen")
+            showLessonEndScreen(finalScore)
             return;
         }
         const unanswered = block.targets.some(id => {
@@ -1503,6 +1528,28 @@ function renderSubmitBlock(block) {
 function findBlockById(id) {
     const block = activeLessonData.blocks.find(b => b.id === id);
     return block;
+}
+
+function showLessonEndScreen(finalScore) {
+    lessonComplete = true;
+    activeLessonStage.innerHTML = "";
+    const nature = pickRNatureImage();
+    activeLessonStage.style.backgroundImage = `url("${nature.path}")`;
+    activeLessonStage.style.backgroundSize = "cover";
+    activeLessonStage.style.backgroundPosition = "center";
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "lesson-end-wrapper";
+    wrapper.innerHTML = `
+        <h2>${finalScore.correct}/${finalScore.total} correct</h2>
+        <span class="lesson-end-credit">${nature.credit}</span>
+    `
+    activeLessonStage.appendChild(wrapper);
+
+    const actionBtn = document.createElement("button");
+    actionBtn.textContent = finalScore.correct === finalScore.total ? "Next" : "Retry";
+    wrapper.appendChild(actionBtn);
+
 }
 
 function resetTopBarLayout() {
