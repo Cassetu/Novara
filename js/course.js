@@ -14,6 +14,8 @@ let activeCourseRef = null;
 let activeSection;
 let activeLessonStage;
 let lessonComplete = false;
+let lessonScrollArea;
+let lessonBar;
 
 const $ = id => document.getElementById(id);
 
@@ -1285,8 +1287,14 @@ async function startLesson(lesson, section) {
     }
 
     viewLesson.innerHTML = "";
-    activeLessonStage = document.createElement("div")
-    activeLessonStage.className = "syllabus-content-stage";
+    activeLessonStage = document.createElement("div");
+    activeLessonStage.className = "syllabus-content-stage lesson-stage-flex";
+    lessonScrollArea = document.createElement("div");
+    lessonScrollArea.className = "lesson-scroll-area"
+    activeLessonStage.appendChild(lessonScrollArea);
+    lessonBar = document.createElement("div");
+    lessonBar.className = "lesson-bar";
+    activeLessonStage.appendChild(lessonBar);
     if (section) {
         const sidebarDiv = document.createElement("div");
         sidebarDiv.className = "syllabus-sidebar";
@@ -1343,13 +1351,13 @@ function renderBlocks(blocks) {
 function renderHeadingBlock(block) {
     const lessonContent = document.createElement("h" + block.level);
     lessonContent.textContent = block.text;
-    activeLessonStage.appendChild(lessonContent);
+    lessonScrollArea.appendChild(lessonContent);
 }
 
 function renderTextBlock(block) {
     const lessonContent = document.createElement("p");
     lessonContent.textContent = block.content;
-    activeLessonStage.appendChild(lessonContent);
+    lessonScrollArea.appendChild(lessonContent);
 }
 
 function renderImageBlock(block) {
@@ -1364,7 +1372,7 @@ function renderImageBlock(block) {
         caption.textContent = block.caption;
         lessonContent.appendChild(caption);
     }
-    activeLessonStage.appendChild(lessonContent);
+    lessonScrollArea.appendChild(lessonContent);
 }
 
 function renderMultipleChoiceBlock(block) {
@@ -1389,7 +1397,7 @@ function renderMultipleChoiceBlock(block) {
         };
         lessonContent.appendChild(button);
     });
-    activeLessonStage.appendChild(lessonContent);
+    lessonScrollArea.appendChild(lessonContent);
 }
 
 function renderImageLabelBlock(block) {
@@ -1435,13 +1443,14 @@ function renderImageLabelBlock(block) {
         if (activeBlockAnswers[block.id]) activeBlockAnswers[block.id] = {};
     }
     lessonContent.appendChild(colBtn);
-    activeLessonStage.appendChild(lessonContent);
+    lessonScrollArea.appendChild(lessonContent);
 }
 
 function renderSubmitBlock(block) {
     const lessonContent = document.createElement("button");
     lessonContent.textContent = "Submit"
-    activeLessonStage.appendChild(lessonContent);
+    lessonContent.className = "lesson-bar-action-btn";
+    lessonBar.appendChild(lessonContent);
     let stage = "submit";
     let finalScore = { correct: 0, total: 0 };
     lessonContent.onclick = async () => {
@@ -1463,11 +1472,11 @@ function renderSubmitBlock(block) {
             const uaFeedback = document.createElement("p");
             uaFeedback.textContent = "Please answer all questions before submitting."
             uaFeedback.className = "block-feedback";
-            activeLessonStage.appendChild(uaFeedback);
+            lessonScrollArea.appendChild(uaFeedback);
             return;
         }
-        activeLessonStage.querySelectorAll(".block-feedback").forEach(el => el.remove());
-        activeLessonStage.scrollIntoView({ behavior: "smooth"});
+        lessonScrollArea.querySelectorAll(".block-feedback").forEach(el => el.remove());
+        lessonScrollArea.scrollIntoView({ behavior: "smooth"});
         if (block.targets.length === 0) {
             ud.scores[activeLessonData.id] = 1
             finalScore = { correct: 1, total: 1 };
@@ -1508,7 +1517,7 @@ function renderSubmitBlock(block) {
                 const feedback = document.createElement("p");
                 feedback.className = "block-feedback";
                 feedback.textContent = feedbackText;
-                activeLessonStage.appendChild(feedback);
+                lessonScrollArea.appendChild(feedback);
             })
             if (allCorrect) {
             ud.scores[activeLessonData.id] = 4;
@@ -1532,11 +1541,11 @@ function findBlockById(id) {
 
 function showLessonEndScreen(finalScore) {
     lessonComplete = true;
-    activeLessonStage.innerHTML = "";
+    lessonScrollArea.innerHTML = "";
     const nature = pickRNatureImage();
-    activeLessonStage.style.backgroundImage = `linear-gradient(rgba(10,10,10,0.45), rgba(10,10,10,0.45)), url("${nature.path}")`;
-    activeLessonStage.style.backgroundSize = "cover";
-    activeLessonStage.style.backgroundPosition = "center";
+    lessonScrollArea.style.backgroundImage = `linear-gradient(rgba(10,10,10,0.45), rgba(10,10,10,0.45)), url("${nature.path}")`;
+    lessonScrollArea.style.backgroundSize = "cover";
+    lessonScrollArea.style.backgroundPosition = "center";
 
     const wrapper = document.createElement("div");
     wrapper.className = "lesson-end-wrapper";
@@ -1544,7 +1553,7 @@ function showLessonEndScreen(finalScore) {
         <h2>${finalScore.correct}/${finalScore.total} correct</h2>
         <span class="lesson-end-credit">${nature.credit}</span>
     `
-    activeLessonStage.appendChild(wrapper);
+    lessonScrollArea.appendChild(wrapper);
 
     const actionBtn = document.createElement("button");
     actionBtn.textContent = finalScore.correct === finalScore.total ? "Next" : "Retry";

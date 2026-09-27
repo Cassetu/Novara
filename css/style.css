@@ -1738,3 +1738,27 @@ button:disabled {
     padding: 80px 20px;
     color:#fff;
 }
+.lesson-stage-flex {
+    display:flex;
+    flex-direction: column;
+    height:100%;
+    padding: 0;
+}
+.lesson-scroll-area {
+    flex:1;
+    overflow-y:auto;
+    padding: 30px;
+    box-sizing:border-box;
+}
+.lesson-bar {
+    flex-shrink: 0;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding:16px 30px;
+    border-top: 1px solid #ddd;
+    background:var(--surface);
+}
+.lesson-bar-action-btn {
+    margin-left:auto;
+}
