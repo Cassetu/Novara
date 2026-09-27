@@ -1534,7 +1534,7 @@ function showLessonEndScreen(finalScore) {
     lessonComplete = true;
     activeLessonStage.innerHTML = "";
     const nature = pickRNatureImage();
-    activeLessonStage.style.backgroundImage = `url("${nature.path}")`;
+    activeLessonStage.style.backgroundImage = `linear-gradient(rgba(10,10,10,0.45), rgba(10,10,10,0.45)), url("${nature.path}")`;
     activeLessonStage.style.backgroundSize = "cover";
     activeLessonStage.style.backgroundPosition = "center";
 
@@ -1550,6 +1550,21 @@ function showLessonEndScreen(finalScore) {
     actionBtn.textContent = finalScore.correct === finalScore.total ? "Next" : "Retry";
     wrapper.appendChild(actionBtn);
 
+    if (finalScore.correct !== finalScore.total) {
+        actionBtn.onclick = () => {
+            startLesson({ id: activeLessonData.id, path: activeLessonData.path, title: activeLessonData.name }, activeSection);
+        };
+    } else if (finalScore.correct === finalScore.total) {
+        actionBtn.onclick = () => {
+            const currentIndex = activeSection.lessons.findIndex(l => l.id === activeLessonData.id);
+            const nextLesson = activeSection.lessons[currentIndex + 1];
+            if (nextLesson) {
+                startLesson(nextLesson, activeSection);
+            } else {
+                openSyllabus(activeBundleCourseId, null, activeCurriculumEntry);
+            }
+        };
+    }
 }
 
 function resetTopBarLayout() {
