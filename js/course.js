@@ -144,7 +144,7 @@ function setAuthStatus(msg, color) {
 }
 function pickRNatureImage() {
     const filename = NATURE_IMAGES[Math.floor(Math.random() * NATURE_IMAGES.length)];
-    const name = filename.replace(".jpg", "").split("-").map(w => w[0].toUpperCase + w.slice(1)).join(" ");
+    const name = filename.replace(".jpg", "").split("-").map(w => w[0].toUpperCase() + w.slice(1)).join(" ");
     return { path: `/assets/img/nature/${filename}`, credit: name };
 }
 function startOnboarding() {
