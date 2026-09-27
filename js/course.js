@@ -53,7 +53,10 @@ const NATURE_IMAGES = [
     "adam-kool.jpg", "anton-lecock.jpg", "cassie-boca.jpg", "daniel-jacob.jpg",
     "derek-thomson.jpg", "erol-ahmed.jpg", "fernando-strabuli.jpg", "hero-mountains.jpg",
     "matthew-smith.jpg", "nils-lindner.jpg", "raul-ling.jpg", "sonaal-bangera.jpg",
-    "sophia-simoes.jpg", "weronika.jpg"
+    "sophia-simoes.jpg", "weronika.jpg", "robynne-o.jpg", "rafael-peier.jpg", "maria-larsen.jpg",
+    "peter-robbins.jpg", "peter-robbins.jpg", "daphne-fecheyr.jpg", "nils-leonhardt.jpg", "nata-ruta.jpg",
+    "bob-brewer.jpg", "lisha-riabinina.jpg", "vitus-bever.jpg", "benjamin-lecomte.jpg", "marco-murakami.jpg",
+    "maksim-shutov.jpg", "bill-eccles.jpg", "michael-rodock.jpg", "konstantin-dyadyun.jpg", "hidde-joustra.jpg"
 ];
 const navToolsBtn = document.getElementById("nav-tools-btn");
 const toolsDropdown = document.getElementById("tools-dropdown");
