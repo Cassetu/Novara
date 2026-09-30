@@ -1458,7 +1458,7 @@ function renderSubmitBlock(block) {
     let finalScore = { correct: 0, total: 0 };
     lessonContent.onclick = async () => {
         if (stage === "complete") {
-            showLessonEndScreen(finalScore)
+            showLessonEndScreen(finalScore, lessonContent)
             return;
         }
         const unanswered = block.targets.some(id => {
@@ -1542,10 +1542,17 @@ function findBlockById(id) {
     return block;
 }
 
-function showLessonEndScreen(finalScore) {
+function showLessonEndScreen(finalScore, actionBtn) {
     lessonComplete = true;
-    lessonScrollArea.innerHTML = "";
+    lessonScrollArea.innerHTML = `<div class="view-loading-state">loading...</div>`;
     const nature = pickRNatureImage();
+    const img = new Image();
+    img.onload = () => renderEndScreenContent(finalScore, nature, actionBtn);
+    img.src = nature.path;
+}
+
+function renderEndScreenContent(finalScore, nature, actionBtn) {
+    lessonScrollArea.innerHTML = "";
     lessonScrollArea.style.backgroundImage = `linear-gradient(rgba(10,10,10,0.45), rgba(10,10,10,0.45)), url("${nature.path}")`;
     lessonScrollArea.style.backgroundSize = "cover";
     lessonScrollArea.style.backgroundPosition = "center";
@@ -1557,10 +1564,7 @@ function showLessonEndScreen(finalScore) {
         <span class="lesson-end-credit">${nature.credit}</span>
     `
     lessonScrollArea.appendChild(wrapper);
-
-    const actionBtn = document.createElement("button");
     actionBtn.textContent = finalScore.correct === finalScore.total ? "Next" : "Retry";
-    wrapper.appendChild(actionBtn);
 
     if (finalScore.correct !== finalScore.total) {
         actionBtn.onclick = () => {
