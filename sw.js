@@ -1,4 +1,4 @@
-const CACHE = "novara-v2";
+const CACHE = "novara-v3";
 
 const STATIC = [
     "/",
