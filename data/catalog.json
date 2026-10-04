@@ -2,6 +2,25 @@
   {
     "id": "test-lessons",
     "title": "Test Lessons",
+    "author": ["Cassetu"],
+    "published": "07-29-2026",
+    "updated": "08-18-2026",
+    "sources": ["None"],
+    "category": "other",
+    "difficulty": "beginner",
+    "description": "Testing for developers",
     "indexFile": "data/testing/index.json"
+  },
+  {
+    "id": "logic",
+    "title": "Logic",
+    "author": ["Cassetu"],
+    "published": "10-3-2026",
+    "updated": "10-3-2026",
+    "sources": ["“14.4: Logical Fallacies.” Social Sci LibreTexts, 8 June 2019, https://socialsci.libretexts.org/Bookshelves/Communication/Public_Speaking/Exploring_Public_Speaking_3e_(Barton_and_Tucker)/14%3A_Logical_Reasoning/14.04%3A_Logical_Fallacies. Accessed 26 Sept. 2026.\n"],
+    "category": "other",
+    "difficulty": "beginner",
+    "description": "The Science of Logical Reasoning",
+    "indexFile": "data/logic/index.json"
   }
 ]

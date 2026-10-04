@@ -1,0 +1,23 @@
+{
+  "id": "logic",
+  "title": "Logical Reasoning",
+  "courses": [
+    {
+      "id": "logic-101",
+      "title": "Logic 101",
+      "sections": [
+        {
+          "title": "Deductive vs. Inductive Arguments",
+          "lessons": [
+            {
+              "id": "arguments-document",
+              "title": "Arguments Document",
+              "type": "document",
+              "path": "data/logic/logic-101/deductive-inductive-arguments/arguments-document.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

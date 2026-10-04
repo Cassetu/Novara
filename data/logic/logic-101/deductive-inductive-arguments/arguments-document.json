@@ -1,0 +1,11 @@
+{
+  "name": "Arguments Document",
+  "icon": "assets/icon/book.svg",
+  "blocks": [
+    { "type": "heading", "level": 2, "text": "Arguments"},
+    { "type": "text", "content": "Arguments are a combination of reasoning and evidence." },
+    { "type": "heading", "level": 3, "text": "Example:"},
+    { "type": "text", "content": "Brother and sister, Sydney and Harrison are arguing about whose turn it’s to clean their bathroom. Harrison tells Sydney she should do it because she’s a girl and girls are better at cleaning. Sydney responds that being a girl has nothing to do with whose turn it is. She reminds Harrison that according to their work chart, they’re responsible for cleaning the bathroom on alternate weeks. She tells him she cleaned the bathroom last week; therefore, it’s his turn this week. Harrison, still unconvinced, refuses to take responsibility for the chore. Sydney then points to the work chart and shows him where it specifically says it’s his turn this week. Defeated, Harrison digs out the cleaning supplies." },
+    { "id": "submit1", "type": "submit", "targets": [] }
+  ]
+}
