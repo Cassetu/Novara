@@ -1762,3 +1762,8 @@ button:disabled {
 .lesson-bar-action-btn {
     margin-left:auto;
 }
+.lesson-squares {display:flex;gap:6px;}
+.step-square { width:14px; height:14px; border: 2px solid #ccc;box-sizing:border-box;}
+.step-square.current { border-color: var(--accent);}
+.step-square.right { background:var(--accent);}
+.step-square.wrong { background: #ccc;}
