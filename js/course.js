@@ -16,6 +16,10 @@ let activeLessonStage;
 let lessonComplete = false;
 let lessonScrollArea;
 let lessonBar;
+let activeSteps = [];
+let activeStepIndex = [];
+let stepResults = [];
+let lessonSquares;
 
 const $ = id => document.getElementById(id);
 
@@ -1230,6 +1234,21 @@ function openProject(projectLesson, entry) {
     });
 }
 
+async function saveLessonResult(finalScore) {
+    if (!activeLessonData.path) return;
+    const id = activeLessonData.id;
+    const earned = Math.round((finalScore.correct / finalScore.total) * 4);
+    const score = finalScore.correct > 0 ? Math.max(1, earned) : 0;
+    if (score > (ud.scores[id] || 0)) {
+        ud.scores[id] = score;
+        await saveField("scores", ud.scores);
+    }
+    if (finalScore.correct === finalScore.total && !ud.mastery[id]) {
+        ud.mastery[id] = true;
+        await saveField("mastery", ud.mastery)
+    }
+}
+
 async function startLesson(lesson, section) {
     if (lesson.blocks) {
         activeLessonData = lesson;
@@ -1298,6 +1317,9 @@ async function startLesson(lesson, section) {
     lessonBar = document.createElement("div");
     lessonBar.className = "lesson-bar";
     activeLessonStage.appendChild(lessonBar);
+    lessonSquares = document.createElement("div");
+    lessonSquares.className = "lesson-squares";
+    lessonBar.appendChild(lessonSquares);
     if (section) {
         const sidebarDiv = document.createElement("div");
         sidebarDiv.className = "syllabus-sidebar";
@@ -1337,7 +1359,31 @@ async function startLesson(lesson, section) {
         });
     }
     viewLesson.appendChild(activeLessonStage);
-    renderBlocks(activeLessonData.blocks)
+    activeSteps = activeLessonData.steps || [{ blocks: activeLessonData.blocks }];
+    stepResults = activeSteps.map(() => null);
+    renderStep(0);
+}
+
+function renderStep(index) {
+    activeStepIndex = index;
+    activeBlockAnswers = {};
+    lessonScrollArea.innerHTML = "";
+    lessonBar.querySelector(".lesson-bar-action-btn")?.remove();
+    lessonScrollArea.scrollTop = 0;
+    renderStepSquares();
+    renderBlocks(activeSteps[index].blocks);
+}
+
+function renderStepSquares() {
+    lessonSquares.innerHTML = "";
+    activeSteps.forEach((_, i) => {
+        const sq = document.createElement("div");
+        sq.className = "step-square";
+        if (i === activeStepIndex) sq.classList.add("current");
+        if (stepResults[i]?.allCorrect === true) sq.classList.add("right");
+        if (stepResults[i]?.allCorrect === false) sq.classList.add("wrong");
+        lessonSquares.appendChild(sq);
+    });
 }
 
 function renderBlocks(blocks) {
@@ -1450,6 +1496,7 @@ function renderImageLabelBlock(block) {
 }
 
 function renderSubmitBlock(block) {
+    const isLastStep = activeStepIndex === activeSteps.length - 1;
     const lessonContent = document.createElement("button");
     lessonContent.textContent = "Submit"
     lessonContent.className = "lesson-bar-action-btn";
@@ -1458,7 +1505,11 @@ function renderSubmitBlock(block) {
     let finalScore = { correct: 0, total: 0 };
     lessonContent.onclick = async () => {
         if (stage === "complete") {
-            showLessonEndScreen(finalScore, lessonContent)
+            if (isLastStep) {
+                showLessonEndScreen(finalScore, lessonContent);
+            } else {
+                renderStep(activeStepIndex + 1);
+            }
             return;
         }
         const unanswered = block.targets.some(id => {
@@ -1479,11 +1530,13 @@ function renderSubmitBlock(block) {
             return;
         }
         lessonScrollArea.querySelectorAll(".block-feedback").forEach(el => el.remove());
-        lessonScrollArea.scrollIntoView({ behavior: "smooth"});
+        lessonScrollArea.scrollTo({ top:0, behavior: "smooth"});
         if (block.targets.length === 0) {
             ud.scores[activeLessonData.id] = 1
             finalScore = { correct: 1, total: 1 };
             await saveField("scores", ud.scores)
+            stepResults[activeStepIndex] = { allCorrect: true, correct:1, total:1};
+            renderStepSquares();
         } else {
             let correctCount = 0;
             let allCorrect = true;
@@ -1521,24 +1574,25 @@ function renderSubmitBlock(block) {
                 feedback.className = "block-feedback";
                 feedback.textContent = feedbackText;
                 lessonScrollArea.appendChild(feedback);
-            })
-            if (allCorrect) {
-            ud.scores[activeLessonData.id] = 4;
-            ud.mastery[activeLessonData.id] = true;
-            await saveField("scores", ud.scores);
-            await saveField("mastery", ud.mastery);
-            } else {
-
-            }
+            });
+            stepResults[activeStepIndex] = { allCorrect, correct:correctCount, total: block.targets.length};
+            renderStepSquares();
             finalScore = { correct: correctCount, total: block.targets.length };
         }
+        if (isLastStep && activeLessonData.steps) {
+            finalScore = {
+                correct: stepResults.filter(r => r?.allCorrect).length,
+                total:activeSteps.length
+            };
+        }
+        if (isLastStep && block.targets.length > 0) await saveLessonResult(finalScore);
         stage = "complete";
-        lessonContent.textContent = "Complete";
+        lessonContent.textContent = isLastStep ? "Complete" : "Next";
     }
 }
 
 function findBlockById(id) {
-    const block = activeLessonData.blocks.find(b => b.id === id);
+    const block = activeSteps[activeStepIndex].blocks.find(b => b.id === id);
     return block;
 }
 

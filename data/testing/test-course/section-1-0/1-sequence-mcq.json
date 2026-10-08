@@ -1,0 +1,43 @@
+{
+  "name": "Sequential Multiple Choice Question",
+  "icon": "assets/icon/pen.svg",
+  "mode": "sequential",
+  "steps": [
+    { "blocks": [
+      { "type": "heading", "level": 2, "text": "One"},
+      { "type": "text", "content": "Example Paragraph Goes Here" },
+      {
+        "id": "mcq1",
+        "type": "multipleChoice",
+        "allowMultiple": false,
+        "question:": "Which option is correct?",
+        "options": [
+          { "id": "a", "text": "Option A", "correct": true, "feedback": "Example Correct Feedback" },
+          { "id": "b", "text": "Option B", "correct": false, "feedback": "Example Incorrect Feedback" },
+          { "id": "c", "text": "Option C", "correct": false }
+        ],
+        "correctFeedback": "Example Catch Correct Feedback",
+        "incorrectFeedback": "Example Catch Incorrect Feedback"
+      },
+      { "id": "submit1", "type": "submit", "targets": ["mcq1"]}
+    ]},
+    { "blocks": [
+      { "type": "heading", "level": 2, "text": "Two"},
+      { "type": "text", "content": "Example Paragraph Goes Here" },
+      {
+        "id": "mcq2",
+        "type": "multipleChoice",
+        "allowMultiple": false,
+        "question:": "Which option is correct?",
+        "options": [
+          { "id": "a", "text": "Option A", "correct": true, "feedback": "Example Correct Feedback" },
+          { "id": "b", "text": "Option B", "correct": false, "feedback": "Example Incorrect Feedback" },
+          { "id": "c", "text": "Option C", "correct": false }
+        ],
+        "correctFeedback": "Example Catch Correct Feedback",
+        "incorrectFeedback": "Example Catch Incorrect Feedback"
+      },
+      { "id": "submit1", "type": "submit", "targets": ["mcq1"]}
+    ]}
+  ]
+}
