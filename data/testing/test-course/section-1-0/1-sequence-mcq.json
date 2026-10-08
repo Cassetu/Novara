@@ -25,7 +25,7 @@
       { "type": "heading", "level": 2, "text": "Two"},
       { "type": "text", "content": "Example Paragraph Goes Here" },
       {
-        "id": "mcq2",
+        "id": "mcq1",
         "type": "multipleChoice",
         "allowMultiple": false,
         "question:": "Which option is correct?",
