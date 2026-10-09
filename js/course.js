@@ -17,7 +17,7 @@ let lessonComplete = false;
 let lessonScrollArea;
 let lessonBar;
 let activeSteps = [];
-let activeStepIndex = [];
+let activeStepIndex = 0;
 let stepResults = [];
 let lessonSquares;
 
@@ -1207,8 +1207,9 @@ async function generateAbsenceReview(courseId, data, absenceDays) {
     if (pool.length === 0) return null;
 
     const qCount = Math.min(9, (absenceDays - 1) * 3);
+    if (qCount <= 0) return null;
     const steps = buildQuizSteps(shuffleArray(pool).slice(0, qCount));
-    return { id: "absence-review", name: "Absence Review", isAbsenceReview: true, mode: "sequential", steps: step };
+    return { id: "absence-review", name: "Absence Review", isAbsenceReview: true, mode: "sequential", steps: steps };
 }
 
 function openProject(projectLesson, entry) {
@@ -1235,8 +1236,9 @@ function openProject(projectLesson, entry) {
 }
 
 async function saveLessonResult(finalScore) {
-    if (!activeLessonData.path) return;
+    if (!activeLessonData.path) { await saveQuizResult(finalScore); return; }
     const id = activeLessonData.id;
+    const prev = ud.scores[id] || 0;
     const earned = Math.round((finalScore.correct / finalScore.total) * 4);
     const score = finalScore.correct > 0 ? Math.max(1, earned) : 0;
     if (score > (ud.scores[id] || 0)) {
@@ -1246,6 +1248,34 @@ async function saveLessonResult(finalScore) {
     if (finalScore.correct === finalScore.total && !ud.mastery[id]) {
         ud.mastery[id] = true;
         await saveField("mastery", ud.mastery)
+    }
+    if (prev === 0 && score > 0) await markPacedCompletion();
+}
+
+async function markPacedCompletion() {
+    if (!ud.pacedMode?.active || !activeCD) return;
+    ud.pacedProgress[activeCD.id] = ud.pacedProgress[activeCD.id] || {};
+    ud.pacedProgress[activeCD.id].lastCompletedDate = new Date().toLocaleDateString("en-CA");
+    ud.pacedProgress[activeCD.id].absenceClearedToday = false;
+    await saveField("pacedProgress", ud.pacedProgress);
+}
+
+async function saveQuizResult(finalScore) {
+    const pid = activeCD?.id;
+    if (activeLessonData.isAbsenceReview && pid) {
+        ud.pacedProgress[pid] = ud.pacedProgress[pid] || {};
+        ud.pacedProgress[pid].absenceClearedToday = true;
+        await saveField("pacedProgress", ud.pacedProgress)
+    }
+    if (activeLessonData.isModuleExam && finalScore.correct / finalScore.total >= 0.8) {
+        activeSteps.forEach(s => {
+            if (!s.sourceLessonId) return;
+            ud.mastery[s.sourceLessonId] = true;
+            ud.scores[s.sourceLessonId] = 4;
+        });
+        await saveField("mastery", ud.mastery);
+        await saveField("scores", ud.scores);
+        await markPacedCompletion();
     }
 }
 
@@ -1532,9 +1562,11 @@ function renderSubmitBlock(block) {
         lessonScrollArea.querySelectorAll(".block-feedback").forEach(el => el.remove());
         lessonScrollArea.scrollTo({ top:0, behavior: "smooth"});
         if (block.targets.length === 0) {
+            const firstTime = !ud.scores[activeLessonData.id];
             ud.scores[activeLessonData.id] = 1
             finalScore = { correct: 1, total: 1 };
             await saveField("scores", ud.scores)
+            if (firstTime) await markPacedCompletion();
             stepResults[activeStepIndex] = { allCorrect: true, correct:1, total:1};
             renderStepSquares();
         } else {
@@ -1602,6 +1634,7 @@ function showLessonEndScreen(finalScore, actionBtn) {
     const nature = pickRNatureImage();
     const img = new Image();
     img.onload = () => renderEndScreenContent(finalScore, nature, actionBtn);
+    img.onerror = () => renderEndScreenContent(finalScore, nature, actionBtn);
     img.src = nature.path;
 }
 
@@ -1672,7 +1705,7 @@ async function generateModuleExam(courseId, data) {
     const allQ = await collectQuestions(data, getDefaultPracticeSettings());
     if (allQ.length === 0) return null;
     const steps = buildQuizSteps(shuffleArray(allQ).slice(0, 10));
-    return { id: `module-exam-${courseId}`, name: "Weekly Module Exam", isModuleExam: true, mode: "sequential", steps: step };
+    return { id: `module-exam-${courseId}`, name: "Weekly Module Exam", isModuleExam: true, mode: "sequential", steps: steps };
 }
 
 function getDefaultPracticeSettings() {
@@ -1879,8 +1912,8 @@ async function getAllQuestionsForEntry(entry, settings) {
 
 function buildQuizSteps(entries) {
     return entries.map(entry => {
-        const blockId = `${entry.sourceLessonID}-mcq`;
-        return { blocks: [
+        const blockId = `${entry.sourceLessonId}-mcq`;
+        return { sourceLessonId: entry.sourceLessonId, blocks: [
             { type: "heading", level: 3, text: entry.sourceLessonTitle },
             { ...entry.block, id: blockId },
             { id: `${blockId}-submit`, type: "submit", targets: [blockId]}
@@ -1964,7 +1997,7 @@ async function compileSurvivalPractice() {
     activeCD = { id: "global" };
     activeCourseRef = null;
 
-    const blocks = buildQuizSteps(allEnrolled);
+    const steps = buildQuizSteps(allEnrolled);
     startLesson({ id: "practice-survival", name: "Survival", mode: "sequential", steps: steps });
 }
 
