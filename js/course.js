@@ -1207,8 +1207,8 @@ async function generateAbsenceReview(courseId, data, absenceDays) {
     if (pool.length === 0) return null;
 
     const qCount = Math.min(9, (absenceDays - 1) * 3);
-    const blocks = buildQuizBlocks(shuffleArray(pool).slice(0, qCount));
-    return { id: "absence-review", name: "Absence Review", isAbsenceReview: true, blocks: blocks };
+    const steps = buildQuizSteps(shuffleArray(pool).slice(0, qCount));
+    return { id: "absence-review", name: "Absence Review", isAbsenceReview: true, mode: "sequential", steps: step };
 }
 
 function openProject(projectLesson, entry) {
@@ -1250,7 +1250,7 @@ async function saveLessonResult(finalScore) {
 }
 
 async function startLesson(lesson, section) {
-    if (lesson.blocks) {
+    if (lesson.blocks || lesson.steps) {
         activeLessonData = lesson;
     } else {
         const res = await fetch(lesson.path);
@@ -1264,7 +1264,7 @@ async function startLesson(lesson, section) {
     activeBlockAnswers = {};
     lessonComplete = false;
 
-    switchView("view-lesson", lesson.title);
+    switchView("view-lesson", lesson.title || lesson.name);
     viewLesson.style.display = "flex";
 
     if ($("nav-active-btn")) $("nav-active-btn").style.display = "none";
@@ -1281,7 +1281,7 @@ async function startLesson(lesson, section) {
         originalText = topNavBtn.innerText;
         topNavBtn.innerText = "← Return";
         topNavBtn.classList.add("tb-btn-return");
-
+        if (window.activeTopbarGate) topNavBtn.removeEventListener("click", window.activeTopbarGate, true);
         window.activeTopbarGate = (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -1618,6 +1618,16 @@ function renderEndScreenContent(finalScore, nature, actionBtn) {
         <span class="lesson-end-credit">${nature.credit}</span>
     `
     lessonScrollArea.appendChild(wrapper);
+
+    if (!activeLessonData.path) {
+        actionBtn.textContent = "Done";
+        actionBtn.onclick = () => {
+            resetTopBarLayout();
+            if (activeCourseRef) openSyllabus(activeBundleCourseId, null, activeCurriculumEntry);
+            else navHub.click();
+        };
+        return;
+    }
     actionBtn.textContent = finalScore.correct === finalScore.total ? "Next" : "Retry";
 
     if (finalScore.correct !== finalScore.total) {
@@ -1631,6 +1641,7 @@ function renderEndScreenContent(finalScore, nature, actionBtn) {
             if (nextLesson) {
                 startLesson(nextLesson, activeSection);
             } else {
+                resetTopBarLayout();
                 openSyllabus(activeBundleCourseId, null, activeCurriculumEntry);
             }
         };
@@ -1660,8 +1671,8 @@ function resetTopBarLayout() {
 async function generateModuleExam(courseId, data) {
     const allQ = await collectQuestions(data, getDefaultPracticeSettings());
     if (allQ.length === 0) return null;
-    const blocks = buildQuizBlocks(shuffleArray(allQ).slice(0, 10));
-    return { id: `module-exam-${courseId}`, name: "Weekly Module Exam", isModuleExam: true, blocks: blocks };
+    const steps = buildQuizSteps(shuffleArray(allQ).slice(0, 10));
+    return { id: `module-exam-${courseId}`, name: "Weekly Module Exam", isModuleExam: true, mode: "sequential", steps: step };
 }
 
 function getDefaultPracticeSettings() {
@@ -1840,7 +1851,8 @@ async function collectQuestions(data, settings) {
     );
     completedLessons.forEach((l, i) => {
         const content = fetchedContents[i];
-        content.blocks.forEach(block => {
+        const allBlocks = content.steps ? content.steps.flatMap(s => s.blocks) : (content.blocks || []);
+        allBlocks.forEach(block => {
             if(block.type !== "multipleChoice") return;
             out.push({
                 block: block,
@@ -1865,16 +1877,15 @@ async function getAllQuestionsForEntry(entry, settings) {
     return all;
 }
 
-function buildQuizBlocks(entries) {
-    const blocks = [];
-    entries.forEach(entry => {
-        const blockId = `${entry.sourceLessonId}-mcq`;
-        blocks.push({type: "heading", level: 3, text: entry.sourceLessonTitle });
-        const mcqBlock = { ...entry.block, id: blockId };
-        blocks.push(mcqBlock);
-        blocks.push({ id: `${blockId}-submit`, type: "submit", targets: [blockId] });
+function buildQuizSteps(entries) {
+    return entries.map(entry => {
+        const blockId = `${entry.sourceLessonID}-mcq`;
+        return { blocks: [
+            { type: "heading", level: 3, text: entry.sourceLessonTitle },
+            { ...entry.block, id: blockId },
+            { id: `${blockId}-submit`, type: "submit", targets: [blockId]}
+        ]};
     });
-    return blocks;
 }
 
 async function compileMasterTest() {
@@ -1885,11 +1896,11 @@ async function compileMasterTest() {
         return;
     }
     const selected = shuffleArray(all).slice(0, 15);
-    const blocks = buildQuizBlocks(selected);
+    const steps = buildQuizSteps(selected);
     startLesson({
         id: "master-test",
         name: "Curriculum Master Test",
-        blocks: blocks
+        mode: "sequential", steps: steps
     });
 }
 
@@ -1930,8 +1941,8 @@ async function compileStandardPractice() {
     activeCD = { id: "global" };
     activeCourseRef = null;
 
-    const blocks = buildQuizBlocks(allEnrolled.slice(0, sessionLen));
-    startLesson({ id: "practice-standard", name: "Standard Practice", blocks: blocks });
+    const steps = buildQuizSteps(allEnrolled.slice(0, sessionLen));
+    startLesson({ id: "practice-standard", name: "Standard Practice", mode: "sequential", steps: steps });
 }
 
 async function compileSurvivalPractice() {
@@ -1953,8 +1964,8 @@ async function compileSurvivalPractice() {
     activeCD = { id: "global" };
     activeCourseRef = null;
 
-    const blocks = buildQuizBlocks(allEnrolled);
-    startLesson({ id: "practice-survival", name: "Survival", blocks: blocks });
+    const blocks = buildQuizSteps(allEnrolled);
+    startLesson({ id: "practice-survival", name: "Survival", mode: "sequential", steps: steps });
 }
 
 searchBar?.addEventListener("input", e => {
