@@ -645,6 +645,7 @@ async function renderExplorer() {
         card.className = "course-card";
         card.dataset.category = entry.category || "";
         card.dataset.difficulty = entry.difficulty || "";
+        card.dataset.search = `${entry.title} ${entry.description || ""}`.toLowerCase();
 
         const pct = await getCourseProgress(entry.id);
         const barColor = enrolled ? "var(--accent)" : "var(--accent-orange)";
@@ -713,7 +714,7 @@ async function renderExplorer() {
     }
 
     updateActiveCountBadge();
-
+    applyExplorerSearch();
     setTimeout(() => {
         document.querySelectorAll(".progress-animator")
             .forEach(b => b.style.width = b.dataset.target);
@@ -2014,14 +2015,14 @@ async function compileSurvivalPractice() {
     startLesson({ id: "practice-survival", name: "Survival", mode: "sequential", steps: steps });
 }
 
-searchBar?.addEventListener("input", e => {
-    const q = e.target.value.toLowerCase();
+function applyExplorerSearch() {
+    const q = (searchBar?.value || "").trim().toLowerCase();
     document.querySelectorAll(".course-card").forEach(card => {
-        const t = card.querySelector("h3")?.innerText.toLowerCase() || "";
-        const d = card.querySelector("p")?.innerText.toLowerCase() || "";
-        card.style.display = (t.includes(q) || d.includes(q)) ? "flex" : "none";
+        card.style.display = (!q || card.dataset.search.includes(q)) ? "flex" : "none";
     });
-});
+}
+
+searchBar?.addEventListener("input", applyExplorerSearch);
 
 document.querySelectorAll(".filter-btn[data-filter]").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -2061,6 +2062,12 @@ document.addEventListener("keydown", e => {
 
     let pubCategory   = "all";
     let pubDifficulty = "all";
+    let pubQuery      = "";
+    const pubSearch = $("public-search-bar");
+    pubSearch?.addEventListener("input", () => {
+        pubQuery = pubSearch.value.trim().toLowerCase();
+        renderPublicGrid();
+    });
 
     async function openPublic(e) {
         e?.preventDefault();
@@ -2099,6 +2106,8 @@ document.addEventListener("keydown", e => {
         catalogData.forEach(entry => {
             if (pubCategory !== "all" && entry.category !== pubCategory) return;
             if (pubDifficulty !== "all" && entry.difficulty !== pubDifficulty) return;
+            const hay = `${entry.title} ${entry.description || ""} ${entry.category || ""}.toLowerCase();`
+            if (pubQuery && !hay.includes(pubQuery)) return;
 
             const card = document.createElement("div");
             card.className = "public-course-card";

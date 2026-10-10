@@ -193,6 +193,7 @@
         <h1 class="landing-title">Courses</h1>
         <p class="landing-desc">Browse every curriculum Novara currently hosts. Sign in to enroll and track progress.</p>
         <div id="mayor-chat"></div>
+        <input type="text" id="public-search-bar" placeholder="Search" spellcheck="false" autocomplete="off">
         <div class="filters-row" id="public-filters">
             <button class="filter-btn active" data-pfilter="all">All</button>
             <button class="filter-btn" data-pfilter="engineering">Engineering</button>
@@ -323,8 +324,11 @@
         <div id="view-explorer" class="explorer-view" style="display:none;">
 
             <div class="explorer-title-block">
-                <span class="explorer-kicker">Not finding what you need? Email me!</span>
-                <h1 class="explorer-title">Curriculums</h1>
+                <div class="explorer-title-txt">
+                    <span class="explorer-kicker">Not finding what you need? Email me!</span>
+                    <h1 class="explorer-title">Curriculums</h1>
+                </div>
+                <input type="text" id="search-bar" placeholder="Search" spellcheck="false" autocomplete="off">
             </div>
 
             <div class="filters-row" id="explorer-filters">
