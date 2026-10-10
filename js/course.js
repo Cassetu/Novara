@@ -941,12 +941,15 @@ async function openCurriculumHome(entry) {
 }
 
 async function openSyllabus(courseId, dataArg, parentEntry) {
+    if (parentEntry) activeCurriculumEntry = parentEntry;
     history.pushState({}, "", `?view=syllabus&id=${courseId}&parentId=${parentEntry?.id || ""}`);
     setActiveNavBtn(null);
     viewSyllabus.innerHTML = `<div class="view-loading-state">loading...</div>`;
 
     const data = dataArg || await loadIndex(parentEntry);
+    if (!data) return;
     activeCD = data.courses.find(c => c.id === courseId);
+    if (!activeCD) { show404(); return;}
     activeCourseRef = activeCD;
     activeCD.id = courseId;
     activeBundleCourseId = courseId;
@@ -1376,6 +1379,7 @@ async function startLesson(lesson, section) {
             row.appendChild(meta);
             if (l.id !== lesson.id) {
                 row.onclick = () => {
+                    if (isLessonLocked(l)) { showError("This lesson is locked in Paced Mode. Come back later!"); return; }
                     if (lessonComplete) {
                         startLesson(l, activeSection);
                     } else {
@@ -1638,6 +1642,15 @@ function showLessonEndScreen(finalScore, actionBtn) {
     img.src = nature.path;
 }
 
+function isLessonLocked(lesson) {
+    if (!activeCD || !activeCD.sections) return false;
+    const paced = getCoursePacedState(activeCD, activeCD.id);
+    console.log("lock check:", lesson.id, "nextId:", paced.nextId, "lockedToday:", paced.lockedToday, "score:", ud.scores[lesson.id]);
+    if (!paced.active) return false;
+    const done = ud.scores[lesson.id] > 0 || ud.mastery[lesson.id];
+    return !done && (lesson.id !== paced.nextId || paced.lockedToday);
+}
+
 function renderEndScreenContent(finalScore, nature, actionBtn) {
     lessonScrollArea.innerHTML = "";
     lessonScrollArea.style.backgroundImage = `linear-gradient(rgba(10,10,10,0.45), rgba(10,10,10,0.45)), url("${nature.path}")`;
@@ -1671,7 +1684,7 @@ function renderEndScreenContent(finalScore, nature, actionBtn) {
         actionBtn.onclick = () => {
             const currentIndex = activeSection.lessons.findIndex(l => l.id === activeLessonData.id);
             const nextLesson = activeSection.lessons[currentIndex + 1];
-            if (nextLesson) {
+            if (nextLesson && !isLessonLocked(nextLesson)) {
                 startLesson(nextLesson, activeSection);
             } else {
                 resetTopBarLayout();
