@@ -351,6 +351,7 @@
     background-position: center;
     box-sizing: border-box;
     padding: 0 40px;
+    border-bottom:4px solid var(--accent);
 }
 .landing-hero-text {
     max-width: 640px;
@@ -404,6 +405,8 @@
 .landing-audience-tabs { display:flex;gap: 8px; border-bottom:2px solid #000;padding-bottom:20px}
 .landing-audience-tab { font-family:monospace; font-size:13px; font-weight:700;letter-spacing:0.5px;text-transform: uppercase; background:none;padding:12px 16px;cursor:pointer; color:var(--text-dim);margin-bottom:-2px;}
 .landing-audience-tab.active { color:var(--text-main);background-color:var(--accent);}
+.landing-audience-tab:hover { color:var(--text-main);background-color:rgba(119,187,162,0.25); }
+.landing-audience-tab.active:hover { background-color: var(--accent); }
 .landing-audience-panel { display:none;min-height: 280px;}
 .landing-audience-panel.active { display: block; }
 .landing-audience-panel h2 { font-size: clamp(22px, 2.6vw, 30px);font-weight:900;letter-spacing:-0.5px;margin:0 0 16px;padding:20px 0px 30px;}
@@ -429,9 +432,15 @@
     font-size:11px;
     color:rgba(255,255,255,0.5);
 }
+.landing-mission-full { width:100%; background-color: var(--bg); color:#000;box-sizing:border-box;padding:80px 40px;}
+.landing-mission { max-width:1300px; margin:0 auto;}
+.landing-mission-title { font-size:clamp(40px, 7vw, 78px);line-height:1;letter-spacing:-2px;margin:0 0 24px;}
+.landing-mission-lead { font-family:monospace;font-size:16px;line-height:1.8;max-width: 720px; color:#000; margin:0 0 48px;}
+.landing-benefits { display:grid;grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:32px;}
+.landing-benefits h3 { color:var(--accent);font-size:16px;letter-spacing:0;margin:0 0 10px;}
+.landing-benefits p { font-family:monospace; font-size:13px;line-height:1.7;color:#000; margin:0;}
 @media (max-width: 720px) {
     .landing-hero {flex-direction: column; gap: 28px;}
-    .landing-hero-figure img { height: 240px;}
     .landing-stats { gap: 32px; flex-wrap:wrap;}
     .landing-audience-tabs { overflow-x: auto;white-space:nowrap;}
     .landing-grid { grid-template-columns: 1fr; gap: 36px; }
