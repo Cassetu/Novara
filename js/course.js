@@ -280,6 +280,20 @@ async function routeFromURL() {
     }
 }
 
+function currentWeekId() {
+    const d = new Date();
+    d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+    return d.toLocaleDateString("en-CA");
+}
+
+async function recordWeeklyActivity() {
+    const week = currentWeekId();
+    if (ud.lastActiveWeek === week) return;
+    ud.lastActiveWeek = week;
+    await saveField("lastActiveWeek", week);
+    await window.setDoc(window.doc(window.db, "stats", `week-${week}`), { count: window.increment(1)}, {merge:true});
+}
+
 async function loadUserData() {
     const ref = window.doc(window.db, "users", currentUser.uid);
     const snap = await window.getDoc(ref);
@@ -300,6 +314,7 @@ async function loadUserData() {
         await window.setDoc(ref, ud);
         await window.setDoc(window.doc(window.db, "stats", "global"), { userCount: window.increment(1) }, { merge: true });
     }
+    await recordWeeklyActivity();
     console.log("user data loaded", currentUser.uid);
 }
 
@@ -380,15 +395,19 @@ async function populateActiveDropdown() {
 }
 
 async function loadStats() {
+    const [globalSnap, weekSnap] = await Promise.all([
+        window.getDoc(window.doc(window.db, "stats", "global")),
+        window.getDoc(window.doc(window.db, "stats", `week-${currentWeekId()}`))
+    ]);
     const catalogRes = await fetch("data/catalog.json");
     const catalog = await catalogRes.json();
     const curriculumCount = catalog.length;
-    const statsSnap = await window.getDoc(window.doc(window.db, "stats", "global"));
-    const userCount = statsSnap.exists() ? statsSnap.data().userCount : 0;
+    $("stat-users").dataset.target = globalSnap.exists() ? globalSnap.data().userCount : 0;
+    $("stat-weekly").dataset.target = weekSnap.exists() ? weekSnap.data().count : 0;
     document.getElementById("stat-curriculums").dataset.target = curriculumCount;
-    document.getElementById("stat-users").dataset.target = userCount;
     animateStatsNum(document.getElementById("stat-curriculums"));
-    animateStatsNum(document.getElementById("stat-users"));
+    animateStatsNum($("stat-users"));
+    animateStatsNum($("stat-weekly"));
 }
 function animateStatsNum(el) {
     const target = parseInt(el.dataset.target, 10);
