@@ -2106,7 +2106,7 @@ document.addEventListener("keydown", e => {
         catalogData.forEach(entry => {
             if (pubCategory !== "all" && entry.category !== pubCategory) return;
             if (pubDifficulty !== "all" && entry.difficulty !== pubDifficulty) return;
-            const hay = `${entry.title} ${entry.description || ""} ${entry.category || ""}.toLowerCase();`
+            const hay = `${entry.title} ${entry.description || ""} ${entry.category || ""}`.toLowerCase();
             if (pubQuery && !hay.includes(pubQuery)) return;
 
             const card = document.createElement("div");
